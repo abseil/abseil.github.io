@@ -1,0 +1,40 @@
+<ul class="doc-side-nav">
+	{% assign current = page.url | downcase | split: '/' %}
+	<li><h5 class="doc-side-nav-title"><a href="{{ site.baseurl }}/docs/">Docs</a></h5></li>
+	<li><h5 class="doc-side-nav-title">
+	<a href="{{ site.baseurl }}/docs/cpp.html" {% if (current[2] == 'cpp' && current[3] == "") %}class='current'{% endif %}><b>C++ Devguide</b></a></h5></li>
+	<li class="doc-side-nav-list-item">
+	  <a href="{{ site.baseurl }}/docs/cpp/quickstart" {% if current[3] == 'quickstart.html' %}class='current'{% endif %}>
+	  Quickstart</a></li>
+	<li><h6 class="doc-side-nav-title">
+	  <a href="{{ site.baseurl }}/docs/cpp/guides/" {% if current[3] == 'guides' && current[4] == "" %}class='current'{% endif %}>
+	Programming Guides</a></h6></li>
+   <li class="doc-side-nav-list-item">
+     <a href="{{ site.baseurl }}/docs/cpp/guides/base" {% if current[4] == 'base.html' %}class='current'{% endif %}>
+     absl::base</a></li>
+   <li class="doc-side-nav-list-item">
+     <a href="{{ site.baseurl }}/docs/cpp/guides/concurrency" {% if current[4] == 'concurrency.html' %}class='current'{% endif %}>
+     Concurrency</a></li>
+   <li class="doc-side-nav-list-item">
+     <a href="{{ site.baseurl }}/docs/cpp/guides/strings" {% if current[4] == 'strings.html' %}class='current'{% endif %}>
+     Strings</a></li>
+   <li class="doc-side-nav-list-item">
+   <a href="{{ site.baseurl }}/docs/cpp/guides/utilities" {% if current[4] == 'utilities.html' %}class='current'{% endif %}>
+   Utilities</a></li>
+ 	<li><h6 class="doc-side-nav-title">
+	  <a href="{{ site.baseurl }}/docs/cpp/resources/" {% if current[3] == 'guides' && current[4] == "" %}class='current'{% endif %}>
+	Resources</a></h6></li>
+   <li class="doc-side-nav-list-item">
+	<a href="{{ site.baseurl }}/docs/cpp/resources/platforms" {% if current[3] == 'platforms.html' %}class='current'{% endif %}>
+	Platforms Guide</a></li>
+	<li class="doc-side-nav-list-item">
+	<a href="{{ site.baseurl }}/docs/cpp/resources/compilers" {% if current[3] == 'compilers.html' %}class='current'{% endif %}>
+	Compiler Guide</a></li>
+   <li class="doc-side-nav-list-item">
+     <a href="{{ site.baseurl }}/docs/cpp/resources/styleguide" {% if current[3] == 'styleguide.html' %}class='current'{% endif %}>
+     Styleguide</a></li>
+	<li class="doc-side-nav-list-item">
+	<a href="{{ site.baseurl }}/docs/cpp/resources/releasenotes" {% if current[3] == 'releasenotes.html' %}class='current'{% endif %}>
+	Release Notes</a></li>
+	<li><h5 class="doc-side-nav-title"><a href="{{ site.baseurl }}/docs/python/">Python Devguide</a></h5></li>
+ </ul>

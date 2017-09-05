@@ -1,0 +1,42 @@
+// Background for nav and hero
+.nav-hero-container {
+  background: url('../img/hero-bg-2.png') no-repeat center/cover; 
+  z-index: 9010;
+  position: relative;
+}
+
+// Landing page hero
+.hero {
+  padding-bottom: 60px;
+  position: relative;
+  text-align: center;
+
+  @media (min-width: $tablet) {
+    padding-bottom: 75px;
+  }
+
+  .hero-title {
+    color: $black;
+    display: block;
+    font-size: 48px;
+    margin-top: 0;
+    margin-bottom: $spacing--l;
+    font-weight: bold; 
+  }
+  .logo {
+    border-radius: 1px;
+    margin-bottom: $spacing--l;
+    margin-top: $spacing--l;
+    padding: $spacing--s $spacing--m;
+    width: 195px;
+  }
+
+  .hero-lead {
+    color: $black;
+    display: block;
+    font-size: 18px;
+    margin-top: 0;
+    margin-bottom: $spacing--l;
+    font-weight: bold;
+  }
+}
