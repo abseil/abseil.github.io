@@ -1,6 +1,10 @@
 <ul class="doc-side-nav">
-	<li><h5 class="doc-side-nav-title"><a href="{{ site.baseurl }}/about">About</a></h5></li>
-	<li><h5 class="doc-side-nav-title"><a href="{{ site.baseurl }}/docs/">Docs</a></h5></li>
-   <li><h5 class="doc-side-nav-title"><a href="{{ site.baseurl }}/blog">Blog</a></h5></li>
-   <li><h5 class="doc-side-nav-title">Community</h5></li>
+   {% assign current = page.url | downcase | split: '/' %}
+	<li><h5 class="doc-side-nav-title"><a href="{{ site.baseurl }}/community/">Community</a></h5></li>
+	<li class="doc-side-nav-list-item">
+	<a href="{{ site.baseurl }}/community/contribute" {% if current[2] == 'contribute.html' %}class='current'{% endif %}>
+	Contribution Guidelines</a></li>
+	<li class="doc-side-nav-list-item">
+	<a href="{{ site.baseurl }}/community/code-of-contact" {% if current[2] == 'code-of-conduct.html' %}class='current'{% endif %}>
+	Code of Conduct</a></li>
  </ul>
