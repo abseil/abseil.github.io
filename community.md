@@ -16,6 +16,16 @@ or <a href="https://twitter.com/abseilio">Twitter</a> to start engaging with
 the project and its members. </p>
 
 <section class="community-section">
+<h4 class="community-code community-title">Code of Conduct</h4>
+<p>Abseil wants to foster an open and welcoming environment for both our
+contributors and maintainers. We pledge to make participation in our project and
+our community a harassment-free experience for everyone, regardless of age, body
+size, disability, ethnicity, gender identity and expression, level of experience,
+nationality, personal appearance, race, religion, or sexual identity and
+orientation. To faciliate this open environment, please review our
+<a href="{{ site.baseurl }}/code-of-conduct">code of conduct</a>.</p>
+
+<section class="community-section">
 <h4 class="community-contribute community-title">Contribute on Github</h4>
 <p>Abseil aims to be a robust and active codebase. We are always looking
 for active contributors to Abseil. Here are a few areas

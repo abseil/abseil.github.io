@@ -8,4 +8,4 @@ type: markdown
 ## Programing Guides (C++)
 
 * [C++ Developer Guide](cpp.md)
-* [Python Developer Guide](python.md)
+* Python Developer Guide (Coming Soon!)

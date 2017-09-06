@@ -74,7 +74,7 @@ you misuse Abseil APIs, you're on your own.
   instead be `std` and your code will break.  More generally: just
   don't do it, we may need to shift things around internally, please
   don't depend on namespace details.
-* **Do not depend upon internal details. **This should go without
+* **Do not depend upon internal details.** This should go without
   saying: if something is in a namespace or filename/path that
   includes the word "internal", you are not allowed to depend upon it.
   It's an implementation  detail. You cannot friend it, you cannot
