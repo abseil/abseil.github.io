@@ -7,7 +7,7 @@ type: markdown
 
 ## C++ Programming Guides
 
-* [`absl::base`](base)
+* [Abseil Fundamentals](base)
 * [Concurrency Guide](concurrency)
 * [Strings Guide](strings)
 * [Utilities](utilities)

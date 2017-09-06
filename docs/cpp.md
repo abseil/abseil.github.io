@@ -7,7 +7,7 @@ type: markdown
 
 ## C++ Developer Guide
 
-* [C++ Quickstart](cpp/quickstart)
-* [C++ Programming Guides](cpp/guides/)
-* [C++ Styleguide](cpp/resources/styleguide)
-* [C++ Release Notes](cpp/resources/releasenotes)
+* [Quickstart](cpp/quickstart)
+* [Programming Guides](cpp/guides/)
+* [Platforms Guide](cpp/platforms)
+* [Compilers Guide](cpp/compilers)
