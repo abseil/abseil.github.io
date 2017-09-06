@@ -25,9 +25,9 @@ and in `src/YOUR-LANGUAGE` (e.g. `src/csharp`)
 ## Guidelines for Pull Requests
 
 * Create **small PRs** that are narrowly focused on **addressing a single concern**. 
-  We often time receive PRs that are trying to fix several things at a time, but only one fix is 
-  considered acceptable, nothing gets merged and both author's & review's time is wasted. Create 
-  more PRs to address different concerns and everyone will be happy.
+  We often time receive PRs that are trying to fix several things at a time, but only
+  one fix is considered acceptable, nothing gets merged and both author's & review's
+  time is wasted. Create more PRs to address different concerns and everyone will be happy.
  
 * For speculative changes, consider opening an issue and discussing it first. If you
   are suggesting a behavioral or API change, consider starting with an [Abseil 
@@ -47,6 +47,4 @@ and in `src/YOUR-LANGUAGE` (e.g. `src/csharp`)
  
 * **All tests need to be passing** before your change can be merged. We recommend you **run tests locally** before creating your PR to catch breakages early on (see [tools/run_tests](tools/run_tests). Ultimately, the green signal will be provided by our testing infrastructure. The reviewer will help you if there are test failures that seem not related to the change you are making.
  
-- Exceptions to the rules can be made if there's a compelling reason for doing so.
-
-
+* Exceptions to the rules can be made if there's a compelling reason for doing so.
