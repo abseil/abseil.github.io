@@ -14,7 +14,7 @@ title: abseil.io
                 <a href="{{ site.baseurl }}/about/philosophy">
                 <button class="btn btn-abseil waves-effect waves-light btn-read-more">READ MORE</button></a>
             </div>
-            <img class="col-sm-5 nofloat landing-image" src="{{ site.baseurl }}/img/cpp-compatibility.jpg" alt="C++ Standards Compatibility">
+            <img class="col-sm-5 nofloat landing-image" src="{{ site.baseurl }}/img/cpp-compatibility.svg" alt="C++ Standards Compatibility">
         </div>
     </div>
 
@@ -27,7 +27,7 @@ title: abseil.io
                 <a href="{{ site.baseurl }}/about/contract">
                 <button class="btn btn-abseil waves-effect waves-light btn-read-more">READ MORE</button></a>
             </div>
-            <img class="col-sm-5 nofloat landing-image" src="{{ site.baseurl }}/img/upgrade-support.jpg" alt="Upgrade Support">
+            <img class="col-sm-5 nofloat landing-image" src="{{ site.baseurl }}/img/upgrade-support.svg" alt="Upgrade Support">
          </div>
     </div>
 
@@ -43,7 +43,7 @@ title: abseil.io
                 <a href="{{ site.baseurl }}/about/intro">
                 <button class="btn btn-abseil waves-effect waves-light btn-read-more">READ MORE</button></a>
             </div>
-            <img class="col-sm-5 nofloat landing-image" src="{{ site.baseurl }}/img/production-experience.jpg" alt="Production Experience">
+            <img class="col-sm-5 nofloat landing-image" src="{{ site.baseurl }}/img/production-experience.svg" alt="Production Experience">
         </div>
     </div>
 
@@ -58,7 +58,7 @@ title: abseil.io
                 <a href="{{ site.baseurl }}/about/design/">
                 <button class="btn btn-abseil waves-effect waves-light btn-read-more">READ MORE</button></a>
             </div>
-            <img class="col-sm-5 nofloat landing-image" src="{{ site.baseurl }}/img/design-priorities.jpg" alt="Design Priorities">
+            <img class="col-sm-5 nofloat landing-image" src="{{ site.baseurl }}/img/design-priorities.svg" alt="Design Priorities">
         </div>
     </div>
 </div>
