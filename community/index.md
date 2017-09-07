@@ -25,10 +25,8 @@ orientation. To faciliate this open environment, please review our
 
 ### Contribute on Github
 
-Abseil aims to be a robust and active codebase. We are always looking
-for active contributors to Abseil. Here are a few areas
-where we would love community contribution. Be sure to follow our
-<a href="{{ site.baseurl }}/community/contribute">community addition guidelines</a>.
+We welcome community contributions. Be sure to follow our
+<a href="https://github.com/abseil/abseil-cpp/blob/master/CONTRIBUTING.md" target="_blank">community addition guidelines</a>.
 
 ### Mailing List
 
