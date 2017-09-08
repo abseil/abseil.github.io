@@ -7,8 +7,8 @@ type: markdown
 
 ### Abseil Contribution guidelines
 
-To contribute, please fork corresponding GitHub Abseil
-repository and start submitting pull requests.
+To contribute, please fork a copy of Abseil at , make your changes to your
+forked repository, and submit pull requests to our master Abseil branch.
 
 We welcome contributions to either of our core repositories.
 <a href="https://github.com/abseil/abseil-cpp/" target="_blank">Abseil-CPP</a>
