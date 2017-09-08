@@ -5,7 +5,7 @@ sidenav: side-nav-community.html
 type: markdown
 ---
 
-### Contribution guidelines for gRPC
+### Abseil Contribution guidelines
 
 To contribute to gRPC documentation, please fork corresponding GitHub Abseil
 repository and start submitting pull requests.
