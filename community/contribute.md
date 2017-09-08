@@ -7,7 +7,7 @@ type: markdown
 
 ### Abseil Contribution guidelines
 
-To contribute to gRPC documentation, please fork corresponding GitHub Abseil
+To contribute, please fork corresponding GitHub Abseil
 repository and start submitting pull requests.
 
 We welcome contributions to either of our core repositories.
