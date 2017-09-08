@@ -22,12 +22,6 @@ experience, nationality, personal appearance, race, religion, or sexual identity
 and orientation. To faciliate this open environment, please review our
 <a href="{{ site.baseurl }}/community/code-of-conduct">code of conduct</a>.
 
-### Contribute on Github
-
-We welcome community contributions. Be sure to follow our
-<a href= "https://github.com/abseil/abseil-cpp/blob/master/CONTRIBUTING.md" target="_blank">community
-addition guidelines</a>.
-
 ### Mailing List
 
 Any questions or suggestions? Just want to be in the loop of what is going on
