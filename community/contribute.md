@@ -7,9 +7,8 @@ type: markdown
 
 ### Contribution guidelines for gRPC
 
-To contribute to gRPC documentation, please fork the GitHub gRPC repository and start submitting pull requests.
-
-Contribution guidelines for gRPC
+To contribute to gRPC documentation, please fork corresponding GitHub Abseil
+repository and start submitting pull requests.
 
 We welcome contributions to either of our core repositories.
 <a href="https://github.com/abseil/abseil-cpp/" target="_blank">Abseil-CPP</a>
