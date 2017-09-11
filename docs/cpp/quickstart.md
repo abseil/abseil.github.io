@@ -41,14 +41,14 @@ repository on Github:
 $ cd ~
 $ mkdir Source; cd Source
 $ git clone https://github.com/abseil/abseil-cpp.git
-Cloning into 'AbseilCommonLibraries'...
+Cloning into 'abseil-cpp'...
 remote: Total 1935 (delta 1083), reused 1935 (delta 1083)
 Receiving objects: 100% (1935/1935), 1.06 MiB | 0 bytes/s, done.
 Resolving deltas: 100% (1083/1083), done.
 $
 ```
 
-Git will create the repository within a directory named `AbseilCommonLibraries`.
+Git will create the repository within a directory named `abseil-cpp`.
 Navigate into this directory and run all tests:
 
 ```
@@ -68,7 +68,7 @@ test it, you're ready to use it within your own project.
 ### Linking Your Code to the Abseil Repository
 
 First, create (or select) a source code directory for your work. This directory
-should generally not be the `AbseilCommonLibraries` directory itself;
+should generally not be the `abseil-cpp` directory itself;
 instead, you will link into that repository from your own source directory.
 
 ```
@@ -88,7 +88,9 @@ local_repository(
   # Name of the Abseil repository. This name is defined within Abseil's
   # WORKSPACE file, in its `workspace()` metadata
   name = "com_google_absl",
-  path = "~/Source/AbseilCommonLibraries",
+
+  # NOTE: Bazel paths must be absolute paths. E.g., you can't use ~/Source
+  path = "/PATH_TO_SOURCE/Source/abseil-cpp",
 )
 ```
 
@@ -115,7 +117,7 @@ Now, create a `hello_world.cc` C++ file within your `examples` directory:
 int main()
 {
   std::vector<std::string> v = {"foo","bar","baz"};
-  std::string s = strings::Join(v, "-");
+  std::string s = absl::StrJoin(v, "-");
 
   std::cout << "Joined string: " << s << "\n";
 
