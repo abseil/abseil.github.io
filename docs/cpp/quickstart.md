@@ -88,7 +88,9 @@ local_repository(
   # Name of the Abseil repository. This name is defined within Abseil's
   # WORKSPACE file, in its `workspace()` metadata
   name = "com_google_absl",
-  path = "~/Source/abseil-cpp",
+
+  # NOTE: Bazel paths must be absolute paths. E.g., you can't use ~/Source
+  path = "/PATH_TO_SOURCE/Source/abseil-cpp",
 )
 ```
 
@@ -115,7 +117,7 @@ Now, create a `hello_world.cc` C++ file within your `examples` directory:
 int main()
 {
   std::vector<std::string> v = {"foo","bar","baz"};
-  std::string s = strings::Join(v, "-");
+  std::string s = absl::StrJoin(v, "-");
 
   std::cout << "Joined string: " << s << "\n";
 
