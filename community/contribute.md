@@ -7,7 +7,7 @@ type: markdown
 
 ### Abseil Contribution guidelines
 
-To contribute, please fork a copy of Abseil at , make your changes to your
+To contribute, please fork a copy of Abseil at the links below , make your changes to your
 forked repository, and submit pull requests to our master Abseil branch.
 
 We welcome contributions to either of our core repositories:
