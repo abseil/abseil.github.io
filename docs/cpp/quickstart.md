@@ -20,12 +20,12 @@ Running the Abseil code within this tutorial requires:
   consult the [Set Up Git](https://help.github.com/articles/set-up-git/) guide
   on Github.
 
-This Quickstart uses Bazel as the official toolchain for Abseil, which is
+This Quickstart uses Bazel as the official build system for Abseil, which is
 supported on most major platforms (Linux, Windows, MacOS, for example) and
 compilers. The Abseil source code assumes you are using Bazel and contains
 `BUILD.bazel` files for that purpose.
 
-Although you are free to use your own toolchain, most of the documentation
+Although you are free to use your own build system, most of the documentation
 within this guide will assume you are using [Bazel](https://bazel.build/).
 
 To download and install Bazel (and any of its dependencies), consult the
@@ -40,7 +40,7 @@ repository on Github:
 # Change to the directory where you want to create the code repository
 $ cd ~
 $ mkdir Source; cd Source
-$ git clone -b staging sso://team/absl-team/AbseilCommonLibraries
+$ git clone https://github.com/abseil/abseil-cpp.git
 Cloning into 'AbseilCommonLibraries'...
 remote: Total 1935 (delta 1083), reused 1935 (delta 1083)
 Receiving objects: 100% (1935/1935), 1.06 MiB | 0 bytes/s, done.
@@ -52,7 +52,7 @@ Git will create the repository within a directory named `AbseilCommonLibraries`.
 Navigate into this directory and run all tests:
 
 ```
-$ cd AbseilCommonLibraries
+$ cd abseil-cpp
 $ bazel test absl/...:all
 ..............
 INFO: Found 12 targets...
