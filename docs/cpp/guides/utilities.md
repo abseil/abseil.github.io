@@ -5,8 +5,6 @@ sidenav: side-nav-cpp.html
 type: markdown
 ---
 
-# Abseil Types
-
 This guide covers a variety of Abseil libraries related to types, including:
 
 * absl:container
