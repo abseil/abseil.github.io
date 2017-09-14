@@ -5,8 +5,6 @@ sidenav: side-nav-cpp.html
 type: markdown
 ---
 
-## The Strings Library
-
 The `//absl/strings` library provides classes and utility functions for
 manipulating and comparing strings, converting other types (such as integers)
 into strings, or evaluating strings for other usages.
@@ -17,7 +15,7 @@ This document outlines highlights and general use cases for the `//absl/strings`
 library. For more detailed guidance about specific classes, functions, and
 fields, consult source documentation within the particular header file.
 
-### Bytes or Strings?
+## Bytes or Strings?
 
 Although "strings" are often thought of as a standard type in C++, they are not
 a built-in type, but instead are provided in the Standard Library (in C++11
@@ -35,7 +33,7 @@ as `absl::ByteSink` and `absl::ByteSource`).
 assumed, however, and arithmetic is never performed on types unless they are
 explicitly noted as <code>signed</code>.</p>
 
-### The `absl::string_view` Container {#string_view}
+## The `absl::string_view` Container {#string_view}
 
 Most C++ code has historically used either the (older) C `char*` pointer type
 or the C++ `std::string` class to hold character data. Methods that wish to
@@ -76,9 +74,9 @@ function, for example, stores its constituent pieces in a
 `std::vector<absl::string_view>`, requiring only allocation for the
 vector storage.
 
-### Splitting Strings {#stringSplitting}
+## Splitting Strings {#stringSplitting}
 
-Use the `absl::StrSplit()` function defined in `absl/strings/split.h` to
+Use the `absl::StrSplit()` function defined in `absl/strings/str_split.h` to
 split strings into substrings. This function takes an input string to be split
 and a delimiter on which to split the string as arguments. `absl::StrSplit()`
 adapts the returned collection to the type specified by the caller. A few
@@ -101,9 +99,9 @@ multiset<string> s = absl::StrSplit("a,b,c", ",");
 list<std::string> li = absl::StrSplit("a,b,c", ",");
 ~~~~
 
-See [split.h](split.h) for more details.
+See [str_split.h](str_split.h) for more details.
 
-### Joining Strings {#stringJoining}
+## Joining Strings {#stringJoining}
 
 Several functions for joining strings exist within the `//absl/strings` library.
 The following are the most commonly used.
@@ -134,7 +132,7 @@ absl::StrAppend(&s1, " and some other string", another);
 For this reason, you should get in the habit of preferring `absl::StrCat` or
 `absl::StrAppend` over using the concatenation operators.
 
-### String Substitution
+## String Substitution
 
 Formatting strings for display to users typically has different needs.
 Traditionally, most C++ code used built-in functions such as `sprintf()` and
@@ -149,7 +147,7 @@ Instead, `absl::Substitute()` combines the efficiency and type-safe nature of
 char buffer[50];
 
 string GetErrorMessage(char *op, char *user, int id) {
-   sprintf(buffer, "Error in %s for user %s (id %i)");
+   sprintf(buffer, "Error in %s for user %s (id %i)", op, user, id);
    return buffer;
 }
 
@@ -164,7 +162,7 @@ string GetErrorMessage(absl::string_view op, absl::string_view user, int id) {
 }
 ~~~~
 
-### Converting to and from Numeric Types {#numericConversion}
+## Converting to and from Numeric Types {#numericConversion}
 
 Specialty functions for converting between strings and numeric types within the
 `//absl/strings` library are defined within [numbers.h](numbers.h). The
