@@ -8,7 +8,7 @@ type: markdown
 ## About Abseil
 
 Abseil is an open-source collection of C++ library code designed to augment
-the C++ standard library. The Abseil library code is culled from Google's
+the C++ standard library. The Abseil library code is collected from Google's
 own C++ code base, has been extensively tested and used in production, and
 is the same code we depend on in our daily coding lives.
 
@@ -25,6 +25,7 @@ a whole.
 For more information about Abseil:
 
 * Consult our [Abseil Introduction](/about/intro)
+* Run through the Abseil [C++ Quickstart](/docs/cpp/quickstart)
 * Read [Why Adopt Abseil](/about/philosophy) to understand our design
   philosophy
 * Peruse our [Abseil Project Contract](/about/contract) to understand
