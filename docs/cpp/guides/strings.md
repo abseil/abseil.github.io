@@ -5,8 +5,6 @@ sidenav: side-nav-cpp.html
 type: markdown
 ---
 
-# Strings Library
-
 The `//absl/strings` library provides classes and utility functions for
 manipulating and comparing strings, converting other types (such as integers)
 into strings, or evaluating strings for other usages.
