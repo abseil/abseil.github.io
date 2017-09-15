@@ -1,5 +1,5 @@
 ---
-title: Abseil Utilities
+title: Type Libraries
 layout: docs
 sidenav: side-nav-cpp.html
 type: markdown
@@ -7,14 +7,12 @@ type: markdown
 
 This guide covers a variety of Abseil libraries related to types, including:
 
-* absl:container
-* absl:meta
-* absl:numeric
-* absl:types
+* `numeric`
+* `algorithm`
+* `container`
+* `types`
+* `meta`
 
-## The Container Library
-
-## The Meta Library
 
 ## The Numeric Library
 
@@ -42,7 +40,7 @@ and `MakeUint128()` are made.
 
 A `uint128` supports the following:
 
-* Implicit construction from integral types
+* Implicit constructio* `algorithm`n from integral types
 * Explicit conversion to integral types
 
 Additionally, if your compiler supports the `__int128` type extension, `uint128`
@@ -70,4 +68,10 @@ uint64_t i = static_cast<uint64_t>(v);
 absl::uint128 big = absl::MakeUint128(1, 0);
 ```
 
+## The Algorithm Library
+
+## The Container Library
+
 ## The Types Library
+
+## The Meta Library

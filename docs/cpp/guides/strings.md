@@ -470,7 +470,7 @@ The following standard formatters are provided within the `StrJoin()` API:
     container of pointer-to-T. This pattern often shows up when joining repeated
     fields in protocol buffers.
 
-## `absl::Substitute` for String Substitution
+## `absl::Substitute()` for String Substitution
 
 Formatting strings for display to users typically has different needs.
 Traditionally, most C++ code used built-in functions such as `sprintf()` and
