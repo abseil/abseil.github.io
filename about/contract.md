@@ -79,9 +79,9 @@ you misuse Abseil APIs, you're on your own.
   includes the word "internal", you are not allowed to depend upon it.
   It's an implementation  detail. You cannot friend it, you cannot
   include it, you cannot mention it or refer to it in any way.
-* **Include What You Use.** We may make changes to the internal #include graph
-  for Abseil headers - if you use an API, please include the relevant header
-  file directly.
+* **Include What You Use.** We may make changes to the internal `#include`
+  graph for Abseil headers - if you use an API, please include the relevant
+  header file directly.
 * **Do not make unqualified calls in the global namespace.** A call like `f(a);`
   for a function `f` in the global namespace can become ambiguous if/when we add
   `absl::f` (especially if `a` is an Abseil type). We generally do not recommend
