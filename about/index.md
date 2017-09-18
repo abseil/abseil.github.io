@@ -28,5 +28,5 @@ For more information about Abseil:
 * Run through the Abseil [C++ Quickstart](/docs/cpp/quickstart)
 * Read [Why Adopt Abseil](/about/philosophy) to understand our design
   philosophy
-* Peruse our [Abseil Project Contract](/about/contract) to understand
+* Peruse our [Abseil Compatibility Guidelines](/about/contract) to understand
   both what we promise to you, and what we expect of you in return.
