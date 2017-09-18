@@ -35,7 +35,7 @@ you misuse Abseil APIs, you're on your own.
   the rare instance where tooling cannot be produced, we'll provide as
   much information as we can about what to look for and how to resolve
   issues. (Remember: any time we are making a change publicly we're
-  also doing the work to update the 100MLoC+ internal Google codebase
+  also doing the work to update the 250MLoC+ internal Google codebase
   &mdash; we very rarely do such refactoring that cannot be
   automated.)
 * **Do not rely on dynamic unloading.** We consistently use patterns
