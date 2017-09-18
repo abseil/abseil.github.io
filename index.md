@@ -21,7 +21,7 @@ title: abseil.io
     <div class="row" >
         <div class="col-md-11 nofloat center-block landing-row">
             <h3 class="col-sm-7 landing-row-title">Upgrade Support</h3>
-            <p class="col-sm-7">If your code behaves according to our project contract, we will do
+            <p class="col-sm-7">If your code behaves according to our compatibility guidelines, we will do
             our best not to break you.</p>
             <div class="col-sm-7">
                 <a href="{{ site.baseurl }}/about/contract">
