@@ -1,10 +1,11 @@
 ---
 title: absl::Mutex Design Notes
 layout: about
-sidenav: side-nav-about.html
+sidenav: side-nav-design.html
 type: markdown
 ---
 
+# Design Note: `absl::Mutex`
 Abseil uses and has published its own `absl::Mutex` abstraction in place of the
 C++ library's `std::mutex` implementation. Such a decision is not advocated
 lightly. This design note attempts to lay out all of the issues surrounding
@@ -26,8 +27,8 @@ standard mutex / condition model.
 
 <table>
   <tr>
-    <th>`absl::Mutex` Usage</th>
-    <th>`std::mutex` Usage</th>
+    <th>absl::Mutex Usage</th>
+    <th>std::mutex Usage</th>
   </tr>
   <tr>
     <td>worker.cc</td>
@@ -54,7 +55,7 @@ void Finish() {
 </pre>
     </td>
   </tr>
-    <tr>
+  <tr>
     <td>waiter.cc</td>
     <td>waiter.cc</td>
   </tr>
@@ -68,7 +69,7 @@ void Wait() {
   }));
   shared_lock_->Unlock();
 }
-</pre
+</pre>
     </td>
     <td>
 <pre>
@@ -80,7 +81,8 @@ void Wait() {
   shared_lock->unlock();
 }
 </pre>
-</td>
+    </td>
+  </tr>
 </table>
 
 Note in particular that the condition is only needed in the waiter in the
