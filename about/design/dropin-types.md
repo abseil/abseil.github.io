@@ -1,7 +1,7 @@
 ---
-title: Abseil and Pre-adopted std:: types
+title: Abseil and Pre-adopted `std::` types
 layout: about
-sidenav: side-nav-about.html
+sidenav: side-nav-design.html
 type: markdown
 ---
 
