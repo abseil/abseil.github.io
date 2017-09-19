@@ -58,7 +58,9 @@ The Abseil codebase consists of the following C++ library components:
 ## License
 
 The Abseil C++ library is licensed under the terms of the Apache
-license. See [LICENSE](LICENSE) for more information.
+license. See
+[LICENSE](https://github.com/abseil/abseil-cpp/blob/master/LICENSE) for more
+information.
 
 ## Links
 
