@@ -6,3 +6,7 @@ type: markdown
 ---
 
 ## Design Notes
+
+### [`absl::Mutex`](mutex)
+
+### [Pre-adopted `std::` types](dropin-types)
