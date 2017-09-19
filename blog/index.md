@@ -6,3 +6,5 @@ type: markdown
 ---
 
 ## Abseil Blog
+
+* #1 09-26-2017 [Welcome to Abseil!](09262017-welcome-to-abseil)
