@@ -5,7 +5,7 @@ sidenav: side-nav-design.html
 type: markdown
 ---
 
-# Design Note: `absl::Mutex`
+# `absl::Mutex`
 Abseil uses and has published its own `absl::Mutex` abstraction in place of the
 C++ library's `std::mutex` implementation. Such a decision is not advocated
 lightly. This design note attempts to lay out all of the issues surrounding
