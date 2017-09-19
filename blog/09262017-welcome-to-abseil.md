@@ -5,7 +5,10 @@ sidenav: side-nav-blog.html
 type: markdown
 ---
 
-## Introducing Abseil, a new common libraries project
+## #1 - Introducing Abseil
+### A New Common Libraries Project
+
+[Titus Winters](mailto:titus@google.com) - 09-26-2017
 
 Today we are open-sourcing Abseil, a collection of libraries drawn from the
 most fundamental pieces of Google’s internal codebase.  These libraries are the
