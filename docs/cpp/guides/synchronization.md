@@ -9,22 +9,22 @@ The Synchronization library includes abstractions and primitives for managing
 tasks across different threads. This library encompasses the following
 header files:
 
-* `mutex.h`
+* `mutex.h`<br />
   Provides primitives for managing locks on resources. A mutex is the most
   important primitive in this library and the building block for most all
   concurrency utilities.
-* `notification.h`
+* `notification.h`<br />
   Provides a simple mechanism for notifiying threads of events.
-* `barrier.h` and `blocking_counter.h`
+* `barrier.h` and `blocking_counter.h`<br />
   Provides synchronization abstractions for cumulative events.
 
 The Abseil `base` library also includes a number of concurrency-related header
 files:
 
-* `base/thread_annotations.h`
+* `base/thread_annotations.h`<br />
   Provides macros for documenting the locking policy of multi-threaded code, and
   providing warnings and errors for misuse of such locks.
-* `base/call_once.h`
+* `base/call_once.h`<br />
   Provides an Abseil version of `std::call_once()` for invoking a callable
   object exactly once across all threads.
 
