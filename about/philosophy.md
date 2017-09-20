@@ -86,7 +86,7 @@ interact with.
 #### We Recommend That You Choose to Live at Head:
 
 We've spoken publicly about Google's internal code base, and our efforts to keep
-that code maintainable as it grows. With over 100M lines of C++ code and nearly
+that code maintainable as it grows. With over 250M lines of C++ code and nearly
 every project building from head, we've demonstrated a different approach to
 software engineering: one largely free of version mismatch issues and one where
 even the most common libraries can be refactored regularly, and safely. With
@@ -94,14 +94,10 @@ Abseil we aim to bring some of that experience to the Open Source world.
 
 To that end, we make the following promises:
 
-* If your code behaves according to our project contract, we will do our best
-  not to break you. 
-* If you host your code somewhere we can see it, build with a toolchain we
-  understand and with a build system we can use, and register with us, we will
-  run your tests before making a change. 
-* Additionally, if we need to refactor an API that you depend on, we will send
-  you a PR to update you.  If we can't see your code, we'll provide a tool that
-  we think should be able to perform the refactoring.
+* If your code behaves according to our compatibility guidelines, it shouldn't
+  break in the face of our changes.
+* If we need to refactor an API that you depend on, we will provide a tool
+  that should be able to perform the refactoring for well-behaved code.
 
 In exchange, we want to see how you call us, and we want you to live at head.
 Yes, you heard that right: live at head.
@@ -173,7 +169,7 @@ or uptime tracking on embedded devices. On the downside, code using
 `std::chrono` tends to be template-heavy and verbose.
 
 Abseil tried a different approach: we've chosen a representation that optimizes
-reasonably and still gives useful sub-second (non-floating-point) resolution
+reasonably and still gives useful sub-nanosecond (non-floating-point) resolution
 over a period of many thousands of years: obviously, this resolution won't work
 in some domains, but for a wide range of tasks we can operate on concrete types
 and work with simpler (non-template) code. Alternatively, on the other end of
@@ -181,7 +177,8 @@ the usability spectrum: in a domain where integral-second granularity is
 sufficient, the standard would not dare force finer granularity types on users
 &mdash; you shouldn't pay for what you don't use. We find the likelihood of
 having CPU-bound time-processing code that cannot afford to use 96 or 128 bits
-for time representation sufficiently unlikely.
+for time representation sufficiently unlikely compared to the cost of
+time-programming bugs.
 
 If your use cases are "normal" (or at least, in-line with what we've found to be
 normal), Abseil may provide a useful counterpoint to the designs chosen by the
@@ -203,9 +200,9 @@ and use cases are well-defined, and want slightly more forgiving designs than
 the standard will provide.  
 
 Regardless of what makes Abseil interesting, we're glad you're taking a look.
-Read up on our policies and the project contract. Register your open source
-projects with us. Sign up for our community mailing list. Take our libraries out
-for a spin &mdash; little things like `StrCat` and `StrSplit` turn out to be
-surprisingly pleasant to have on hand. And if you don't see anything interesting
-yet, be patient: this is just the beginning of an ongoing process to make our
+Read up on our policies and the compatibility guidelines. Sign up for our
+community mailing list. Take our libraries out for a spin &mdash; little things
+like `StrCat` and `StrSplit` turn out to be surprisingly pleasant to have on
+hand. And if you don't see anything interesting yet, be patient: this is just
+the beginning of an ongoing process to make our
 most-common utility libraries portable and available.  

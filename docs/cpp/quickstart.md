@@ -168,7 +168,8 @@ Congratulations! You've created your first binary using Abseil code.
 
 ## What's Next
 
-* Read our [design philosophy] and [project contract], if you haven't already.
+* Read our [design philosophy] and [compatibility guidelines], if you haven't
+  already.
 * Read through the C++ developer guide.
 * Consult the Abseil C++ .h header files, which contain valuable reference
   information.

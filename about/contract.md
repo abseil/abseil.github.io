@@ -1,11 +1,11 @@
 ---
-title: Abseil's Contract
+title: Abseil's Compatibility Guidelines
 layout: about
 sidenav: side-nav-about.html
 type: markdown
 ---
 
-## Abseil Project Contract
+## Abseil Compatibility Guidelines
 
 This document details what we expect from well-behaved users, and what
 we will offer in exchange. Any usage of Abseil libraries outside of
@@ -79,11 +79,21 @@ you misuse Abseil APIs, you're on your own.
   includes the word "internal", you are not allowed to depend upon it.
   It's an implementation  detail. You cannot friend it, you cannot
   include it, you cannot mention it or refer to it in any way.
+* **Include What You Use.** We may make changes to the internal `#include`
+  graph for Abseil headers - if you use an API, please include the relevant
+  header file directly.
+* **Do not make unqualified calls in the global namespace.** A call like `f(a);`
+  for a function `f` in the global namespace can become ambiguous if/when we add
+  `absl::f` (especially if `a` is an Abseil type). We generally do not recommend
+  you use the global namespace for anything. If you must, please qualify any
+  call that accepts a type provided by Abseil.
 
 ### What We Promise
 
-* **We will not break API compatibility.** If we must, we will ship a
-  tool to automate the upgrade to a preferred API.
+* **We will not break API compatibility.** If we must, we will ship a tool to
+  automate the upgrade to a preferred API. We will never break that API in a
+  single change - we believe in non-atomic refactoring. We will introduce the
+  new API and the tool, wait some time, and then remove the old.
 * **We promise to provide good forward-compatibility with the C++
   standard.**
 * **We promise at least the basic-exception guarantee.** Although
