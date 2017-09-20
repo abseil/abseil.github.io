@@ -63,7 +63,7 @@ void Finish() {
     <td>
 <pre>
 void Wait() {
-  shared_lock_>Lock();
+  shared_lock_->Lock();
   shared_lock_->Await(Condition([this]() {
       return shared_state_ == 1;
   }));
@@ -74,11 +74,11 @@ void Wait() {
     <td>
 <pre>
 void Wait() {
-  shared_lock->lock();
+  shared_lock_->lock();
   shared_cv_->wait(*shared_lock_, []() {
     return shared_state_ == 1;
   });
-  shared_lock->unlock();
+  shared_lock_->unlock();
 }
 </pre>
     </td>
