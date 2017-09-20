@@ -13,16 +13,19 @@ big-endian), compiler, and standard library.
 
 Abseil has two basic levels of support:
 
-* **Supported** means that the indicated platform is officially supported. We
-  pledge to test our code on that platform, have automated continuous
-  integration (CI) tests for that platform, and bugs within that platform will
-  be treated with high priority.
-
-* **Best Effort** means that we may or may not run continuous integration tests
-  on the platform, but we are fairly confident that Abseil should work on the
-  platform. Although we may not prioritize bugs on the associated platforms, we
-  will make our best effort to support it, and we will welcome patches based on
-  this platform. We may at some point officially support such a platform.
+<ul>
+	<li><b>Supported</b> means that the indicated platform is officially
+    supported. We pledge to test our code on that platform, have automated
+	continuous integration (CI) tests for that platform, and bugs within that
+	platform will be treated with high priority.</li>
+	<li><b>Best Effort</b> means that we may or may not run continuous
+	integration tests on the platform, but we are fairly confident that Abseil
+	should work on the platform. Although we may not prioritize bugs on the
+	associated platforms, we will make our best effort to support it, and we
+	will welcome patches based on this platform. We may at some point
+	officially support such a platform.</li>
+</ul>
+	
 
 Any other platform that is not explicitly mentioned as **Supported** or
 **Best Effort** is *not supported*. We will not accept patches for such
