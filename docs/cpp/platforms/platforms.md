@@ -25,7 +25,6 @@ Abseil has two basic levels of support:
 	will welcome patches based on this platform. We may at some point
 	officially support such a platform.</li>
 </ul>
-	
 
 Any other platform that is not explicitly mentioned as **Supported** or
 **Best Effort** is *not supported*. We will not accept patches for such
