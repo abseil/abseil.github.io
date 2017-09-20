@@ -146,7 +146,7 @@ whatever interfaces are necessary.
 
 This is arguably one of the most complicated large-scale refactoring any
 software organization envisions. More specifically: a lot of this refactoring
-had no precedent, so this would have been largely have been a research task. Any
+had no precedent, so this would have been largely a research task. Any
 upsides would have to be very strong in order to justify such a change. We
 decided the upsides were not that pressing.
 
@@ -169,8 +169,8 @@ phenomenally expensive.
 But all those things aside, the prime motivation for our support of
 `absl::Mutex`, and the reason we are offering it to the open-source community,
 is that we prefer our API and think it provides some crucial features. As well,
-usage of our `absl::Mutex` is easily and less error-prone than the standard
-offering.
+usage of our `absl::Mutex` is easily understood and less error-prone than the
+standard offering.
 
 If at some point in the future it becomes easier to perform a migration from
 `absl::Mutex` to the standard, and the standard solves the problems we mention

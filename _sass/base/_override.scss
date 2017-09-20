@@ -10,9 +10,9 @@ a {
   font-weight: 350;
 }
 
-a:hover,
-a:focus {
-  color: $linkHoverColor;
+a:visited, a:hover, a:active, a:focus {
+  color: inherit;
+  text-decoration: none;
 }
 
 a.external {
