@@ -5,7 +5,9 @@ sidenav: side-nav-docs.html
 type: markdown
 ---
 
-## Programing Guides (C++)
+## Programing Guides
+
+Abseil consists of source code repositories for C++ and Python. (A future update will include bindings between Python and C++ code.)
 
 * [C++ Developer Guide](cpp.md)
 * Python Developer Guide (Coming Soon!)

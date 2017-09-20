@@ -70,7 +70,7 @@ For more information about Abseil:
   development environment and test out the code.
 * Read [Why Adopt Abseil](/about/philosophy) to understand our
   design philosophy.
-* Peruse our [Abseil Project Contract](/about/contract) to
+* Peruse our [Abseil Compatibility Guidelines](/about/compatibility) to
   understand both what we promise to you, and what we expect of you in return.
 
 ## Disclaimer
