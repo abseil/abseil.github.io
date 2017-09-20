@@ -9,7 +9,7 @@ type: markdown
 
 Or: Why the world has room for another collection of C++ utility libraries
 
-There are a few main reasons I would recommend Abseil as your first choice for
+There are a few main reasons we recommend Abseil as your first choice for
 utility code when starting a new C++ project:
 
 * Compatibility with current and future C++ standards, and planned evolution
@@ -22,7 +22,7 @@ utility code when starting a new C++ project:
 * Interest in a different set of design priorities than the C++ standard
 
 The extent to which any of these arguments applies to your project will depend
-on lots of things: I don't claim that Abseil is a silver bullet, or a perfect
+on lots of things: we don't claim that Abseil is a silver bullet, or a perfect
 solution for everyone's problems. On the other hand, these libraries have grown
 inside Google for many years and we've learned a lot in their evolution. We know
 that these libraries and our upgrade policies can be a good solution for some
@@ -139,7 +139,7 @@ parser, but ignored (and inaccessible to the code depending on commandline
 flags). On its own, this feature may not make sense to most users. However, in a
 massive shared codebase, where multiple products are cutting releases at
 different times and with different job configurations, it can become difficult
-to *remove* a flag once it has outlived it's usefulness. Retired flags are
+to *remove* a flag once it has outlived its usefulness. Retired flags are
 designed to provide a temporal bridge so that changes can be rolled out slowly
 without breaking builds or production deployments.  Abseil is full of these
 small features, making this a set of utility libraries well-suited for

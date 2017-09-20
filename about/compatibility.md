@@ -67,8 +67,9 @@ you misuse Abseil APIs, you're on your own.
   refactoring that changes template parameters, default parameters, or
   namespaces will be a breaking change in the face of
   forward-declarations.
-* **Do not depend on ADL when calling Abseil APIs.** Even if it
-  happens to build, calling `StrCat(foo, bar);` with two
+* **Do not depend on Argument-Dependent Lookup (ADL) when calling
+  Abseil APIs.** Even if it happens to build, calling
+  `StrCat(foo, bar);` with two
   `absl::string_view` params is a bad idea &mdash; when building C++17
   mode, the associated namespace will no longer be `absl` and will
   instead be `std` and your code will break.  More generally: just
