@@ -21,17 +21,17 @@ utilities for core code, and initialization primitives.
 
 The Base library's configuration header files consist of the following:
 
-* config.h provides macros for determining platform and compiler support.
-* policy_checks.h enforces Abseil policies that can be enforced at build time,
+* `config.h` provides macros for determining platform and compiler support.
+* `policy_checks.h` enforces Abseil policies that can be enforced at build time,
   such as minimum compiler and library versions.
-* port.h provides miscellaneous APIs for creating portable code.
+* `port.h` provides miscellaneous APIs for creating portable code.
 
 See [Platforms](#platforms) below for more information.
 
 The Base library's Abseil utility header files consist of the following:
 
-* casts.h provides a few useful extensions for performing safer type casts
-* macros.h provides macros used within Abseil code for language features
+* `casts.h` provides a few useful extensions for performing safer type casts
+* `macros.h` provides macros used within Abseil code for language features
 
 See [Abseil Utilities](#utilities) below for more information.
 
@@ -39,8 +39,8 @@ The Base library's concurrency-related files, which are included in "base"
 because they are fundamental to initialization and thread management, consist
 of the following:
 
-* call_once.h
-* thread_annotations.h
+* `call_once.h`
+* `thread_annotations.h`
 
 These APIs are documented separately within the
 [Concurrency Guide](concurrency.md) rather than within this guide, because they
