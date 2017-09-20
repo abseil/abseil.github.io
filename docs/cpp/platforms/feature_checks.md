@@ -5,6 +5,7 @@ sidenav: side-nav-cpp.html
 type: markdown
 ---
 
+## Feature Check Macros
 
 At compile time, we sometimes need to conditionally compile code based on
 whether a language feature is provided by the underlying platform or compiler
