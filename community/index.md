@@ -5,6 +5,8 @@ sidenav: side-nav-community.html
 type: markdown
 ---
 
+## The Abseil Community
+
 Abseil aims to have an active community of developers who are using, enhancing
 and building valuable integrations with other software projects. We’d love your
 help to improve and extend the project. You can reach us via the
