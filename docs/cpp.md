@@ -9,5 +9,4 @@ type: markdown
 
 * [Quickstart](cpp/quickstart)
 * [Programming Guides](cpp/guides/)
-* [Platforms Guide](cpp/platforms)
-* [Compilers Guide](cpp/compilers)
+* [Platforms Guide](cpp/platforms/)

@@ -6,9 +6,11 @@
 	<li class="doc-side-nav-list-item">
 	  <a href="{{ site.baseurl }}/docs/cpp/quickstart" {% if current[3] == 'quickstart.html' %}class='current'{% endif %}>
 	  Quickstart</a></li>
+	  
 	<li><h6 class="doc-side-nav-title">
 	  <a href="{{ site.baseurl }}/docs/cpp/guides/" {% if current[3] == 'guides' && current[4] == "" %}class='current'{% endif %}>
 	Programming Guides</a></h6></li>
+	
    <li class="doc-side-nav-list-item">
      <a href="{{ site.baseurl }}/docs/cpp/guides/base" {% if current[4] == 'base.html' %}class='current'{% endif %}>
      Abseil Fundamentals</a></li>
@@ -18,11 +20,18 @@
    <li class="doc-side-nav-list-item">
      <a href="{{ site.baseurl }}/docs/cpp/guides/strings" {% if current[4] == 'strings.html' %}class='current'{% endif %}>
      Strings</a></li>
-  <li><h6 class="doc-side-nav-title">Resources</h6></li>
+	 
+  <li><h6 class="doc-side-nav-title">
+  <a href="{{ site.baseurl }}/docs/cpp/platforms/" {% if current[3] == 'platforms' && current[4] == "" %}class='current'{% endif %}>
+   Platforms Guide</a></h6></li>
+   
    <li class="doc-side-nav-list-item">
-	<a href="{{ site.baseurl }}/docs/cpp/platforms" {% if current[3] == 'platforms.html' %}class='current'{% endif %}>
-	Platforms Guide</a></li>
+	<a href="{{ site.baseurl }}/docs/cpp/platforms/platforms" {% if current[3] == 'platforms.html' %}class='current'{% endif %}>
+	Supported Platforms</a></li>
 	<li class="doc-side-nav-list-item">
-	<a href="{{ site.baseurl }}/docs/cpp/compilers" {% if current[3] == 'compilers.html' %}class='current'{% endif %}>
-	Compiler Guide</a></li>
+	<a href="{{ site.baseurl }}/docs/cpp/platforms/compilers" {% if current[3] == 'compilers.html' %}class='current'{% endif %}>
+	Compiler Flags Guide</a></li>
+	<li class="doc-side-nav-list-item">
+	<a href="{{ site.baseurl }}/docs/cpp/platforms/feature_checks" {% if current[3] == 'feature_checks.html' %}class='current'{% endif %}>
+	Feature Check Macros</a></li>
  </ul>
