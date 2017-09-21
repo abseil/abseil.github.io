@@ -28,7 +28,10 @@ footer {
       text-decoration: underline;
       color: $white;
     }
-
+    &:visited {
+      text-decoration: underline;
+      color: $white;
+    }
     &::after {
       display: none;
     }

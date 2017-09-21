@@ -5,14 +5,8 @@ body {
   font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-a {
-  color: $mainBrandColor;
-  font-weight: 350;
-}
-
-a:hover,
-a:focus {
-  color: $linkHoverColor;
+a, a:visited, a:hover, a:active, a:focus {
+  color: inherit;
 }
 
 a.external {

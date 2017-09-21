@@ -9,10 +9,12 @@ type: markdown
 
 Abseil aims to have an active community of developers who are using, enhancing
 and building valuable integrations with other software projects. We’d love your
-help to improve and extend the project. You can reach us via the
-<a href="https://groups.google.com/forum/#!forum/abseil-io" target="_blank">Abseil Mailing
-list</a> or <a href="https://twitter.com/abseilio" target="_blank">Twitter</a> to start engaging
-with the project and its members.
+help to improve and extend the project. You can reach us via the Abseil Mailing
+List at
+<a href="https://groups.google.com/forum/#!forum/abseil-io" target="_blank">
+abseil-io@googlegroups.com</a> or
+<a href="https://twitter.com/abseilio" target="_blank">Twitter</a>
+to start engaging with the project and its members.
 
 ### Code of Conduct
 
@@ -27,6 +29,5 @@ and orientation. To faciliate this open environment, please review our
 ### Mailing List
 
 Any questions or suggestions? Just want to be in the loop of what is going on
-with the project? Join the
-<a href="https://groups.google.com/forum/#!forum/abseil-io" target="_blank">Abseil mailing
-list</a>.
+with the project? Join the Abseil mailing list at 
+<a href="https://groups.google.com/forum/#!forum/abseil-io" target="_blank">abseil-io@googlegroups.com</a>.

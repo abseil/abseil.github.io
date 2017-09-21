@@ -24,7 +24,7 @@ title: abseil.io
             <p class="col-sm-7">If your code behaves according to our compatibility guidelines, we will do
             our best not to break you.</p>
             <div class="col-sm-7">
-                <a href="{{ site.baseurl }}/about/contract">
+                <a href="{{ site.baseurl }}/about/compatibility">
                 <button class="btn btn-abseil waves-effect waves-light btn-read-more">READ MORE</button></a>
             </div>
             <img class="col-sm-5 nofloat landing-image" src="{{ site.baseurl }}/img/upgrade-support.svg" alt="Upgrade Support">
