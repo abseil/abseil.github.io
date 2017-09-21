@@ -56,7 +56,7 @@ Highlights of the initial release include:
   work
 * [Pre-adoption for C++17 types](/about/design/std-drop-ins): `string_view`, 
   `optional`, `any`.  We’ll follow up with `variant` soon.
-* Our primary synchronization type: []`absl::Mutex`](/about/design/mutex) has
+* Our primary synchronization type: [`absl::Mutex`](/about/design/mutex) has
   an elegant interface and has been extensively optimized for our production
   requirements.
 * Efficient support for handling time: `absl::Time` and absl::Duration are
@@ -71,6 +71,6 @@ Highlights of the initial release include:
 The project has support for C++ and some Python. Over time we’ll tie those two 
 projects together more closely with shared logging and command-line flag 
 infrastructure. To start contributing, please see our contribution guidelines
-and [fork us on github](https://github.com/abseil).  Check out our
+and [fork us on Github](https://github.com/abseil).  Check out our
 [documentation](/index) and how to [get in touch with us](/community). 
 
