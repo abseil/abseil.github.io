@@ -13,8 +13,7 @@ Running the Abseil code within this tutorial requires:
   fully supported. Consult the [Platforms Guide](platforms.md) for more
   information.
 * A compatible C++ compiler *supporting at least C++11*. Most major compilers
-  are supported. Consult the [Compiler Guide](compilers.md) for more
-  information.
+  are supported. 
 * [Git](https://git-scm.com/) for interacting with the Abseil source code
   repository, which is contained on [Github](http://github.com). To install Git,
   consult the [Set Up Git](https://help.github.com/articles/set-up-git/) guide
