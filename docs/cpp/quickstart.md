@@ -10,8 +10,8 @@ type: markdown
 Running the Abseil code within this tutorial requires:
 
 * A compatible platform (e.g. Windows, Mac OS X, Linux, etc.. Most platforms are
-  fully supported. Consult the [Platforms Guide](platforms.md) for more
-  information.
+  fully supported. Consult the [Platforms Guide](/docs/cpp/platforms/platforms) 
+  for more information.
 * A compatible C++ compiler *supporting at least C++11*. Most major compilers
   are supported. 
 * [Git](https://git-scm.com/) for interacting with the Abseil source code
