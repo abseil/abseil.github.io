@@ -5,10 +5,13 @@ body {
   font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-a:link {color: $mainBrandColor; font-weight:600;}
-a:visited {color: $secondaryBrandColor; font-weight:600;}
+a:link {color: $mainBrandColor; font-weight:500;}
+a:visited {color: $secondBrandColor; font-weight:500;}
 
 a.external {
+
+  target: "_blank";
+  
   &:after {
     @extend .external-link-icon;
     content: "";
