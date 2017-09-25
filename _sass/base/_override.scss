@@ -5,9 +5,8 @@ body {
   font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-a, a:visited, a:hover, a:active, a:focus {
-  color: inherit;
-}
+a:link {color: $mainBrandColor; font-weight:600;}
+a:visited {color: $secondaryBrandColor; font-weight:600;}
 
 a.external {
   &:after {
