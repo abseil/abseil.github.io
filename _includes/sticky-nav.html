@@ -19,6 +19,7 @@
           {% assign current = page.url | downcase | split: '/' %}
           <li><a href="{{ site.baseurl }}/about" {% if current[1] == 'about' %}class='current'{% endif %}>About</a></li>
           <li><a href="{{ site.baseurl }}/docs/" {% if current[1] == 'docs' %}class='current'{% endif %}>Docs</a></li>
+		  <li><a href="{{ site.baseurl }}/tips/" {% if current[1] == 'tips' %}class='current'{% endif %}>Tips</a></li>
           <li><a href="{{ site.baseurl }}/blog/" {% if current[1] == 'blog' %}class='current'{% endif %}>Blog</a></li>
           <li><a href="{{ site.baseurl }}/community/" {% if current[1] == 'community' %}class='current'{% endif %}>Community</a></li>
         </ul>
@@ -36,10 +37,12 @@
     <li class="nav-item"><a href="{{ site.baseurl }}/docs/" {% if current[1] == 'docs' %}class='current'{% endif %}><p>Docs</p></a>
       <div class="nav-doc-toggle icon-caret"></div>
       <ul class="doc-list">
-        <a href="{{ site.baseurl }}/docs/cpp" {% if page.path == 'docs/index.html' %}class='current'{% endif %}><li class="nav-doc-tab">C++ Developer Guide</li></a>
+        <a href="{{ site.baseurl }}/docs/cpp" {% if page.path == 'docs/index.html' %}class='current'{% endif %}><li class="nav-doc-tab">C++ Devguide</li></a>
         <a href="{{ site.baseurl }}/docs/cpp/quickstart" {% if current[2] == 'quickstart' %}class='current'{% endif %}><li class="nav-doc-tab">C++ Quick Start</li></a>
       </ul>
     </li>
+    <hr>
+    <li class="nav-item"><a href="{{ site.baseurl }}/tips/" {% if current[1] == 'tips' %}class='current'{% endif %}><p>Tips</p></a></li>
     <hr>
     <li class="nav-item"><a href="{{ site.baseurl }}/blog/" {% if current[1] == 'blog' %}class='current'{% endif %}><p>Blog</p></a></li>
     <hr>
