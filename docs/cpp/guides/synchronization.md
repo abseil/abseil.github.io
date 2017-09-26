@@ -75,14 +75,14 @@ Locking access to shared resources is usually addressed through
 mutually-exclusive locks known as *mutexes*. Abseil provides its own `Mutex`
 class for this purpose; similarly, the C++ standard library provides a
 `std::mutex` class for the same purpose. (Reasons why we implement our own
-`Mutex` class are discussed in [Mutex Design Notes](/docs/design/mutex.md).
+`Mutex` class are discussed in [Mutex Design Notes](/about/design/mutex).
 
 Types that behave correctly regardless of the order, scheduling,
 or interleaving of their operations are known as *thread-safe*. In most cases,
 such types use mutexes and atomic operations underneath the hood
 to guard access to the object's internal state.
 
-See [#Mutexes](Mutexes) below for more information.
+See [Mutexes](#mutexes) below for more information.
 
 ### Synchronization Operations
 
@@ -123,7 +123,8 @@ operations, none of the operations in thread1 need necessarily happen before any
 of the operations in thread2, and that `CHECK()` may fail.
 
 Abseil provides several synchronization abstractions. See
-[#Synchronization](Synchronization) for more information.
+[Synchronization Operations](#other-synchronization-operations) for more 
+information.
 
 ## Mutexes
 
@@ -141,16 +142,16 @@ of `std::mutex` but adds the following additional features:
   condition variables. `Mutex::Await()` and `Mutex::LockWhen()` allow the client
   to wait for a condition without needing a condition variable; the client need
   not write the while-loop, nor need they use `Signal()`. (See
-  [Condition](#ConditionalCriticalSections) below.)
+  [Condition](#conditional-critical-sections) below.)
 * `Mutex`  intrinsically supports deadlock detection (when locks are not
   acquired in a consistent order). The deadlock detector is enabled by default
   in most non-opt build modes, and it can detect deadlock risks that even Clang's
   [Thread Sanitizer](https://clang.llvm.org/docs/ThreadSanitizer.html) misses.
-  (See [Deadlock Detection](#DeadlockDetection) below.)
+  (See [Deadlock Detection](#Deadlock-detection) below.)
 
 Additionally, `absl::Mutex` can act as a reader-writer lock (like
 `std::shared_mutex`) with special `ReaderLock()` and `ReaderUnlock()` functions.
-(See [Reader-Writer Locks](#ReaderWriterLocks) below.)
+(See [Reader-Writer Locks](#reader-writer-locks) below.)
 
 We've found these features to be critically important for maintaining a large
 and complex code base. We are not necessarily intending to compete with
@@ -588,7 +589,7 @@ Mutex mu0_ ACQUIRED_BEFORE(mu1_); // protects foo_
 ```
 
 If the mutex acquisition order is not consistent, deadlock may result. See
-[Deadlock Detection](#DeadlockDetection) for utilities within the Concurrency
+[Deadlock Detection](#deadlock-detection) for utilities within the Concurrency
 library to detect deadlock.
 
 Each routine should be annotated or have a comment indicating which mutexes must
