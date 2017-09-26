@@ -173,5 +173,5 @@ Congratulations! You've created your first binary using Abseil code.
 * Read through the C++ developer guide.
 * Consult the Abseil C++ .h header files, which contain valuable reference
   information.
-* Read our contribution guidelines, if you intend to submit code to our
-  repository.
+* Read our [contribution guidelines](/community/contribute), if you intend to
+  submit code to our repository.
