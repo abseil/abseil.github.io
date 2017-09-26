@@ -22,18 +22,26 @@ footer {
   }
 
   a {
-    color: $white;
 
-    &:hover {
-      text-decoration: underline;
-      color: $white;
-    }
+    &:link {
+	  text-decoration: underline;
+	  color: $white;
+	}
     &:visited {
       text-decoration: underline;
       color: $white;
     }
+    &:focus {
+      text-decoration: underline;
+      color: $white;
+    }
+    &:hover {
+      text-decoration: underline;
+      color: $white;
+    }
     &::after {
-      display: none;
+      text-decoration: underline;
+      color: $white;
     }
   }
 
