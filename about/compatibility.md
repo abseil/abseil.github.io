@@ -7,6 +7,13 @@ type: markdown
 
 ## Abseil Compatibility Guidelines
 
+<p class="note">This is our initial release of Abseil, as of September 26, 
+2017. For a period until November 1, 2017 (about one month in duration),
+we will not be guaranteeing the guidelines spelled out below, though
+we will make a best effort to do so, as we resolve any issues we discover
+from the initial release.</p>
+
+
 This document details what we expect from well-behaved users, and what
 we will offer in exchange. Any usage of Abseil libraries outside of
 these technical boundaries may result in breakage when upgrading to
