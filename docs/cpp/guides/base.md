@@ -52,8 +52,8 @@ Abseil code is designed to work with targets built with the LeakSanitizer
 (ASan) as an additional component, or which can be used standalone. Leak
 checking is enabled by default in all ASan builds.
 
-For more information on the LeakSanitizer, see
-https://github.com/google/sanitizers/wiki/AddressSanitizerLeakSanitizer
+For more information on the LeakSanitizer, see the
+[Address Sanitizer docs](https://github.com/google/sanitizers/wiki/AddressSanitizerLeakSanitizer)
 
 To enable LSan on your builds including Abseil code (using Bazel):
 
@@ -99,7 +99,7 @@ The Base library's configuration header files consist of the following:
   optimization techniques.
 * `config.h`<br />
   Provides macros for determining platform and compiler support.
-  For more information, consult the [Feature Check Macros](feature_checks)
+  For more information, consult the [Feature Check Macros](/docs/cpp/platforms/feature_checks)
   guide.
 
 Additionally, the Base library includes one utility header file:
