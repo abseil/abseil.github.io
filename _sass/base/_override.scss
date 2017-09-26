@@ -3,15 +3,8 @@
 body {
   color: $textColor;
   font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-
-a:link {color: $mainBrandColor; font-weight:500;}
-a:visited {color: $secondBrandColor; font-weight:500;}
-
-footer {
-  a:link, a:visited {
-    color: $white;
-  }
+  a:link {color: $mainBrandColor; font-weight:500;}
+  a:visited {color: $secondBrandColor; font-weight:500;}
 }
 
 a.external {
