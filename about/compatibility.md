@@ -7,8 +7,8 @@ type: markdown
 
 ## Abseil Compatibility Guidelines
 
-<p class="note">This is our initial release of Abseil, as of September 26, 
-2017. For a period until November 1, 2017 (about one month in duration),
+<p class="note">This is our <b>initial release of Abseil</b>, as of September
+26, 2017. For a period until November 1, 2017 (about one month in duration),
 we will not be guaranteeing the guidelines spelled out below, though
 we will make a best effort to do so, as we resolve any issues we discover
 from the initial release.</p>
