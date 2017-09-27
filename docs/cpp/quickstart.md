@@ -113,8 +113,7 @@ Now, create a `hello_world.cc` C++ file within your `examples` directory:
 #include <vector>
 #include "absl/strings/str_join.h"
 
-int main()
-{
+int main() {
   std::vector<std::string> v = {"foo","bar","baz"};
   std::string s = absl::StrJoin(v, "-");
 
