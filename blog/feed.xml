@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+<channel>
+<title>Abseil Blog</title>
+<link>//abseil.io/blog/</link>
+<description>Code Development, Live at Head</description>
+<item>
+  <title>Welcome to Abseil!</title>
+  <link>http://abseil.io/blog/20170926-welcome-to-abseil</link>
+  <guid>http://abseil.io/blog/20170926-welcome-to-abseil</guid>
+  <pubDate>Tue, 26 Sep 2017 18:30:00 GMT</pubDate>
+  <description>
+    [CDATA[ Introducing Abseil, A New Common Libraries Project]]
+  </description>
+</item>
