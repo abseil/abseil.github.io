@@ -50,7 +50,7 @@ Example:
 
 ## Writing Your Own Feature Check Macros
 
-Feature check macros are not allowed to be overridden (-D) on the compiler
+Feature check macros are not allowed to be overridden (`-D`) on the compiler
 command line. They should only be derived from pre-defined macros, other feature
 check macros, or build configuration macros. For reusability, a feature check
 macro should only be added to `absl/base/config.h` if it is used in at least
