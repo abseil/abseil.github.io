@@ -14,7 +14,7 @@ header files:
   important primitive in this library and the building block for most all
   concurrency utilities.
 * `notification.h`<br />
-  Provides a simple mechanism for notifiying threads of events.
+  Provides a simple mechanism for notifying threads of events.
 * `barrier.h` and `blocking_counter.h`<br />
   Provides synchronization abstractions for cumulative events.
 
