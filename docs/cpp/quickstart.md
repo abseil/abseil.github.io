@@ -15,9 +15,9 @@ Running the Abseil code within this tutorial requires:
 * A compatible C++ compiler *supporting at least C++11*. Most major compilers
   are supported. 
 * [Git](https://git-scm.com/) for interacting with the Abseil source code
-  repository, which is contained on [Github](http://github.com). To install Git,
+  repository, which is contained on [GitHub](http://github.com). To install Git,
   consult the [Set Up Git](https://help.github.com/articles/set-up-git/) guide
-  on Github.
+  on GitHub.
 
 This Quickstart uses Bazel as the official build system for Abseil, which is
 supported on most major platforms (Linux, Windows, MacOS, for example) and
@@ -33,7 +33,7 @@ To download and install Bazel (and any of its dependencies), consult the
 ## Getting the Abseil Code
 
 Once you have Bazel and Git installed, you can obtain the Abseil code from its
-repository on Github:
+repository on GitHub:
 
 ```
 # Change to the directory where you want to create the code repository
@@ -113,8 +113,7 @@ Now, create a `hello_world.cc` C++ file within your `examples` directory:
 #include <vector>
 #include "absl/strings/str_join.h"
 
-int main()
-{
+int main() {
   std::vector<std::string> v = {"foo","bar","baz"};
   std::string s = absl::StrJoin(v, "-");
 
