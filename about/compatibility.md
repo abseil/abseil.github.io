@@ -74,14 +74,18 @@ you misuse Abseil APIs, you're on your own.
   refactoring that changes template parameters, default parameters, or
   namespaces will be a breaking change in the face of
   forward-declarations.
-* **Do not depend on Argument-Dependent Lookup (ADL) when calling
-  Abseil APIs.** Even if it happens to build, calling
-  `StrCat(foo, bar);` with two
-  `absl::string_view` params is a bad idea &mdash; when building C++17
-  mode, the associated namespace will no longer be `absl` and will
-  instead be `std` and your code will break.  More generally: just
-  don't do it, we may need to shift things around internally, please
-  don't depend on namespace details.
+* **Avoid unnecessary dependency on Argument-Dependent Lookup (ADL)
+  when calling Abseil APIs.** Some APIs are designed to work via ADL
+  (e.g. `operator<<` for iostreams, unqualified `swap` in generic
+  code, etc.) For most APIs, however, ADL is not part of the design.
+  Calling functions from namespace `absl` via ADL, unless that is
+  explicitly intended as part of the design, should be avoided.
+  This is especially true for any function that accepts a pre-adopted
+  type like `absl::string_view`: when the type changes to utilize the
+  `std` version, its associated namespace will change and ADL will
+  fail, resulting in build breaks. More generally: just don't do it,
+  we may need to shift things around internally, so please don't
+  depend on namespace details.
 * **Do not depend upon internal details.** This should go without
   saying: if something is in a namespace or filename/path that
   includes the word "internal", you are not allowed to depend upon it.
