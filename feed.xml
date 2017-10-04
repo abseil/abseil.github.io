@@ -1,10 +1,7 @@
----
-layout: null
----
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Abseil Blog & Tips</title>
+    <title>Abseil Blog &amp; Tips</title>
     <description>An open-source collection of C++ library code designed to augment the C++ standard library</description>
     <link>{{ site.baseurl }}</link>
     {% for post in site.posts %}
