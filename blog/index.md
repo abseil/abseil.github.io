@@ -5,6 +5,12 @@ sidenav: side-nav-blog.html
 type: markdown
 ---
 
-## Abseil Blog
-
-* #1 2017-09-26 [Welcome to Abseil!](20170926-welcome-to-abseil)
+<ul>
+  {% for post in site.posts %}
+    {% unless post.title contains "Tip of the Week" %}
+    <li>
+        <a href="{{ post.url }}">{{post.date | date_to_string}} - {{ post.title }}</a>
+    </li>
+    {% endunless %}
+  {% endfor %}
+</ul>

@@ -33,5 +33,12 @@ to the original numbering don't have to learn new citations. As a result, some
 tips may appear missing and/or  out of order to a casual reader. But rest 
 assured, we're giving you the good stuff.
 
-* [TotW #1 string_view](totw/1) - Overview of absl::string_view and how to use
-  it in APIs
+<ul>
+  {% for post in site.posts %}
+    {% if post.title contains "Tip of the Week" %}
+    <li>
+        <a href="{{ post.url }}">{{ post.title }}</a>
+    </li>
+    {% endif %}
+  {% endfor %}
+</ul>
