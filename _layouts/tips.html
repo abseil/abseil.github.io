@@ -11,10 +11,20 @@ layout: default
 {% include {{page.sidenav}} %}
 </div>
 <div class="col-sm-7 {{ page.type }}">
+<h1>{{page.title}}</h1>
 {{ content }}
 </div>
 
 <div id="toc" class="toc col-sm-2"></div>
+<br />
+<a href="http://feeds.feedburner.com/abseilio"
+    title="Subscribe to Abseil Blog &amp; Tips"
+    rel="alternate"
+    type="application/rss+xml">
+    <img src="//feedburner.google.com/fb/images/pub/feed-icon32x32.png"
+         alt="Subscribe to the Abseil Blog" style="border:0;">
+    </img>
+</a>
 </div>
 </div>
 </div>
