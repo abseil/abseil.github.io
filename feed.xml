@@ -5,16 +5,17 @@ layout: null
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Abseil Blog &amp; Tips</title>
-    <description>An open-source collection of C++ library code designed to augment the C++ standard library</description>
-    <link>{{ site.baseurl }}</link>
+    <description>An open-source collection of C++ library code designed to
+    augment the C++ standard library</description>
+    <link>{{ site.url }}</link>
     {% for post in site.posts %}
       {% unless post.draft %}
         <item>
           <title>{{ post.title | xml_escape }}</title>
           <description>{{ post.content | xml_escape }}</description>
           <pubDate>{{ post.date | date_to_xmlschema }}</pubDate>
-          <link>{{ post.url | prepend: site.baseurl }}</link>
-          <guid isPermaLink="true">{{ post.url | prepend: site.baseurl }}</guid>
+          <link>{{ post.url | prepend: site.url }}</link>
+          <guid isPermaLink="true">{{ post.url | prepend: site.url }}</guid>
         </item>
       {% endunless %}
     {% endfor %}
