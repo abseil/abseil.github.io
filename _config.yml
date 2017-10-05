@@ -13,13 +13,23 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-title: Tom Manshreck
-email: manshreck@abseil.io
+
+# Not currently used
+title: Abseil
+email: abseil-admin@google.com
 description: The Abseil.Io website
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username: manshreck
-github_username:  manshreck
+
+# The base hostname & protocol for your site, e.g. http://example.com
+# This site.url path is required by the RSS feed.xml
+url: "https://abseil.io"
+
+# the subpath of your site. The main Abseil website is not on a subpath
+baseurl: ""
+
+# Not currently used
+twitter_username: abseil
+
+# host: 0.0.0.0 is required for local development.
 host: 0.0.0.0
 
 # Build settings
