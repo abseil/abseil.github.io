@@ -40,6 +40,10 @@ p {
     line-height: 1rem;
 }
 
+pre code {
+  font-size: $font-size--xxs;
+}
+
 p.lead {
   font-size: 17px;
   font-weight: 400;
