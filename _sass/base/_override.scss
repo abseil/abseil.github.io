@@ -7,6 +7,10 @@ body {
   a:visited {color: $secondBrandColor; font-weight:500;}
 }
 
+.container {
+  margin-left:0px;
+}
+
 a.external {
 
   target: "_blank";
@@ -50,7 +54,7 @@ pre, pre.prettyprint {
   background-color: $codeBkColor;
   color: #000000;
   border: none !important;
-  font-size: 14px !important;
+  font-size: $font-size--xxs !important;
   padding: 9.5px !important;
 }
 

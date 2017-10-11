@@ -2,12 +2,12 @@
 title: Welcome to Abseil!
 layout: blog
 sidenav: side-nav-blog.html
+published: true
+permalink: blog/20170926-welcome-to-abseil
 type: markdown
 ---
 
-## #1 - Introducing Abseil
-### A New Common Libraries Project
-
+## A New Common Libraries Project
 
 By [Titus Winters](mailto:titus@google.com), Abseil Lead
 

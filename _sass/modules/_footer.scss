@@ -24,11 +24,9 @@ footer {
   a {
 
     &:link {
-	  text-decoration: underline;
 	  color: $white;
 	}
     &:visited {
-      text-decoration: underline;
       color: $white;
     }
     &:focus {
@@ -127,18 +125,6 @@ footer {
       cursor: pointer;
       padding: 15px 0;
       position: relative;
-
-        &:after {
-          content: '';
-          background: url('../img/caret.svg') no-repeat center/cover;
-          background-size: contain;
-          height: 45px;
-          width: 35px;
-          position: absolute;
-          right: 0;
-          top: 5px;
-          cursor: pointer;
-        }
     }
 
     @media (min-width: $tablet) {
