@@ -35,3 +35,5 @@ assured, we're giving you the good stuff.
 
 * [TotW #1 string_view](totw/1) - Overview of absl::string_view and how to use
   it in APIs
+* [TotW #122 - Test Fixtures, Clarity, and Dataflow](totw/122) - Design
+  suggestions for tests and test fixtures to improve clarity.
