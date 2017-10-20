@@ -32,7 +32,8 @@ tips may appear missing and/or  out of order to a casual reader. But rest
 assured, we're giving you the good stuff.
 
 <ul>
-  {% assign sorted_posts = site.posts | sort: permalink %}
+  {% assign sorted_posts = site.posts | sort: 'order' %}
+
   {% for post in sorted_posts %}
     {% if post.title contains "Tip of the Week" %}
     <li>
