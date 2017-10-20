@@ -34,7 +34,8 @@ tips may appear missing and/or  out of order to a casual reader. But rest
 assured, we're giving you the good stuff.
 
 <ul>
-  {% for post in site.posts %}
+  {% assign sorted_posts = site.posts | sort: permalink %}
+  {% for post in sorted_posts %}
     {% if post.title contains "Tip of the Week" %}
     <li>
         <a href="{{ post.url }}">{{ post.title }}</a>
