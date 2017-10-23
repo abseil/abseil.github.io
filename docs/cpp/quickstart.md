@@ -19,10 +19,12 @@ Running the Abseil code within this tutorial requires:
   consult the [Set Up Git](https://help.github.com/articles/set-up-git/) guide
   on GitHub.
 
-This Quickstart uses Bazel as the official build system for Abseil, which is
-supported on most major platforms (Linux, Windows, MacOS, for example) and
-compilers. The Abseil source code assumes you are using Bazel and contains
+<p class="note">
+Note: this Quickstart uses Bazel as the official build system for Abseil,
+which is supported on most major platforms (Linux, Windows, MacOS, for example)
+and compilers. The Abseil source code assumes you are using Bazel and contains
 `BUILD.bazel` files for that purpose.
+</p>
 
 Although you are free to use your own build system, most of the documentation
 within this guide will assume you are using [Bazel](https://bazel.build/).
