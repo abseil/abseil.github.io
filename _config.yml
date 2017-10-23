@@ -39,6 +39,7 @@ theme: minima
 # RSS / Blog configuration settings
 gems:
   - jekyll-feed
+future: false
   
 # Exclusions
 exclude:
