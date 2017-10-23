@@ -5,7 +5,7 @@ sidenav: side-nav-tips.html
 type: markdown
 ---
 
-Background: About five years ago, within Google we started publishing a series
+Background: About five years ago, within Google we started publishing a series 
 of C++ tips, about once a week, that became known as the "C++ Tips of the Week"
 (TotW). They became wildly successful, and we are still publishing them to
 this day (indicating that a language as rich as C++ will not deplete us of
@@ -25,11 +25,18 @@ specific to our internal tools and abstractions, and some have become obsolete
 as the language has changed. But we'll publish what we can and what we find
 valuable (and write new tips!) on this page as they become available.
 
-Note: we will be keeping the original numbering scheme on these tips, and
+<p class="note">
+Note: we will be keeping the original numbering scheme on these tips, and 
 original publication date, so that the 12K or so people that have some exposure
 to the original numbering don't have to learn new citations. As a result, some
 tips may appear missing and/or  out of order to a casual reader. But rest
 assured, we're giving you the good stuff.
+<br/><br/>
+Some tips may include historical information that, though accurate, may reflect
+philosophy and/or usage at the time the tip was originally written. In most
+cases, we have updated that information to reflect current practices, and note
+exceptions that are historical, where applicable.
+</p>
 
 <ul>
   {% assign sorted_posts = site.posts | sort: 'order' %}
