@@ -42,9 +42,9 @@ gems:
 timezone: "America/New_York"
 
 # Set these false for production, true for staging server
-future: true
-unpublished: true
-show_drafts: true
+future: false
+unpublished: false
+show_drafts: false
   
 # Exclusions
 exclude:
