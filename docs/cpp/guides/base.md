@@ -118,7 +118,7 @@ of the following:
   once, which is used during object initialization.
 * `thread_annotations.h`<br />
   Provides a set of annotations to use within your code
-  indentifying intended behavior in concurrent environments.
+  identifying intended behavior in concurrent environments.
 
 These APIs are documented separately within the
 [Synchronization Guide](synchronization.md) rather than within this guide,
