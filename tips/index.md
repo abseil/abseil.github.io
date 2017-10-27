@@ -39,7 +39,7 @@ exceptions that are historical, where applicable.
 </p>
 
 <ul>
-  {% assign sorted_posts = site.posts | sort: 'order' %}
+  {% assign sorted_posts = (site.posts | sort: 'order') %}
 
   {% for post in sorted_posts %}
     {% if post.title contains "Tip of the Week" %}
