@@ -3,4 +3,4 @@ layout: default
 title: Time check
 ---
 
-{{ site.time }}
+The time on the abseil.io server is {{ site.time }}.
