@@ -9,3 +9,4 @@ type: markdown
 
 * [Supported Platforms](platforms)
 * [Compiler Feature Checks](feature_checks)
+* [Pre-compiled Macros](macros)
