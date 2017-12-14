@@ -23,7 +23,7 @@ This document is designed solely to document Abseil's usage of these
 macros, and assist developers who need to add architecture-specific
 code to Abseil.
 
-Note: [feature check macros](feature_checks), which developers can use to
+Note: [Feature Check Macros](feature_checks), which developers can use to
 check for the presence of certain language features, are documented within
 their own, separate guide.
 
@@ -31,7 +31,9 @@ The macros that Abseil uses are listed below, in tables that list the
 macro, what it identifies, and what standard defines the macro.
 
 <p class="note">If you wish to check what macros your compiler has defined,
-See [How to List Compiler Predefined Macros](http://nadeausoftware.com/articles/2011/12/c_c_tip_how_list_compiler_predefined_macros)
+See
+<a href="http://nadeausoftware.com/articles/2011/12/c_c_tip_how_list_compiler_predefined_macros" target="_blank">
+How to List Compiler Predefined Macros</a></p>
 
 ## Architecture
 
