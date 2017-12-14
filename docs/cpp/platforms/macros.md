@@ -37,21 +37,21 @@ How to List Compiler Predefined Macros</a></p>
 
 ## Architecture
 
-|**Macro**|**Architecture**|**Compiler**|
-|------------|----------|---------------|
-|`__x86_64__`|AMD64|GNU C, Clang/LLVM|
-|`_M_X64`|AMD64|Visual Studio|
-|`__arm__`|ARM||32-bit only
-|`_M_ARM`|ARM|Visual Studio|
-|`__aarch64__`|ARM64||
-|`__i386__`|Intel x86||
-|`_M_IX86`|Intel x86|Visual Studio\*|
-|`__ia64__`|Intel Itanum (IA-64)||
-|`_M_IA64`|Intel Itanum (IA-64)|Visual Studio|
-|`__ppc__`<br/>`__PPC__`<br/>`__ppc64__`<br/>`__PPC64__`|PowerPC||
-|`_M_PPC`|PowerPC|Visual Studio|
-|`__myriad2__`|Myriad2|Myriad Development Kit (Intel Movidius)|
-|`__mips__`|MIPS|GNU C|
+|**Macro**|**Architecture**|**Compiler**|**Notes**|
+|------------|----------|---------------|--------|
+|`__x86_64__`|AMD64|GNU C, Clang/LLVM||
+|`_M_X64`|AMD64|Visual Studio||
+|`__arm__`|ARM||32-bit only|
+|`_M_ARM`|ARM|Visual Studio||
+|`__aarch64__`|ARM64|||
+|`__i386__`|Intel x86|||
+|`_M_IX86`|Intel x86|Visual Studio\*||
+|`__ia64__`|Intel Itanum (IA-64)|||
+|`_M_IA64`|Intel Itanum (IA-64)|Visual Studio||
+|`__ppc__`<br/>`__PPC__`<br/>`__ppc64__`<br/>`__PPC64__`|PowerPC|||
+|`_M_PPC`|PowerPC|Visual Studio||
+|`__myriad2__`|Myriad2|Myriad Development Kit (Intel Movidius)||
+|`__mips__`|MIPS|GNU C||
 
 \* Only defined for 32-bits architectures.
 
@@ -94,13 +94,13 @@ References:
 ## Compilers
 
 |**Macro**|**Compiler**|**Version Macro**|**Notes**|
-|------------|----------|--------|---------|----------|
+|------------|----------|--------|---------|
 |`__GNUC__`|GCC|`__GNUC__`<br/>`__GNUC_MINOR__`<br/>`__GNUC_PATCHLEVEL__`|Clang also defines `__GNUC__` for compatibility with GCC. If you want Clang-only, write `defined(__GNUC__) && !defined(__clang__)`|
 |`__clang__`|Clang/LLVM|`__clang_major__`<br/>`__clang_minor__`<br/>`__clang_patchlevel__`||
-|`_MSC_VER`|MSVC|`_MSC_VER`<br/>`_MSC_FULL_VER` |||
-|`__EMSCRIPTEN__`|Emscripten|`__EMSCRIPTEN_major__`<br/>`__EMSCRIPTEN_minor__`<br/>`__EMSCRIPTEN_tiny__`|||
-|`__asmjs__`|asm.js||||
-|`__NVCC__`|NVCC| |||
+|`_MSC_VER`|MSVC|`_MSC_VER`<br/>`_MSC_FULL_VER` ||
+|`__EMSCRIPTEN__`|Emscripten|`__EMSCRIPTEN_major__`<br/>`__EMSCRIPTEN_minor__`<br/>`__EMSCRIPTEN_tiny__`||
+|`__asmjs__`|asm.js|||
+|`__NVCC__`|NVCC|||
 
 References:
 
