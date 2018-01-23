@@ -1,0 +1,47 @@
+---
+layout: default
+---
+
+{% assign current = page.url | downcase | split: '/' %}
+{% if current[1] == 'tips' and page.sidenav != null %}
+<div class="container">
+<div class="row">
+<div class="col-md-12 nofloat center-block ">
+<div class="col-sm-3">
+{% include {{page.sidenav}} %}
+</div>
+<div class="col-sm-8 {{ page.type }}">
+<h1>{{page.title}}</h1>
+{{ content }}
+</div>
+
+<div id="toc" class="col-sm-1"></div>
+<br />
+<a href="http://feeds.feedburner.com/abseilio"
+    title="Subscribe to Abseil Blog &amp; Tips"
+    rel="alternate"
+    type="application/rss+xml">
+    <img src="//feedburner.google.com/fb/images/pub/feed-icon32x32.png"
+         alt="Subscribe to the Abseil Blog" style="border:0;">
+    </img>
+</a>
+</div>
+</div>
+</div>
+
+{% else %}
+
+{% if page.type == 'markdown' %}
+<div class="container {{ page.type }}">
+<div class="row">
+<div class="col-md-11 nofloat center-block ">
+<div class="col-sm-12">
+{{ content }}  
+</div>
+</div>
+</div>
+</div>
+{% else %}
+{{ content }}
+{% endif %}
+{% endif %}

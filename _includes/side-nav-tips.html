@@ -1,0 +1,14 @@
+<ul class="doc-side-nav">
+   <li><h5 class="doc-side-nav-title">
+    <a href="{{ site.baseurl }}/tips/">C++ Tips</a></h5>
+   </li>
+   {% assign sorted_posts = site.posts | sort: 'order' %}
+
+   {% for post in sorted_posts %}
+     {% if post.title contains "Tip of the Week" %}
+     <li><h6 class="doc-side-nav-list-item">
+         <a href="{{ post.url }}">{{ post.title | replace: 'Tip of the Week', 'TotW'}}</a></h6>
+     </li>
+     {% endif %}
+   {% endfor %}
+ </ul>

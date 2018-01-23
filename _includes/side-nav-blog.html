@@ -1,0 +1,10 @@
+<ul class="doc-side-nav">
+   <li><h5 class="doc-side-nav-title"><a href="{{ site.baseurl }}/blog/">Abseil Blog</a></h5></li>
+   {% for post in site.posts %}
+     {% unless post.title contains "Tip of the Week" %}
+     <li><h6 class="doc-side-nav-list-item">
+         <a href="{{ post.url }}">{{post.title}}</a></h6>
+     </li>
+     {% endunless %}
+   {% endfor %}
+ </ul>
