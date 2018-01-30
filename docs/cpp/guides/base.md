@@ -94,13 +94,13 @@ The Base library's configuration header files consist of the following:
   the Abseil [Platforms Guide](/docs/cpp/platforms).
 * `macros.h`<br />
   Provides macros used within Abseil code for language features.
-* `optimization.h`
-  <br /> provides several platform-dependent macros for implementing
+* `optimization.h`<br />
+  Provides several platform-dependent macros for implementing
   optimization techniques.
 * `config.h`<br />
   Provides macros for determining platform and compiler support.
-  For more information, consult the [Feature Check Macros](/docs/cpp/platforms/feature_checks)
-  guide.
+  For more information, consult the
+  [Feature Check Macros](/docs/cpp/platforms/feature_checks) guide.
 
 Additionally, the Base library includes one utility header file:
 
@@ -121,5 +121,5 @@ of the following:
   identifying intended behavior in concurrent environments.
 
 These APIs are documented separately within the
-[Synchronization Guide](synchronization.md) rather than within this guide,
+[Synchronization Guide](synchronization) rather than within this guide,
 because they are strongly related to the other abstractions within that guide.

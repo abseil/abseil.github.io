@@ -5,7 +5,7 @@ sidenav: side-nav-cpp.html
 type: markdown
 ---
 
-The Abseil C++ code is supported on the following platforms. (By "platforms",
+The Abseil C++ code is supported on the following platforms. By "platforms",
 we mean the union of operating system, architecture (e.g. little-endian vs.
 big-endian), compiler, and standard library.
 
@@ -14,16 +14,16 @@ big-endian), compiler, and standard library.
 Abseil has two basic levels of support:
 
 <ul>
-	<li><b>Supported</b> means that the indicated platform is officially
-    supported. We pledge to test our code on that platform, have automated
-	continuous integration (CI) tests for that platform, and bugs within that
-	platform will be treated with high priority.</li>
-	<li><b>Best Effort</b> means that we may or may not run continuous
-	integration tests on the platform, but we are fairly confident that Abseil
-	should work on the platform. Although we may not prioritize bugs on the
-	associated platforms, we will make our best effort to support it, and we
-	will welcome patches based on this platform. We may at some point
-	officially support such a platform.</li>
+  <li><b>Supported</b> means that the indicated platform is officially
+  supported. We pledge to test our code on that platform, have automated
+  continuous integration (CI) tests for that platform, and bugs within that
+  platform will be treated with high priority.</li>
+  <li><b>Best Effort</b> means that we may or may not run continuous integration
+  tests on the platform, but we are fairly confident that Abseil should work on
+  the platform. Although we may not prioritize bugs on the associated platforms,
+  we will make our best effort to support it, and we will welcome patches based
+  on this platform. We may at some point officially support such a
+  platform.</li>
 </ul>
 
 Any other platform that is not explicitly mentioned as **Supported** or
@@ -47,7 +47,7 @@ Linux:
 * clang < 5.0: `-std=c++1z`
 * gcc, clang 5.0+: `-std=c++17`
 
-Mac OS X:
+Mac OSX:
 
 * gcc, clang: `-std=c++11`
 * gcc, clang: `-std=c++14`
@@ -56,8 +56,8 @@ Mac OS X:
 
 Windows:
 
-* msvc `/std:c++14`
-* msvc `/std:c++latest`
+* msvc: `/std:c++14`
+* msvc: `/std:c++latest`
 
 ## Supported Platforms
 
@@ -97,14 +97,14 @@ Archiecture, Specific Compiler, and Standard Library implementation.
       <th>Standard Libraries</th>
     </tr>
     <tr>
-      <td>ChromeOS, little-endian, 64-bit</td>
-      <td>gcc 4.9+, clang 5.0+</td>
+      <td>ChromeOS, armv7a, little-endian, 32-bit</td>
+      <td>clang 5.0+</td>
       <td>libstdc++</td>
     </tr>
   </tbody>
 </table>
 
-### Mac OS X / Darwin Family
+### Mac OSX / Darwin Family
 
 **Supported**
 
@@ -183,8 +183,8 @@ Archiecture, Specific Compiler, and Standard Library implementation.
     </tr>
     <tr>
       <td>Windows, little-endian, 32/64-bit</td>
-      <td>clang+</td>
-      <td>???</td>
+      <td>Clang/LLVM 3.7+</td>
+      <td>msvc</td>
     </tr>
   </tbody>
 </table>
@@ -203,7 +203,7 @@ Archiecture, Specific Compiler, and Standard Library implementation.
       <th>Standard Libraries</th>
     </tr>
     <tr>
-      <td>Android NDK r9b+</td>
+      <td>Android NDK r11c+</td>
       <td>gcc 4.8+</td>
       <td>libc++, libstdc++</td>
     </tr>

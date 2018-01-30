@@ -1,6 +1,6 @@
 ---
-layout: community
 title: Abseil Code of Conduct
+layout: community
 sidenav: side-nav-community.html
 type: markdown
 ---

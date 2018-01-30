@@ -5,8 +5,7 @@ sidenav: side-nav-design.html
 type: markdown
 ---
 
-# Pre-Adopted `std::` Types
-Abseil’s initial release includes several types that mimic the API of C++17 
+Abseil’s initial release includes several types that mimic the API of C++17
 vocabulary types: `absl::string_view`, `absl::any`, and `absl::optional`.
 
 Like everything else currently in Abseil, these types only require C++11.
@@ -55,4 +54,3 @@ We expect to use this pre-adoption strategy repeatedly in the coming years, to
 provide pre-adoption versions of standard library facilities for users that
 can’t quite catch up to the current standard - or that require compatibility
 with others that are stuck behind.  Just remember: it’s a 5 year horizon.
-
