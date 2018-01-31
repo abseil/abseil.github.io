@@ -9,8 +9,8 @@ type: markdown
 
 <p class="note">This is our <b>initial release of Abseil</b> and the
 guidelines spelled out below have become effective as of November 1,
-2017. Any new APIs we release will have these requirements waived for
-a period of 30 days, though we will make a best effort to adhere to these
+2017. Any new APIs we release will have these requirements waived
+for a period of 30 days, though we will make a best effort to adhere to these
 guidelines as we resolve any issues with the new APIs.</p>
 
 This document details what we expect from well-behaved users, and what
