@@ -14,7 +14,7 @@ header files:
   important primitive in this library and the building block for most all
   concurrency utilities.
 * `notification.h`<br />
-  Provides a simple mechanism for notifiying threads of events.
+  Provides a simple mechanism for notifying threads of events.
 * `barrier.h` and `blocking_counter.h`<br />
   Provides synchronization abstractions for cumulative events.
 
@@ -75,7 +75,7 @@ Locking access to shared resources is usually addressed through
 mutually-exclusive locks known as *mutexes*. Abseil provides its own `Mutex`
 class for this purpose; similarly, the C++ standard library provides a
 `std::mutex` class for the same purpose. (Reasons why we implement our own
-`Mutex` class are discussed in [Mutex Design Notes](/about/design/mutex).
+`Mutex` class are discussed in [Mutex Design Notes](/about/design/mutex).)
 
 Types that behave correctly regardless of the order, scheduling,
 or interleaving of their operations are known as *thread-safe*. In most cases,

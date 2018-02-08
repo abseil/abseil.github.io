@@ -24,11 +24,9 @@ footer {
   a {
 
     &:link {
-	  text-decoration: underline;
 	  color: $white;
 	}
     &:visited {
-      text-decoration: underline;
       color: $white;
     }
     &:focus {

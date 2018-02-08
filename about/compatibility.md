@@ -1,5 +1,5 @@
 ---
-title: Abseil's Compatibility Guidelines
+title: Abseil Compatibility Guidelines
 layout: about
 sidenav: side-nav-about.html
 type: markdown
@@ -7,17 +7,16 @@ type: markdown
 
 ## Abseil Compatibility Guidelines
 
-<p class="note">This is our <b>initial release of Abseil</b>, as of September
-26, 2017. For a period until November 1, 2017 (about one month in duration),
-we will not be guaranteeing the guidelines spelled out below, though
-we will make a best effort to do so, as we resolve any issues we discover
-from the initial release.</p>
-
+<p class="note">This is our <b>initial release of Abseil</b> and the
+guidelines spelled out below have become effective as of November 1,
+2017. Any new APIs we release will have these requirements waived
+for a period of 30 days, though we will make a best effort to adhere to these
+guidelines as we resolve any issues with the new APIs.</p>
 
 This document details what we expect from well-behaved users, and what
 we will offer in exchange. Any usage of Abseil libraries outside of
 these technical boundaries may result in breakage when upgrading to
-newer versions of Abseil.  
+newer versions of Abseil.
 
 Put another way: don't do things that make Abseil API maintenance
 tasks harder, and we promise not to break you if at all possible. If
@@ -74,14 +73,18 @@ you misuse Abseil APIs, you're on your own.
   refactoring that changes template parameters, default parameters, or
   namespaces will be a breaking change in the face of
   forward-declarations.
-* **Do not depend on Argument-Dependent Lookup (ADL) when calling
-  Abseil APIs.** Even if it happens to build, calling
-  `StrCat(foo, bar);` with two
-  `absl::string_view` params is a bad idea &mdash; when building C++17
-  mode, the associated namespace will no longer be `absl` and will
-  instead be `std` and your code will break.  More generally: just
-  don't do it, we may need to shift things around internally, please
-  don't depend on namespace details.
+* **Avoid unnecessary dependency on Argument-Dependent Lookup (ADL)
+  when calling Abseil APIs.** Some APIs are designed to work via ADL
+  (e.g. `operator<<` for iostreams, unqualified `swap` in generic
+  code, etc.) For most APIs, however, ADL is not part of the design.
+  Calling functions from namespace `absl` via ADL, unless that is
+  explicitly intended as part of the design, should be avoided.
+  This is especially true for any function that accepts a pre-adopted
+  type like `absl::string_view`: when the type changes to utilize the
+  `std` version, its associated namespace will change and ADL will
+  fail, resulting in build breaks. More generally: just don't do it,
+  we may need to shift things around internally, so please don't
+  depend on namespace details.
 * **Do not depend upon internal details.** This should go without
   saying: if something is in a namespace or filename/path that
   includes the word "internal", you are not allowed to depend upon it.
@@ -119,3 +122,4 @@ you misuse Abseil APIs, you're on your own.
   to make things exception-safe. However, we won't contort things to
   support all possible exceptions &mdash; if you have a hash functor
   or `operator==` that throws, we may just mark it `noexcept` instead.
+

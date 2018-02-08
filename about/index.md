@@ -28,6 +28,6 @@ For more information about Abseil:
 * Run through the Abseil [C++ Quickstart](/docs/cpp/quickstart)
 * Read [Why Adopt Abseil](/about/philosophy) to understand our design
   philosophy
-* Peruse our [Abseil Compatibility Guidelines](/about/compatibility) to 
+* Peruse our [Abseil Compatibility Guidelines](/about/compatibility) to
   understand both what we promise to you, and what we expect of you in
   return.

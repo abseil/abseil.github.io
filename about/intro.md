@@ -19,10 +19,10 @@ Abseil and provides an overview of the code we're providing.
 
 The Abseil codebase consists of the following C++ library components:
 
-* [`base`](https://github.com/abseil/abseil-cpp/tree/master/absl/base) Abseil Fundamentals
-  <br /> The `base` library contains initialization code and other code which
-  all other Abseil code depends on. Code within `base` may not depend on any
-  other code (other than the C++ standard library).
+* [`base`](https://github.com/abseil/abseil-cpp/tree/master/absl/base) Abseil
+  Fundamentals<br /> The `base` library contains initialization code and other
+  code which all other Abseil code depends on. Code within `base` may not depend
+  on any other code (other than the C++ standard library).
 * [`algorithm`](https://github.com/abseil/abseil-cpp/tree/master/absl/algorithm)
   <br /> The `algorithm` library contains additions to the C++ `<algorithm>`
   library and container-based versions of such algorithms.
@@ -52,15 +52,14 @@ The Abseil codebase consists of the following C++ library components:
   points in time, durations of time, and formatting and parsing time within
   time zones.
 * [`types`](https://github.com/abseil/abseil-cpp/tree/master/absl/types)
-  <br /> The `types` library contains non-container utility types, like a 
+  <br /> The `types` library contains non-container utility types, like a
   C++11-compatible version of `absl::optional`.
 
 ## License
 
 The Abseil C++ library is licensed under the terms of the Apache
-license. See
-[LICENSE](https://github.com/abseil/abseil-cpp/blob/master/LICENSE) for more
-information.
+license. See [LICENSE](https://github.com/abseil/abseil-cpp/blob/master/LICENSE)
+for more information.
 
 ## Links
 
@@ -68,8 +67,8 @@ For more information about Abseil:
 
 * Walk through the Abseil [C++ Quickstart](/docs/cpp/quickstart) to set up your
   development environment and test out the code.
-* Read [Why Adopt Abseil](/about/philosophy) to understand our
-  design philosophy.
+* Read [Why Adopt Abseil](/about/philosophy) to understand our design
+  philosophy.
 * Peruse our [Abseil Compatibility Guidelines](/about/compatibility) to
   understand both what we promise to you, and what we expect of you in return.
 
