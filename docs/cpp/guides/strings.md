@@ -104,7 +104,7 @@ std::vector<absl::string_view> v = absl::StrSplit("a,b,c", ',');
 ```
 
 `StrSplit()` splits strings using a passed *Delimiter* object. (See
-[Delimiters](#Delimiters) below.) However, in many cases, you can simply pass a
+[Delimiters](#delimiters) below.) However, in many cases, you can simply pass a
 string literal as the delimiter (which will be implicitly converted to an
 `absl::ByString` delimiter).
 
