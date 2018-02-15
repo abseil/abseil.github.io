@@ -1,5 +1,5 @@
 ---
-title: C++ Quickstart
+title: Quickstart
 layout: docs
 sidenav: side-nav-cpp.html
 type: markdown
@@ -9,11 +9,11 @@ type: markdown
 
 Running the Abseil code within this tutorial requires:
 
-* A compatible platform (e.g. Windows, Mac OS X, Linux, etc.). Most platforms are
-  fully supported. Consult the [Platforms Guide](/docs/cpp/platforms/platforms) 
-  for more information.
+* A compatible platform (e.g. Windows, Mac OS X, Linux, etc.). Most platforms
+  are fully supported. Consult the
+  [Platforms Guide](/docs/cpp/platforms/platforms) for more information.
 * A compatible C++ compiler *supporting at least C++11*. Most major compilers
-  are supported. 
+  are supported.
 * [Git](https://git-scm.com/) for interacting with the Abseil source code
   repository, which is contained on [GitHub](http://github.com). To install Git,
   consult the [Set Up Git](https://help.github.com/articles/set-up-git/) guide
@@ -41,7 +41,7 @@ repository on GitHub:
 # Change to the directory where you want to create the code repository
 $ cd ~
 $ mkdir Source; cd Source
-$ git clone https://github.com/abseil/abseil-cpp.git
+$ git clone -b  https://github.com/abseil/abseil-cpp.git
 Cloning into 'abseil-cpp'...
 remote: Total 1935 (delta 1083), reused 1935 (delta 1083)
 Receiving objects: 100% (1935/1935), 1.06 MiB | 0 bytes/s, done.

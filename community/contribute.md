@@ -1,6 +1,6 @@
 ---
-layout: community
 title: Contribution Guidelines
+layout: community
 sidenav: side-nav-community.html
 type: markdown
 ---
@@ -15,4 +15,3 @@ We welcome contributions to either of our core repositories:
 * <a href="https://github.com/abseil/abseil-py" target="_blank">Abseil Python</a>
 
 <a href="https://github.com/abseil/abseil-cpp/blob/master/CONTRIBUTING.md" target="_blank">VIEW GUIDELINES</a>
-

@@ -205,4 +205,5 @@ community mailing list. Take our libraries out for a spin &mdash; little things
 like `StrCat` and `StrSplit` turn out to be surprisingly pleasant to have on
 hand. And if you don't see anything interesting yet, be patient: this is just
 the beginning of an ongoing process to make our most-common utility libraries
-portable and available.  
+portable and available.
+
