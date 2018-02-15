@@ -13,7 +13,6 @@ guidelines spelled out below have become effective as of November 1,
 for a period of 30 days, though we will make a best effort to adhere to these
 guidelines as we resolve any issues with the new APIs.</p>
 
-
 This document details what we expect from well-behaved users, and what
 we will offer in exchange. Any usage of Abseil libraries outside of
 these technical boundaries may result in breakage when upgrading to
@@ -123,3 +122,4 @@ you misuse Abseil APIs, you're on your own.
   to make things exception-safe. However, we won't contort things to
   support all possible exceptions &mdash; if you have a hash functor
   or `operator==` that throws, we may just mark it `noexcept` instead.
+
