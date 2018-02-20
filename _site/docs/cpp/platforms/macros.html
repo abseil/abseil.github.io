@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="title" content="Abseil open-source foundational code">
     <meta name="description" content="Battle-tested, Mom-approved">
-    <title>abseil / Pre-Compiled Macros</title>
+    <title>abseil / Compiler Macros Guide</title>
 
     <!-- Fontawesome Icons -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
@@ -35,7 +35,7 @@
     <![endif]-->
 
     <!-- metadata -->
-    <meta name="og:title" content="abseil / Pre-Compiled Macros"/>
+    <meta name="og:title" content="abseil / Compiler Macros Guide"/>
 	 <meta name="og:description" content="An open-source collection of core C++ library code"/>
   </head>
   <body class=>
@@ -230,285 +230,101 @@ their own, separate guide.</p>
 macro, what it identifies, and what standard defines the macro.</p>
 
 <p class="note">If you wish to check what macros your compiler has defined,
-See
-<a href="http://nadeausoftware.com/articles/2011/12/c_c_tip_how_list_compiler_predefined_macros" target="_blank">
-How to List Compiler Predefined Macros</a></p>
+See [How to List Compiler Predefined Macros](http://nadeausoftware.com/articles/2011/12/c_c_tip_how_list_compiler_predefined_macros)
 
-<h2 id="architecture">Architecture</h2>
+## Architecture
 
-<table>
-  <thead>
-    <tr>
-      <th><strong>Macro</strong></th>
-      <th><strong>Architecture</strong></th>
-      <th><strong>Compiler</strong></th>
-      <th><strong>Notes</strong></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="highlighter-rouge">__x86_64__</code></td>
-      <td>AMD64</td>
-      <td>GNU C, Clang/LLVM</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">_M_X64</code></td>
-      <td>AMD64</td>
-      <td>Visual Studio</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">__arm__</code></td>
-      <td>ARM</td>
-      <td> </td>
-      <td>32-bit only</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">_M_ARM</code></td>
-      <td>ARM</td>
-      <td>Visual Studio</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">__aarch64__</code></td>
-      <td>ARM64</td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">__i386__</code></td>
-      <td>Intel x86</td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">_M_IX86</code></td>
-      <td>Intel x86</td>
-      <td>Visual Studio*</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">__ia64__</code></td>
-      <td>Intel Itanum (IA-64)</td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">_M_IA64</code></td>
-      <td>Intel Itanum (IA-64)</td>
-      <td>Visual Studio</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">__ppc__</code><br /><code class="highlighter-rouge">__PPC__</code><br /><code class="highlighter-rouge">__ppc64__</code><br /><code class="highlighter-rouge">__PPC64__</code></td>
-      <td>PowerPC</td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">_M_PPC</code></td>
-      <td>PowerPC</td>
-      <td>Visual Studio</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">__myriad2__</code></td>
-      <td>Myriad2</td>
-      <td>Myriad Development Kit (Intel Movidius)</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">__mips__</code></td>
-      <td>MIPS</td>
-      <td>GNU C</td>
-      <td> </td>
-    </tr>
-  </tbody>
-</table>
+|**Macro**|**Architecture**|**Compiler**|**Notes**|
+|------------|----------|---------------|--------|
+|`__x86_64__`|AMD64|GNU C, Clang/LLVM||
+|`_M_X64`|AMD64|Visual Studio||
+|`__arm__`|ARM||32-bit only|
+|`_M_ARM`|ARM|Visual Studio||
+|`__aarch64__`|ARM64|||
+|`__i386__`|Intel x86|||
+|`_M_IX86`|Intel x86|Visual Studio\*||
+|`__ia64__`|Intel Itanum (IA-64)|||
+|`_M_IA64`|Intel Itanum (IA-64)|Visual Studio||
+|`__ppc__`<br />`__PPC__`<br />`__ppc64__`<br />`__PPC64__`|PowerPC|||
+|`_M_PPC`|PowerPC|Visual Studio||
+|`__myriad2__`|Myriad2|Myriad Development Kit (Intel Movidius)||
+|`__mips__`|MIPS|GNU C||
 
-<p>* Only defined for 32-bits architectures.</p>
+\* Only defined for 32-bits architectures.
 
-<p>References:</p>
+References:
 
-<ul>
-  <li><a href="https://sourceforge.net/p/predef/wiki/Architectures/">Architectures</a>
-within the Sourceforge Pre-defined Compiler Macros guide.</li>
-  <li><a href="http://nadeausoftware.com/articles/2012/02/c_c_tip_how_detect_processor_type_using_compiler_predefined_macros">How to detect the processor type using compiler predefined macros</a></li>
-</ul>
+* [Architectures](https://sourceforge.net/p/predef/wiki/Architectures/)
+  within the Sourceforge Pre-defined Compiler Macros guide.
+* [How to detect the processor type using compiler predefined macros](http://nadeausoftware.com/articles/2012/02/c_c_tip_how_detect_processor_type_using_compiler_predefined_macros)
 
-<h2 id="endianness">Endianness</h2>
+## Endianness
 
-<p>No standard portable pre-defined macro exists that can be used to
+No standard portable pre-defined macro exists that can be used to
 determine endianness. Instead, Abseil defines the following macros in
-<code class="highlighter-rouge">absl/base/config/h</code>:</p>
+`absl/base/config/h`:
 
-<ul>
-  <li><code class="highlighter-rouge">ABSL_IS_LITTLE_ENDIAN</code></li>
-  <li><code class="highlighter-rouge">ABSL_IS_BIG_ENDIAN</code></li>
-</ul>
+* `ABSL_IS_LITTLE_ENDIAN`
+* `ABSL_IS_BIG_ENDIAN`
 
-<p>References:</p>
+References:
 
-<ul>
-  <li><a href="https://sourceforge.net/p/predef/wiki/Endianness/">Endian Neutral Code</a>
-within the Sourceforge Pre-defined Compiler Macros guide.</li>
-</ul>
+* [Endian Neutral Code](https://sourceforge.net/p/predef/wiki/Endianness/)
+  within the Sourceforge Pre-defined Compiler Macros guide.
 
-<h2 id="operating-systems">Operating Systems</h2>
+## Operating Systems
 
-<table>
-  <thead>
-    <tr>
-      <th><strong>Macro</strong></th>
-      <th><strong>Operating System</strong></th>
-      <th><strong>Compiler</strong></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="highlighter-rouge">__ANDROID__</code></td>
-      <td>Android</td>
-      <td>Android NDK</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">__APPLE__</code></td>
-      <td>MacOS, iOS</td>
-      <td>GNU C, Intel C++, and Apple LLVM</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">_WIN32</code></td>
-      <td>Windows</td>
-      <td>For both 32-bit and 64-bit environments</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">__linux__</code></td>
-      <td>Linux</td>
-      <td>Android NDK, GNU C, Clang/LLVM</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">__ros__</code></td>
-      <td>Akaros</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">__Fushsia__</code></td>
-      <td>Fuchsia</td>
-      <td> </td>
-    </tr>
-  </tbody>
-</table>
+|**Macro**|**Operating System**|**Compiler**|
+|------------|----------|----------|
+|`__ANDROID__`|Android|Android NDK|
+|`__APPLE__`|MacOS, iOS|GNU C, Intel C++, and Apple LLVM|
+|`_WIN32`|Windows|For both 32-bit and 64-bit environments|
+|`__linux__`|Linux|Android NDK, GNU C, Clang/LLVM|
+|`__ros__`|Akaros||
+|`__Fushsia__`|Fuchsia||
 
-<p>References:</p>
+References:
 
-<ul>
-  <li><a href="https://sourceforge.net/p/predef/wiki/OperatingSystems/">Operating Systems</a>
-within the Sourceforge Pre-defined Compiler Macros guide.</li>
-</ul>
+* [Operating Systems](https://sourceforge.net/p/predef/wiki/OperatingSystems/)
+  within the Sourceforge Pre-defined Compiler Macros guide.
 
-<h2 id="compilers">Compilers</h2>
+## Compilers
 
-<table>
-  <thead>
-    <tr>
-      <th><strong>Macro</strong></th>
-      <th><strong>Compiler</strong></th>
-      <th><strong>Version Macro</strong></th>
-      <th><strong>Notes</strong></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="highlighter-rouge">__GNUC__</code></td>
-      <td>GCC</td>
-      <td><code class="highlighter-rouge">__GNUC__</code><br /><code class="highlighter-rouge">__GNUC_MINOR__</code><br /><code class="highlighter-rouge">__GNUC_PATCHLEVEL__</code></td>
-      <td>Clang also defines <code class="highlighter-rouge">__GNUC__</code> for compatibility with GCC. If you want Clang-only, write <code class="highlighter-rouge">defined(__GNUC__) &amp;&amp; !defined(__clang__)</code></td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">__clang__</code></td>
-      <td>Clang/LLVM</td>
-      <td><code class="highlighter-rouge">__clang_major__</code><br /><code class="highlighter-rouge">__clang_minor__</code><br /><code class="highlighter-rouge">__clang_patchlevel__</code></td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">_MSC_VER</code></td>
-      <td>MSVC</td>
-      <td><code class="highlighter-rouge">_MSC_VER</code><br /><code class="highlighter-rouge">_MSC_FULL_VER</code></td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">__EMSCRIPTEN__</code></td>
-      <td>Emscripten</td>
-      <td><code class="highlighter-rouge">__EMSCRIPTEN_major__</code><br /><code class="highlighter-rouge">__EMSCRIPTEN_minor__</code><br /><code class="highlighter-rouge">__EMSCRIPTEN_tiny__</code></td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">__asmjs__</code></td>
-      <td>asm.js</td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">__NVCC__</code></td>
-      <td>NVCC</td>
-      <td> </td>
-      <td> </td>
-    </tr>
-  </tbody>
-</table>
+|**Macro**|**Compiler**|**Version Macro**|**Notes**|
+|------------|----------|--------|---------|
+|`__GNUC__`|GCC|`__GNUC__`<br />`__GNUC_MINOR__`<br />`__GNUC_PATCHLEVEL__`|Clang also defines `__GNUC__` for compatibility with GCC. If you want Clang-only, write `defined(__GNUC__) &amp;&amp; !defined(__clang__)`|
+|`__clang__`|Clang/LLVM|`__clang_major__`<br />`__clang_minor__`<br />`__clang_patchlevel__`||
+|`_MSC_VER`|MSVC|`_MSC_VER`<br />`_MSC_FULL_VER` ||
+|`__EMSCRIPTEN__`|Emscripten|`__EMSCRIPTEN_major__`<br />`__EMSCRIPTEN_minor__`<br />`__EMSCRIPTEN_tiny__`||
+|`__asmjs__`|asm.js|||
+|`__NVCC__`|NVCC|||
 
-<p>References:</p>
+References:
 
-<ul>
-  <li><a href="https://sourceforge.net/p/predef/wiki/Compilers/">Compilers</a>
-within the Sourceforge Pre-defined Compiler Macros guide.</li>
-</ul>
+* [Compilers](https://sourceforge.net/p/predef/wiki/Compilers/)
+  within the Sourceforge Pre-defined Compiler Macros guide.
 
-<h2 id="libraries">Libraries</h2>
+## Libraries
 
-<p>Library headers need to be included before checking the macros. For example,
-<code class="highlighter-rouge">base/config.h</code> includes <code class="highlighter-rouge">&lt;cstddef&gt;</code> for <code class="highlighter-rouge">__GLIBCXX__</code>, <code class="highlighter-rouge">_LIBCPP_VERSION</code>.</p>
+Library headers need to be included before checking the macros. For example,
+`base/config.h` includes `<cstddef>` for `__GLIBCXX__`, `_LIBCPP_VERSION`.
 
-<p>Note that these macros are not compiler-dependent as they are defined within
-header files.</p>
+Note that these macros are not compiler-dependent as they are defined within
+header files.
 
-<table>
-  <thead>
-    <tr>
-      <th><strong>Macro</strong></th>
-      <th><strong>Library</strong></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="highlighter-rouge">__GLIBCXX__</code></td>
-      <td>libstdc++</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">_LIBCPP_VERSION</code></td>
-      <td>libc++</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">_MSC_VER</code></td>
-      <td>MSVC</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">__GLIBC__</code></td>
-      <td>GNU glibc</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">__BIONIC__</code></td>
-      <td>Bionic libc</td>
-    </tr>
-  </tbody>
-</table>
+|**Macro**|**Library**|
+|------------|----------|
+|`__GLIBCXX__`|libstdc++|
+|`_LIBCPP_VERSION`|libc++|
+|`_MSC_VER`|MSVC|
+|`__GLIBC__`|GNU glibc|
+|`__BIONIC__`|Bionic libc|
 
-<p>References:</p>
+References:
 
-<ul>
-  <li><a href="https://sourceforge.net/p/predef/wiki/Libraries/">Libraries</a>
-within the Sourceforge Pre-defined Compiler Macros guide.</li>
-</ul>
+* [Libraries](https://sourceforge.net/p/predef/wiki/Libraries/)
+  within the Sourceforge Pre-defined Compiler Macros guide.
+</cstddef></p>
 
 </div>
 

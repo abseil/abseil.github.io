@@ -114,8 +114,8 @@ pre code { white-space: pre; }
 .markdown em { font-style: italic; }
 .markdown strong { font-weight: bold; }
 .markdown img { width: 100%; }
-.markdown li { line-height: 24px; }
-.markdown ol, .markdown ul { list-style: initial; list-style-position: inside; font-size: 15px; font-weight: 300; margin: 0 20px; }
+.markdown li { line-height: 24px; margin-top: 12px; }
+.markdown ol, .markdown ul { list-style: initial; list-style-position: outside; font-size: 15px; font-weight: 300; margin: 0 20px; }
 @media (max-width: 768px) { .markdown ol, .markdown ul { margin: 0; } }
 .markdown ol { list-style: decimal; }
 .markdown h1 { color: #3949AB; }
