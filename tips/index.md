@@ -38,24 +38,14 @@ cases, we have updated that information to reflect current practices, and note
 exceptions that are historical, where applicable.
 </p>
 
-**Because these tips are being published out of original order, we've listed them
-below in the order of re-publication.**
-
 <ul>
-  {% assign sorted_posts = (site.posts | sort: 'date' | reverse) %}
-  {% assign datelist = '' %}
-  {% assign new = true %}
+  {% assign sorted_posts = (site.posts | sort: 'order') %}
 
   {% for post in sorted_posts %}
     {% if post.title contains "Tip of the Week" %}
-      {% assign cur_date = post.date | date_to_string %}
-      {% unless datelist contains cur_date %}
-        <li><b>{{post.date | date: '%B %d, %Y' }}</b></li>
-        {% assign datelist = datelist | append: cur_date %}
-      {% endunless %}
-        <p style="text-indent:25px;line-height:5px;">
+    <li>
         <a href="{{ post.url }}">{{ post.title }}</a>
-        </p>
+    </li>
     {% endif %}
   {% endfor %}
 </ul>
