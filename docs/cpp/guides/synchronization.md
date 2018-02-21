@@ -75,7 +75,7 @@ Locking access to shared resources is usually addressed through
 mutually-exclusive locks known as *mutexes*. Abseil provides its own `Mutex`
 class for this purpose; similarly, the C++ standard library provides a
 `std::mutex` class for the same purpose. (Reasons why we implement our own
-`Mutex` class are discussed in [Mutex Design Notes](/about/design/mutex).
+`Mutex` class are discussed in [Mutex Design Notes](/about/design/mutex).)
 
 Types that behave correctly regardless of the order, scheduling,
 or interleaving of their operations are known as *thread-safe*. In most cases,

@@ -104,7 +104,7 @@ std::vector<absl::string_view> v = absl::StrSplit("a,b,c", ',');
 ```
 
 `StrSplit()` splits strings using a passed *Delimiter* object. (See
-[Delimiters](#Delimiters) below.) However, in many cases, you can simply pass a
+[Delimiters](#delimiters) below.) However, in many cases, you can simply pass a
 string literal as the delimiter (which will be implicitly converted to an
 `absl::ByString` delimiter).
 
@@ -167,7 +167,7 @@ std::pair<std::string, std::string> p = absl::StrSplit("a,b,c", ',');
 
 The `StrSplit()` API provides a number of "Delimiters" for providing special
 delimiter behavior. A Delimiter implementation contains a `Find()` function that
-knows how find the first occurrence of itself in a given `absl::string_view`.
+knows how to find the first occurrence of itself in a given `absl::string_view`.
 Models of the Delimiter concept represent specific kinds of delimiters, such as
 single characters, substrings, or even regular expressions.
 

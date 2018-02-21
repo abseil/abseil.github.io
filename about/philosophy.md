@@ -28,7 +28,7 @@ inside Google for many years and we've learned a lot in their evolution. We know
 that these libraries and our upgrade policies can be a good solution for some
 types of problems that are important in the industry, and over time we've
 learned how to provide this sort of infrastructure in an evolving but
-maintainable fashion. 
+maintainable fashion.
 
 ### Compatibility With Current and Future C++ Standards
 
@@ -120,7 +120,7 @@ content-management tax!
 * We will periodically mark a tag as "supported" and branch it &mdash; if we
   discover security issues or major performance problems, we'll update those
   branches. Our expectation is to do this every 6 months and support those
-  branches for 2 years. 
+  branches for 2 years.
 
 ### Production Experience
 
@@ -197,12 +197,13 @@ and beyond, or you use protobufs or gRPC, you might be well served with Abseil.
 Or maybe you don't care much about what utility library you use, but are
 intrigued by our "live at head" approach. Or maybe you know that your platforms
 and use cases are well-defined, and want slightly more forgiving designs than
-the standard will provide.  
+the standard will provide.
 
 Regardless of what makes Abseil interesting, we're glad you're taking a look.
 Read up on our policies and the compatibility guidelines. Sign up for our
 community mailing list. Take our libraries out for a spin &mdash; little things
 like `StrCat` and `StrSplit` turn out to be surprisingly pleasant to have on
 hand. And if you don't see anything interesting yet, be patient: this is just
-the beginning of an ongoing process to make our
-most-common utility libraries portable and available.  
+the beginning of an ongoing process to make our most-common utility libraries
+portable and available.
+

@@ -5,7 +5,8 @@ sidenav: side-nav-design.html
 type: markdown
 ---
 
-# `absl::Mutex`
+## `absl::Mutex`
+
 Abseil uses and has published its own `absl::Mutex` abstraction in place of the
 C++ library's `std::mutex` implementation. Such a decision is not advocated
 lightly. This design note attempts to lay out all of the issues surrounding
@@ -141,7 +142,7 @@ least for Mutexes that are used across translation units, it may require some
 variation of whole-program analysis to identify which mutex features are used
 for any given mutex. Rewriting such code is then a matter of expanding a single
 `absl::Mutex` into a `std::mutex` and some number of other types (e.g.
-`std::shared_mutex`, etc.) and then threading that package of variables through
+`std::shared_mutex`, etc.), and then threading that package of variables through
 whatever interfaces are necessary.
 
 This is arguably one of the most complicated large-scale refactoring any

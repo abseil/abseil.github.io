@@ -39,6 +39,12 @@ theme: minima
 # RSS / Blog configuration settings
 gems:
   - jekyll-feed
+timezone: "America/New_York"
+
+# Set these false for production, true for staging server
+future: false
+unpublished: false
+show_drafts: false
   
 # Exclusions
 exclude:

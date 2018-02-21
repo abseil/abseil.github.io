@@ -1,5 +1,5 @@
 ---
-title: Abseil's Plenary Keynote
+title: "CppCon 2017: C++ as a 'Live at Head' Language"
 layout: blog
 sidenav: side-nav-blog.html
 published: true
@@ -7,8 +7,7 @@ permalink: blog/20171004-cppcon-plenary
 type: markdown
 ---
 
-## CppCon 2017
-### Titus Winters “C++ as a "Live at Head" Language”
+## Titus Winters' Plenary Keynote
 
 By [Tom Manshreck](mailto:shreck@google.com), Abseil Tech Writer
 
