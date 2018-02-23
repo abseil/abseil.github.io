@@ -42,7 +42,7 @@ exceptions that are historical, where applicable.
 below in the order of re-publication.**
 
 <ul>
-  {% assign sorted_posts = (site.posts | sort: 'date' | reverse) %}
+  {% assign sorted_posts = site.posts | sort: 'date' | reverse %}
   {% assign datelist = '' %}
   {% assign new = true %}
 
