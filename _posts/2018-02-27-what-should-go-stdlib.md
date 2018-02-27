@@ -2,12 +2,12 @@
 title: "What Should Go Into the C++ Standard Library"
 layout: blog
 sidenav: side-nav-blog.html
-published: false
+published: true
 permalink: blog/20180227-what-should-go-stdlib
 type: markdown
 ---
 
-By [Titus Winters](mailto:titus@google.com), @TitusWinters
+By Titus Winters (titus@google.com), @TitusWinters
 
 <i><b>About the Author - </b> Titus holds a PhD in Computer Science Education
 from UC Riverside. He created most of Google’s internal C++ coursework, and
@@ -18,22 +18,23 @@ Library Evolution Working Group (LEWG) - the sub-committee of the C++ Standard
 that focuses on the design of the C++ standard library.</i>
 
 A few interesting pieces on the direction and design for C++ have circulated
-recently.  First off, I strongly recommend everyone read through [Direction for
-ISO C++](wg21.link/P0939r0) ; it provides a lot of excellent detail and
-suggestions, as well as some much-needed guidance on how the language should
-evolve.  In particular, I think it's really important to note "No language can
-be everything for everybody," the technical "pillars" upon which C++ rests, and
-the call to remind everyone to go read "The Design and Evolution of C++". The
-Direction Group is very rightly showing concern about the breadth of things
-being proposed for the standard, as well as how to maintain velocity and
-stability as we continue to move forward at an ever more rapid pace.
+recently.  First off, I strongly recommend everyone read through 
+[Direction for ISO C++](http://wg21.link/P0939r0) ; it provides a lot of 
+excellent detail and suggestions, as well as some much-needed guidance on how
+the language should evolve.  In particular, I think it's really important to
+note "No language can be everything for everybody," the technical "pillars" upon
+which C++ rests, and the call to remind everyone to go read "The Design and
+Evolution of C++". The Direction Group is very rightly showing concern about the
+breadth of things being proposed for the standard, as well as how to maintain
+velocity and stability as we continue to move forward at an ever more rapid
+pace.
 
 ### Batteries Included?
 
 An [interesting piece](https://hatcat.com/?p=16) by Guy Davidson also
 specifically focuses on what should be included in the C++ Standard Library,
-with emphasis on a proposed [Graphics
-library.](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0267r7.pdf)
+with emphasis on a proposed 
+[Graphics library.](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0267r7.pdf)
 Guy (again, rightly) is concerned with what can and cannot be done with C++
 easily and out of the box.  Guy argues we should aim for "batteries included," a
 much more all-inclusive approach than what is currently standardized. Especially
@@ -108,11 +109,12 @@ put: developing an algorithmic mindset is hard on its own, even in a language
 that is designed to hold your hand. C++ is not well-suited for being a starter
 language - come to us when you've gotten over those first hurdles.
 
-Approaching it from another angle: according to [P0939](wg21.link/P0939r0), C++
-cannot afford to be all things to all people.  Hopefully nobody disagrees when I
-say that C++ is a language that prioritizes efficiency and performance above
-pretty much everything else - including user-friendliness, ease of use, etc.
-Citing [P0939](wg21.link/P0939r0) and [P0684](http://wg21.link/P0684r2) - one of
+Approaching it from another angle: according to
+[P0939](http://wg21.link/P0939r0), C++ cannot afford to be all things to all
+people.  Hopefully nobody disagrees when I say that C++ is a language that
+prioritizes efficiency and performance above pretty much everything else -
+including user-friendliness, ease of use, etc.  Citing
+[P0939](http://wg21.link/P0939r0) and [P0684](http://wg21.link/P0684r2) - one of
 the few perspectives I expect everyone on the Committee to agree with is that
 "C++ leaves no room for another language between itself and the hardware", and
 that you don't pay for what you don't use.  Protections against programmer error
@@ -131,8 +133,8 @@ As an educator, I don't buy it.
 ### What Makes C++ Special?
 
 There's a separate chain of reasoning that concerns me with Guy's "Batteries
-Included" approach. Some of this was presented in [Corentin's
-reply](https://hackernoon.com/a-cake-for-your-cherry-what-should-go-in-the-c-standard-library-804fcecccef8)
+Included" approach. Some of this was presented in 
+[Corentin's reply](https://hackernoon.com/a-cake-for-your-cherry-what-should-go-in-the-c-standard-library-804fcecccef8)
 to Guy's article, but I've got a bit of a different approach and experience with
 it.
 
@@ -141,12 +143,12 @@ stability. In many respects I think we take that too far - I regularly leave
 standards meetings frustrated at our inability to fix mistakes, but I do also
 see the value that stability provides the community.  At the committee level we
 pay pretty close attention to what will break user code (well, at least
-well-behaved user code, see [P0921](wg21.link/p0921r0)), up to and including
-support for pre-compiled code depending on an ever-changing standard library.
-That is, we provide not just API (source level) compatibility over time, we
-almost always provide ABI (binary level) compatibility. And that means that a
-huge number of possible changes are infeasible: if it involves how a type is
-represented in memory, it will not change for decades.
+well-behaved user code, see [P0921](http://wg21.link/p0921r0)), up to and
+including support for pre-compiled code depending on an ever-changing standard
+library.  That is, we provide not just API (source level) compatibility over
+time, we almost always provide ABI (binary level) compatibility. And that means
+that a huge number of possible changes are infeasible: if it involves how a type
+is represented in memory, it will not change for decades.
 
 My friend Matt Kulukundis 
 [spoke at CPPCon](https://www.youtube.com/watch?v=ncHmEUmJZf4) about work that
