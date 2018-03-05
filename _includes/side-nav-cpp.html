@@ -1,16 +1,13 @@
 <ul class="doc-side-nav">
-	{% assign current = page.url | downcase | split: '/' %}
-	<li><h5 class="doc-side-nav-title"><a href="{{ site.baseurl }}/docs/">Docs</a></h5></li>
-	<li><h5 class="doc-side-nav-title">
-	<a href="{{ site.baseurl }}/docs/cpp.html" {% if (current[2] == 'cpp' && current[3] == "") %}class='current'{% endif %}><b>C++ Devguide</b></a></h5></li>
-	<li class="doc-side-nav-list-item">
-	  <a href="{{ site.baseurl }}/docs/cpp/quickstart" {% if current[3] == 'quickstart.html' %}class='current'{% endif %}>
-	  Quickstart</a></li>
-	  
-	<li><h6 class="doc-side-nav-title">
-	  <a href="{{ site.baseurl }}/docs/cpp/guides/" {% if current[3] == 'guides' && current[4] == "" %}class='current'{% endif %}>
-	Programming Guides</a></h6></li>
-	
+  {% assign current = page.url | downcase | split: '/' %}
+  <li><h5 class="doc-side-nav-title"><a href="{{ site.baseurl }}/docs/">Docs</a></h5></li>
+  <li><h5 class="doc-side-nav-title">
+    <a href="{{ site.baseurl }}/docs/cpp.html" {% if (current[2] == 'cpp' && current[3] == "") %}class='current'{% endif %}><b>C++ Devguide</b></a></h5></li>
+    <li class="doc-side-nav-list-item">
+      <a href="{{ site.baseurl }}/docs/cpp/quickstart" {% if current[3] == 'quickstart.html' %}class='current'{% endif %}>Quickstart</a>
+    </li> 
+    <li><h6 class="doc-side-nav-title">
+      <a href="{{ site.baseurl }}/docs/cpp/guides/" {% if current[3] == 'guides' && current[4] == "" %}class='current'{% endif %}>Programming Guides</a></h6></li>
    <li class="doc-side-nav-list-item">
      <a href="{{ site.baseurl }}/docs/cpp/guides/base" {% if current[4] == 'base.html' %}class='current'{% endif %}>
      Abseil Fundamentals</a></li>
@@ -20,21 +17,15 @@
    <li class="doc-side-nav-list-item">
      <a href="{{ site.baseurl }}/docs/cpp/guides/strings" {% if current[4] == 'strings.html' %}class='current'{% endif %}>
      Strings</a></li>
-	 
   <li><h6 class="doc-side-nav-title">
   <a href="{{ site.baseurl }}/docs/cpp/platforms/" {% if current[3] == 'platforms' && current[4] == "" %}class='current'{% endif %}>
    Platforms Guide</a></h6></li>
-   
-   <li class="doc-side-nav-list-item">
-	<a href="{{ site.baseurl }}/docs/cpp/platforms/platforms" {% if current[4] == 'platforms.html' %}class='current'{% endif %}>
-	Supported Platforms</a></li>
-	<li class="doc-side-nav-list-item">
-	<a href="{{ site.baseurl }}/docs/cpp/platforms/compilerflags" {% if current[4] == 'compilerflags.html' %}class='current'{% endif %}>
-	Feature Check Macros</a></li>
-	<li class="doc-side-nav-list-item">
-	<a href="{{ site.baseurl }}/docs/cpp/platforms/feature_checks" {% if current[4] == 'feature_checks.html' %}class='current'{% endif %}>
-	Feature Check Macros</a></li>
-	<li class="doc-side-nav-list-item">
-	<a href="{{ site.baseurl }}/docs/cpp/platforms/macros" {% if current[4] == 'macros.html' %}class='current'{% endif %}>
-	Pre-compiled Macros</a></li>
+  <li class="doc-side-nav-list-item">
+    <a href="{{ site.baseurl }}/docs/cpp/platforms/platforms" {% if current[4] == 'platforms.html' %}class='current'{% endif %}>Supported Platforms</a></li>
+  <li class="doc-side-nav-list-item">
+    <a href="{{ site.baseurl }}/docs/cpp/platforms/compilerflags" {% if current[4] == 'compilerflags.html' %}class='current'{% endif %}>Compiler Flags</a></li>
+  <li class="doc-side-nav-list-item">
+    <a href="{{ site.baseurl }}/docs/cpp/platforms/feature_checks" {% if current[4] == 'feature_checks.html' %}class='current'{% endif %}>Feature Check Macros</a></li>
+  <li class="doc-side-nav-list-item">
+    <a href="{{ site.baseurl }}/docs/cpp/platforms/macros" {% if current[4] == 'macros.html' %}class='current'{% endif %}>Pre-compiled Macros</a></li>
  </ul>
