@@ -17,11 +17,11 @@
 
         <ul class="nav col-xs-10">
           {% assign current = page.url | downcase | split: '/' %}
-          <li><a href="{{ site.baseurl }}/about" {% if current[1] == 'about' %}class='current'{% endif %}>About</a></li>
-          <li><a href="{{ site.baseurl }}/docs/" {% if current[1] == 'docs' %}class='current'{% endif %}>Docs</a></li>
+          <li><a href="{{ site.baseurl }}/about/" {% if current[1] == 'about' %}class='current'{% endif %}>About</a></li>
+          <li><a href="{{ site.baseurl }}/docs/cpp/" {% if current[1] == 'cpp' %}class='current'{% endif %}>C++ Guide</a></li>
           <li><a href="{{ site.baseurl }}/tips/" {% if current[1] == 'tips' %}class='current'{% endif %}>C++ Tips</a></li>
 		  <li><a href="{{ site.baseurl }}/blog/" {% if current[1] == 'blog' %}class='current'{% endif %}>Blog</a></li>
-          <li><a href="{{ site.baseurl }}/community" {% if current[1] == 'community.html' %}class='current'{% endif %}>Community</a></li>
+          <li><a href="{{ site.baseurl }}/community/" {% if current[1] == 'community.html' %}class='current'{% endif %}>Community</a></li>
         </ul>
 
       </div>
