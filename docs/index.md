@@ -9,5 +9,5 @@ type: markdown
 
 Abseil consists of source code repositories for C++ and Python. (A future update will include bindings between Python and C++ code.)
 
-* [C++ Developer Guide](cpp.md)
+* [C++ Developer Guide](/docs/cpp.md)
 * Python Developer Guide (Coming Soon!)
