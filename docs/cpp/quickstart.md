@@ -90,8 +90,7 @@ local_repository(
   # WORKSPACE file, in its `workspace()` metadata
   name = "com_google_absl",
 
-  # NOTE: Bazel paths must be absolute paths. E.g., you can't use ~/Source
-  path = "/PATH_TO_SOURCE/Source/abseil-cpp",
+  path = "abseil-cpp",
 )
 ```
 
