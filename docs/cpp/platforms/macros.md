@@ -98,6 +98,7 @@ References:
 |`_MSC_VER`|MSVC|`_MSC_VER`<br/>`_MSC_FULL_VER` ||
 |`__EMSCRIPTEN__`|Emscripten|`__EMSCRIPTEN_major__`<br/>`__EMSCRIPTEN_minor__`<br/>`__EMSCRIPTEN_tiny__`||
 |`__asmjs__`|asm.js|||
+|`__wasm__`|WebAssembly|||
 |`__NVCC__`|NVCC|||
 
 References:

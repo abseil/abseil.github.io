@@ -256,7 +256,7 @@ std::vector<std::string> v = absl::StrSplit(",a, ,b,", ',',
 // v[0] == "a", v[1] == "b"
 ```
 
-## `absl::StrCat()` and `absl::StrAppend()` for String Concatentation
+## `absl::StrCat()` and `absl::StrAppend()` for String Concatenation
 
 Most documentation on the usage of C++ strings mention that unlike other
 languages, strings in C++ are mutable; however, modifying a string can be
@@ -422,11 +422,8 @@ string s = absl::StrJoin(v, "-");
 // Joins a `std::map`, with each key-value pair separated by an equals
 // sign. This pattern would also work with, say, a
 // `std::vector<std::pair<>>`.
-std::map<string, int> m = {
-  std::make_pair("a", 1),
-  std::make_pair("b", 2),
-  std::make_pair("c", 3)};
-string s = absl::StrJoin(m, ",", strings::PairFormatter("="));
+std::map<string, int> m = {{"a", 1}, {"b", 2}, {"c", 3}};
+string s = absl::StrJoin(m, ",", absl::PairFormatter("="));
 // Produces the string "a=1,b=2,c=3"
 ```
 

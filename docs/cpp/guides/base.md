@@ -67,7 +67,7 @@ $ CC=clang BAZEL_COMPILER=llvm bazel build --copt=-DLEAK_SANITIZER \
 
 # Enable ASan, which also includes LSan.
 $ CC=clang BAZEL_COMPILER=llvm bazel build --copt=-DADDRESS_SANITIZER \
-    --copt=-fsanitize=address --linkopt=-fsanitize=address= *target*
+    --copt=-fsanitize=address --linkopt=-fsanitize=address *target*
 ```
 
 The `debugging/leak_check.h` header file contains several utility functions to

@@ -41,7 +41,7 @@ repository on GitHub:
 # Change to the directory where you want to create the code repository
 $ cd ~
 $ mkdir Source; cd Source
-$ git clone -b  https://github.com/abseil/abseil-cpp.git
+$ git clone  https://github.com/abseil/abseil-cpp.git
 Cloning into 'abseil-cpp'...
 remote: Total 1935 (delta 1083), reused 1935 (delta 1083)
 Receiving objects: 100% (1935/1935), 1.06 MiB | 0 bytes/s, done.
@@ -54,7 +54,7 @@ Navigate into this directory and run all tests:
 
 ```
 $ cd abseil-cpp
-$ bazel test absl/...:all
+$ bazel test //absl/...
 ..............
 INFO: Found 12 targets...
 INFO: Elapsed time: 3.677s, Critical Path: 0.03s
@@ -150,7 +150,7 @@ Build our target ("hello_world") and run it:
 ```
 # It's often good practice to build files from the workspace root
 $ cd ~/Source/TestProject
-$ bazel build examples:hello_world
+$ bazel build //examples:hello_world
 INFO: Analysed target //examples:hello_world (12 packages loaded).
 INFO: Found 1 target...
 Target //examples:hello_world up-to-date:
@@ -158,7 +158,7 @@ Target //examples:hello_world up-to-date:
 INFO: Elapsed time: 0.180s, Critical Path: 0.00s
 INFO: Build completed successfully, 1 total action
 
-$ bazel run examples:hello_world
+$ bazel run //examples:hello_world
 INFO: Running command line: bazel-bin/examples/hello_world
 Joined string: foo-bar-baz
 $
