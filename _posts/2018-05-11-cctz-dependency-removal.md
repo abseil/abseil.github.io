@@ -21,8 +21,7 @@ We are in the process of adding some updates to our Time library. As a
 transitional step in this set of planned updates, we have added an internal
 fork of the CCTZ types and dropped the dependency on the external CCTZ project.
 To avoid potential name conflicts with a project’s independent use of the CCTZ
-library, our internal copy lives in a unique, internal absl namespace. Note
-that the internal copy is intended solely as an implementation detail
+library, our internal copy lives in a unique, internal absl namespace. The internal copy is intended solely as an implementation detail
 underpinning our provided Time APIs. As with all internal types, users should
 not depend on or use them directly. 
 
