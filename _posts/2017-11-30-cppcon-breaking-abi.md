@@ -5,9 +5,11 @@ sidenav: side-nav-blog.html
 published: true
 permalink: blog/20171023-cppcon-breaking-abi
 type: markdown
+category: blog
+excerpt_separator: <!--break-->
 ---
 
-## Gennadiy Rozental's Lightning Talk
+### Gennadiy Rozental's Lightning Talk
 
 By [Tom Manshreck](mailto:shreck@google.com), Abseil Tech Writer
 
