@@ -5,9 +5,11 @@ sidenav: side-nav-blog.html
 published: true
 permalink: blog/20171031-cppcon-renaming
 type: markdown
+category: blog
+excerpt_separator: <!--break-->
 ---
 
-## Jon Cohen: “A Type, by Any Other Name”
+### Jon Cohen: “A Type, by Any Other Name”
 
 By [Tom Manshreck](mailto:shreck@google.com), Abseil Tech Writer
 

@@ -5,9 +5,11 @@ sidenav: side-nav-blog.html
 published: true
 permalink: blog/20170926-welcome-to-abseil
 type: markdown
+category: blog
+excerpt_separator: <!--break-->
 ---
 
-## A New Common Libraries Project
+### A New Common Libraries Project
 
 By [Titus Winters](mailto:titus@google.com), Abseil Lead
 
@@ -19,6 +21,8 @@ source projects, and now we have brought them together into one comprehensive
 project. Abseil encompasses the most basic building blocks of Google's 
 codebase: code that is production tested and will be fully maintained for years 
 to come.
+
+<!--break-->
 
 Our C++ code repository is available at
 [https://github.com/abseil/abseil-cpp](https://github.com/abseil/abseil-cpp).

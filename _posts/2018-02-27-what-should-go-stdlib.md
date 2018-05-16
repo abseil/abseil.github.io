@@ -5,6 +5,8 @@ sidenav: side-nav-blog.html
 published: true
 permalink: blog/20180227-what-should-go-stdlib
 type: markdown
+category: blog
+excerpt_separator: <!--break-->
 ---
 
 By Titus Winters (titus@google.com), @TitusWinters
@@ -28,6 +30,8 @@ Evolution of C++". The Direction Group is very rightly showing concern about the
 breadth of things being proposed for the standard, as well as how to maintain
 velocity and stability as we continue to move forward at an ever more rapid
 pace.
+
+<!--break-->
 
 ### Batteries Included?
 
