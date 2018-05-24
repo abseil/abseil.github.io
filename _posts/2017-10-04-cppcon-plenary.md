@@ -5,9 +5,11 @@ sidenav: side-nav-blog.html
 published: true
 permalink: blog/20171004-cppcon-plenary
 type: markdown
+category: blog
+excerpt_separator: <!--break-->
 ---
 
-## Titus Winters' Plenary Keynote
+### Titus Winters' Plenary Keynote
 
 By [Tom Manshreck](mailto:shreck@google.com), Abseil Tech Writer
 
