@@ -71,7 +71,3 @@ For more information about Abseil:
   philosophy.
 * Peruse our [Abseil Compatibility Guidelines](/about/compatibility) to
   understand both what we promise to you, and what we expect of you in return.
-
-## Disclaimer
-
-*   This is not an official Google product.
