@@ -17,7 +17,7 @@ type: markdown
       {{ post.excerpt | number_of_words }} 
     {% endcapture %} 
     {% if excerpt_words != content_words %}
-    <p><a href="{{ post.url }}/#read-more" role="button">Read more</a></p>
+    <p><a href="{{ post.url }}#read-more" role="button">Read more</a></p>
     {% endif %}
     <hr style="height:2px;border:none;background-color: #3F51B5;" />
   {% endfor %}
