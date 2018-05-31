@@ -133,7 +133,7 @@ In either case, it's important to bear a few (related) ideas in mind:
     different.
 -   After 20 years of experience, we're confident that the definition of a
     Regular type is a useful abstraction, and approximates the right "default
-    semantics" for user defined types.
+    semantics" for user-defined types.
 -   The definitions for a Regular type come from use in generic contexts. The
     essential aim is to define the syntax and semantics of a value type that
     mimics the behavior of a built-in type. The semantics of Regular allow us to
