@@ -12,6 +12,8 @@ excerpt_separator: <!--break-->
 _Good types are all alike; every poorly designed type is poorly defined in its
 own way._ - Adapted with apologies to Leo Tolstoy
 
+By [Titus Winters](mailto:titus@google.com)
+
 ### Abstract
 
 With 20 years of experience, we know that Regular type design is a good
@@ -117,12 +119,13 @@ Range v3 and/or the Ranges TS).
 </tbody>
 </table>
 
-(It’s generally assumed that Move construction would be included in Stepanov’s
-formulation, although move semantics were not present in C++ of that era. This
-is true even though `int` doesn’t have a move constructor: it is still move
-constructible (can be constructed from a temporary), and this is even the proper
-design for the type. Move+copy should be considered an overload set for
-optimization purposes. More in [TotW 148](http://abseil.io/tips/148))
+Note: it’s generally assumed that Move construction would be included in
+Stepanov’s formulation, although move semantics were not present in C++ of that
+era. This is true even though `int` doesn’t have a move constructor: it is
+still move constructible (can be constructed from a temporary), and this is
+even the proper design for the type. Move+copy should be considered an overload
+set for optimization purposes. For more information, see
+[TotW 148](/tips/148))
 
 In either case, it's important to bear a few (related) ideas in mind:
 
@@ -136,7 +139,7 @@ In either case, it's important to bear a few (related) ideas in mind:
     mimics the behavior of a built-in type. The semantics of Regular allow us to
     reason about the use of the type within an algorithm, and hence define what
     the algorithm does.
--   The reasoning about code is much easier, if the code consists of Regular
+-   The reasoning about code is much easier if the code consists of Regular
     types, instead of non-Regular ones, using the existing understanding of how
     built-in types work.
 
@@ -245,16 +248,16 @@ const T a = SomeT();
 const T b = SomeT();
 if (a == b) {
   DoSomething(a);
-  assert(a == b);  // Note: we're assuming the semantics ==
+  assert(a == b);  // Note: we're assuming the semantics of ==
 }
 ```
 
 This seems straightforward: we have two const values. If they are equal, it
 doesn't matter what operation we perform on one of them, they will remain equal.
 It also doesn't matter if we modify any other global state. It does imply one
-additional requirement, however: the normal semantics of `const` must be
-enforced - a const object must not change values. Consider the following type
-and body for `DoSomething`:
+additional requirement beyond being Regular: the normal semantics of `const` 
+must be enforced - a const object must not change values. Consider the
+following type and body for `DoSomething`:
 
 ```c++
 class Rotten {
@@ -418,7 +421,7 @@ form of the property we want from Regular: when passing a `const T&` to a
 function, that function may be able to invalidate the preconditions on some API
 of `T` through mechanisms that are outside of `T`. It isn't enough to say that
 `T` is thread-compatible - we must know that nothing in the program is going to
-invalidate the depentent preconditions.
+invalidate the dependent preconditions.
 
 Let's consider `int*` in the context of our Regular-code usage snippet:
 
@@ -481,9 +484,9 @@ copy it in a race free fashion.
 This requirement is unstated, and pervasive. Everything in the Stepanov-era
 standard library implicitly assumes it. In the Ranges/Concepts era, we get text
 like P0898, rightly forbidding spontaneous changes to an object. But in the
-general case, the standard already says this, because the library rules on data
-races require that most library types are effectively thread-compatible, and
-that inputs to the library must be thread-compatible.
+general case, the standard already says this, because of the language rules on
+data races, and the library rules that require most library types
+are effectively thread-compatible.
 
 Put another way: what do you need to know when invoking a standard algorithm on
 some user-defined type? You need to know the syntax and semantics of its basic
@@ -559,7 +562,9 @@ useful in conjunction with the existing definitions for Regular.
     it as a non-owning parameter type: the underlying buffer will outlive the
     function call and is immutable for the duration of the call. Given that
     external knowledge of that underlying buffer, `string_view` behaves as if it
-    were Regular.
+    were Regular. This makes sense, given that `string_view` was designed to be
+	a drop-in replacement for `const string&`, and although references are not
+	Regular types, `std::string` types are.
 -   **Single-threaded usage** - This is easy to misuse, but can be an important
     area for optimization. Consider the discussions to provide a `shared_ptr`
     analogue that does not synchronize its reference count - if we know
@@ -589,10 +594,13 @@ us.
 using T = string_view;
 void DoSomething(const T& t);
 
-const T a = SomeT();  // Assume SomeT() is providing a long-lived and stable buffer
+const T a = SomeT();  // Assume SomeT() is providing a
+                      // long-lived and stable buffer.
 const T b = SomeT();
+
 if (a == b) {
-  DoSomething(a);  // Can't modify the buffer, it's assumed stable.
+  DoSomething(a);     // Won't modify the buffer,
+                      // provided our assumption on SomeT() is correct.
   assert(a == b);
 }
 ```
