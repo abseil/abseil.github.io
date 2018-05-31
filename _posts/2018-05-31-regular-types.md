@@ -599,8 +599,10 @@ const T a = SomeT();  // Assume SomeT() is providing a
 const T b = SomeT();
 
 if (a == b) {
-  DoSomething(a);     // Won't modify the buffer,
-                      // provided our assumption on SomeT() is correct.
+	
+  // Won't modify the buffer, provided our assumption on SomeT() is correct.
+  DoSomething(a);
+
   assert(a == b);
 }
 ```
