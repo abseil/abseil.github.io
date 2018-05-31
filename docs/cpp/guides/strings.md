@@ -384,6 +384,7 @@ collections of strings, ints, floats, doubles, etc.
 
 ### Examples
 
+<!-- {% raw %} -->
 ```cpp
 std::vector<string> v = {"foo", "bar", "baz"};
 string s = absl::StrJoin(v, "-");
@@ -426,6 +427,7 @@ std::map<string, int> m = {{"a", 1}, {"b", 2}, {"c", 3}};
 string s = absl::StrJoin(m, ",", absl::PairFormatter("="));
 // Produces the string "a=1,b=2,c=3"
 ```
+<!-- {% endraw %} -->
 
 ### Join Formatters
 
