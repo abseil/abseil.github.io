@@ -5,6 +5,12 @@ sidenav: side-nav-cpp.html
 type: markdown
 ---
 
+## C++ Quickstart
+
+This document is designed to allow you to get the Abseil development
+environment up and running. We recommend that each person starting
+development with Abseil code at least run through this quick tutorial.
+
 ## Prerequisites
 
 Running the Abseil code within this tutorial requires:
