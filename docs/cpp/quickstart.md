@@ -47,7 +47,7 @@ repository on GitHub:
 # Change to the directory where you want to create the code repository
 $ cd ~
 $ mkdir Source; cd Source
-$ git clone https://github.com/abseil/abseil-cpp.git
+$ git clone  https://github.com/abseil/abseil-cpp.git
 Cloning into 'abseil-cpp'...
 remote: Total 1935 (delta 1083), reused 1935 (delta 1083)
 Receiving objects: 100% (1935/1935), 1.06 MiB | 0 bytes/s, done.

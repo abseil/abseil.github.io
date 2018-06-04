@@ -268,7 +268,7 @@ For example, the following code is inefficient:
 
 ```cpp
 // Inefficient code
-std::string s1;
+std::string s1 = "A string";
 s1 = s1 + " another string";
 ```
 
@@ -287,8 +287,8 @@ temporaries:
 
 ```cpp
 // Inefficient code
-string s1 = "A string";
-string another = " and another string";
+std::string s1 = "A string";
+std::string another = " and another string";
 s1 += " and some other string" + another;
 ```
 
@@ -545,7 +545,7 @@ string at run-time, is slower than `absl::StrCat()`. Choose `Substitute()` over
 The Abseil strings library also contains simple utilities for performing string
 matching checks. All of their function parameters are specified as
 `absl::string_view`, meaning that these functions can accept `std::string`,
-`absl::string_view` or nul-terminated C-style strings.
+`absl::string_view` or null-terminated C-style strings.
 
 ```cpp
 // Assume "msg" is a line from a logs entry
