@@ -12,5 +12,7 @@ Over time, we hope to have comprehensive documentation, including examples, for
 all code within Abseil within this guide.
 
 * [Abseil Fundamentals](base)
+* [Meta Library Guide](meta)
+* [Numeric Library Guide](numeric)
 * [Synchronization Guide](synchronization)
 * [Strings Guide](strings)

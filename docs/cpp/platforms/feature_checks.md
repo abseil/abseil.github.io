@@ -64,7 +64,7 @@ When writing preprocessor conditionals, you can either whitelist all platforms
 where a given feature is available, or blacklist all platforms where a given
 feature is missing. Either option has pros and cons:
 
-|----| whitelist |blacklist|
+|| whitelist |blacklist|
 |----|------------|----------|
 |pros|Generally safe, and more likely to build on a new platform.|The compilation fails if a new platform doesn’t support the feature.|
 |cons|The whitelist needs to be extended for each new platform.|Compilation might succeed but runtime behavior might be unexpected, if the interface exists but the implementation is problematic.|
