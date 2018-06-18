@@ -1,12 +1,15 @@
 ---
-title: Abseil and Pre-adopted `std::` types
+title: Abseil and Pre-adopted `std::` Types
 layout: about
 sidenav: side-nav-design.html
 type: markdown
 ---
 
+## Pre-adopted `std::` Types
+
 Abseil’s initial release includes several types that mimic the API of C++17
-vocabulary types: `absl::string_view`, `absl::any`, and `absl::optional`.
+vocabulary types. For example, `absl::string_view`, `absl::any`, and
+`absl::optional` are all C++11 versions of C++17 types.
 
 Like everything else currently in Abseil, these types only require C++11.
 Where there are API designs that require C++14 or C++17, we’ve tried to ensure
