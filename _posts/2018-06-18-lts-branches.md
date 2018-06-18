@@ -9,8 +9,6 @@ category: blog
 excerpt_separator: <!--break-->
 ---
 
-# Long-Term Support (LTS) Branches
-
 By [Tom Manshreck](mailto:shreck@google.com), Abseil Tech Writer
 
 Abseil encourages developers to “live at head” but we understand that
