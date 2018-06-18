@@ -1,11 +1,11 @@
 ---
-title: Contribution Guidelines
+title: Abseil Contribution Guidelines
 layout: community
 sidenav: side-nav-community.html
 type: markdown
 ---
 
-## Abseil Contribution Guidelines
+# Abseil Contribution Guidelines
 
 To contribute, please fork a copy of Abseil at the links below , make your changes to your
 forked repository, and submit pull requests to our master Abseil branch.

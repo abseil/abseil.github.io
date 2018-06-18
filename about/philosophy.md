@@ -1,11 +1,11 @@
 ---
-title: Abseil Philosophy
+title: Why Adopt Abseil?
 layout: about
 sidenav: side-nav-about.html
 type: markdown
 ---
 
-## Why Adopt Abseil?
+# Why Adopt Abseil?
 
 Or: Why the world has room for another collection of C++ utility libraries
 
@@ -30,7 +30,7 @@ types of problems that are important in the industry, and over time we've
 learned how to provide this sort of infrastructure in an evolving but
 maintainable fashion.
 
-### Compatibility With Current and Future C++ Standards
+## Compatibility With Current and Future C++ Standards
 
 Google has developed many abstractions that either match or closely match
 features incorporated into C++14, C++17, and beyond. Using the Abseil versions
@@ -62,7 +62,7 @@ boundaries.
 So, one reason you might want to adopt Abseil: early access to facilities from
 upcoming C++ standard library releases, with a clear migration path.
 
-### Compatibility with Google OSS Projects
+## Compatibility with Google OSS Projects
 
 Over the years, Google's needs for compatibility with other codebases and OSS
 projects have changed.  A decade ago, most of our code was completely internal
@@ -81,9 +81,9 @@ Abseil should be a clear win: these libraries are going to be part of your
 dependency chain anyway, and will be increasingly present in the APIs you
 interact with.
 
-### Upgrade Support
+## Upgrade Support
 
-#### We Recommend That You Choose to Live at Head:
+### We Recommend That You Choose to Live at Head:
 
 We've spoken publicly about Google's internal code base, and our efforts to keep
 that code maintainable as it grows. With over 250M lines of C++ code and nearly
@@ -113,7 +113,7 @@ spent could be spent on more useful things, like actually writing code and
 solving problems for users. Join with Abseil, and stop paying the
 content-management tax!
 
-#### If You Choose to Not Live at Head:
+### If You Choose to Not Live at Head:
 
 * You are of course free to fork Abseil, include it in your project and manage
   dependencies any way that is convenient for your development practices. 
@@ -122,7 +122,7 @@ content-management tax!
   branches. Our expectation is to do this every 6 months and support those
   branches for 2 years.
 
-### Production Experience
+## Production Experience
 
 The libraries we are releasing come with a pedigree: many years of experience
 using these APIs in Google's production environments. We've seen what works and
@@ -145,7 +145,7 @@ without breaking builds or production deployments.  Abseil is full of these
 small features, making this a set of utility libraries well-suited for
 supporting real production issues.
 
-### Different Design Priorities than the Standard
+## Different Design Priorities than the Standard
 
 The C++ standard holds two goals above all else:
 
@@ -185,7 +185,7 @@ normal), Abseil may provide a useful counterpoint to the designs chosen by the
 C++ standard. When we put out something that conflicts with the standard, we'll
 be clear about why we are diverging and try our best to remain interoperable.
 
-### Summary
+## Summary
 
 We are explicitly prioritizing measured progress, careful API design,
 prioritization for what we find to be common needs, and compatibility over time

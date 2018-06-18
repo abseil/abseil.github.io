@@ -5,7 +5,7 @@ sidenav: side-nav-cpp.html
 type: markdown
 ---
 
-## C++ Developer Guide
+# C++ Developer Guide
 
 The Abseil C++ Developer Guide provides programming documentation for
 the Abseil C++ code on

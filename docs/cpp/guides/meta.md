@@ -5,7 +5,7 @@ sidenav: side-nav-cpp.html
 type: markdown
 ---
 
-## The Meta Library
+# The Meta Library
 
 This `meta` library contains C++11-compatible versions of standard
 `<type_traits>` API functions for determining the characteristics of types. Such
