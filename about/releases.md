@@ -46,30 +46,30 @@ Including Abseil code in your project, as long as it is provided as source
 code or within your own binary, is relatively straightfoward. You have a few
 options, listed in order of higher preference:
 
-* Live at HEAD, depend on and build the latest snapshot of Abseil.<br/><br/>
+*   Live at HEAD, depend on and build the latest snapshot of Abseil.
 
-    * *ENCOURAGED*: For now, this requires manually updating the snapshot of
-      Abseil used, for example, within a Bazel `WORKSPACE` file. Note that if
-      you build from source and use an unsupported build system, we can't
-      support you at the moment, though we are open to adding support if you
-      [contact us](mailto:abseil-io@googlegroups.com) or provide us with a pull
-      request.
-<br/><br/>
+    *   *ENCOURAGED*: For now, this requires manually updating the snapshot of
+        Abseil used, for example, within a Bazel `WORKSPACE` file. Note that if
+        you build from source and use an unsupported build system, we can't
+        support you at the moment, though we are open to adding support if you
+        [contact us](mailto:abseil-io@googlegroups.com) or provide us with a pull
+        request.
+
 *   Tie your release to a specific snapshot of Abseil. This can be
-    done in a few ways:<br/><br/>
+    done in a few ways:
 
-    * *ALLOWED*: Build Abseil from source at a Long Term Support (LTS)
-      branch. LTS branches of Abseil are “supported” branches we aim to cut
-      every 6 months, which will be frozen except for critical bug fixes, such
-      as security patches. We enforce an LTS branch's integrity through the use
-      of inline namespaces.
+    *   *ALLOWED*: Build Abseil from source at a Long Term Support (LTS)
+        branch. LTS branches of Abseil are “supported” branches we aim to cut
+        every 6 months, which will be frozen except for critical bug fixes, such
+        as security patches. We enforce an LTS branch's integrity through the use
+        of inline namespaces.
 
-    * *DISCOURAGED*: Build Abseil from source at a specific commit. This is
-      straightforward, but you’re on your own if problems pop up.
+    *   *DISCOURAGED*: Build Abseil from source at a specific commit. This is
+        straightforward, but you’re on your own if problems pop up.
 
-    * *DISCOURAGED*: Copy Abseil code into your project and provide it within
-      your own repository. Obviously, this makes maintenance difficult, though
-      not impossible.
+    *   *DISCOURAGED*: Copy Abseil code into your project and provide it within
+        your own repository. Obviously, this makes maintenance difficult, though
+        not impossible.
 
 ## Options for Including Abseil Code In Your Library
 
@@ -81,23 +81,23 @@ as other binaries or libraries using Abseil. See
 (Building Abseil with the different compiler flags would cause ABI changes
 between different builds of Abseil.)
 
-* *ENCOURAGED*: Distribute your source code, so users build both your library
-  and Abseil at the same time.
+*   *ENCOURAGED*: Distribute your source code, so users build both your library
+    and Abseil at the same time.
 
-* *ALLOWED*: Distribute a *static* library built with an
-  [LTS branch of Abseil][LTS]. Because LTS branches use inline namespaces for
-  all `absl::` symbols, collisions between potential Abseil "versions" should
-  not occur, though your library may incur code bloat.
+*   *ALLOWED*: Distribute a *static* library built with an
+    [LTS branch of Abseil][LTS]. Because LTS branches use inline namespaces for
+    all `absl::` symbols, collisions between potential Abseil "versions" should
+    not occur, though your library may incur code bloat.
 
-* *DISCOURAGED*: Distribute a *static* library not based on an LTS branch of
-  Abseil, that exports no Abseil symbols. This option implies that no Abseil
-  types exist within your library's public API, and all Abseil symbols must be
-  hidden by the linker.
+*   *DISCOURAGED*: Distribute a *static* library not based on an LTS branch of
+    Abseil, that exports no Abseil symbols. This option implies that no Abseil
+    types exist within your library's public API, and all Abseil symbols must be
+    hidden by the linker.
 
-* *DISCOURAGED*: Distribute a *dynamic* library. Abseil does not support dynamic
-  loading or unloading of any shared libraries at this time. We are
-  investigating if we can support dynamic loading without unloading. Consult
-  our [Compatibility Guidelines](https://abseil.io/about/compatibility) when in
-  doubt.
+*   *DISCOURAGED*: Distribute a *dynamic* library. Abseil does not support dynamic
+    loading or unloading of any shared libraries at this time. We are
+    investigating if we can support dynamic loading without unloading. Consult
+    our [Compatibility Guidelines](https://abseil.io/about/compatibility) when in
+    doubt.
 
 [LTS]: https://github.com/abseil/abseil-cpp/blob/master/LTS.md
