@@ -5,7 +5,7 @@ sidenav: side-nav-cpp.html
 type: markdown
 ---
 
-## The Numeric Library
+# The Numeric Library
 
 The `//absl/numeric` library provides only one header file at this time:
 

@@ -5,6 +5,8 @@ sidenav: side-nav-about.html
 type: markdown
 ---
 
+# Introduction to Abseil
+
 Welcome to Abseil! Abseil is an open-source collection of C++ code (compliant to
 C++11) designed to augment the C++ standard library. This document introduces
 Abseil and provides an overview of the code we're providing.

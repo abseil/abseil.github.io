@@ -5,6 +5,8 @@ sidenav: side-nav-cpp.html
 type: markdown
 ---
 
+# Abseil Platforms
+
 The Abseil C++ code is supported on the following platforms. By "platforms",
 we mean the union of operating system, architecture (e.g. little-endian vs.
 big-endian), compiler, and standard library.

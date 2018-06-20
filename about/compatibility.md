@@ -5,7 +5,7 @@ sidenav: side-nav-about.html
 type: markdown
 ---
 
-## Abseil Compatibility Guidelines
+# Abseil Compatibility Guidelines
 
 <p class="note">This is our <b>initial release of Abseil</b> and the
 guidelines spelled out below have become effective as of November 1,
@@ -22,7 +22,7 @@ Put another way: don't do things that make Abseil API maintenance
 tasks harder, and we promise not to break you if at all possible. If
 you misuse Abseil APIs, you're on your own.
 
-### What Users Must (And Must Not) Do
+## What Users Must (And Must Not) Do
 
 * **Do not depend on a compiled representation of Abseil.** We do not
   promise any ABI compatibility &mdash; we intend for Abseil to be
@@ -99,7 +99,7 @@ you misuse Abseil APIs, you're on your own.
   you use the global namespace for anything. If you must, please qualify any
   call that accepts a type provided by Abseil.
 
-### What We Promise
+## What We Promise
 
 * **We will support our code for at least 5 years**. We will support language
   versions, compilers, platforms, and workarounds as needed for 5 years after

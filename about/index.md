@@ -1,11 +1,11 @@
 ---
-title: About
+title: About Abseil
 layout: about
 sidenav: side-nav-about.html
 type: markdown
 ---
 
-## About Abseil
+# About Abseil
 
 Abseil is an open-source collection of C++ library code designed to augment
 the C++ standard library. The Abseil library code is collected from Google's
@@ -31,3 +31,5 @@ For more information about Abseil:
 * Peruse our [Abseil Compatibility Guidelines](/about/compatibility) to
   understand both what we promise to you, and what we expect of you in
   return.
+* Understand [Abseil Release Management](/about/releases) to identify
+  how to use Abseil within your particular development environment.
