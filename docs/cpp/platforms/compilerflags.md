@@ -1,11 +1,11 @@
 ---
-title: Abseil Compiler Guide
+title: Abseil Compiler Flags
 layout: docs
 sidenav: side-nav-cpp.html
 type: markdown
 ---
 
-## Abseil Compiler Flags
+# Abseil Compiler Flags
 
 The Abseil C++ code is compiled using flags indicated within this guide. Our
 objective is to support as many warning flags as possible, to minimize the

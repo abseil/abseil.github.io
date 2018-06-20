@@ -1,11 +1,11 @@
 ---
-title: Compiler Macros Guide
+title: Platform Check Macros
 layout: docs
 sidenav: side-nav-cpp.html
 type: markdown
 ---
 
-## Platform Check Macros
+# Platform Check Macros
 
 C and C++ compilers automatically define some macros that can be used to:
 

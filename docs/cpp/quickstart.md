@@ -1,11 +1,11 @@
 ---
-title: Quickstart
+title: C++ Quickstart
 layout: docs
 sidenav: side-nav-cpp.html
 type: markdown
 ---
 
-## C++ Quickstart
+# C++ Quickstart
 
 This document is designed to allow you to get the Abseil development
 environment up and running. We recommend that each person starting
