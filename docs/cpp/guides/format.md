@@ -15,13 +15,9 @@ string formatting and a number of additional benefits:
 *   Type safety, including native support for `std::string` and
     `absl::string_view`
 *   Reliable behavior independent of standard libraries
-*   Support for the POSIX positional extensions // google3-begin(Internal Type
-    Support)
-*   Supports google3 types such as `Cord`, natively and can be extended to
-    support other types. // google3-end
+*   Support for the POSIX positional extensions
 *   Much faster (generally 2 to 3 times faster) than native `printf` functions
-*   Streamable to a variety of existing sinks // google3-begin(Sink Extensions)
-*   Extensible to other future sinks // google3-end
+*   Streamable to a variety of existing sinks
 
 Additionally, the library includes replacements for `printf()`, `fprintf()`, and
 `snprintf()`.
