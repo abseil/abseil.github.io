@@ -15,4 +15,5 @@ all code within Abseil within this guide.
 * [Meta Library Guide](meta)
 * [Numeric Library Guide](numeric)
 * [Synchronization Guide](synchronization)
+* [StrFormat Guide](format)
 * [Strings Guide](strings)
