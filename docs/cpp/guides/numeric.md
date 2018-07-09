@@ -1,5 +1,5 @@
 ---
-title: The Numeric Library
+title: "The Numeric Library"
 layout: docs
 sidenav: side-nav-cpp.html
 type: markdown

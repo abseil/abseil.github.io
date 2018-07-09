@@ -1,5 +1,5 @@
 ---
-title: Feature Check Macros
+title: "Feature Check Macros"
 layout: docs
 sidenav: side-nav-cpp.html
 type: markdown

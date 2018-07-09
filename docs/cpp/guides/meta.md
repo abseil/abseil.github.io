@@ -1,5 +1,5 @@
 ---
-title: The Meta Library
+title: "The Meta Library"
 layout: docs
 sidenav: side-nav-cpp.html
 type: markdown

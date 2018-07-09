@@ -1,5 +1,5 @@
 ---
-title: Platform Check Macros
+title: "Platform Check Macros"
 layout: docs
 sidenav: side-nav-cpp.html
 type: markdown

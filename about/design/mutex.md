@@ -1,5 +1,5 @@
 ---
-title: `absl::Mutex`
+title: "`absl::Mutex`"
 layout: about
 sidenav: side-nav-design.html
 type: markdown

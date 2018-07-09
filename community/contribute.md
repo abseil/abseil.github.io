@@ -1,5 +1,5 @@
 ---
-title: Abseil Contribution Guidelines
+title: "Abseil Contribution Guidelines"
 layout: community
 sidenav: side-nav-community.html
 type: markdown

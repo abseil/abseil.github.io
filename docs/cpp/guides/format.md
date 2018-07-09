@@ -1,5 +1,5 @@
 ---
-title: absl::StrFormat()
+title: "absl::StrFormat()"
 layout: docs
 sidenav: side-nav-cpp.html
 type: markdown

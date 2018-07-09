@@ -1,5 +1,5 @@
 ---
-title: C++ Platform Guides
+title: "C++ Platform Guides"
 layout: docs
 sidenav: side-nav-cpp.html
 type: markdown
