@@ -203,7 +203,7 @@ Looking at both the [generator example](https://godbolt.org/g/mCKfnr) and
 Gor), perhaps the real question is this: how confident are we (the committee 
 and the community) that `promise_type` and the other coroutine customization 
 points are the right design?  Clearly they are a correct and functional design 
-- as always, I'm terribly impressed with the end result of the code that uses 
+; as always, I'm terribly impressed with the end result of the code that uses 
 all of this. I'm less convinced that all of these apparent knobs are proveably 
 the right set of basic operations and customization.
 
