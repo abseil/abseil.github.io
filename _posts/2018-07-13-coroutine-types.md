@@ -140,7 +140,7 @@ That said, here is the complete callable API for the proposed `std::task`:
 template <typename T> class [[nodiscard]] task {
   public:
     task(task&& rhs) noexcept;
-     ~task();
+    ~task();
     auto operator co_await();  // exposition only
 };   
 ```
