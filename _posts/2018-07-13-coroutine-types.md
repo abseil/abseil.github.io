@@ -19,6 +19,7 @@ for the C++ standard library) during the Rapperswil meeting this summer. It was
 here was disconcerting. I want to point out what LEWG saw before we commit to
 this direction irrevocably - coroutine types as currently designed are baffling.
 
+<!--break-->
 
 ## Background
 
