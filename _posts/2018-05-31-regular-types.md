@@ -579,7 +579,7 @@ Given a `const T` (and some program knowledge), we can perform any operation
 it or any of its API preconditions. Regular+thread-compatible types allow us
 this invariant with no constraints on the program or that operation. Lesser
 invariants require more knowledge - in return we tend to get lower-overhead,
-which is a very C++ style of tradeoff.
+which is a very C++-style of tradeoff.
 
 ## Evaluating `string_view`
 
