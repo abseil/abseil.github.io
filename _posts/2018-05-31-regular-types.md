@@ -681,7 +681,7 @@ still behaves as if it were Regular.
 
 ## Non-owning Reference Parameters
 
-C++ is a language that is very concerned with 2 things: types, and efficiency.
+C++ is a language that is very concerned with 2 things: types and efficiency.
 The type system for C++ is more complex than most other languages by a
 significant margin: this is the only mainstream language that I can imagine
 where it's reasonable to envision a proposal for an infinite family of Null
