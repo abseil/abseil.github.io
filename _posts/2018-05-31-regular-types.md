@@ -828,7 +828,7 @@ If you have got the option, make your value types Regular and thread-compatible
 with no mutable or shared state. Do not take any of the above as justification
 to break that commandment lightly.
 
-That said, Regular as everyone describes it does gloss over some things - we
+That said, Regular - as everyone describes it - does gloss over some things: we
 operate on Regular types by reference in standard algorithms constantly, and
 those operations aren't safe without some form of structural knowledge of the
 program. Usually that knowledge is of the form "this instance isn't shared to
