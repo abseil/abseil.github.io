@@ -53,8 +53,8 @@ type, which matches the built-in type semantics, thereby making our user-defined
 types behave like built-in types as well."
 
 A vastly-simplified summary, that has become popular in C++ design in later
-years, is "do as the ints do." Generally speaking, for a snippet of generic code
-operating on some type `T`, if it works properly on ints and also works properly
+years, is "do as the `int`s do." Generally speaking, for a snippet of generic code
+operating on some type `T`, if it works properly on `int`s and also works properly
 for your new type (similarly bug-free/comprehensible/etc.), you've designed a
 reasonable type.
 
@@ -202,7 +202,7 @@ traditional logician. In general, we focus on predicates that observe "the
 value" rather than the identity of the instance.
 
 Stepanov goes on to describe the built-in notion of equality for most types:
-bitwise equality for ints and pointers. Floating point values are glossed over a
+bitwise equality for `int`s and pointers. Floating-point values are glossed over a
 bit via "although there are sometimes minor deviations like distinct positive
 and negative zero representations." From this as a basis, we can begin to build
 up a definition of equality for aggregates, but immediately get into trouble
@@ -343,7 +343,7 @@ of its API may result in a data race.
     type causes a data race. Any call to a non-`const` API means that instance
     must be used with external synchronization. C++ guarantees that standard
     library types are at least thread-compatible. This follows from the general
-    pattern of Regular design, and "do as the ints do" as `int` is
+    pattern of Regular design, and "do as the `int`s do" as `int` is
     thread-compatible. In most cases, this is in-line with the philosophy of
     C++ - you do not pay for what you do not use. If you operate on an
     `optional<int>`, you can be sure that it isn't grabbing a mutex. On the
