@@ -125,7 +125,7 @@ era. This is true even though `int` doesn’t have a move constructor: it is
 still move constructible (can be constructed from a temporary), and this is
 even the proper design for the type. Move+copy should be considered an overload
 set for optimization purposes. For more information, see
-[TotW 148](/tips/148))
+[TotW 148](/tips/148).
 
 In either case, it's important to bear a few (related) ideas in mind:
 
