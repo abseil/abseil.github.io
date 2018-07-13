@@ -200,7 +200,7 @@ nothing more than "asynchrony is complicated" which should come as little
 surprise.
 
 Looking at both the [generator example](https://godbolt.org/g/mCKfnr) and 
-[task<> example](https://godbolt.org/g/mCKfnr) (both graciously provided by 
+[task<> example](https://wandbox.org/permlink/Xb1Lu7DMmm1NVkNC) (both graciously provided by 
 Gor), perhaps the real question is this: how confident are we (the committee 
 and the community) that `promise_type` and the other coroutine customization 
 points are the right design?  Clearly they are a correct and functional design 
