@@ -46,7 +46,7 @@ but not nearly as clear as direct style programming.
 
 Coroutines are an attempt to provide a language-level ability to write in a 
 direct style and execute in a continuation-passing style. For example, consider
-an example from [P1056](wg21.link/P1056):
+an example from [P1056](http://wg21.link/P1056):
 
 
 ```cpp
@@ -159,7 +159,7 @@ this do not actually show you what you expect to see.
 This would represent an unusual step for type design - producing types whose 
 interface does not (and arguably cannot) describe its expected usage. IDEs are 
 going to choke on this, autocompleters are useless, 
-[cppreference.com](cppreference.com) documentation will be novel at best.
+[cppreference.com](http://cppreference.com) documentation will be novel at best.
 
 The
 [simplest current implementation of task<>](https://wandbox.org/permlink/Xb1Lu7DMmm1NVkNC)
@@ -167,12 +167,12 @@ The
 such a type is detailing its interaction with the coroutine machinery and 
 definition of its related promise type. 
 
-It's well worth spending a few minutes reading through 
-[P1056](wg21.link/P1056r0) and the above implementation link. It is certainly 
-possible that coroutines require this complexity and subtlety - it is a 
-fundamental extension to basic programming concepts. But we should be sure that 
-this is well understood including its impact on the language, library, 
-documentation, and the rest of the ecosystem. We should also be sure that we 
+It's well worth spending a few minutes reading through
+[P1056](http://wg21.link/P1056r0) and the above implementation link. It is
+certainly possible that coroutines require this complexity and subtlety - it is
+a fundamental extension to basic programming concepts. But we should be sure
+that this is well understood including its impact on the language, library,
+documentation, and the rest of the ecosystem. We should also be sure that we
 have found the right abstraction boundaries, not just something that works.
 
 ## Coroutine Type Design
@@ -200,7 +200,7 @@ nothing more than "asynchrony is complicated" which should come as little
 surprise.
 
 Looking at both the [generator example](https://godbolt.org/g/mCKfnr) and 
-[task<> example](https://godbolt.org/g/mCKfnr) (both graciously provided by 
+[task<> example](https://wandbox.org/permlink/Xb1Lu7DMmm1NVkNC) (both graciously provided by 
 Gor), perhaps the real question is this: how confident are we (the committee 
 and the community) that `promise_type` and the other coroutine customization 
 points are the right design?  Clearly they are a correct and functional design 
@@ -208,12 +208,12 @@ points are the right design?  Clearly they are a correct and functional design
 all of this. I'm less convinced that all of these apparent knobs are proveably 
 the right set of basic operations and customization.
 
-I'm not sure what the better answer is, and I have largely been uninvolved in 
-my colleagues' proposal ([P1063](wg21.link/p1063)) - I'm not sure that such a 
-proposal would produce clearer types or customization points that I was more 
-confident in. But even absent a better proposal, I want the community to look 
-at this and pause. Is anyone else uncomfortable with designs like these? Are we 
-sure we want to rush to include coroutines in the next C++ release, even with 
+I'm not sure what the better answer is, and I have largely been uninvolved in my
+colleagues' proposal ([P1063](http://wg21.link/p1063)) - I'm not sure that such
+a proposal would produce clearer types or customization points that I was more
+confident in. But even absent a better proposal, I want the community to look at
+this and pause. Is anyone else uncomfortable with designs like these? Are we
+sure we want to rush to include coroutines in the next C++ release, even with
 these design smells?
 
 As is often the case, I urge the committee and community to take the time to be 
