@@ -57,6 +57,10 @@ pre, pre.prettyprint {
   padding: 9.5px !important;
 }
 
+pre.bad-code {
+  background-color:#fbe9e7;
+}
+
 pre code {
   white-space: pre;
 
