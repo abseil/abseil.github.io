@@ -1,5 +1,5 @@
 ---
-title: Introduction to Abseil
+title: "Introduction to Abseil"
 layout: about
 sidenav: side-nav-about.html
 type: markdown

@@ -1,5 +1,5 @@
 ---
-title: Abseil Release Management
+title: "Abseil Release Management"
 layout: about
 sidenav: side-nav-about.html
 type: markdown

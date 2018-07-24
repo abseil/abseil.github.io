@@ -1,5 +1,5 @@
 ---
-title: C++ Programming Guides
+title: "C++ Programming Guides"
 layout: docs
 sidenav: side-nav-cpp.html
 type: markdown

@@ -1,5 +1,5 @@
 ---
-title: Abseil Compatibility Guidelines
+title: "Abseil Compatibility Guidelines"
 layout: about
 sidenav: side-nav-about.html
 type: markdown

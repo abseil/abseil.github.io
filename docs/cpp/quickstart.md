@@ -1,5 +1,5 @@
 ---
-title: C++ Quickstart
+title: "C++ Quickstart"
 layout: docs
 sidenav: side-nav-cpp.html
 type: markdown
