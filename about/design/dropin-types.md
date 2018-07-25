@@ -1,5 +1,5 @@
 ---
-title: Pre-adopted `std::` Types
+title: "Pre-adopted `std::` Types"
 layout: about
 sidenav: side-nav-design.html
 type: markdown

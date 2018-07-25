@@ -1,5 +1,5 @@
 ---
-title: Why Adopt Abseil?
+title: "Why Adopt Abseil?"
 layout: about
 sidenav: side-nav-about.html
 type: markdown

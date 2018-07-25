@@ -1,5 +1,5 @@
 ---
-title: StrFormat Design Notes
+title: "StrFormat Design Notes"
 layout: about
 sidenav: side-nav-design.html
 type: markdown
