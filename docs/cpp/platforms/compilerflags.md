@@ -25,15 +25,6 @@ the
 [copts.bzl](https://github.com/abseil/abseil-cpp/blob/master/absl/copts.bzl)
 file.
 
-<p class="note">
-Note that, in general, Abseil treats all compiler <i>warnings</i> as
-<b>errors</b> (<code>-Werror</code> in GCC/Clang, <code>/WX</code> in MSVC),
-and our Kokoro continuous integration tests do likewise. However, we do not
-enable "warnings as errors" within the GCC and Clang flag sets here; we can't
-control what warnings future compilers may add to the existing flag sets. (We do
-enable warnings as errors within the MSVC flag set.)
-</p>
-
 ## Abseil Warning Flags
 
 At a high level, Abseil defines two sets of flags:
@@ -108,7 +99,7 @@ The Clang compiler flag set has the following characteristics:
   abstractions (mostly internal) require them. In general, however, you should
   avoid global constructors.
 * `-Wpadded` and `-Wpacked` are disabled because these flags are typically
-  used as advisory warnings, but we treat warnings as errors within Abseil code.
+  used as advisory warnings.
 * `-Wundef` is disabled because some Abseil dependencies
   ([CCTZ](https://github.com/google/cctz) and
   [pcg_random](http://www.pcg-random.org/)) use `#undef`. (We only do so on
@@ -135,10 +126,7 @@ and has the following characteristics:
 
 * All "level 3" flags are set via the `\W3` flag. (See
   [Warning Levels](https://msdn.microsoft.com/en-us/library/thxezb7y.aspx)).
-* All warnings are treated as errors (as is the case above for Clang and GCC)
-  via the `\WX` flag.
-* The following flags are disabled because they are advisory, and ignoring them
-  is better than treating them as errors:
+* The following flags are disabled because they are advisory only:
     * `/wd4005` prevents warnings about macro redefinitions.
     * `/wd4068` prevents warnings on unknown pragmas.
     * `/wd4244` prevents warnings on implicit conversions.

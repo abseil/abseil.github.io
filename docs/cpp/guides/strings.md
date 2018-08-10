@@ -566,7 +566,8 @@ an equivalent member function would exhibit; e.g. `s.Contains(x)` ==>
 ## Converting to and from Numeric Types {#numericConversion}
 
 Specialty functions for converting strings to numeric types within the
-`absl/strings` library are defined within [numbers.h](numbers.h). The following
+`absl/strings` library are defined within
+[numbers.h](https://github.com/abseil/abseil-cpp/blob/master/absl/strings/numbers.h). The following
 functions are of particular use:
 
 *   `absl::SimpleAtoi()` converts a string into integral types.
