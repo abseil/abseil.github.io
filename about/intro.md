@@ -69,7 +69,7 @@ For more information about Abseil:
 
 * Walk through the Abseil [C++ Quickstart](/docs/cpp/quickstart) to set up your
   development environment and test out the code.
-* Read [Why Adopt Abseil](/about/philosophy) to understand our design
+* Read [Why Adopt Abseil](philosophy) to understand our design
   philosophy.
-* Peruse our [Abseil Compatibility Guidelines](/about/compatibility) to
+* Peruse our [Abseil Compatibility Guidelines](compatibility) to
   understand both what we promise to you, and what we expect of you in return.

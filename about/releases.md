@@ -18,7 +18,8 @@ library.
 
 ## Long Term Support (LTS) Branches
 
-Abseil encourages developers to ["live at head"](/blog/20171004-cppcon-plenary)
+Abseil encourages developers to
+["live at head"](http://abseil.io/blog/20171004-cppcon-plenary)
 but we understand that philosophy may not work for everyone. We are therefore
 providing snapshots of the Abseil codebase. These snapshots are available as
 "Long Term Support" (LTS) branches of Abseil, and we intend to provide a new
@@ -72,7 +73,7 @@ Including Abseil code in your library requires more care, as that library in
 turn may be used by other projects that depend on Abseil. In particular, to
 avoid ODR violations, your library must be built with the same compiler flags
 as other binaries or libraries using Abseil. See
-[Abseil Compiler Flags](https://abseil.io/docs/cpp/platforms/compilerflags).
+[Abseil Compiler Flags](/docs/cpp/platforms/compilerflags).
 (Building Abseil with the different compiler flags would cause ABI changes
 between different builds of Abseil.)
 
@@ -89,7 +90,7 @@ between different builds of Abseil.)
 * *DISCOURAGED*: Distribute a *dynamic* library. Abseil does not support dynamic
   loading or unloading of any shared libraries at this time. We are
   investigating if we can support dynamic loading without unloading. Consult
-  our [Compatibility Guidelines](https://abseil.io/about/compatibility) when in
+  our [Compatibility Guidelines](compatibility) when in
   doubt.
 
 [LTS]: https://github.com/abseil/abseil-cpp/blob/master/LTS.md

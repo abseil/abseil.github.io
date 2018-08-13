@@ -102,7 +102,8 @@ The Base library's configuration header files consist of the following:
 * `config.h`<br />
   Provides macros for determining platform and compiler support.
   For more information, consult the
-  [Feature Check Macros](/docs/cpp/platforms/feature_checks) guide.
+  [Feature Check Macros](/docs/cpp/platforms/feature_checks)
+  guide.
 
 Additionally, the Base library includes one utility header file:
 

@@ -24,12 +24,12 @@ a whole.
 
 For more information about Abseil:
 
-* Consult our [Abseil Introduction](/about/intro)
+* Consult our [Abseil Introduction](intro)
 * Run through the Abseil [C++ Quickstart](/docs/cpp/quickstart)
-* Read [Why Adopt Abseil](/about/philosophy) to understand our design
+* Read [Why Adopt Abseil](philosophy) to understand our design
   philosophy
-* Peruse our [Abseil Compatibility Guidelines](/about/compatibility) to
+* Peruse our [Abseil Compatibility Guidelines](compatibility) to
   understand both what we promise to you, and what we expect of you in
   return.
-* Understand [Abseil Release Management](/about/releases) to identify
+* Understand [Abseil Release Management](releases) to identify
   how to use Abseil within your particular development environment.
