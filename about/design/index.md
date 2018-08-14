@@ -1,5 +1,5 @@
 ---
-title: Design Notes
+title: "Design Notes"
 layout: about
 sidenav: side-nav-design.html
 type: markdown

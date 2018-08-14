@@ -1,5 +1,5 @@
 ---
-title: Strings Library
+title: "Strings Library"
 layout: docs
 sidenav: side-nav-cpp.html
 type: markdown
@@ -95,14 +95,14 @@ Examples:
 // Splits the given string on commas. Returns the results in a
 // vector of strings. (Data is copied once.)
 std::vector<std::string> v = absl::StrSplit("a,b,c", ',');  // Can also use ","
-// v[0] == "a", v[1] == "b", v[3] == "c"
+// v[0] == "a", v[1] == "b", v[2] == "c"
 
 // Splits the string as in the previous example, except that the results
 // are returned as `absl::string_view` objects, avoiding copies. Note that
 // because we are storing the results within `absl::string_view` objects, we
 // have to ensure that the input string outlives any results.
 std::vector<absl::string_view> v = absl::StrSplit("a,b,c", ',');
-// v[0] == "a", v[1] == "b", v[3] == "c"
+// v[0] == "a", v[1] == "b", v[2] == "c"
 ```
 
 `StrSplit()` splits strings using a passed *Delimiter* object. (See
@@ -514,7 +514,7 @@ SubstituteAndAppend(&s, "My name is $0 and I am $1 years old.", "Bob", 5);
 // Produces the string "Hi. My name is Bob and I am 5 years old."
 ```
 
-Note however, that `absl::Subtitute()`, because it requires parsing a format =
+Note however, that `absl::Substitute()`, because it requires parsing a format
 string at run-time, is slower than `absl::StrCat()`. Choose `Substitute()` over
 `StrCat()` only when code clarity is more important than speed.
 

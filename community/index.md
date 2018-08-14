@@ -1,5 +1,5 @@
 ---
-title: The Abseil Community
+title: "The Abseil Community"
 layout: community
 sidenav: side-nav-community.html
 type: markdown

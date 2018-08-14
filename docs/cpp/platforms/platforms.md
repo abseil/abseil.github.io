@@ -1,5 +1,5 @@
 ---
-title: Abseil Platforms
+title: "Abseil Platforms"
 layout: docs
 sidenav: side-nav-cpp.html
 type: markdown
