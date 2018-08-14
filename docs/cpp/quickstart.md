@@ -17,7 +17,7 @@ Running the Abseil code within this tutorial requires:
 
 * A compatible platform (e.g. Windows, Mac OS X, Linux, etc.). Most platforms
   are fully supported. Consult the
-  [Platforms Guide](/docs/cpp/platforms/platforms) for more information.
+  [Platforms Guide](platforms/platforms) for more information.
 * A compatible C++ compiler *supporting at least C++11*. Most major compilers
   are supported.
 * [Git](https://git-scm.com/) for interacting with the Abseil source code
@@ -175,10 +175,11 @@ Congratulations! You've created your first binary using Abseil code.
 ## What's Next
 
 * Read our [design philosophy](/about/philosophy) and
-  [compatibility guidelines](/about/compatibility), if you haven't
-  already.
+  [compatibility guidelines](/about/compatibility), if
+  you haven't already.
 * Read through the C++ developer guide.
 * Consult the Abseil C++ .h header files, which contain valuable reference
   information.
-* Read our [contribution guidelines](/community/contribute), if you intend to
-  submit code to our repository.
+* Read our
+  [contribution guidelines](/community/contribute), if
+  you intend to submit code to our repository.
