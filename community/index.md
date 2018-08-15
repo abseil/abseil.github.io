@@ -24,10 +24,11 @@ our community a harassment-free experience for everyone, regardless of age, body
 size, disability, ethnicity, gender identity and expression, level of
 experience, nationality, personal appearance, race, religion, or sexual identity
 and orientation. To faciliate this open environment, please review our
-<a href="{{ site.baseurl }}/community/code-of-conduct">code of conduct</a>.
+[Code of Conduct](code-of-conduct).
 
 ## Mailing List
 
 Any questions or suggestions? Just want to be in the loop of what is going on
-with the project? Join the Abseil mailing list at 
-<a href="https://groups.google.com/forum/#!forum/abseil-io" target="_blank">abseil-io@googlegroups.com</a>.
+with the project? Join the Abseil mailing list at
+<a href="https://groups.google.com/forum/#!forum/abseil-io" target="_blank">
+abseil-io@googlegroups.com</a>.
