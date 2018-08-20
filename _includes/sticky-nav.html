@@ -19,7 +19,8 @@
           {% assign current = page.url | downcase | split: '/' %}
           <li><a href="{{ site.baseurl }}/about" {% if current[1] == 'about' %}class='current'{% endif %}>About</a></li>
           <li><a href="{{ site.baseurl }}/docs/cpp" {% if current[1] == 'cpp.html' %}class='current'{% endif %}>C++ Guide</a></li>
-		  <li><a href="{{ site.baseurl }}/tips/" {% if current[1] == 'tips' %}class='current'{% endif %}>C++ Tips</a></li>
+          <li><a href="{{ site.baseurl }}/tips/" {% if current[1] == 'tips' %}class='current'{% endif %}>C++ Tips</a></li>
+          <li><a href="{{ site.baseurl }}/docs/python" {% if current[1] == 'python.html' %}class='current'{% endif %}>Python Guide</a></li>
           <li><a href="{{ site.baseurl }}/blog/" {% if current[1] == 'blog' %}class='current'{% endif %}>Blog</a></li>
           <li><a href="{{ site.baseurl }}/community/" {% if current[1] == 'community' %}class='current'{% endif %}>Community</a></li>
         </ul>
