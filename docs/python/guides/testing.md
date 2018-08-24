@@ -9,11 +9,11 @@ type: markdown
 
 ## Introduction
 
-Abseil Python's Testing library is similar to Python's standard `unittest`
+Abseil Python's testing library is similar to Python's standard `unittest`
 module (sometimes referred to as PyUnit) but offers some additional useful
 features on top of the standard library, such as interfacing with Abseil Flags.
 
-When using Abseil Python Test, take the following steps in your unit tests:
+To use the Abseil testing library, do the following in your unit tests:
 
 * import the `absltest` module
 * import the `flags` module, which gives you access to the variables
@@ -33,7 +33,7 @@ The pattern is simple and common to most xUnit frameworks. Basically:
 *   `main()` scans the current file for classes derived from `TestCase`
 *   `main()` then scans each class for methods prefixed by `"test"` (e.g.
     `testInitialize(self):`)
-*   then for each class and each test method it:
+*   For each class and each test method, the framework:
     *   instantiates the class
     *   calls the `setUp()` method, if one exists
     *   try:
@@ -54,8 +54,8 @@ Validation methods such as `assertEqual()` raise an exception on failure,
 which terminates the current test method. Unit test execution will continue with
 the remaining test methods.
 
-Additional methods, inherited from `absltest`, are available to
-validate results:
+Additional methods, inherited from `absltest`, are available to validate
+results:
 
 *   `self.assertTrue`
 *   `self.assertFalse`
@@ -63,11 +63,11 @@ validate results:
 *   `self.assertNotEqual`
 *   `self.fail`
 
-There are many more methods available than the five above; some are in Python's
-built-in [unittest.TestCase](https://docs.python.org/2/library/unittest.html#unittest.TestCase) while others
+The Abseil testing library contains many more methods than the five above; some
+are in Python's built-in [unittest.TestCase](https://docs.python.org/2/library/unittest.html#unittest.TestCase) while others
 are in Abseil Python's subclass [absl.testing.absltest](https://github.com/abseil/abseil-py/blob/master/absl/testing/absltest.py).
 
 ### Example Code
 
-More examples are forthcoming, but for now, see [absl-py's own tests](https://github.com/abseil/abseil-py/blob/master/absl/tests/app_test.py) for
-examples of how `absltest` is used.
+More examples are forthcoming, but for now please see [absl-py's own tests](https://github.com/abseil/abseil-py/blob/master/absl/tests/app_test.py) for
+examples of how to use `absltest`.

@@ -11,12 +11,14 @@ Abseil has its own library for logging in Python. It is implemented on top of
 the standard logging module in Python (described in
 [PEP282](http://legacy.python.org/dev/peps/pep-0282/)), which is good if you're
 already familiar with that library. This section mentions the basics of Abseil's
-logging library. See [the source](https://github.com/abseil/abseil-py/blob/master/absl/logging/__init__.py)
+logging library. See the [source](https://github.com/abseil/abseil-py/blob/master/absl/logging/__init__.py)
 for more details.
 
 **Dependencies:**
 
-    from absl import logging
+```python
+from absl import logging
+```
 
 **Example code:**
 
