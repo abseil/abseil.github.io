@@ -9,8 +9,8 @@ category: blog
 excerpt_separator: <!--break-->
 ---
 
-By [Deanna Garcia](garciadeannam5@gmail.com) and
-[Hugo Gonzalez](hugogonzalez810@gmail.com), Abseil Interns
+By [Deanna Garcia](mailto:garciadeannam5@gmail.com) and
+[Hugo Gonzalez](mailto:hugogonzalez810@gmail.com), Abseil Interns
 
 Abseil wants to help developers avoid common mistakes unique to our collection
 of libraries. Therefore, we have developed a set of clang-tidy checks for
