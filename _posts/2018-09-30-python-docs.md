@@ -1,5 +1,5 @@
 ---
-title: "Abseil Python Quickstart and Programming Guides are Here!"
+title: "Abseil Python Docs are Here!"
 layout: blog
 sidenav: side-nav-blog.html
 published: true
