@@ -15,8 +15,7 @@ the [Programming Guides](/docs/python/guides) for details about specific modules
 Running the Abseil code within this tutorial requires the following:
 
 * A compatible platform (e.g. Windows, Mac OS X, Linux, etc.). Most platforms
-  are fully supported. Consult the
-  [Platforms Guide](platforms/platforms) for more information.
+  are fully supported.
 * Python 2 or 3.
 * [`pip`](https://pypi.org/project/pip/)
 * [Git](https://git-scm.com/) for interacting with the Abseil source code
