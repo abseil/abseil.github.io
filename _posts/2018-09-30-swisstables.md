@@ -30,7 +30,7 @@ access to APIs from C++17 and C++20.
 
 ### `absl::flat_hash_map` and `absl::flat_hash_set`
 
-![Flat Hash Map Memory Layout](/img/flat-hash-map.svg){width="50%" style="margin:5px;"}
+![Flat Hash Map Memory Layout](/img/flat_hash_map.svg){width="50%" style="margin:5px;"}
 
 The "flat" Swiss tables should be your default choice. They store their 
 `value_type` inside the container's main array to avoid memory indirections. 
@@ -41,7 +41,7 @@ If you require pointer stability or your values are large, consider using an
 
 ## # `absl::node_hash_map` and `absl::node_hash_set`
 
-![Node Hash Map Memory Layout](img/node-hash-map.svg){width="50%" style="margin:5px;"}
+![Node Hash Map Memory Layout](img/node_hash_map.svg){width="50%" style="margin:5px;"}
 
 The "node" Swiss tables allocate their `value_type` in nodes outside of the 
 main array (like as in `std::unordered_map`). Because of the separate 
