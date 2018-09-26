@@ -28,6 +28,8 @@ work of a great many people.
 Swiss Tables boast improvements to efficiency and provide C++11 codebases early
 access to APIs from C++17 and C++20.
 
+These hash tables live within the [Abseil `container` library][container-link].
+
 ### `absl::flat_hash_map` and `absl::flat_hash_set`
 
 <img src="/img/flat_hash_map.svg" style="margin:5px;width:30%"
@@ -87,3 +89,4 @@ library.
 
 [cppcon-talk]: https://www.youtube.com/watch?v=ncHmEUmJZf4&t=3s
 [std-hash]: https://en.cppreference.com/w/cpp/utility/hash
+[container-link]: https://github.com/abseil/abseil-cpp/tree/master/absl/container
