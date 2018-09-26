@@ -48,15 +48,17 @@ If you require pointer stability or your values are large, consider using an
   alt="Node Hash Map Memory Layout"/>
 
 The "node" Swiss tables allocate their `value_type` in nodes outside of the 
-main array (like as in `std::unordered_map`). Because of the separate 
-allocation, they provide pointer stability (the address of objects stored in 
-the map does not change) for the stored data and empty slots only require 8 
-bytes. Additionally, they can store things that are neither moveable nor 
-copyable.
+main array (as in `std::unordered_map`). Because of the separate allocation,
+they provide pointer stability (the address of objects stored in the map does
+not change). As well, the stored data and empty slots only require 8 bytes. 
+Additionally, they can store things that are neither moveable nor copyable.
 
 We generally recommend that you use
 `absl::flat_hash_map<K, std::unique_ptr<V>>` instead of
 `absl::node_hash_map<K, V>`.
+
+For more information about Swiss tables, see the
+[Abseil `container` library documentation][container-docs].
 	
 ## The `absl::Hash` hashing framework
 
@@ -67,17 +69,17 @@ The [`absl::Hash` library][hash-link] consists of two parts:
 *   A generic hashing framework for specializing hashing behavior and making user-defined types hashable
 
 This library is designed to be used as a replacement for 
-[`std::hash`][std-hash] and the various other hash functors used in google3. It 
-provides several advantages over them:
+[`std::hash`][std-hash] and the various other hash functors. It provides
+several advantages over them:
 
 *   It can hash objects of almost any standard type, including `std::pair`, 
-    `std::tuple`, and most standard containers
+    `std::tuple`, and most standard containers.
 *   It can be extended to support user-defined types. Our goal is that if it 
     makes sense to hash an object of type `Foo`, then `absl::Hash<Foo>` will 
 	just work. These extensions are easy to write and efficient to execute.
 
 Importantly, the underlying hash algorithm can be changed without modifying
-user code, which allows us to improve both it, and types which utilize 
+user code, which allows us to improve both it and types which utilize 
 `absl::Hash` over time. For example, we might wish to change the hashing 
 algorithm within a container to improve performance and to defend against some
 hash-flooding attacks.
@@ -86,8 +88,12 @@ The `absl::Hash` framework is the default hash implementation for the Swiss
 tables and does not need to be explicitly specified when working with that 
 library.
 
+For more information, see the [Abseil `hash` library documentation][hash-docs].
+
 
 [cppcon-talk]: https://www.youtube.com/watch?v=ncHmEUmJZf4&t=3s
 [std-hash]: https://en.cppreference.com/w/cpp/utility/hash
 [container-link]: https://github.com/abseil/abseil-cpp/tree/master/absl/container
 [hash-link]: https://github.com/abseil/abseil-cpp/tree/master/absl/hash
+[hash-docs]: http://abseil.io/docs/cpp/guides/hash
+[container-docs]: http://abseil.io/docs/cpp/guides/container
