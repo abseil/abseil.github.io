@@ -1,5 +1,5 @@
 ---
-title: "Swiss Table and <code>absl::Hash</code>"
+title: "Swiss Tables and <code>absl::Hash</code>"
 layout: blog
 sidenav: side-nav-blog.html
 published: true
