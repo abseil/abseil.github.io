@@ -1,5 +1,5 @@
 ---
-title: "Swiss Table and absl::Hash"
+title: "Swiss Table and `absl::Hash`"
 layout: blog
 sidenav: side-nav-blog.html
 published: true
@@ -12,6 +12,10 @@ excerpt_separator: <!--break-->
 By [Matt Kulukundis](mailto:kfm@google.com) and
 [Sam Benzaquen](mailto:sbenza@google.com))
 
+We are extremely pleased to announce the availability of the new “Swiss Table” 
+family of hashtables in Abseil and the `absl::Hash` hashing framework that 
+allows easy extensibility for user defined types.
+
 Last year at CppCon, We presented a [talk][cppcon-talk] on a new hashtable that
 we were rolling out across Google’s codebase. When asked about its release 
 date, we may have been a touch optimistic. But hopefully it will have been 
@@ -19,23 +23,25 @@ worth the wait. As an added bonus, this release also comes with an entirely new
 framework for hashing your types. As with all things of this size, this is the 
 work of a great many people.
 
-We are extremely pleased to announce the availability of the new “Swiss Table” 
-family of hashtables in Abseil and the `absl::Hash` hashing framework that 
-allows easy extensibility for user defined types.
+<!--break-->
 
 Swiss Tables boast improvements to efficiency and provide C++11 codebases early
 access to APIs from C++17 and C++20.
 
-## `absl::flat_hash_map` and `absl::flat_hash_set`
+### `absl::flat_hash_map` and `absl::flat_hash_set`
+
+![Flat Hash Map Memory Layout](/img/flat-hash-map.svg){width="50%" style="margin:5px;"}
 
 The "flat" Swiss tables should be your default choice. They store their 
 `value_type` inside the container's main array to avoid memory indirections. 
 Because they move data when they rehash, elements do not get pointer stability. 
-If you require pointer stability or your values are large, consider using and 
+If you require pointer stability or your values are large, consider using an
 `absl::node_hash_map` or `absl::node_hash_set` (or an
 `absl::flat_hash_map<Key, std::unique_ptr<Value>>`).
 
-## `absl::node_hash_map` and `absl::node_hash_set`
+## # `absl::node_hash_map` and `absl::node_hash_set`
+
+![Node Hash Map Memory Layout](img/node-hash-map.svg){width="50%" style="margin:5px;"}
 
 The "node" Swiss tables allocate their `value_type` in nodes outside of the 
 main array (like as in `std::unordered_map`). Because of the separate 
