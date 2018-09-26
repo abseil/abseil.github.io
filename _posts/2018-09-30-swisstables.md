@@ -60,7 +60,7 @@ We generally recommend that you use
 	
 ## The `absl::Hash` hashing framework
 
-The `absl::Hash` library consists of two parts:
+The [`absl::Hash` library][hash-link] consists of two parts:
 
 *   `absl::Hash<T>`, a concrete hash functor object, which you can use out of 
 	the box
@@ -90,3 +90,4 @@ library.
 [cppcon-talk]: https://www.youtube.com/watch?v=ncHmEUmJZf4&t=3s
 [std-hash]: https://en.cppreference.com/w/cpp/utility/hash
 [container-link]: https://github.com/abseil/abseil-cpp/tree/master/absl/container
+[hash-link]: https://github.com/abseil/abseil-cpp/tree/master/absl/hash
