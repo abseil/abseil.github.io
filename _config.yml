@@ -46,10 +46,6 @@ future: false
 unpublished: false
 show_drafts: false
 
-# Plugins
-plugins:
-  - jekyll-redirect-from
- 
 # Exclusions
 exclude:
   - Gemfile

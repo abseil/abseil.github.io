@@ -3,14 +3,14 @@ title: "Swiss Tables and <code>absl::Hash</code>"
 layout: blog
 sidenav: side-nav-blog.html
 published: true
-permalink: blog/20180929-swisstables
+permalink: blog/20180927-swisstables
 type: markdown
 category: blog
 excerpt_separator: <!--break-->
 ---
 
 By [Matt Kulukundis](mailto:kfm@google.com) and
-[Sam Benzaquen](mailto:sbenza@google.com))
+[Sam Benzaquen](mailto:sbenza@google.com)
 
 We are extremely pleased to announce the availability of the new “Swiss Table” 
 family of hashtables in Abseil and the `absl::Hash` hashing framework that 
