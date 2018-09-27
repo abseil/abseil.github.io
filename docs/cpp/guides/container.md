@@ -99,12 +99,14 @@ migrate code to them from other containers.
 ## Construction and Usage
 
 ```cpp
+{% raw %}
 absl::flat_hash_map<int, string> numbers =
     {{1, "one"}, {2, "two"}, {3, "three"}};
 numbers.try_emplace(4, "four");
 
 absl::flat_hash_map<string, std::unique_ptr<string>> strings;
 strings.try_emplace("foo", absl::make_unique<string>("bar"));
+{% endraw %}
 ```
 ## Heterogeneous Lookup
 
