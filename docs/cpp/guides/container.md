@@ -130,7 +130,7 @@ example), and for conversions to smart pointer types (`std::unique_ptr`,
 `std::shared_ptr`), through the `absl::Hash` hashing framework. (The supporting
 comparators are built into `absl::Hash`.)
 
-```cpp {.good}
+```cpp
 absl::flat_hash_map<std::string, int> m = ...;
 absl::string_view some_key = ...;
 // We can use string_view directly as the key search.
