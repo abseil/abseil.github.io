@@ -43,7 +43,7 @@ containers for general use. These are flat data structures, which store their
 
 ### Memory Usage
 
-<img src="images/flat-hash-map.svg" style="margin:5px;width:30%"
+<img src="images/flat-hash-map.svg" style="margin:5px;width:50%"
     alt="Flat Hash Map Memory Layout"/>
 
 The container uses O(`(sizeof(std::pair<const K, V>) + 1) * bucket_count()`)
@@ -80,7 +80,7 @@ pointers to those nodes.
 
 ### Memory Usage
 
-<img src="images/node-hash-map.svg" style="margin:5px;width:30%"
+<img src="images/node-hash-map.svg" style="margin:5px;width:50%"
     alt="Node Hash Map Memory Layout"/>
  
 The slot array requires `(sizeof(void*) + 1) * bucket_count()` bytes and the
