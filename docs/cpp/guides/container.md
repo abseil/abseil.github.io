@@ -43,7 +43,8 @@ containers for general use. These are flat data structures, which store their
 
 ### Memory Usage
 
-![Flat Hash Map Memory Layout](images/flat-hash-map.svg){width="30%" style="margin:5px;"}
+<img src="images/flat-hash-map.svg" style="margin:5px;width:30%"
+    alt="Flat Hash Map Memory Layout"/>
 
 The container uses O(`(sizeof(std::pair<const K, V>) + 1) * bucket_count()`)
 bytes. The *max load factor* is 87.5%, after which the table doubles in size
@@ -79,8 +80,9 @@ pointers to those nodes.
 
 ### Memory Usage
 
-![Node Hash Map Memory Layout](images/node-hash-map.svg){width="30%" style="margin:5px;"}
-
+<img src="images/node-hash-map.svg" style="margin:5px;width:30%"
+    alt="Node Hash Map Memory Layout"/>
+ 
 The slot array requires `(sizeof(void*) + 1) * bucket_count()` bytes and the
 nodes themselves require `sizeof(value_type) * size()` bytes. Together, this is
 O(`9*bucket_count + sizeof(std::pair<const K, V>)*size()`) on most platforms.
