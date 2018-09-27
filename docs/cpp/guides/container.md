@@ -98,6 +98,7 @@ migrate code to them from other containers.
 
 ## Construction and Usage
 
+{% raw %}
 ```cpp
 absl::flat_hash_map<int, string> numbers =
     {{1, "one"}, {2, "two"}, {3, "three"}};
@@ -106,6 +107,8 @@ numbers.try_emplace(4, "four");
 absl::flat_hash_map<string, std::unique_ptr<string>> strings;
 strings.try_emplace("foo", absl::make_unique<string>("bar"));
 ```
+{% endraw %}
+
 ## Heterogeneous Lookup
 
 Inserting into or looking up an element within an associative container requires
@@ -113,7 +116,7 @@ a key. In general, containers require the keys to be of a specific type, which
 can lead to inefficiencies at call sites that need to convert between
 near-equivalent types (such as `std::string` and `absl::string_view`).
 
-```cpp {.bad}
+```cpp
 std::map<std::string, int> m = ...;
 absl::string_view some_key = ...;
 // Construct a temporary `std::string` to do the query.
