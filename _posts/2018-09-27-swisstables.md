@@ -10,7 +10,7 @@ excerpt_separator: <!--break-->
 ---
 
 By [Matt Kulukundis](mailto:kfm@google.com) and
-[Sam Benzaquen](mailto:sbenza@google.com))
+[Sam Benzaquen](mailto:sbenza@google.com)
 
 We are extremely pleased to announce the availability of the new “Swiss Table” 
 family of hashtables in Abseil and the `absl::Hash` hashing framework that 
