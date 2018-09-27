@@ -3,7 +3,7 @@ title: "Swiss Tables and <code>absl::Hash</code>"
 layout: blog
 sidenav: side-nav-blog.html
 published: true
-permalink: blog/20180929-swisstables
+permalink: blog/20180927-swisstables
 type: markdown
 category: blog
 excerpt_separator: <!--break-->
