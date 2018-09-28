@@ -126,7 +126,7 @@ seeds itself at program startup.
 *   absl types such as the following:
     *   `absl::InlinedVector`
     *   `absl::FixedArray`
-    *   `absl::unit128`
+    *   `absl::uint128`
     *   `absl::Time`, `absl::Duration`, and `absl::TimeZone`
 
 NOTE: the list above is not meant to be exhaustive. Additional type support
