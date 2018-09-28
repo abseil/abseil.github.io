@@ -163,6 +163,5 @@ point sums do, and it can be the case that a sum is deterministic with
     a container has pointer stability is the same as saying
     that it doesn't move elements in memory; their addresses
     do not change. Pointer stability/invalidation is the same
-    as reference stability/invalidation. See b/65286026 for
-    more details.
+    as reference stability/invalidation.
 
