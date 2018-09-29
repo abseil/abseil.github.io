@@ -368,7 +368,6 @@ type in question, but the most common ones:
 *   Use an explicit hash/equality function when declaring a hash table. Some
     types already provide these functions. For others you might need to write
     one yourself.
-
 *   Add the extension point in the right place, or ask the owners of that code
     to do it for you.
 
