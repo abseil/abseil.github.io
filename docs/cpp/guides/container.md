@@ -43,7 +43,8 @@ containers for general use. These are flat data structures, which store their
 
 ### Memory Usage
 
-![Flat Hash Map Memory Layout](images/flat-hash-map.svg){width="30%" style="margin:5px;"}
+<img src="images/flat-hash-map.svg" style="margin:5px;width:50%"
+    alt="Flat Hash Map Memory Layout"/>
 
 The container uses O(`(sizeof(std::pair<const K, V>) + 1) * bucket_count()`)
 bytes. The *max load factor* is 87.5%, after which the table doubles in size
@@ -79,8 +80,9 @@ pointers to those nodes.
 
 ### Memory Usage
 
-![Node Hash Map Memory Layout](images/node-hash-map.svg){width="30%" style="margin:5px;"}
-
+<img src="images/node-hash-map.svg" style="margin:5px;width:50%"
+    alt="Node Hash Map Memory Layout"/>
+ 
 The slot array requires `(sizeof(void*) + 1) * bucket_count()` bytes and the
 nodes themselves require `sizeof(value_type) * size()` bytes. Together, this is
 O(`9*bucket_count + sizeof(std::pair<const K, V>)*size()`) on most platforms.
@@ -98,6 +100,7 @@ migrate code to them from other containers.
 
 ## Construction and Usage
 
+{% raw %}
 ```cpp
 absl::flat_hash_map<int, string> numbers =
     {{1, "one"}, {2, "two"}, {3, "three"}};
@@ -106,6 +109,8 @@ numbers.try_emplace(4, "four");
 absl::flat_hash_map<string, std::unique_ptr<string>> strings;
 strings.try_emplace("foo", absl::make_unique<string>("bar"));
 ```
+{% endraw %}
+
 ## Heterogeneous Lookup
 
 Inserting into or looking up an element within an associative container requires
@@ -113,7 +118,7 @@ a key. In general, containers require the keys to be of a specific type, which
 can lead to inefficiencies at call sites that need to convert between
 near-equivalent types (such as `std::string` and `absl::string_view`).
 
-```cpp {.bad}
+```cpp
 std::map<std::string, int> m = ...;
 absl::string_view some_key = ...;
 // Construct a temporary `std::string` to do the query.
@@ -127,7 +132,7 @@ example), and for conversions to smart pointer types (`std::unique_ptr`,
 `std::shared_ptr`), through the `absl::Hash` hashing framework. (The supporting
 comparators are built into `absl::Hash`.)
 
-```cpp {.good}
+```cpp
 absl::flat_hash_map<std::string, int> m = ...;
 absl::string_view some_key = ...;
 // We can use string_view directly as the key search.
@@ -159,3 +164,4 @@ point sums do, and it can be the case that a sum is deterministic with
     that it doesn't move elements in memory; their addresses
     do not change. Pointer stability/invalidation is the same
     as reference stability/invalidation.
+

@@ -45,7 +45,7 @@ timezone: "America/New_York"
 future: false
 unpublished: false
 show_drafts: false
-  
+
 # Exclusions
 exclude:
   - Gemfile

@@ -293,7 +293,6 @@ to verify that a type implements its overload correctly. This function has a few
 requirements:
 
 *   The type must implement the `==` operator correctly.
-
 *   The caller must provide instances of the type that include any interesting
     representations for their type. (For example, a type with a small size
     optimization should include equivalent instances that use the small size
@@ -369,7 +368,6 @@ type in question, but the most common ones:
 *   Use an explicit hash/equality function when declaring a hash table. Some
     types already provide these functions. For others you might need to write
     one yourself.
-
 *   Add the extension point in the right place, or ask the owners of that code
     to do it for you.
 

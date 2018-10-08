@@ -12,6 +12,8 @@ Over time, we hope to have comprehensive documentation, including examples, for
 all code within Abseil within this guide.
 
 * [Abseil Fundamentals](base)
+* [Container Library](container)
+* [Hash Library](hash)
 * [Meta Library Guide](meta)
 * [Numeric Library Guide](numeric)
 * [Synchronization Guide](synchronization)
