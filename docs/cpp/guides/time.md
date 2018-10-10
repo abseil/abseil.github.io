@@ -92,14 +92,12 @@ concepts:
   converted to and from other absolute time representations using conversion
   functions, and to and from civil time representations with the help of an
   `absl::TimeZone`.
-
 * Civil times are represented by six individual integers, specifying the year,
   month, day, hour, minute, and second of an `absl::Civil*` object. (See
   [civil_time.h](https://github.com/abseil/abseil-cpp/blob/master/absl/time/civil_time.h).) These
   integer values may be specified as arguments to civil-time constructors (e.g.
   `absl::CivilYear` or `absl::CivilSecond`, or parsed from a formatted time
   string.
-
 * Time zones are represented by the `absl::TimeZone` class. (See
   [time.h](https://github.com/abseil/abseil-cpp/blob/master/absl/time/time.h).) This  mostly-opaque
   value type is passed (by value) to other Abseil time functions that will then
@@ -131,7 +129,7 @@ provided for naturally expressing time calculations.
 NOTE: although `absl::Time` resolution is guaranteed at least down to
 nanoseconds, in practice it may be finer. Regardless of this fact, both the time
 resolution and epoch are implementation details and you should not depend on them.
-
+683d590da105a10713e46dde126c2d2c858791aa
 `absl::Time` uses a resolution that is high enough to avoid loss in
 precision, and a range that is wide enough to avoid overflow, when
 converting between tick counts in most usable time scales (i.e., precision
