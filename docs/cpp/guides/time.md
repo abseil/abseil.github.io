@@ -129,7 +129,7 @@ provided for naturally expressing time calculations.
 NOTE: although `absl::Time` resolution is guaranteed at least down to
 nanoseconds, in practice it may be finer. Regardless of this fact, both the time
 resolution and epoch are implementation details and you should not depend on them.
-683d590da105a10713e46dde126c2d2c858791aa
+
 `absl::Time` uses a resolution that is high enough to avoid loss in
 precision, and a range that is wide enough to avoid overflow, when
 converting between tick counts in most usable time scales (i.e., precision
