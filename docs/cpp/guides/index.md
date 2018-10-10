@@ -19,4 +19,4 @@ all code within Abseil within this guide.
 * [Synchronization Guide](synchronization)
 * [StrFormat Guide](format)
 * [Strings Guide](strings)
-* [Time Library](time))
+* [Time Library](time)
