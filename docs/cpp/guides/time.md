@@ -92,14 +92,12 @@ concepts:
   converted to and from other absolute time representations using conversion
   functions, and to and from civil time representations with the help of an
   `absl::TimeZone`.
-
 * Civil times are represented by six individual integers, specifying the year,
   month, day, hour, minute, and second of an `absl::Civil*` object. (See
   [civil_time.h](https://github.com/abseil/abseil-cpp/blob/master/absl/time/civil_time.h).) These
   integer values may be specified as arguments to civil-time constructors (e.g.
   `absl::CivilYear` or `absl::CivilSecond`, or parsed from a formatted time
   string.
-
 * Time zones are represented by the `absl::TimeZone` class. (See
   [time.h](https://github.com/abseil/abseil-cpp/blob/master/absl/time/time.h).) This  mostly-opaque
   value type is passed (by value) to other Abseil time functions that will then
