@@ -34,7 +34,7 @@ mimic an intrinsic type as closely as possible, so that any forthcoming
 `uint128_t` can be a drop-in replacement. (`uint128` will be removed once C++
 supports such a type.)
 
-Note: code written with this type will continue to compile once `unint128_t`
+Note: code written with this type will continue to compile once `uint128_t`
 is introduced, provided the replacement helper functions `Uint128(Low|High)64()`
 and `MakeUint128()` are made.
 
