@@ -40,7 +40,7 @@ and `MakeUint128()` are made.
 
 A `uint128` supports the following:
 
-* Implicit constructio* `algorithm`n from integral types
+* Implicit construction from integral types
 * Explicit conversion to integral types
 
 Additionally, if your compiler supports the `__int128` type extension, `uint128`
