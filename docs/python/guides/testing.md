@@ -17,7 +17,7 @@ To use the Abseil testing library, do the following in your unit tests:
 
 * import the `absltest` module
 * import the `flags` module, which gives you access to the variables
-`FLAGS.test_srcdir` and `FLAGS.test_tmpfir`.
+`FLAGS.test_srcdir` and `FLAGS.test_tmpdir`.
 * call `absltest.main()` instead of `unittest.main()`
 
 ## Unit Tests Basics
