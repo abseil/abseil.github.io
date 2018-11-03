@@ -202,7 +202,6 @@ An `AbslHashValue()` overload is a function template that takes two arguments:
 
 1.  An object representing the current state of the hash algorithm, i.e. all of
     the input it has received so far, in some unspecified partially-hashed form
-
 2.  The value to be hashed
 
 It must return the resulting state object after combining its state to the
