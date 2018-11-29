@@ -30,11 +30,11 @@ overload set in providing a powerful conceptual framework for API
 design. In the second part, we focus on the properties of well-designed
 types, and how to think about things like Regularity. We discuss how
 Regularity affects the design of non-owning reference types
-like string_view or span.
+like `string_view` or `span`.
 
 If you haven't already, check out Titus' original blog post on
 ["Revisiting Regular Types"][regular-types] for more background
-information.)
+information.
 
 <!--break--> 
 
