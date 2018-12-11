@@ -386,7 +386,7 @@ UseDay(cm);                  // OK: implicit conversion to absl::CivilDay
 Normalization takes invalid values and adjusts them to produce valid values.
 Within the civil-time library, integer arguments passed to the `Civil*`
 constructors may be out-of-range, in which case they are normalized by
-carrying overflow into a field of courser granularity to produce valid
+carrying overflow into a field of coarser granularity to produce valid
 civil-time objects. This normalization enables natural arithmetic on
 constructor arguments without worrying about the field's range.
 
