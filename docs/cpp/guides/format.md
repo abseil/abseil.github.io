@@ -100,12 +100,14 @@ form:
     but are allowed for backwards compatibility:
     *   `hh`, `h`, `l`, `ll`, `L`, `j`, `z`, `t`, `q`
 *   A type-specifier:
-    *   `c` for characters
-    *   `s` for strings
-    *   `d` or `i` for signed integers
-    *   `o` for unsigned integer conversions into octal
-    *   `x` or `X` for unsigned integer conversions into hex
-    *   `u` for unsigned integers
+    *   `c` for character values
+    *   `s` for string values
+    *   `d` or `i` for integer values, including enumerated type values
+    *   `o` for unsigned integer conversions, including enumerated type values,
+        into octal values
+    *   `x` or `X` for unsigned integer conversions, including enumerated type
+        values, into hex values
+    *   `u` for unsigned integer values
     *   `f` or `F` for floating point values into decimal notation
     *   `e` or `E` for floating point values into exponential notation
     *   `a` or `A` for floating point values into hex exponential notation
