@@ -29,6 +29,61 @@ They provide several advantages over the `std::unordered_*` containers:
     construction and insertion.
 *   Guarantees an `O(1)` erase method by returning void instead of an iterator.
 
+## Construction
+
+The set of Swiss table containers support the same overload set as
+`std::unordered_map` for construction and assignment:
+
+```c++
+// Examples using node_hash_set and node_hash_map are equivalent
+
+// Default constructor
+// No allocation for the table's elements is made.
+absl::flat_hash_set<std::string> set1;
+
+absl::flat_hash_map<int, std::string> map1;
+
+// Initializer List constructor
+absl::flat_hash_set<std::string> set2 = {{"huey"}, {"dewey"}, {"louie"},};
+
+absl::flat_hash_map<int, std::string> map2 =
+    {{1, "huey"}, {2, "dewey"}, {3, "louie"},};
+
+// Copy constructor
+absl::flat_hash_set<std::string> set3(set2);
+
+absl::flat_hash_map<int, std::string> map3(map2);
+
+// Copy assignment operator
+// Hash functor and Comparator are copied as well
+absl::flat_hash_set<std::string> set4;
+set4 = set3;
+
+absl::flat_hash_map<int, std::string> map4;
+map4 = map3;
+
+// Move constructor
+// Move is guaranteed efficient
+absl::flat_hash_set<std::string> set5(std::move(set4));
+
+absl::flat_hash_map<int, std::string> map5(std::move(map4));
+
+// Move assignment operator
+// May be efficient if allocators are compatible
+absl::flat_hash_set<std::string> set6;
+set6 = std::move(set5);
+
+absl::flat_hash_map<int, std::string> map6;
+map6 = std::move(map5);
+
+// Range constructor
+std::vector<std::string> v = {"a", "b"};
+absl::flat_hash_set<std::string> set7(v.begin(), v.end());
+
+std::vector<std::pair<int, std::string>> v = {{1, "a"}, {2, "b"}};
+absl::flat_hash_map<int, std::string> set7(v.begin(), v.end());
+```
+
 ## `absl::flat_hash_map` and `absl::flat_hash_set`
 
 `absl::flat_hash_map` and `absl::flat_hash_set` are the recommended unordered
@@ -82,7 +137,7 @@ pointers to those nodes.
 
 <img src="images/node-hash-map.svg" style="margin:5px;width:50%"
     alt="Node Hash Map Memory Layout"/>
- 
+
 The slot array requires `(sizeof(void*) + 1) * bucket_count()` bytes and the
 nodes themselves require `sizeof(value_type) * size()` bytes. Together, this is
 O(`9*bucket_count + sizeof(std::pair<const K, V>)*size()`) on most platforms.
@@ -100,7 +155,7 @@ migrate code to them from other containers.
 
 ## Construction and Usage
 
-{% raw %}
+<!--{% raw %}-->
 ```cpp
 absl::flat_hash_map<int, string> numbers =
     {{1, "one"}, {2, "two"}, {3, "three"}};
@@ -109,7 +164,7 @@ numbers.try_emplace(4, "four");
 absl::flat_hash_map<string, std::unique_ptr<string>> strings;
 strings.try_emplace("foo", absl::make_unique<string>("bar"));
 ```
-{% endraw %}
+<!--{% endraw %}-->
 
 ## Heterogeneous Lookup
 
@@ -118,13 +173,13 @@ a key. In general, containers require the keys to be of a specific type, which
 can lead to inefficiencies at call sites that need to convert between
 near-equivalent types (such as `std::string` and `absl::string_view`).
 
-```cpp
+<pre class="bad-code">
 std::map<std::string, int> m = ...;
 absl::string_view some_key = ...;
 // Construct a temporary `std::string` to do the query.
 // The allocation + copy + deallocation might dominate the find() call.
 auto it = m.find(std::string(some_key));
-```
+</pre>
 
 To avoid this unnecessary work, the Swiss tables provide heterogeneous lookup
 for conversions to string types (allowing `absl::string_view` in the lookup, for
@@ -164,4 +219,3 @@ point sums do, and it can be the case that a sum is deterministic with
     that it doesn't move elements in memory; their addresses
     do not change. Pointer stability/invalidation is the same
     as reference stability/invalidation.
-

@@ -32,7 +32,10 @@ The Abseil codebase consists of the following C++ library components:
   <br /> The `container` library contains additional STL-style containers.
 * [`debugging`](https://github.com/abseil/abseil-cpp/tree/master/absl/debugging)
   <br /> The `debugging` library contains code useful for enabling leak
-  checks. Future updates will add stacktrace and symbolization utilities.
+  checks, and stacktrace and symbolization utilities.
+* [`hash`](https://github.com/abseil/abseil-cpp/tree/master/absl/hash)
+  <br /> The `hash` library contains the hashing framework and default hash
+  functor implementations for hashable types in Abseil.
 * [`memory`](https://github.com/abseil/abseil-cpp/tree/master/absl/memory)
   <br /> The `memory` library contains C++11-compatible versions of
   `std::make_unique()` and related memory management facilities.
@@ -56,6 +59,8 @@ The Abseil codebase consists of the following C++ library components:
 * [`types`](https://github.com/abseil/abseil-cpp/tree/master/absl/types)
   <br /> The `types` library contains non-container utility types, like a
   C++11-compatible version of `absl::optional`.
+* [`utility`](https://github.com/abseil/abseil-cpp/tree/master/absl/utility)
+  <br /> The `utility` library contains utility and helper code.
 
 ## License
 
