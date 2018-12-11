@@ -1,11 +1,11 @@
 ---
-title: "Pre-adopted `std::` Types"
+title: "Pre-adopted `std::` Types Design Notes"
 layout: about
 sidenav: side-nav-design.html
 type: markdown
 ---
 
-# Pre-adopted `std::` Types
+# Pre-adopted `std::` Types Design Notes
 
 Abseil’s initial release includes several types that mimic the API of C++17
 vocabulary types. For example, `absl::string_view`, `absl::any`, and
