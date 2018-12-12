@@ -16,3 +16,5 @@ be adding more design notes in the future.
 ## [Pre-adopted `std::` types](dropin-types)
 
 ## [`absl::StrFormat`](strformat)
+
+## [Swiss tables](swisstables)
