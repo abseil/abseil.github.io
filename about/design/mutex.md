@@ -1,11 +1,11 @@
 ---
-title: "`absl::Mutex`"
+title: "`absl::Mutex` Design Notes"
 layout: about
 sidenav: side-nav-design.html
 type: markdown
 ---
 
-# `absl::Mutex`
+# `absl::Mutex` Design Notes
 
 Abseil uses and has published its own `absl::Mutex` abstraction in place of the
 C++ library's `std::mutex` implementation. Such a decision is not advocated

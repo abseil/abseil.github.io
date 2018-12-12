@@ -45,7 +45,7 @@ distributes entropy across the entire bit space well (producing an
 accomplishes this well and should be sufficient for most users.
 
 <img src="images/hashbits-layout.png" align="center"
-     style="padding:24px;display:block;margin:auto;width:50%;" />
+     style="padding:24px;display:block;margin:auto;width:75%;" />
 
 ### Metadata Information
 
@@ -56,14 +56,14 @@ combination with the value in the H2 section of the metadata, indicates whether
 the associated hash element is empty, present, or has been deleted.
 
 <img src="images/h2-metadata.png" alt="H2 Metadata"
-     style="padding:24px;display:block;margin:auto;width:30%;" />
+     style="padding:24px;display:block;margin:auto;width:50%;" />
 
 The metadata, which is an implementation detail but can be thought of as being
 laid out consecutively, maps this presence information to elements in the hash
 table itself.
 
 <img src="images/metadata-mapping.png" alt="Metadata Relationship"
-     style="padding:24px;display:block;margin:auto;width:80%;" />
+     style="padding:24px;display:block;margin:auto;width:100%;" />
 
 In this diagram, elements with the same H1 hash are colored identically, blue
 elements are empty, and black represents a deleted element.
@@ -85,7 +85,7 @@ as follows:
 Steps 2+3 can be summarized visually as:
 
 <img src="images/hashtable-lookup.png" alt="Metadata Lookup"
-     style="padding:24px;display:block;margin:auto;width:70%;" />
+     style="padding:24px;display:block;margin:auto;width:85%;" />
 
 Equivalent code for this lookup appears below:
 
