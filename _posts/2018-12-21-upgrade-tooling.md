@@ -28,7 +28,7 @@ for
 
 As outlined in our upgrade guide, we will always first serve notice of
 such a tool via this blog, and will also blog once we've officially
-removed, if necessary, the deprecated API.
+removed the deprecated API.
 
 [compatibility]: /about/compatibility
 [api-upgrades]: /docs/cpp/tools/api-upgrades
