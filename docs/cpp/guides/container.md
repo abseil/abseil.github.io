@@ -34,8 +34,8 @@ They provide several advantages over the `std::unordered_*` containers:
 The set of Swiss table containers support the same overload set as
 `std::unordered_map` for construction and assignment:
 
+<!--{% raw %}-->
 ```c++
-{% raw %}
 // Examples using node_hash_set and node_hash_map are equivalent
 
 // Default constructor
@@ -83,8 +83,8 @@ absl::flat_hash_set<std::string> set7(v.begin(), v.end());
 
 std::vector<std::pair<int, std::string>> v = {{1, "a"}, {2, "b"}};
 absl::flat_hash_map<int, std::string> set7(v.begin(), v.end());
-{% endraw %}
 ```
+<!--{% endraw %}-->
 
 ## `absl::flat_hash_map` and `absl::flat_hash_set`
 
