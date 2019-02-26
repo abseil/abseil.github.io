@@ -40,7 +40,7 @@ arguments.
 Example:
 
 ```cpp
-string s = absl::StrFormat("Welcome to %s, Number %d!", "The Village", 6);
+std::string s = absl::StrFormat("Welcome to %s, Number %d!", "The Village", 6);
 EXPECT_EQ("Welcome to The Village, Number 6!", s);
 ```
 
@@ -55,7 +55,7 @@ std::string s = absl::StrFormat(formatString, "The Village", 6);
 
 // This will compile.
 constexpr absl::string_view formatString = "Welcome to %s, Number %d!";
-string s = absl::StrFormat(formatString, "The Village", 6);
+std::string s = absl::StrFormat(formatString, "The Village", 6);
 ```
 
 Requiring the format string to be `constexpr` allows compiler-time checking of
@@ -178,7 +178,7 @@ int* ptr = 9;
 absl::StrFormat("%p", ptr) -> "0x7ffdeb6ad2a4";
 
 // Positional Modifiers
-string s = absl::StrFormat("%2$s, %3$s, %1$s!", "vici", "veni", "vidi");
+std::string s = absl::StrFormat("%2$s, %3$s, %1$s!", "vici", "veni", "vidi");
 EXPECT_EQ(s, "veni, vidi, vici!");
 
 // Character Count Capturing
