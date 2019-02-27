@@ -249,7 +249,7 @@ formatting to an existing `&dest` string, appending the formatted string to it.
 Example:
 
 ```cpp
-string& absl::StrAppendFormat(&dest, format, ...)
+std::string& absl::StrAppendFormat(&dest, format, ...)
 ```
 
 ## Writing to a Stream
