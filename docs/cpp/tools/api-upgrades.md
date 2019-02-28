@@ -83,11 +83,11 @@ run a sufficiently fresh version of clang-tidy to generate the needed changes to
 their code.
 
 Prior to releasing any API breaking changes, we will attempt to ensure that the
-upgrade check, the old API, and its replacement coexist for at least one LTS
-branch cut.  Then, when the time comes to actually remove the deprecated API,
-we will add a release notes blog post as a helpful reminder.  Similar notes will
-be repeated as part of any LTS branch cut announcements that include API
-breaking changes.
+upgrade check, the old API, and its replacement coexist for at least one
+Long-Term Support (LTS) branch cut. Then, when the time comes to actually remove
+the deprecated API, we will add a release notes blog post as a helpful reminder.
+Any LTS branch that includes such an API breaking change will have that change
+noted on the [LTS main page][lts-page].
 
 [compatibility]: /about/compatibility
 [clang-tidy]: http://clang.llvm.org/extra/clang-tidy/
@@ -95,4 +95,5 @@ breaking changes.
 [clang-tidy-checks]: https://clang.llvm.org/extra/clang-tidy/checks/list.html
 [abseil-blog]: https://abseil.io/blog/
 [llvm]: http://releases.llvm.org/
+[lts-page]: https://github.com/abseil/abseil-cpp/blob/master/LTS.md
 
