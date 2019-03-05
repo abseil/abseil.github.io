@@ -119,15 +119,17 @@ We avoid this allocation in all cases where the key can be inferred from the
 arguments of `emplace()` without running user-defined constructors.
 
 <!--{% raw %}-->
+
 ```c++
-absl::flat_hash_map<int64, string> m = {{0, ""}};
-// No objects of type `string` are constructed in the following code.
+absl::flat_hash_map<int64, std::string> m = {{0, ""}};
+// No objects of type `std::string` are constructed in the following code.
 m.emplace(0, "abc");
 m.emplace(std::make_pair(0, "abc"));
 m.emplace(std::piecewise_construct,
           std::forward_as_tuple(0),
           std::forward_as_tuple("abc"));
 ```
+
 <!--{% endraw %}-->
 
 The same optimization is applied for `insert()` operations.
