@@ -44,29 +44,41 @@ Once you have Bazel and Git installed, you can download, compile, and run the
 [abseil-hello](https://github.com/abseil/abseil-hello) binary to get you
 coding right away. This tiny project features all the configuration and a simple
 test and `hello_main` to start you on your way:
-
+### For bazel:
 ```
 $ git clone https://github.com/abseil/abseil-hello.git
 Cloning into 'abseil-hello'...
 ...
-$ cd abseil-hello/
-abseil-hello$ bazel test :hello_test
+$ cd abseil-hello/bazel-hello/
+bazel-hello$ bazel test :hello_test
 ...
 /:hello_test                                                      PASSED in 0.1s
 
 Executed 1 out of 1 test: 1 test passes.
 ...
-abseil-hello$ bazel build :hello_main
+bazel-hello$ bazel build :hello_main
 ...
 Target //:hello_main up-to-date:
   bazel-bin/hello_main
 ...
-abseil-hello$ bazel run hello_main
+bazel-hello$ bazel run hello_main
 Hello world
-abseil-hello$ bazel run hello_main Abseil!
+bazel-hello$ bazel run hello_main Abseil!
 Hello Abseil!
 ```
-
+### For cmake:
+```
+$ git clone https://github.com/abseil/abseil-hello.git
+Cloning into 'abseil-hello'...
+...
+$ cd abseil-hello/cmake-hello/
+cmake-hello$ git clone https://github.com/abseil/abseil-cpp.git
+cmake-hello$ mkdir build && cd build && cmake .. && cmake --build . --target main
+build$ ./main Hello world
+Hello world
+build$ ./main Hello Abseil!
+Hello Abseil!
+```
 Happy Coding!
 
 ## Getting the Abseil Code
