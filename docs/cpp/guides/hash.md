@@ -16,7 +16,7 @@ The `absl::Hash` library consists of the following components:
 
 This library is designed to be used as a replacement for
 [`std::hash`](http://en.cppreference.com/w/cpp/utility/hash) and the various
-other hash functors used in google3. It provides several advantages over them:
+other hash functors used in Abseil. It provides several advantages over them:
 
 *   It can hash objects of almost any standard type, including `std::pair`,
     `std::tuple`, and most standard containers
