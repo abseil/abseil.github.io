@@ -7,20 +7,23 @@ type: markdown
 
 # About Abseil
 
-Abseil is an open-source collection of C++ library code designed to augment
-the C++ standard library. The Abseil library code is collected from Google's
-own C++ code base, has been extensively tested and used in production, and
-is the same code we depend on in our daily coding lives.
+Abseil is an open source collection of C++ libraries drawn from the most
+fundamental pieces of Google’s internal codebase. These libraries are the
+nuts-and-bolts that underpin almost everything Google runs. Bits and pieces of
+these APIs are embedded in most of our open source projects, and Abseil aims to
+bring them together into one comprehensive project. Abseil encompasses the most
+basic building blocks of Google’s codebase: code that is production-tested and
+will be fully maintained for years to come.
 
-In some cases, Abseil provides pieces missing from the C++ standard; in
-others, Abseil provides alternatives to the standard for special needs
-we've found through usage in the Google code base. We denote those cases
-clearly within the library code we provide you.
+Our primary purpose in releasing Abseil is to more easily support Google open
+source projects sharing their C++ code outside of Google. In some cases, Abseil
+provides pieces missing from the C++ standard; in others, Abseil provides
+alternatives to the standard for particular use cases we've needed in the Google
+codebase. We denote those cases clearly within the library code we provide you.
 
-Abseil is not meant to be competitor to any standard library code; we've
-just found that many of these utilities serve a purpose within our code
-base, and we now want to provide those resources to the C++ community as
-a whole.
+Abseil is not meant to be competitor to any standard library code; we've just
+found that many of these utilities serve a purpose within our codebase, and we
+now want to provide those resources to the C++ community as a whole.
 
 For more information about Abseil:
 
