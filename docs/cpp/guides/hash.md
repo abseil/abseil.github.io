@@ -15,8 +15,8 @@ The `absl::Hash` library consists of the following components:
     user-defined types hashable
 
 This library is designed to be used as a replacement for
-[`std::hash`](http://en.cppreference.com/w/cpp/utility/hash) and the various
-other hash functors used in google3. It provides several advantages over them:
+[`std::hash`](https://en.cppreference.com/w/cpp/utility/hash) and various
+other hash functors. It provides several advantages over them:
 
 *   It can hash objects of almost any standard type, including `std::pair`,
     `std::tuple`, and most standard containers
@@ -31,6 +31,15 @@ The `absl::Hash` framework is the default hash implementation for "Swiss tables"
 `absl::{flat,node}_hash_{set,map}` and does not need to be explicitly specified
 when working with that library.
 
+## Including the `absl::Hash` Library
+
+You only need to include the `absl::Hash` library if you need to invoke
+`absl::Hash()` directly. You don't need to include this library to make your
+types hashable.
+
+```cpp
+#include "absl/hash/hash.h"
+```
 
 ## **TL;DR** How Do I Make My Type Hashable?
 
@@ -61,6 +70,10 @@ than this, please see
 To test your hash function, add a test like:
 
 ```c++
+#include "absl/hash/hash_testing.h"
+
+...
+
 TEST(Circle, Hash) {
   EXPECT_TRUE(absl::VerifyTypeImplementsAbslHashCorrectly({
       Circle(),
@@ -84,13 +97,10 @@ The `absl::Hash` framework is the default hash implementation for the "Swiss
 table" hash tables. All types hashable by the `absl::Hash` framework will
 automatically be hashable within Swiss tables.
 
-
 For other hash table implementations, `absl::Hash` can be used just like any
 other hash functor:
 
 ```c++
-#include "third_party/absl/hash/hash.h"
-
 std::unordered_map<MyKey, MyValue, absl::Hash<MyKey>> my_map;
 ```
 
@@ -135,7 +145,6 @@ may be added, in which case the above list will be updated.
 Unlike `std::hash` and similar hashers, `absl::Hash` should **not** be
 specialized. Instead, user-defined types can be made hashable by providing
 an `AbslHashValue()` overload, as discussed [below](#making-hashable-types).
-
 
 ### `absl::Hash` Invocation Evaluation
 When invoked, `absl::Hash<T>` searches for supplied hash functions in the
@@ -191,7 +200,6 @@ H AbslHashValue(H h, const MyClass& m) {
 Notice that `AbslHashValue()` is not a class member, but an ordinary function.
 An `AbslHashValue()` overload for a type `Foo` should **only** be declared in
 the header that defines `Foo`, and in the same namespace as `Foo`.
-
 
 Also note that `MyClass` does not require adding an additional `#include` or any
 `BUILD` dependency to provide its overload of `AbslHashValue()`.
@@ -373,20 +381,10 @@ type in question, but the most common ones:
 For some known types that you may wish to hash, see the sections below for
 advice.
 
-
 #### Types in `std`
 
 Most relevant types in the `std` namespace are directly supported by
 `absl::Hash`. This includes all sequence and ordered associative containers.
-
-
-
-<!--absl:google3=begin(third_party support)-->
-#### Types in `//third_party` libraries and other types that we do not control
-
-For types that we do not control the best approach is to write your own hash
-function object and use it explicitly when required.
-<!--absl:google3-end-->
 
 ### Making Your Types Hashable When You Cannot Use Templates
 
@@ -402,7 +400,7 @@ with virtual functions. For these cases the framework provides the class
 Usage example:
 
 ```c++
-#include "third_party/absl/hash/hash.h"  // For definition of `absl::HashState`
+#include "absl/hash/hash.h"  // For definition of `absl::HashState`
 
 // A class that uses the PImpl technique:
 
