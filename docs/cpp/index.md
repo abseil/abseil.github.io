@@ -16,7 +16,8 @@ to augment those code comments. For full reference documentation, consult
 the header files directly.
 
 
-* [C++ Quickstart](/docs/cpp/quickstart)
+* [C++ Quickstart (Bazel)](/docs/cpp/quickstart)
+* [C++ Quickstart (CMake)](/docs/cpp/quickstart-cmake)
 * [C++ Programming Guides](/docs/cpp/guides/)
 * [C++ Platforms Guide](/docs/cpp/platforms/)
 * [C++ Tools Guide](/docs/cpp/tools/)
