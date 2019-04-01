@@ -12,7 +12,7 @@ This `meta` library contains C++11-compatible versions of standard
 traits can support type inference, classification, and transformation, as well
 as make it easier to write templates based on generic type behavior.
 
-See http://en.cppreference.com/w/cpp/header/type_traits
+See https://en.cppreference.com/w/cpp/header/type_traits
 
 >WARNING: use of many of the constructs in this header will count as "complex
 >template metaprogramming", so before proceeding, please carefully consider

@@ -210,7 +210,6 @@ unordered container. While mathematical sums do not depend on order, floating
 point sums do, and it can be the case that a sum is deterministic with
 `std::unordered_set` but non-deterministic with `absl::flat_hash_set`.
 
-
 ## Notes
 
 [^pointer-stability]: "Pointer stability" means that a pointer to an element

@@ -19,7 +19,7 @@ library.
 ## Long Term Support (LTS) Branches
 
 Abseil encourages developers to
-["live at head"](http://abseil.io/blog/20171004-cppcon-plenary)
+["live at head"](https://abseil.io/blog/20171004-cppcon-plenary)
 but we understand that philosophy may not work for everyone. We are therefore
 providing snapshots of the Abseil codebase. These snapshots are available as
 "Long Term Support" (LTS) branches of Abseil, and we intend to provide a new

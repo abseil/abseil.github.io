@@ -7,7 +7,6 @@ type: markdown
 
 # Time Programming
 
-
 This Abseil `time` library contains abstractions for holding time values, both
 in terms of *absolute time* and *civil time*. The time library consists of the
 following components:
@@ -78,7 +77,6 @@ equally because they describe time in the real world. Different programming
 languages and libraries may model these concepts differently with different
 classes and sometimes even different names, but these fundamental concepts and
 relationships will still exist.
-
 
 ## Abseil Time Constructs
 
@@ -671,4 +669,3 @@ const auto nov06 = lax.At(absl::CivilSecond(2011, 11, 6, 1, 15, 0));
     `absl::RFC3339_full`)
 *   Use `absl::FormatTime` to format time strings, and `absl::ParseTime` to
     parse time strings.
-
