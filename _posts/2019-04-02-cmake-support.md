@@ -11,13 +11,25 @@ excerpt_separator: <!--break-->
 
 By [Jon Cohen](mailto:cohenjon@google.com), Abseil Engineer
 
+CMake is a popular tool used to build multi-platform C++ projects.
+Abseil has had unofficial CMake support for some time, but support
+has never been as robust as that for Bazel. We are happy to
+announce that Abseil now fully supports the CMake build system.
 
+<!--break-->
 
-CMake is a popular tool used to build multi-platform C++ projects.  Abseil has had a CMake buildsystem in some states since almost its inception, but it has always been considered secondary to Bazel.  This has now changed.
+Abseil supports CMake through the `add_subdirectory` command for
+full source inclusion, or by [local installation][cmake-installs]
+into your project. Future Abseil LTS releases will be supported
+for installation in system-wide locations (such as `/usr/local`,
+CMake's default install location).
 
-Abseil now offers full support for the CMake buildsystem.  We support usage either via CMake's `add_subdirectory` command for full source inclusion, or by local installation into your project.  Abseil LTS releases will be supported to be installed in system-wide locations (such as `/usr/local`, CMake's default install location) starting with the next after this blog post.
+We hope that this support will make it easier for users to adopt
+Abseil and for package managers to successfully and easily
+package Abseil.
 
-We hope that this will make it easier for users to adopt Abseil and for package managers to successfully and easily package Abseil.
+For more information on getting Abseil working with CMake, consult
+our [CMake Quickstart][cmake-quickstart]
 
 [cmake-quickstart]: /docs/cpp/quickstart-cmake
 [cmake-installs]: /docs/cpp/tools/cmake-installs
