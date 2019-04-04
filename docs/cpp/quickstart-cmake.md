@@ -159,10 +159,10 @@ target_link_libraries(hello_world absl::strings)
 For more information on how to create CMakeLists.txt files, consult the
 [CMake Tutorial](https://cmake.org/cmake-tutorial/).
 
-Build our CMake build files:
+Configure the CMake build from a fresh binary directory. This configuration is
+called an "out of source" build and is the preferred method for CMake projects.
 
 ```
-# It's often good practice to build files from a separate build directory
 $ cd ~/Source/TestProject/examples
 $ mkdir build && cd build
 $ cmake ..
