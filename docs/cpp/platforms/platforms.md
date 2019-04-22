@@ -166,7 +166,7 @@ Archiecture, Specific Compiler, and Standard Library implementation.
     </tr>
     <tr>
       <td>Windows, little-endian, 32/64-bit</td>
-      <td>MVC 2015, MSVC 2017</td>
+      <td>MVC 2015 Update 3, MSVC 2017</td>
       <td>msvc</td>
     </tr>
   </tbody>
