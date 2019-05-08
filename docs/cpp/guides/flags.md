@@ -1,0 +1,412 @@
+---
+title: "The Abseil Flags Library"
+layout: docs
+sidenav: side-nav-cpp.html
+type: markdown
+---
+
+# The Abseil Flags Library
+
+The Abseil flags library allows programmatic access to flag values passed on the
+command-line to binaries. The Abseil Flags library provides the following
+features:
+
+* Access to Abseil flags in a thread-safe manner
+* Access to flag values that are valid at any point during a program's lifetime
+* Prevention of conflicting flag names by ensuring uniqueness within the same
+  binary
+* Associated help text and contains a number of built-in usage flags
+* Has type support for boolean, integral and string types, and is extensible to
+  support other Abseil types and custom types
+* Default values and programmatic access to flag values for both reading and
+  writing
+* Allows distributed declaration and definition of flags, though this usage
+  has drawbacks and should generally be avoided.
+
+Values for these flags are parsed from the command line by
+`absl::ParseCommandLine()`. The resulting value for each flag is stored in a
+global variable of an unspecified type `absl::Flag<T>`.
+
+## Introduction
+
+**Command-line flags** are flags that users typically specify on the command
+line when they run an executable as runtime parameters. (These flags are often
+referred to as *options* in the GNU world, such as within the `getopt()`
+command-line argument parser.)
+
+In the command:
+
+```sh
+$ fgrep -l -f /var/tmp/foo johannes brahms
+```
+
+*   `-l` are `-f` are *command-line flags*.
+*   The `-f` flag contains one argument, `/var/tmp/foo` which is its
+    *command-line flag argument*.
+*   The `johannes` and `brahms` arguments, which are not associated with any
+    command-line flag, are *command-line positional arguments*.
+
+NOTE: unlike `getopt()`, the Abseil flags library does not support flags with
+both short and long options (e.g. `-v` and `--verbose` as short and long
+versions of the same command-line option).
+
+Typically, an application lists what flags the user is allowed to pass in, and
+what arguments they take. In this example, `-l` takes no argument, and `-f`
+takes a string (in particular, a filename) as an argument. Users use a library
+to help parse the command-line and store the flags in some data structure.
+
+## Do I Need Command Line Flags?
+
+In general, don't reach for flags. More often than not, flags are poor choices
+for binary configuration. As global variables, it is difficult to avoid
+conflicts with other flags, and difficult to deprecate and remove flags once
+they are no longer useful. Some flag values end up being wasteful within your
+binary: a flag with a single value that never varies is effectively a constant,
+but one whose associated code paths can never be optimized, as they are runtime
+initialized.
+
+Often, flags interact with other flags to provide configuration to a binary. If
+that configuration is reasonably complex, a configuration file is usually a
+better option. That said, sometimes flags are appropriate.
+
+A flag is reasonable if you know you will need to change the flag’s value, and
+if the associated logic of the flag is self-contained. For example, a flag is
+useful for:
+
+* Toggling features: flags such as `--enforce_quota` can be changed
+  when quota is causing a problem. When a new feature is being rolled
+  out, you may want a simple way to switch it off in an emergency. However, make
+  sure to remove these flags once their intended purpose has run its course.
+* Platform dependence: specifying values that change in different environments,
+  especially for input/output parameters: file paths, URLs, etc.
+* Tuning parameters: batch sizes, timeouts, thresholds, etc.
+* Debugging: a debugging flag may be desired to log information at runtime
+  without changing user-visible behavior. For example, a logging flag may
+  collect information if a server appears to be slow to respond.
+
+All that said, many flags are strictly unnecessary. During one of our audits in
+2012, we discovered that the majority of our flags never varied in value. Before
+you reach for flags, consider whether you really need them, and for how long.
+
+## Flags Best Practices
+
+OK, we've warned you about flag usage. But if we accept that you do need flags
+in your binary, what are some best practices around flag usage?
+
+*   Prefer to define flags only in the file containing the binary's `main()`
+    function. Although Abseil flags may be defined anywhere in any namespace,
+    avoid any usage outside of `main()` as it will otherwise be difficult to
+    resolve conflicts.
+*   Prefer to reference flags only from within the file containing the binary's
+    `main()` function, for the same reason.
+*   Do not use flags to implement any binary logic.
+*   Do not declare any flags that you do not own yourself.
+*   Do not access a binary's flags within any tight loops. Flags are expensive
+    to read.
+*   Prefer using flag types already defined in Abseil rather than implementing
+    your own custom flag types.
+
+With these caveats, the rest of this documentation discusses using the Abseil
+Flags library API.
+
+## Defining Flags
+
+Use the `ABSL_FLAG(type, name, default, help-text)` macro to define a flag of
+the appropriate type:
+
+```cpp
+#include "absl/flags/flag.h"
+#include "absl/time/time.h"
+
+ABSL_FLAG(bool, big_menu, true,
+          "Include 'advanced' options in the menu listing");
+ABSL_FLAG(std::string, output_dir, "foo/bar/baz/", "output file dir");
+ABSL_FLAG(std::vector<std::string>, languages,
+          {"english", "french", "german"},
+          "comma-separated list of languages to offer in the 'lang' menu");
+ABSL_FLAG(absl::Duration, timeout, absl::Seconds(30), "Default RPC deadline");
+```
+
+Flags defined with `ABSL_FLAG` will create global variables named
+`FLAG_<i>name</i>` of the specified type and default value. Help text will be
+displayed using the `--help` usage argument if invoked.
+
+Out of the box, the Abseil flags library supports the following types:
+
+* `bool`
+* `int16_t`
+* `uint16_t`
+* `int32_t`
+* `uint32_t`
+* `int64_t`
+* `uint64_t`
+* `float`
+* `double`
+* `std::string`
+* `std::vector<std::string>`
+
+NOTE: support for integral types is implemented using overloads for
+variable-width fundamental types (`short`, `int`, `long`, etc.). However,
+you should prefer the fixed-width integral types as noted above (`int32_t`,
+`uint64_t`, etc.)
+
+You can define a flag in any `.cc` file in your executable, but only define a
+flag once! All flags should be defined outside any C++ namespace so if multiple
+definitions of flags with the same name are linked into a single program the
+linker will report an error. If you want to access a flag in more than one
+source file, define it in a `.cc` file, and
+[declare](#using_a_flag_in_a_different_file) it in the corresponding header
+file.
+
+## Accessing Flags
+
+A flag defined via `ABSL_FLAG` is available as a variable of an unspecified
+type and named using the name passed to `ABSL_FLAG`. `absl::GetFlag()` and
+`absl::SetFlag()` can be used to access such flags. E.g., for flags of type
+`absl::Duration`:
+
+```cpp
+// Creates variable "absl::Flag<absl::Duration> FLAGS_timeout;"
+// Example command line usage: --timeout=1m30s
+ABSL_FLAG(absl::Duration, timeout, absl::Seconds(30), "Default RPC timeout");
+
+// Read the flag
+absl::Duration d = absl::GetFlag(FLAGS_timeout);
+
+// Modify the flag
+absl::SetFlag(&FLAGS_timeout, d + absl::Seconds(10));
+```
+
+Accesses to `ABSL_FLAG` flags are thread-safe.
+
+## Using a Flag in a Different File
+
+Accessing a flag in the manner of the previous section only works if the flag
+was defined earlier in the same `.cc` file. If it wasn't, you'll get an
+'unknown variable' error.
+
+If you need to allow other modules to access the flag, you must export it in
+some header file that is included by those modules. For an `ABSL_FLAG` flag
+named `FLAG_name` of type `T`, use the `ABSL_DECLARE_FLAG(T, name);` macro to do
+so:
+
+```cpp
+ABSL_DECLARE_FLAG(absl::Duration, timeout);
+```
+
+The declaration should always be placed in the header file associated with the
+`.cc` file that defines and owns the flag, as with any other exported entities.
+If you need to do this for testing only, you can place it at the end of the file
+with an `// Exposed for testing only` comment.
+
+## Sanity-Checking Flag Values
+
+Some flag values may be invalid. E.g., the underlying type may have a larger
+range than desired for the flag.
+
+For `ABSL_FLAG` flags, extra checks on a flag value can be done by providing a
+custom type and adding appropriate validation to the corresponding
+`AbslParseFlag()` function, which defines how a particular flag should be
+parsed.
+
+Example:
+
+```c++
+#include <string>
+
+#include "absl/flags/flag.h"
+#include "absl/flags/marshalling.h"
+#include "absl/strings/string_view.h"
+
+struct PortNumber {
+  explicit PortNumber(int p = 0) : port(p) {}
+
+  int port;  // Valid range is [0..32767]
+};
+
+// Returns a textual flag value corresponding to the PortNumber `p`.
+std::string AbslUnparseFlag(PortNumber p) {
+  // Delegate to the usual unparsing for int.
+  return absl::UnparseFlag(p.port);
+}
+
+// Parses a PortNumber from the command line flag value `text`.
+// Returns true and sets `*p` on success; returns false and sets `*error`
+// on failure.
+bool AbslParseFlag(absl::string_view text, PortNumber* p, std::string* error) {
+  // Convert from text to int using the int-flag parser.
+  if (!absl::ParseFlag(text, &p->port, error)) {
+    return false;
+  }
+  if (p->port < 0 || p->port > 32767) {
+    *error = "not in range [0,32767]";
+    return false;
+  }
+  return true;
+}
+
+ABSL_FLAG(PortNumber, port, PortNumber(0), "What port to listen on");
+```
+
+If `AbslParseFlag()` returns false for a value specified on the command-line,
+the process will exit with an error message. Note that `AbslParseFlag()` does
+not initiate any parsing, but simply defines the parsing behavior.
+
+## Parsing Flags During Startup
+
+Command-line flags should be parsed at startup, preferably before any other
+business logic associated with your binary. To do so:
+
+```cpp
+absl::ParseCommandLine(argc, argv);
+```
+
+`absl::ParseCommandLine()` parses the set of command-line arguments passed in
+the `argc` (argument count) and `argv[]` (argument vector) parameters from
+`main()`, assigning values to any defined Abseil flags. (Any arguments passed
+after the flag-terminating delimiter (`--`) are treated as positional arguments
+and ignored.)
+
+Any command-line flags (and arguments to those flags) are parsed into Abseil
+Flag values, if those flags are defined. Any undefined flags will either
+return an error, or be ignored if that flag is designated using `--undefok` to
+indicate "undefined is OK."
+
+Any command-line positional arguments not part of any command-line flag (or
+arguments to a flag) are returned in a vector, with the program invocation
+name at position 0 of that vector. (Note that this includes positional
+arguments after the flag-terminating delimiter `--`.)
+
+After all flags and flag arguments are parsed, this function looks for any
+built-in usage flags (e.g. `--help`), and if any were specified, it reports
+help messages and then exits the program. If command-line flags fail to pass
+parsing and validation, the process will be terminated.
+
+## Setting Flags on the Command Line
+
+The reason you make something a flag instead of a compile-time constant, is so
+users can specify a non-default value on the command-line. Here's how they might
+do it for an application that links in `foo.cc`:
+
+```sh
+app_containing_foo --nobig_menu --languages="chinese,japanese,korean" ...
+```
+
+This sets `FLAGS_big_menu = false;` and `FLAGS_languages =
+"chinese,japanese,korean"`, when `ParseCommandLine()` is run.
+
+Note the atypical syntax for setting a boolean flag to false: putting "no" in
+front of its name. There's a fair bit of flexibility to how flags may be
+specified. Here's an example of all the ways to specify the "languages" flag:
+
+-   `app_containing_foo --languages="chinese,japanese,korean"`
+-   `app_containing_foo -languages="chinese,japanese,korean"`
+-   `app_containing_foo --languages "chinese,japanese,korean"`
+-   `app_containing_foo -languages "chinese,japanese,korean"`
+
+For boolean flags, the possibilities are slightly different:
+
+-   `app_containing_foo --big_menu`
+-   `app_containing_foo --nobig_menu`
+-   `app_containing_foo --big_menu=true`
+-   `app_containing_foo --big_menu=false`
+
+(as well as the single-dash variant on all of these).
+
+Despite this flexibility, we recommend using only a single form:
+`--variable=value` for non-boolean flags, and `--variable/--novariable` for
+boolean flags. This consistency will make your code more readable.
+
+It is a fatal error to specify a flag on the command-line that has not been
+defined somewhere in the executable. If you need that functionality for some
+reason -- say you want to use the same set of flags for several executables, but
+not all of them define every flag in your list -- you can specify
+[--undefok](#special_flags) to suppress the error.
+
+If a flag is specified more than once, only the last specification is used; the
+others are ignored.
+
+Note that Abseil flags do not have single-letter synonyms, like they do in the
+`getopt()` library, nor do we allow "combining" flags behind a single dash, as
+in `ls -laf`.
+
+## Changing the Default Flag Value
+
+Sometimes a flag is defined in a library, and you want to change its default
+value in one application but not others. To do so, you can use `absl::SetFlag()`
+to override this default value before calling `ParseCommandLine()`; if the
+user does not pass a value on the command line, this new default will be used:
+
+```cpp
+int main(int argc, char** argv) {
+  // Overrides the default for FLAGS_logtostderr
+  absl::SetFlag(&FLAGS_logtostderr, true);
+  absl::ParseCommandLine(argc, argv);
+}
+```
+
+## Removing / Retiring Flags
+
+When a flag is no longer useful (and no longer referenced in code), in some
+cases it may be possible to simply remove the definition. However, if the flag
+is referenced in configuration files, job launching scripts, and the like,
+simply removing the definition will cause problems for deployment. For flags
+referenced in complex deployments where a single configuration may be used with
+multiple builds, it can be impossible to satisfy all constraints. To handle
+these cases where timing and coordination are difficult, you can denote some
+flags as "retired" flags via `ABSL_RETIRED_FLAG()`.
+
+```cpp
+ABSL_RETIRED_FLAG(bool, old_bool_flag, true, "old description");
+```
+
+Retired flags have a number of important behaviors. Specifically, they:
+
+-   do not define a C++ `FLAGS_` variable.
+-   have a type and a value, but that value is intentionally inaccessible.
+-   do not appear in `--help` messages.
+-   are fully supported by _all_ flag parsing routines.
+-   consume args normally, and complain about type mismatches in those
+    arguments.
+-   emit a complaint but do not die if they are accessed by name through the
+    flags API for parsing or otherwise.
+
+In this way, you can safely remove flags that are used in (multiple) complex
+deployments: retire the flag, wait for releases of affected binaries, then
+remove reference to the flag from configuration files and startup scripts. Once
+all jobs are starting up without logging warnings about reference to the retired
+flag, the retired flag can be removed completely.
+
+## Special Usage Flags
+
+There are a few flags defined by the Abseil flags library itself. Usage flags,
+if invoked, cause the application to print some information about itself and
+exit.
+
+```text
+--help            show help on important flags for this binary
+--helpfull        shows all flags from all files, sorted by file and then
+                  by name; shows the flagname, its default value, and its
+                  help string
+--helpshort       shows only flags for the file with the same name as the
+                  executable (usually the one containing main())
+--helpon=FILE     shows only flags defined in FILE.*
+--helpmatch=S     shows only flags defined in *S*.*
+--helppackage     shows flags defined in files in same directory as main()
+--version         prints version info for the executable
+```
+
+Additionally, some built-in flags have additional behavioral effects. These are
+noted below.
+
+### `--undefok`
+
+The Abseil flags library also supports an `undefok` flag:
+
+`--undefok=flagname,flagname,...`
+
+For those names listed as the argument to `--undefok`, this flag instructs the
+Abseil flags library to suppress normal error signaling that occurs when
+`--name` is seen on the command-line (or `--noname` since a listed flag might
+have been an old boolean flag), but `name` has not been defined anywhere in the
+application
