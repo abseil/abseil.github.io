@@ -15,7 +15,6 @@ header files include thorough documentation. This guide is designed
 to augment those code comments. For full reference documentation, consult
 the header files directly.
 
-
 * [C++ Quickstart (Bazel)](/docs/cpp/quickstart)
 * [C++ Quickstart (CMake)](/docs/cpp/quickstart-cmake)
 * [C++ Programming Guides](/docs/cpp/guides/)
