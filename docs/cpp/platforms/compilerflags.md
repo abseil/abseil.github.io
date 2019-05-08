@@ -100,11 +100,6 @@ The Clang compiler flag set has the following characteristics:
   avoid global constructors.
 * `-Wpadded` and `-Wpacked` are disabled because these flags are typically
   used as advisory warnings.
-* `-Wundef` is disabled because some Abseil dependencies
-  ([CCTZ](https://github.com/google/cctz) and
-  [pcg_random](http://www.pcg-random.org/)) use `#undef`. (We only do so on
-  macros we define ourselves for local use, to prevent the definition from
-  leaking globally.)
 * `-Wgcc-compat` is disabled because we want to use Clang-specific features in
   a Clang compilation branch and not get unnecessary warnings about GCC.
 * `-Wcomma` and `-Wextra-semi` are disabled because they are still valid C++

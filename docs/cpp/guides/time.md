@@ -66,7 +66,7 @@ in the example below and illustrated in Figure 1.
 
 ```
 Civil Time = F(Absolute Time, Time Zone)
-Absolute Time = F(Civil Time, Time Zone)
+Absolute Time = F'(Civil Time, Time Zone)
 ```
 
 ![Fundamental Time Concepts](images/time-concepts.png) Figure 1
