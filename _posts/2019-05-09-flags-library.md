@@ -8,7 +8,7 @@ type: markdown
 category: blog
 excerpt_separator: <!--break-->
 ---
-By [Gennadiy Rozenthal](mailto:rogeef@google.com), Abseil Engineer
+By [Gennadiy Rozenthal](mailto:rogeeff@google.com), Abseil Engineer
 
 Abseil is very happy to announce the release of the Abseil Flags
 library. Abseil's flags library provides a standard, readable way
