@@ -13,6 +13,7 @@ all code within Abseil within this guide.
 
 * [Abseil Fundamentals](base)
 * [Container Library](container)
+* [Flags Library](flags)
 * [Hash Library](hash)
 * [Meta Library Guide](meta)
 * [Numeric Library Guide](numeric)
