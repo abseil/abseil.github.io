@@ -15,7 +15,7 @@ features:
 * Access to flag values that are valid at any point during a program's lifetime
 * Prevention of conflicting flag names by ensuring uniqueness within the same
   binary
-* Associated help text and contains a number of built-in usage flags
+* Associated help text provided by a number of built-in usage flags
 * Has type support for boolean, integral and string types, and is extensible to
   support other Abseil types and custom types
 * Default values and programmatic access to flag values for both reading and
@@ -128,8 +128,8 @@ ABSL_FLAG(absl::Duration, timeout, absl::Seconds(30), "Default RPC deadline");
 ```
 
 Flags defined with `ABSL_FLAG` will create global variables named
-`FLAG_<i>name</i>` of the specified type and default value. Help text will be
-displayed using the `--help` usage argument if invoked.
+<code>FLAG_<i>name</i></code> of the specified type and default value. Help text
+will be displayed using the `--help` usage argument, if invoked.
 
 Out of the box, the Abseil flags library supports the following types:
 
@@ -150,13 +150,15 @@ variable-width fundamental types (`short`, `int`, `long`, etc.). However,
 you should prefer the fixed-width integral types as noted above (`int32_t`,
 `uint64_t`, etc.)
 
+See [Defining Custom Flag Types](#custom) for how to provide support for a new
+type.
+
 You can define a flag in any `.cc` file in your executable, but only define a
 flag once! All flags should be defined outside any C++ namespace so if multiple
 definitions of flags with the same name are linked into a single program the
 linker will report an error. If you want to access a flag in more than one
-source file, define it in a `.cc` file, and
-[declare](#using_a_flag_in_a_different_file) it in the corresponding header
-file.
+source file, define it in a `.cc` file, and [declare](#declaring_flags) it in
+the corresponding header file.
 
 ## Accessing Flags
 
@@ -179,7 +181,7 @@ absl::SetFlag(&FLAGS_timeout, d + absl::Seconds(10));
 
 Accesses to `ABSL_FLAG` flags are thread-safe.
 
-## Using a Flag in a Different File
+## Using a Flag in a Different File {#declaring_flags}
 
 Accessing a flag in the manner of the previous section only works if the flag
 was defined earlier in the same `.cc` file. If it wasn't, you'll get an
@@ -187,8 +189,8 @@ was defined earlier in the same `.cc` file. If it wasn't, you'll get an
 
 If you need to allow other modules to access the flag, you must export it in
 some header file that is included by those modules. For an `ABSL_FLAG` flag
-named `FLAG_name` of type `T`, use the `ABSL_DECLARE_FLAG(T, name);` macro to do
-so:
+named `FLAGS_name` of type `T`, use the `ABSL_DECLARE_FLAG(T, name);` macro to
+do so:
 
 ```cpp
 ABSL_DECLARE_FLAG(absl::Duration, timeout);
@@ -197,9 +199,11 @@ ABSL_DECLARE_FLAG(absl::Duration, timeout);
 The declaration should always be placed in the header file associated with the
 `.cc` file that defines and owns the flag, as with any other exported entities.
 If you need to do this for testing only, you can place it at the end of the file
-with an `// Exposed for testing only` comment.
+with an
+<br/>
+`// Exposed for testing only` comment.
 
-## Sanity-Checking Flag Values
+## Validating Flag Values
 
 Some flag values may be invalid. E.g., the underlying type may have a larger
 range than desired for the flag.
@@ -250,7 +254,7 @@ ABSL_FLAG(PortNumber, port, PortNumber(0), "What port to listen on");
 
 If `AbslParseFlag()` returns false for a value specified on the command-line,
 the process will exit with an error message. Note that `AbslParseFlag()` does
-not initiate any parsing, but simply defines the parsing behavior.
+not initiate any parsing itself, but simply defines the parsing behavior.
 
 ## Parsing Flags During Startup
 
@@ -284,9 +288,9 @@ parsing and validation, the process will be terminated.
 
 ## Setting Flags on the Command Line
 
-The reason you make something a flag instead of a compile-time constant, is so
-users can specify a non-default value on the command-line. Here's how they might
-do it for an application that links in `foo.cc`:
+The reason you make something a flag instead of a compile-time constant, is to
+allow users to specify a non-default value on the command-line. Here's how they
+might do it for an application that links in `foo.cc`:
 
 ```sh
 app_containing_foo --nobig_menu --languages="chinese,japanese,korean" ...
@@ -341,9 +345,15 @@ user does not pass a value on the command line, this new default will be used:
 int main(int argc, char** argv) {
   // Overrides the default for FLAGS_logtostderr
   absl::SetFlag(&FLAGS_logtostderr, true);
+  // If the command-line contains a value for logtostderr, use that. Otherwise,
+  // use the default (as set above).
   absl::ParseCommandLine(argc, argv);
 }
 ```
+
+Note that setting the flag *after* parsing the command-line is neither generally
+useful nor recommended, as it will ignore the user's intentions with a
+command-line flag and essentially set the flag as a constant value.
 
 ## Removing / Retiring Flags
 
@@ -377,7 +387,9 @@ remove reference to the flag from configuration files and startup scripts. Once
 all jobs are starting up without logging warnings about reference to the retired
 flag, the retired flag can be removed completely.
 
-## Special Usage Flags
+For more details, see the [Tip of the Week on retired flags][retired-flags].
+
+## Special Usage Flags {#special_flags}
 
 There are a few flags defined by the Abseil flags library itself. Usage flags,
 if invoked, cause the application to print some information about itself and
@@ -410,3 +422,131 @@ Abseil flags library to suppress normal error signaling that occurs when
 `--name` is seen on the command-line (or `--noname` since a listed flag might
 have been an old boolean flag), but `name` has not been defined anywhere in the
 application
+
+## Defining Custom Flag Types {#custom}
+
+For a type `T` to be used as an Abseil flag type, it must support conversion to
+and from strings supplied on the command-line. Custom types may have a unique
+format for this command-line string, and hence may require custom support for
+Abseil flags.
+
+To add support for your user-defined type, add overloads of `AbslParseFlag()`
+and `AbslUnparseFlag()` as free (non-member) functions to your type. If `T`
+is a class type, these functions can be friend function definitions. These
+overloads must be added to the same namespace where the type is defined, so
+that they can be discovered by Argument-Dependent Lookup (ADL).
+
+Example:
+
+```cpp
+namespace foo {
+enum OutputMode { kPlainText, kHtml };
+
+// AbslParseFlag converts from a string to OutputMode.
+// Must be in same namespace as OutputMode.
+
+// Parses an OutputMode from the command line flag value `text. Returns
+// `true` and sets `*mode` on success; returns `false` and sets `*error`
+// on failure.
+bool AbslParseFlag(absl::string_view text,
+                   OutputMode* mode,
+                   std::string* error) {
+  if (text == "plaintext") {
+    *mode = kPlainText;
+    return true;
+  }
+  if (text == "html") {
+    *mode = kHtml;
+    return true;
+  }
+  *error = "unknown value for enumeration";
+  return false;
+}
+
+// AbslUnparseFlag converts from an OutputMode to a string.
+// Must be in same namespace as OutputMode.
+
+// Returns a textual flag value corresponding to the OutputMode `mode`.
+std::string AbslUnparseFlag(OutputMode mode) {
+  switch (mode) {
+   case kPlainText: return "plaintext";
+   case kHtml: return "html";
+   default: return SimpleItoa(mode);
+  }
+}
+}  // namespace foo
+```
+
+Notice that neither `AbslParseFlag()` nor `AbslUnparseFlag()` are class
+members, but free functions. `AbslParseFlag/AbslUnparseFlag()` overloads
+for a type should only be declared in the same file and namespace as said
+type. The proper `AbslParseFlag/AbslUnparseFlag()` implementations for a
+given type will be discovered via Argument-Dependent Lookup (ADL).
+
+`AbslParseFlag()` may need, in turn, to parse simpler constituent types
+using `absl::ParseFlag()`. For example, a custom struct `MyFlagType`
+consisting of a `std::pair<int, std::string>` would add an `AbslParseFlag()`
+overload for its `MyFlagType` like so:
+
+Example:
+
+```cpp
+namespace my_flag_namespace {
+
+struct MyFlagType {
+  std::pair<int, std::string> my_flag_data;
+};
+
+bool AbslParseFlag(absl::string_view text, MyFlagType* flag,
+                   std::string* err);
+
+std::string AbslUnparseFlag(const MyFlagType&);
+
+// Within the implementation, `AbslParseFlag()` will, in turn invoke
+// `absl::ParseFlag()` on its constituent `int` and `std::string` types
+// (which have built-in Abseil flag support.
+
+bool AbslParseFlag(absl::string_view text, MyFlagType* flag,
+                   std::string* err) {
+  std::pair<absl::string_view, absl::string_view> tokens =
+      absl::StrSplit(text, ',');
+  if (!absl::ParseFlag(tokens.first, &flag->my_flag_data.first, err))
+    return false;
+  if (!absl::ParseFlag(tokens.second, &flag->my_flag_data.second, err))
+    return false;
+  return true;
+}
+
+// Similarly, for unparsing, we can simply invoke `absl::UnparseFlag()` on
+// the constituent types.
+std::string AbslUnparseFlag(const MyFlagType& flag) {
+  return absl::StrCat(absl::UnparseFlag(flag.my_flag_data.first),
+                      ",",
+                      absl::UnparseFlag(flag.my_flag_data.second));
+}
+}  // my_flag_namespace
+```
+
+### Best Practices for Defining Custom Flag Types
+
+*   Declare `AbslParseFlag()` and `AbslUnparseFlag()` in exactly one place for
+    `T`, generally in the same file that declares `T. If `T` is a class type,
+    they can be defined with [friend _function-definitions_][friend-functions].
+*   If you must declare `AbslParseFlag()` and `AbslUnparseFlag()` away from
+    `T`'s declaration, you must still be the owner of `T` and must guarantee
+    that the functions are defined exactly once in the codebase.
+*   `absl::StrSplit("")` returns `{""}` (a list with one element), so watch out
+    for that if you are defining a compound flag type. Flags defined with
+    `ABSL_FLAG(std::vector<std::string>, ...)` treat an empty string as an empty
+    container.
+*   Escape separators if they can occur in values for compound flag types.
+*   Invoke `absl::ParseFlag()` and `absl::UnparseFlag()` within your free
+    function overloads to get the string conversion behavior implemented for
+    constituent built-in types.
+*   Only boolean flags are allowed to not pass a value: e.g. `--enable_foo` or
+    `--noenable_foo`. As a result, all custom flag types require an explicit
+    value to be passed to `AbslParseFlag()` and `AbslUnparseFlag()`, even if
+    that value is the empty string (e.g. `--my_custom_flag=""`).
+
+[retired-flags]: https://abseil.io/tips/90
+[friend-functions]: http://en.cppreference.com/w/cpp/language/friend
