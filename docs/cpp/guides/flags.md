@@ -122,7 +122,7 @@ ABSL_FLAG(bool, big_menu, true,
           "Include 'advanced' options in the menu listing");
 ABSL_FLAG(std::string, output_dir, "foo/bar/baz/", "output file dir");
 ABSL_FLAG(std::vector<std::string>, languages,
-          {"english", "french", "german"},
+          std::vector({"english", "french", "german"}),
           "comma-separated list of languages to offer in the 'lang' menu");
 ABSL_FLAG(absl::Duration, timeout, absl::Seconds(30), "Default RPC deadline");
 ```
