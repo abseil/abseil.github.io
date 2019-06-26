@@ -122,7 +122,7 @@ ABSL_FLAG(bool, big_menu, true,
           "Include 'advanced' options in the menu listing");
 ABSL_FLAG(std::string, output_dir, "foo/bar/baz/", "output file dir");
 ABSL_FLAG(std::vector<std::string>, languages,
-          std::vector({"english", "french", "german"}),
+          std::vector<std::string>({"english", "french", "german"}),
           "comma-separated list of languages to offer in the 'lang' menu");
 ABSL_FLAG(absl::Duration, timeout, absl::Seconds(30), "Default RPC deadline");
 ```
@@ -440,7 +440,7 @@ Example:
 
 ```cpp
 namespace foo {
-enum OutputMode { kPlainText, kHtml };
+enum class OutputMode { kPlainText, kHtml };
 
 // AbslParseFlag converts from a string to OutputMode.
 // Must be in same namespace as OutputMode.
@@ -452,11 +452,11 @@ bool AbslParseFlag(absl::string_view text,
                    OutputMode* mode,
                    std::string* error) {
   if (text == "plaintext") {
-    *mode = kPlainText;
+    *mode = OutputMode::kPlainText;
     return true;
   }
   if (text == "html") {
-    *mode = kHtml;
+    *mode = OutputMode::kHtml;
     return true;
   }
   *error = "unknown value for enumeration";
@@ -469,9 +469,9 @@ bool AbslParseFlag(absl::string_view text,
 // Returns a textual flag value corresponding to the OutputMode `mode`.
 std::string AbslUnparseFlag(OutputMode mode) {
   switch (mode) {
-   case kPlainText: return "plaintext";
-   case kHtml: return "html";
-   default: return SimpleItoa(mode);
+    case OutputMode::kPlainText: return "plaintext";
+    case OutputMode::kHtml: return "html";
+    default: return absl::StrCat(mode);
   }
 }
 }  // namespace foo
