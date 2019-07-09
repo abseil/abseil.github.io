@@ -155,10 +155,11 @@ Archiecture, Specific Compiler, and Standard Library implementation.
 
 <p style="background-color: #89CFF0; padding: 5px; width: 80%;" id="id06272019">
 <br/>
-On Windows platforms, Abseil does not include <code>winsock.h</code>, as it also
-pulls in <code>windows.h</code> (and defines a set of macros that may conflict
-with Abseil users). Instead, we forward declare <code>timeval</code> and
-require Windows users to explicitly include <code>winsock2.h</code> themselves.
+On Windows platforms, Abseil does not include <code>winsock2.h</code>, as it
+also pulls in <code>windows.h</code> (and defines a set of macros that may
+conflict with Abseil users). Instead, we forward declare <code>timeval</code>
+and require Windows users to explicitly include <code>winsock2.h</code>
+themselves.
 </p>
 
 **Supported**
