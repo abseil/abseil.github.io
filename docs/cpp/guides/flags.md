@@ -530,7 +530,7 @@ std::string AbslUnparseFlag(const MyFlagType& flag) {
 ### Best Practices for Defining Custom Flag Types
 
 *   Declare `AbslParseFlag()` and `AbslUnparseFlag()` in exactly one place for
-    `T`, generally in the same file that declares `T. If `T` is a class type,
+    `T`, generally in the same file that declares `T`. If `T` is a class type,
     they can be defined with [friend _function-definitions_][friend-functions].
 *   If you must declare `AbslParseFlag()` and `AbslUnparseFlag()` away from
     `T`'s declaration, you must still be the owner of `T` and must guarantee
