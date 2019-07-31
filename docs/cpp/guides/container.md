@@ -1,14 +1,115 @@
 ---
-title: "Abseil Containers (Hash Tables)"
+title: "Abseil Containers"
 layout: docs
 sidenav: side-nav-cpp.html
 type: markdown
 ---
 
-# Abseil Containers (Hash Tables)
+# Abseil Containers
 
-The Abseil `container` library contains a number of useful containers generally
-adhering to the STL container API contract, including a number of hash tables:
+Abseil provides a number of containers as alternatives to STL containers. These
+containers generally adhere to the properties of STL containers, though there
+are often some associated API differences and/or implementation details which
+differ from the standard library.
+
+The Abseil containers are designed to be more efficient in the general case; in
+some cases, however, the STL containers may be more efficient. Unlike some other
+abstractions that Abseil provides, these containers should not be considered
+drop-in replacements for their STL counterparts, as there are API and/or
+contract differences between the two sets of containers. For example, the
+Abseil containers often do not guarantee pointer stability after insertions or
+deletions.
+
+The Abseil `container` library defines the following sets of containers:
+
+* B-tree ordered containers
+* Swiss table unordered containers
+
+See below for more information about each of these container types.
+
+## B-tree Ordered Containers
+
+The Abseil `container` library contains ordered containers generally
+adhering to the STL container API contract, but implemented using (generally
+more efficient) B-trees rather than binary trees (as used in `std::map` et al):
+
+*   `absl::btree_map`
+*   `absl::btree_set`
+*   `absl::btree_multimap`
+*   `absl::btree_multiset`
+
+These ordered containers are designed to be more efficient replacements for
+[`std::map`](https://en.cppreference.com/w/cpp/container/map)
+and [`std::set`](https://en.cppreference.com/w/cpp/container/set) in most cases.
+Specifically, they provide several advantages over the ordered `std::`
+containers:
+*   Provide lower memory overhead in most cases than their STL equivalents.
+*   Are generally more cache friendly (and hence faster) than their STL
+    equivalents.
+*   Provide C++11 support for C++17 mechanisms such as `try_emplace()`.
+*   Support heterogeneous lookup.
+
+### Construction
+
+The set of B-tree containers support the same overload set as
+`std::map` for construction and assignment:
+
+<!--{% raw %}-->
+```c++
+// Examples using btree_multimap and btree_multiset are equivalent
+
+// Default constructor
+// No allocation for the B-tree's elements is made.
+absl::btree_set<std::string> set1;
+
+absl::btree_map<int, std::string> map1;
+
+// Initializer List constructor
+absl::btree_set<std::string> set2 = {{"huey"}, {"dewey"}, {"louie"},};
+
+absl::btree_map<int, std::string> map2 =
+    {{1, "huey"}, {2, "dewey"}, {3, "louie"},};
+
+// Copy constructor
+absl::btree_set<std::string> set3(set2);
+
+absl::btree_map<int, std::string> map3(map2);
+
+// Copy assignment operator
+// Hash functor and Comparator are copied as well
+absl::btree_set<std::string> set4;
+set4 = set3;
+
+absl::btree_map<int, std::string> map4;
+map4 = map3;
+
+// Move constructor
+// Move is guaranteed efficient
+absl::btree_set<std::string> set5(std::move(set4));
+
+absl::btree_map<int, std::string> map5(std::move(map4));
+
+// Move assignment operator
+// May be efficient if allocators are compatible
+absl::btree_set<std::string> set6;
+set6 = std::move(set5);
+
+absl::btree_map<int, std::string> map6;
+map6 = std::move(map5);
+
+// Range constructor
+std::vector<std::string> v = {"a", "b"};
+absl::btree_set<std::string> set7(v.begin(), v.end());
+
+std::vector<std::pair<int, std::string>> v = {{1, "a"}, {2, "b"}};
+absl::btree_map<int, std::string> set7(v.begin(), v.end());
+```
+<!--{% endraw %}-->
+
+## Hash Tables
+
+The Abseil `container` library contains a number of useful hash tables generally
+adhering to the STL container API contract:
 
 *   `absl::flat_hash_map`
 *   `absl::flat_hash_set`
@@ -29,7 +130,7 @@ They provide several advantages over the `std::unordered_*` containers:
     construction and insertion.
 *   Guarantees an `O(1)` erase method by returning void instead of an iterator.
 
-## Construction
+### Construction
 
 The set of Swiss table containers support the same overload set as
 `std::unordered_map` for construction and assignment:
@@ -86,19 +187,19 @@ absl::flat_hash_map<int, std::string> set7(v.begin(), v.end());
 ```
 <!--{% endraw %}-->
 
-## `absl::flat_hash_map` and `absl::flat_hash_set`
+### `absl::flat_hash_map` and `absl::flat_hash_set`
 
 `absl::flat_hash_map` and `absl::flat_hash_set` are the recommended unordered
 containers for general use. These are flat data structures, which store their
 `value_type` directly in the slot array.
 
-### Guarantees
+#### Guarantees
 
 *   Keys and values are stored inline.
 *   Iterators, references, and pointers to elements are invalidated on rehash.
 *   Move operations do not invalidate iterators or pointers.
 
-### Memory Usage
+#### Memory Usage
 
 <img src="images/flat-hash-map.svg" style="margin:5px;width:50%"
     alt="Flat Hash Map Memory Layout"/>
@@ -110,11 +211,11 @@ bytes. The *max load factor* is 87.5%, after which the table doubles in size
 rehashed the load factor can be even lower, but these numbers are sufficient for
 our estimates.
 
-### Recommendation
+#### Recommendation
 
 Use `absl::flat_hash_map` most of the time.
 
-## `absl::node_hash_map` and `absl::node_hash_set`
+### `absl::node_hash_map` and `absl::node_hash_set`
 
 These are near drop-in replacement for `std::unordered_map` and
 `std::unordered_set`. They are useful:
@@ -129,13 +230,13 @@ These are node-based data structures in the STL standard sense: each
 `value_type` is allocated in a separate node and the main table contains
 pointers to those nodes.
 
-### Guarantees
+#### Guarantees
 
 *   Nodes have stable addresses.
 *   Iterators are invalidated on rehash.
 *   Move operations do not invalidate iterators.
 
-### Memory Usage
+#### Memory Usage
 
 <img src="images/node-hash-map.svg" style="margin:5px;width:50%"
     alt="Node Hash Map Memory Layout"/>
@@ -144,7 +245,7 @@ The slot array requires `(sizeof(void*) + 1) * bucket_count()` bytes and the
 nodes themselves require `sizeof(value_type) * size()` bytes. Together, this is
 O(`9*bucket_count + sizeof(std::pair<const K, V>)*size()`) on most platforms.
 
-### Recommendation
+#### Recommendation
 
 Prefer `absl::flat_hash_map` or `absl::flat_hash_set` in most new code (see
 above).
@@ -155,7 +256,7 @@ containers with this property. *Note:* Do not use popularity as a guide. You
 will see the "node" containers used a lot, but only because it was safe to
 migrate code to them from other containers.
 
-## Construction and Usage
+### Construction and Usage
 
 <!--{% raw %}-->
 ```cpp
@@ -168,7 +269,7 @@ strings.try_emplace("foo", absl::make_unique<string>("bar"));
 ```
 <!--{% endraw %}-->
 
-## Heterogeneous Lookup
+### Heterogeneous Lookup
 
 Inserting into or looking up an element within an associative container requires
 a key. In general, containers require the keys to be of a specific type, which
@@ -196,7 +297,7 @@ absl::string_view some_key = ...;
 auto it = m.find(some_key);
 ```
 
-## Iteration Order Instability
+### Iteration Order Instability
 
 While `std::unordered_map` makes no guarantees about iteration order, many
 implementations happen to have a deterministic order based on the keys and their

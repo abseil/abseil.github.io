@@ -17,7 +17,7 @@ environment up and running. We recommend that each person starting
 development with Abseil code at least run through this quick tutorial.
 
 Abseil also supports building with CMake.  For information, please see the
-[CMake Quickstart](/docs/cpp/quickstart-cmake.md).
+[CMake Quickstart](/docs/cpp/quickstart-cmake).
 
 ## Prerequisites
 

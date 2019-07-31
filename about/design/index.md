@@ -20,3 +20,5 @@ be adding more design notes in the future.
 ## [Swiss tables](swisstables)
 
 ## [`charconv`](charconv)
+
+## [B-Tree Maps](btree)
