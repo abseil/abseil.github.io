@@ -65,9 +65,8 @@ void Finish() {
 <pre>
 void Wait() {
   shared_lock_->Lock();
-  shared_lock_->Await(Condition([this]() {
-      return shared_state_ == 1;
-  }));
+  auto shared_state_is_one = [this] { return shared_state_ == 1; };
+  shared_lock_->Await(Condition(&shared_state_is_one));
   shared_lock_->Unlock();
 }
 </pre>

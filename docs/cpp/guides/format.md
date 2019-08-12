@@ -68,9 +68,9 @@ Usage' guide for information on dynamic formatting.
 ### Conversion Specifiers
 
 The `str_format` library follows the POSIX syntax as used within the
-[POSIX `printf` specification][1], which specifies the makeup of a format
-conversion specifier. A format conversion specifier is a string of the following
-form:
+[POSIX `printf()` family specification][1], which specifies the makeup of a
+format conversion specifier. A format conversion specifier is a string of the
+following form:
 
 *   The `%` character
 *   An optional positional specifier of the form `n$`, where `n` is a
@@ -277,4 +277,4 @@ if (fileHandle!=nullptr)
 }
 ```
 
-[1]: http://pubs.opengroup.org/onlinepubs/9699919799/utilities/printf.html
+[1]: http://pubs.opengroup.org/onlinepubs/9699919799/functions/fprintf.html
