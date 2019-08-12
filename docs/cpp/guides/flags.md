@@ -122,13 +122,13 @@ ABSL_FLAG(bool, big_menu, true,
           "Include 'advanced' options in the menu listing");
 ABSL_FLAG(std::string, output_dir, "foo/bar/baz/", "output file dir");
 ABSL_FLAG(std::vector<std::string>, languages,
-          {"english", "french", "german"},
+          std::vector<std::string>({"english", "french", "german"}),
           "comma-separated list of languages to offer in the 'lang' menu");
 ABSL_FLAG(absl::Duration, timeout, absl::Seconds(30), "Default RPC deadline");
 ```
 
 Flags defined with `ABSL_FLAG` will create global variables named
-<code>FLAG_<i>name</i></code> of the specified type and default value. Help text
+<code>FLAGS_<i>name</i></code> of the specified type and default value. Help text
 will be displayed using the `--help` usage argument, if invoked.
 
 Out of the box, the Abseil flags library supports the following types:
@@ -440,7 +440,7 @@ Example:
 
 ```cpp
 namespace foo {
-enum OutputMode { kPlainText, kHtml };
+enum class OutputMode { kPlainText, kHtml };
 
 // AbslParseFlag converts from a string to OutputMode.
 // Must be in same namespace as OutputMode.
@@ -452,11 +452,11 @@ bool AbslParseFlag(absl::string_view text,
                    OutputMode* mode,
                    std::string* error) {
   if (text == "plaintext") {
-    *mode = kPlainText;
+    *mode = OutputMode::kPlainText;
     return true;
   }
   if (text == "html") {
-    *mode = kHtml;
+    *mode = OutputMode::kHtml;
     return true;
   }
   *error = "unknown value for enumeration";
@@ -469,9 +469,9 @@ bool AbslParseFlag(absl::string_view text,
 // Returns a textual flag value corresponding to the OutputMode `mode`.
 std::string AbslUnparseFlag(OutputMode mode) {
   switch (mode) {
-   case kPlainText: return "plaintext";
-   case kHtml: return "html";
-   default: return SimpleItoa(mode);
+    case OutputMode::kPlainText: return "plaintext";
+    case OutputMode::kHtml: return "html";
+    default: return absl::StrCat(mode);
   }
 }
 }  // namespace foo
@@ -530,7 +530,7 @@ std::string AbslUnparseFlag(const MyFlagType& flag) {
 ### Best Practices for Defining Custom Flag Types
 
 *   Declare `AbslParseFlag()` and `AbslUnparseFlag()` in exactly one place for
-    `T`, generally in the same file that declares `T. If `T` is a class type,
+    `T`, generally in the same file that declares `T`. If `T` is a class type,
     they can be defined with [friend _function-definitions_][friend-functions].
 *   If you must declare `AbslParseFlag()` and `AbslUnparseFlag()` away from
     `T`'s declaration, you must still be the owner of `T` and must guarantee

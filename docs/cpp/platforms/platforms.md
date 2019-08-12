@@ -153,6 +153,15 @@ Archiecture, Specific Compiler, and Standard Library implementation.
 
 ### Windows
 
+<p style="background-color: #89CFF0; padding: 5px; width: 80%;" id="id06272019">
+<br/>
+On Windows platforms, Abseil does not include <code>winsock2.h</code>, as it
+also pulls in <code>windows.h</code> (and defines a set of macros that may
+conflict with Abseil users). Instead, we forward declare <code>timeval</code>
+and require Windows users to explicitly include <code>winsock2.h</code>
+themselves.
+</p>
+
 **Supported**
 
 <table width="80%">
@@ -211,3 +220,6 @@ Archiecture, Specific Compiler, and Standard Library implementation.
     </tr>
   </tbody>
 </table>
+
+<!-- Styles for dated updates/changes to platform support -->
+<style>#id06302019:before { content: "06/27/2019";font-weight:bold; }</style>
