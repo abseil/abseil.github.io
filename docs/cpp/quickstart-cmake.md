@@ -11,7 +11,7 @@ This document is designed to allow you to get the Abseil development
 environment up and running using CMake. We recommend that each person starting
 development with Abseil code at least run through this quick tutorial.  If your
 project uses [Bazel](https://bazel.build/) instead, please find the
-[Bazel Quickstart](/docs/cpp/quickstart.md).
+[Bazel Quickstart](/docs/cpp/quickstart).
 
 ## Prerequisites
 

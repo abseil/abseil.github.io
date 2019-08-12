@@ -128,7 +128,7 @@ ABSL_FLAG(absl::Duration, timeout, absl::Seconds(30), "Default RPC deadline");
 ```
 
 Flags defined with `ABSL_FLAG` will create global variables named
-<code>FLAG_<i>name</i></code> of the specified type and default value. Help text
+<code>FLAGS_<i>name</i></code> of the specified type and default value. Help text
 will be displayed using the `--help` usage argument, if invoked.
 
 Out of the box, the Abseil flags library supports the following types:
@@ -530,7 +530,7 @@ std::string AbslUnparseFlag(const MyFlagType& flag) {
 ### Best Practices for Defining Custom Flag Types
 
 *   Declare `AbslParseFlag()` and `AbslUnparseFlag()` in exactly one place for
-    `T`, generally in the same file that declares `T. If `T` is a class type,
+    `T`, generally in the same file that declares `T`. If `T` is a class type,
     they can be defined with [friend _function-definitions_][friend-functions].
 *   If you must declare `AbslParseFlag()` and `AbslUnparseFlag()` away from
     `T`'s declaration, you must still be the owner of `T` and must guarantee
