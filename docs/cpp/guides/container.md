@@ -43,6 +43,7 @@ These ordered containers are designed to be more efficient replacements for
 and [`std::set`](https://en.cppreference.com/w/cpp/container/set) in most cases.
 Specifically, they provide several advantages over the ordered `std::`
 containers:
+
 *   Provide lower memory overhead in most cases than their STL equivalents.
 *   Are generally more cache friendly (and hence faster) than their STL
     equivalents.
