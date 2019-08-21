@@ -147,8 +147,8 @@ Examples:
 ```cpp
 // Stores results in a std::set<std::string>, which also performs de-duplication
 // and orders the elements in ascending order.
-std::set<std::string> a = absl::StrSplit("b,a,c,a,b", ',');
-// v[0] == "a", v[1] == "b", v[3] == "c"
+std::set<std::string> s = absl::StrSplit("b,a,c,a,b", ',');
+// s[0] == "a", s[1] == "b", s[3] == "c"
 
 // Stores results in a map. The map implementation assumes that the input
 // is provided as a series of key/value pairs. For example, the 0th element
