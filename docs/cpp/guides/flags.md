@@ -203,6 +203,12 @@ with an
 <br/>
 `// Exposed for testing only` comment.
 
+Warning: The necessity to access flags from different files, expecially in
+libraries, is generally a sign of a bad design. Given the "global variable"
+nature of flags they should be avoided in libraries and be injected instead
+(e.g. in constructors). (see
+[abseil.io/tips/45](https://abseil.io/tips/45))
+
 ## Validating Flag Values
 
 Some flag values may be invalid. E.g., the underlying type may have a larger
