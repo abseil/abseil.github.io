@@ -77,14 +77,14 @@ References:
 
 ## Operating Systems
 
-|**Macro**|**Operating System**|**Compiler**|
-|------------|----------|----------|
-|`__ANDROID__`|Android|Android NDK|
-|`__APPLE__`|MacOS, iOS|GNU C, Intel C++, and Apple LLVM|
-|`_WIN32`|Windows|For both 32-bit and 64-bit environments|
-|`__linux__`|Linux|Android NDK, GNU C, Clang/LLVM|
-|`__ros__`|Akaros||
-|`__Fushsia__`|Fuchsia||
+**Macro**     | **Operating System** | **Compiler**
+------------- | -------------------- | ---------------------------------------
+`__ANDROID__` | Android              | Android NDK
+`__APPLE__`   | macOS, iOS           | GNU C, Intel C++, and Apple LLVM
+`_WIN32`      | Windows              | For both 32-bit and 64-bit environments
+`__linux__`   | Linux                | Android NDK, GNU C, Clang/LLVM
+`__ros__`     | Akaros               |
+`__Fushsia__` | Fuchsia              |
 
 References:
 
