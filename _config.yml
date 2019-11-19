@@ -37,7 +37,7 @@ markdown: kramdown
 theme: minima
 
 # RSS / Blog configuration settings
-gems:
+plugins:
   - jekyll-feed
 timezone: "America/New_York"
 
