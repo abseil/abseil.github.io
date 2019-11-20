@@ -9,8 +9,13 @@ type: markdown
 
 Abseil provides its repository as source code, and specifically does not offer
 binary releases. Instead, we encourage you to either "live at head" (build
-from the latest version of Abseil) or, if necessary, build against a known,
-supported branch, known as a Long Term Support (LTS) branch.
+from the latest version of Abseil), or build against a known, supported branch,
+known as a Long Term Support (LTS) branch.
+
+If you must provide Abseil within a binary or library (e.g. you are a package
+manager), we have provided a mechanism to help ensure that any embedded copy of
+Abseil uses the same copy of Abseil. For more information, consult the
+[Abseil Options Guide](/docs/cpp/guides/options).
 
 This document outlines the specifics of what releases we provide, and options
 for how you build and distribute Abseil within your source code, binary, or
@@ -66,6 +71,11 @@ options, listed in order of higher preference:
     * *DISCOURAGED*: Copy Abseil code into your project and provide it within
       your own repository. Obviously, this makes maintenance difficult, though
       not impossible.
+*   Embed a copy of Abseil within your binary. Although discouraged, we
+    understand this is sometimes necessary:<br/><br/>
+    * *ALLOWED*: Embed a copy of Abseil using configurations within the Abseil
+      `options.h` file. Consult the
+      [Abseil Options Guide](/docs/cpp/guides/options).
 
 ## Options for Including Abseil Code In Your Library
 
@@ -87,6 +97,9 @@ between different builds of Abseil.)
   Abseil, that exports no Abseil symbols. This option implies that no Abseil
   types exist within your library's public API, and all Abseil symbols must be
   hidden by the linker.
+* *ALLOWED*: Embed a copy of Abseil using configurations within the Abseil
+  `options.h` file. Consult the
+  [Abseil Options Guide](/docs/cpp/guides/options).
 * *DISCOURAGED*: Distribute a *dynamic* library. Abseil does not support dynamic
   loading or unloading of any shared libraries at this time. We are
   investigating if we can support dynamic loading without unloading. Consult

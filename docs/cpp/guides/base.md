@@ -96,6 +96,9 @@ The Base library's configuration header files consist of the following:
   the Abseil [Platforms Guide](/docs/cpp/platforms).
 * `macros.h`<br />
   Provides macros used within Abseil code for language features.
+* `options.h` <br />
+  Provides mechanisms to enforce static configuration of certain implementation
+  details.
 * `optimization.h`<br />
   Provides several platform-dependent macros for implementing
   optimization techniques.
