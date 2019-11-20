@@ -84,7 +84,7 @@ References:
 `_WIN32`      | Windows              | For both 32-bit and 64-bit environments
 `__linux__`   | Linux                | Android NDK, GNU C, Clang/LLVM
 `__ros__`     | Akaros               |
-`__Fushsia__` | Fuchsia              |
+`__Fuchsia__` | Fuchsia              |
 
 References:
 
