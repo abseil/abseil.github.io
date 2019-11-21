@@ -15,23 +15,21 @@ maintaining compatibility with that library.
 
 The Abseil Random library provides several advantages over `<random>`:
 
-* Improved algorithms<br/>
-    The Abseil Random library provides improved pseudorandom algorithms, and
-    allows us to adopt new algorithms as they become available. Random value
-    generation is an area of active research, and today's algorithms initialize
-    more quickly, generate values faster, and produce sequences that are
-    statistically more difficult to guess.<br><br>
-
-* Easy construction of well-seeded generators<br/>
-    Abseil's bit generators require no constructor arguments to be seeded
-    properly. Providing the initial state for a random value generator (ie.
-    _"seeding"_) is a nontrivial task which often requires knowledge of the
-    underlying bit-generation algorithm.<br><br>
-
-* Concise sampling syntax<br/>
-    Abseil's Random library provides a more concise syntax than `<random>` by
-    representing distributions as functions rather than objects, while still
-    decoupling bit generation from distribution sampling.<br><br>
+* **Improved algorithms**<br/>
+  The Abseil Random library provides improved pseudorandom algorithms, and
+  allows us to adopt new algorithms as they become available. Random value
+  generation is an area of active research, and today's algorithms initialize
+  more quickly, generate values faster, and produce sequences that are
+  statistically more difficult to guess.
+* **Easy construction of well-seeded generators**<br/>
+  Abseil's bit generators require no constructor arguments to be seeded
+  properly. Providing the initial state for a random value generator (ie.
+  _"seeding"_) is a nontrivial task which often requires knowledge of the
+  underlying bit-generation algorithm.
+* **Concise sampling syntax**<br/>
+  Abseil's Random library provides a more concise syntax than `<random>` by
+  representing distributions as functions rather than objects, while still
+  decoupling bit generation from distribution sampling.
 
 To get started, add the following `#include`, and analogous dependency within
 your build file.
@@ -285,7 +283,6 @@ categories of generator stability:
     generator-instances *g<sub>1</sub>(S), …, g<sub>n</sub>(S)* constructed
     within the same process execution, all generators *g<sub>k</sub>* will
     produce the same sequences of variates.
-
 *   **Seed Stability**: Given a fixed seed sequence *S*, and a collection of
     generator instances *g<sub>1</sub>(S), …, g<sub>n</sub>(S)*, all generators
     *g<sub>k</sub>* will produce the same sequence of variates, across all

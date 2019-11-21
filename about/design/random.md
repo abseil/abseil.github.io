@@ -1,3 +1,12 @@
+---
+title: "Random Library Design Notes"
+layout: about
+sidenav: side-nav-design.html
+type: markdown
+---
+
+# Random Library Design Notes
+
 The Abseil Random library is a collection of classes and function templates
 which provide an API for generating random numbers. In these design notes we
 will focus on the parts of the library which provide meaningful additions to the
