@@ -279,14 +279,14 @@ promises to produce the same variates from a fixed seed sequence, as the
 In the course of our discussions, we found it useful to define the following
 categories of generator stability:
 
-* **Process Stability**: Given a fixed seed sequence *S*, and a collection of
-  generator-instances *g<sub>1</sub>(S), …, g<sub>n</sub>(S)* constructed
-  within the same process execution, all generators *g<sub>k</sub>* will
-  produce the same sequences of variates.
-* **Seed Stability**: Given a fixed seed sequence *S*, and a collection of
-  generator instances *g<sub>1</sub>(S), …, g<sub>n</sub>(S)*, all generators
-  *g<sub>k</sub>* will produce the same sequence of variates, across all
-  instances of any binaries.
+*   **Process Stability**: Given a fixed seed sequence *S*, and a collection of
+    generator-instances *g<sub>1</sub>(S), …, g<sub>n</sub>(S)* constructed
+    within the same process execution, all generators *g<sub>k</sub>* will
+    produce the same sequences of variates.
+*   **Seed Stability**: Given a fixed seed sequence *S*, and a collection of
+    generator instances *g<sub>1</sub>(S), …, g<sub>n</sub>(S)*, all generators
+    *g<sub>k</sub>* will produce the same sequence of variates, across all
+    instances of any binaries.
 
 ### Guarantees provided by the Abseil Random library
 
