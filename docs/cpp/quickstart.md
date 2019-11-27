@@ -7,9 +7,9 @@ type: markdown
 
 # C++ Quickstart
 
-Note: this Quickstart uses Bazel as the official build system for Abseil,
-which is supported on most major platforms (Linux, Windows, MacOS, for example)
-and compilers. The Abseil source code assumes you are using Bazel and contains
+Note: this Quickstart uses Bazel as the official build system for Abseil, which
+is supported on most major platforms (Linux, Windows, macOS, for example) and
+compilers. The Abseil source code assumes you are using Bazel and contains
 `BUILD.bazel` files for that purpose.
 
 This document is designed to allow you to get the Abseil development
@@ -17,21 +17,21 @@ environment up and running. We recommend that each person starting
 development with Abseil code at least run through this quick tutorial.
 
 Abseil also supports building with CMake.  For information, please see the
-[CMake Quickstart](/docs/cpp/quickstart-cmake.md).
+[CMake Quickstart](/docs/cpp/quickstart-cmake).
 
 ## Prerequisites
 
 Running the Abseil code within this tutorial requires:
 
-* A compatible platform (e.g. Windows, Mac OS X, Linux, etc.). Most platforms
-  are fully supported. Consult the
-  [Platforms Guide](platforms/platforms) for more information.
-* A compatible C++ compiler *supporting at least C++11*. Most major compilers
-  are supported.
-* [Git](https://git-scm.com/) for interacting with the Abseil source code
-  repository, which is contained on [GitHub](http://github.com). To install Git,
-  consult the [Set Up Git](https://help.github.com/articles/set-up-git/) guide
-  on GitHub.
+*   A compatible platform (e.g. Windows, macOS, Linux, etc.). Most platforms are
+    fully supported. Consult the [Platforms Guide](platforms/platforms) for more
+    information.
+*   A compatible C++ compiler *supporting at least C++11*. Most major compilers
+    are supported.
+*   [Git](https://git-scm.com/) for interacting with the Abseil source code
+    repository, which is contained on [GitHub](http://github.com). To install
+    Git, consult the [Set Up Git](https://help.github.com/articles/set-up-git/)
+    guide on GitHub.
 
 Although you are free to use your own build system, most of the documentation
 within this guide will assume you are using [Bazel](https://bazel.build/).

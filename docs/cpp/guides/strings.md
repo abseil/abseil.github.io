@@ -147,8 +147,8 @@ Examples:
 ```cpp
 // Stores results in a std::set<std::string>, which also performs de-duplication
 // and orders the elements in ascending order.
-std::set<std::string> a = absl::StrSplit("b,a,c,a,b", ',');
-// v[0] == "a", v[1] == "b", v[3] == "c"
+std::set<std::string> s = absl::StrSplit("b,a,c,a,b", ',');
+// s[0] == "a", s[1] == "b", s[3] == "c"
 
 // Stores results in a map. The map implementation assumes that the input
 // is provided as a series of key/value pairs. For example, the 0th element
@@ -189,19 +189,19 @@ Examples:
 // two splits are equivalent.
 std::vector<std::string> v = absl::StrSplit("a,b,c", ",");
 std::vector<std::string> v = absl::StrSplit("a,b,c", absl::ByString(","));
-// v[0] == "a", v[1] == "b", v[3] == "c"
+// v[0] == "a", v[1] == "b", v[2] == "c"
 
 // Because a `char` literal is converted to an `absl::ByChar`, the following two
 // splits are equivalent.
 std::vector<std::string> v = absl::StrSplit("a,b,c", ',');
-// v[0] == "a", v[1] == "b", v[3] == "c"
+// v[0] == "a", v[1] == "b", v[2] == "c"
 
 std::vector<std::string> v = absl::StrSplit("a,b,c", absl::ByChar(','));
-// v[0] == "a", v[1] == "b", v[3] == "c"
+// v[0] == "a", v[1] == "b", v[2] == "c"
 
 // Splits on any of the given characters ("," or ";")
 vector<std::string> v = absl::StrSplit("a,b;c", absl::ByAnyChar(",;"));
-// v[0] == "a", v[1] == "b", v[3] == "c"
+// v[0] == "a", v[1] == "b", v[2] == "c"
 
 // Uses the `absl::MaxSplits` delimiter to limit the number of matches a
 // delimiter can have. In this case, the delimiter of a literal comma is limited
@@ -213,7 +213,7 @@ std::vector<std::string> v = absl::StrSplit("a,b,c", absl::MaxSplits(',', 1));
 
 // Splits into equal-length substrings.
 std::vector<std::string> v = absl::StrSplit("12345", absl::ByLength(2));
-// v[0] == "12", v[1] == "34", v[3] == "5"
+// v[0] == "12", v[1] == "34", v[2] == "5"
 ```
 
 ### Filtering Predicates
@@ -388,20 +388,20 @@ collections of strings, ints, floats, doubles, etc.
 
 <!-- {% raw %} -->
 ```cpp
-std::vector<string> v = {"foo", "bar", "baz"};
-string s = absl::StrJoin(v, "-");
+std::vector<std::string> v = {"foo", "bar", "baz"};
+std::string s = absl::StrJoin(v, "-");
 // Produces the string "foo-bar-baz"
 
 // Joins the values in the given `std::initializer_list<>` specified using
 // brace initialization. This pattern also works with an initializer_list
 // of ints or `absl::string_view` -- any `AlphaNum`-compatible type.
-string s = absl::StrJoin({"foo", "bar", "baz"}, "-");
+std::string s = absl::StrJoin({"foo", "bar", "baz"}, "-");
 // Produces the string "foo-bar-baz"
 
 // Joins a collection of ints. This pattern also works with floats,
 // doubles, int64s -- any `absl::StrCat()`-compatible type.
 std::vector<int> v = {1, 2, 3, -4};
-string s = absl::StrJoin(v, "-");
+std::string s = absl::StrJoin(v, "-");
 // Produces the string "1-2-3--4"
 
 // Joins a collection of pointer-to-int. By default, pointers are
@@ -411,22 +411,22 @@ string s = absl::StrJoin(v, "-");
 // `std::vector<int*>`.
 int x = 1, y = 2, z = 3;
 std::vector<int*> v = {&x, &y, &z};
-string s = absl::StrJoin(v, "-");
+std::string s = absl::StrJoin(v, "-");
 // Produces the string "1-2-3"
 
 // Dereferencing of `std::unique_ptr<>` is also supported:
 std::vector<std::unique_ptr<int>> v
-v.emplace_back(new int(1));
-v.emplace_back(new int(2));
-v.emplace_back(new int(3));
-string s = absl::StrJoin(v, "-");
+v.push_back(absl::make_unique<int>(1));
+v.push_back(absl::make_unique<int>(2));
+v.push_back(absl::make_unique<int>(3));
+std::string s = absl::StrJoin(v, "-");
 // Produces the string "1-2-3"
 
 // Joins a `std::map`, with each key-value pair separated by an equals
 // sign. This pattern would also work with, say, a
 // `std::vector<std::pair<>>`.
-std::map<string, int> m = {{"a", 1}, {"b", 2}, {"c", 3}};
-string s = absl::StrJoin(m, ",", absl::PairFormatter("="));
+std::map<std::string, int> m = {{"a", 1}, {"b", 2}, {"c", 3}};
+std::string s = absl::StrJoin(m, ",", absl::PairFormatter("="));
 // Produces the string "a=1,b=2,c=3"
 ```
 <!-- {% endraw %} -->
@@ -445,7 +445,7 @@ The following is an example of a custom Formatter that simply uses
 
 ```cpp
 struct MyFormatter {
-  void operator()(string* out, int i) const {
+  void operator()(std::string* out, int i) const {
     out->append(std::to_string(i));
   }
 };
@@ -456,7 +456,7 @@ argument to `absl::StrJoin()`:
 
 ```cpp
 std::vector<int> v = {1, 2, 3, 4};
-string s = absl::StrJoin(v, "-", MyFormatter());
+std::string s = absl::StrJoin(v, "-", MyFormatter());
 // Produces the string "1-2-3-4"
 ```
 
@@ -481,19 +481,19 @@ Traditionally, most C++ code used built-in functions such as `sprintf()` and
 ```cpp
 // Bad. Need to worry about buffer size and null-terminations.
 
-string GetErrorMessage(char *op, char *user, int id) {
+std::string GetErrorMessage(char *op, char *user, int id) {
   char buffer[50];
   sprintf(buffer, "Error in %s for user %s (id %i)", op, user, id);
   return buffer;
 }
 
 // Better. Using absl::StrCat() avoids the pitfalls of sprintf() and is faster.
-string GetErrorMessage(absl::string_view op, absl::string_view user, int id) {
+std::string GetErrorMessage(absl::string_view op, absl::string_view user, int id) {
   return absl::StrCat("Error in ", op, " for user ", user, " (", id, ")");
 }
 
 // Best. Using absl::Substitute() is easier to read and to understand.
-string GetErrorMessage(absl::string_view op, absl::string_view user, int id) {
+std::string GetErrorMessage(absl::string_view op, absl::string_view user, int id) {
   return absl::Substitute("Error in $0 for user $1 ($2)", op, user, id);
 }
 ```
@@ -506,10 +506,10 @@ indicate which substitution arguments to use at that location within the format
 string.
 
 ```cpp
-string s = Substitute("$1 purchased $0 $2. Thanks $1!", 5, "Bob", "Apples");
+std::string s = Substitute("$1 purchased $0 $2. Thanks $1!", 5, "Bob", "Apples");
 // Produces the string "Bob purchased 5 Apples. Thanks Bob!"
 
-string s = "Hi. ";
+std::string s = "Hi. ";
 SubstituteAndAppend(&s, "My name is $0 and I am $1 years old.", "Bob", 5);
 // Produces the string "Hi. My name is Bob and I am 5 years old."
 ```
@@ -580,5 +580,5 @@ For conversion of numeric types into strings, use `absl::StrCat()` and
 `uint32`, `int64`, `uint64`, `float`, and `double` types into strings:
 
 ```cpp
-string foo = StrCat("The total is ", cost + tax + shipping);
+std::string foo = StrCat("The total is ", cost + tax + shipping);
 ```

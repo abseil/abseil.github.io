@@ -49,7 +49,7 @@ Linux:
 * clang < 5.0: `-std=c++1z`
 * gcc, clang 5.0+: `-std=c++17`
 
-Mac OSX:
+macOS:
 
 * gcc, clang: `-std=c++11`
 * gcc, clang: `-std=c++14`
@@ -81,11 +81,16 @@ Archiecture, Specific Compiler, and Standard Library implementation.
     </tr>
     <tr>
       <td>Linux, little-endian, 64-bit</td>
-      <td>gcc 4.8+<br/>clang 3.3+</td>
-      <td>libstdc++<br/>libcxx</td>
+      <td>gcc 4.9+<br/>clang 3.3+</td>
+      <td>libstdc++<br/>libc++</td>
     </tr>
   </tbody>
 </table>
+
+<p style="background-color: #89CFF0; padding: 5px; width: 80%;" id="id08192019">
+<br/>
+Abseil now requires gcc 4.9 or above. Usage of gcc 4.8 is now unsupported.
+</p>
 
 **Best Effort**
 
@@ -106,7 +111,7 @@ Archiecture, Specific Compiler, and Standard Library implementation.
   </tbody>
 </table>
 
-### Mac OSX / Darwin Family
+### macOS / Darwin Family
 
 **Supported**
 
@@ -120,13 +125,13 @@ Archiecture, Specific Compiler, and Standard Library implementation.
       <th>Standard Libraries</th>
     </tr>
     <tr>
-      <td>Mac OSX 10.7+, endian-neutral, 64-bit</td>
-      <td>XCode 7.3.1+</td>
+      <td>macOS 10.7+, endian-neutral, 64-bit</td>
+      <td>Xcode 7.3.1+</td>
       <td>libc++</td>
     </tr>
     <tr>
       <td>iOS 7+, endian-neutral, 64-bit</td>
-      <td>XCode 7.3.1+</td>
+      <td>Xcode 7.3.1+</td>
       <td>libc++</td>
     </tr>
   </tbody>
@@ -145,13 +150,22 @@ Archiecture, Specific Compiler, and Standard Library implementation.
     </tr>
     <tr>
       <td>watchOS 2+, endian-neutral, 64-bit</td>
-      <td>XCode 7.3.1+</td>
+      <td>Xcode 7.3.1+</td>
       <td>libc++</td>
     </tr>
   </tbody>
 </table>
 
 ### Windows
+
+<p style="background-color: #89CFF0; padding: 5px; width: 80%;" id="id06272019">
+<br/>
+On Windows platforms, Abseil does not include <code>winsock2.h</code>, as it
+also pulls in <code>windows.h</code> (and defines a set of macros that may
+conflict with Abseil users). Instead, we forward declare <code>timeval</code>
+and require Windows users to explicitly include <code>winsock2.h</code>
+themselves.
+</p>
 
 **Supported**
 
@@ -206,8 +220,17 @@ Archiecture, Specific Compiler, and Standard Library implementation.
     </tr>
     <tr>
       <td>Android NDK r11c+</td>
-      <td>gcc 4.8+</td>
+      <td>gcc 4.9+</td>
       <td>libc++, libstdc++</td>
     </tr>
   </tbody>
 </table>
+
+<p style="background-color: #89CFF0; padding: 5px; width: 80%;" id="id08192019">
+<br/>
+Abseil now requires gcc 4.9 or above. Usage of gcc 4.8 is now unsupported.
+</p>
+
+<!-- Styles for dated updates/changes to platform support -->
+<style>#id06272019:before { content: "06/27/2019";font-weight:bold; color:black}</style>
+<style>#id08192019:before { content: "08/19/2019";font-weight:bold; color:black}</style>

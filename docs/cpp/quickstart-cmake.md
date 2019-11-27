@@ -11,23 +11,23 @@ This document is designed to allow you to get the Abseil development
 environment up and running using CMake. We recommend that each person starting
 development with Abseil code at least run through this quick tutorial.  If your
 project uses [Bazel](https://bazel.build/) instead, please find the
-[Bazel Quickstart](/docs/cpp/quickstart.md).
+[Bazel Quickstart](/docs/cpp/quickstart).
 
 ## Prerequisites
 
 Running the Abseil code within this tutorial requires:
 
-* A compatible platform (e.g. Windows, Mac OS X, Linux, etc.). Most platforms
-  are fully supported. Consult the
-  [Platforms Guide](platforms/platforms) for more information.
-* A compatible C++ compiler *supporting at least C++11*. Most major compilers
-  are supported.
-* [Git](https://git-scm.com/) for interacting with the Abseil source code
-  repository, which is contained on [GitHub](http://github.com). To install Git,
-  consult the [Set Up Git](https://help.github.com/articles/set-up-git/) guide
-  on GitHub.
-* [CMake](https://cmake.org/) for building your project and Abseil.  Abseil
-  supports CMake 3.5+.
+*   A compatible platform (e.g. Windows, macOS, Linux, etc.). Most platforms are
+    fully supported. Consult the [Platforms Guide](platforms/platforms) for more
+    information.
+*   A compatible C++ compiler *supporting at least C++11*. Most major compilers
+    are supported.
+*   [Git](https://git-scm.com/) for interacting with the Abseil source code
+    repository, which is contained on [GitHub](http://github.com). To install
+    Git, consult the [Set Up Git](https://help.github.com/articles/set-up-git/)
+    guide on GitHub.
+*   [CMake](https://cmake.org/) for building your project and Abseil. Abseil
+    supports CMake 3.5+.
 
 ## Getting the Abseil Code
 

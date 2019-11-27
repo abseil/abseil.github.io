@@ -101,25 +101,24 @@ you misuse Abseil APIs, you're on your own.
 
 ## What We Promise
 
-* **We will support our code for at least 5 years**. We will support language
-  versions, compilers, platforms, and workarounds as needed for 5 years after
-  their replacement is available, when possible. If it is technically infeasible
-  (such as support for MSVC before 2015, which has limited C++11 functionality),
-  those will be noted specifically. After 5 years we will stop support and may
-  remove workarounds. `ABSL_HAVE_THREAD_LOCAL` is a good example: the base 
-  language feature works on everything except XCode prior to XCode 8 ; once
-  XCode 8 is out for 5 years, we will drop that workaround support.
-* **We will not break API compatibility.** If we must, we will ship a tool to
-  automate the upgrade to a preferred API. We will never break that API in a
-  single change - we believe in non-atomic refactoring. We will introduce the
-  new API and the tool, wait some time, and then remove the old.
-* **We promise to provide good forward-compatibility with the C++
-  standard.**
-* **We promise at least the basic-exception guarantee.** Although
-  Google is part of the minority of the C++ community that doesn't use
-  exceptions, we recognize that it **is** a minority and believe that
-  code is often better when it's exception-safe. We've done our best
-  to make things exception-safe. However, we won't contort things to
-  support all possible exceptions &mdash; if you have a hash functor
-  or `operator==` that throws, we may just mark it `noexcept` instead.
-
+*   **We will support our code for at least 5 years**. We will support language
+    versions, compilers, platforms, and workarounds as needed for 5 years after
+    their replacement is available, when possible. If it is technically
+    infeasible (such as support for MSVC before 2015, which has limited C++11
+    functionality), those will be noted specifically. After 5 years we will stop
+    support and may remove workarounds. `ABSL_HAVE_THREAD_LOCAL` is a good
+    example: the base language feature works on everything except Xcode prior to
+    Xcode 8 ; once Xcode 8 is out for 5 years, we will drop that workaround
+    support.
+*   **We will not break API compatibility.** If we must, we will ship a tool to
+    automate the upgrade to a preferred API. We will never break that API in a
+    single change - we believe in non-atomic refactoring. We will introduce the
+    new API and the tool, wait some time, and then remove the old.
+*   **We promise to provide good forward-compatibility with the C++ standard.**
+*   **We promise at least the basic-exception guarantee.** Although Google is
+    part of the minority of the C++ community that doesn't use exceptions, we
+    recognize that it **is** a minority and believe that code is often better
+    when it's exception-safe. We've done our best to make things exception-safe.
+    However, we won't contort things to support all possible exceptions &mdash;
+    if you have a hash functor or `operator==` that throws, we may just mark it
+    `noexcept` instead.

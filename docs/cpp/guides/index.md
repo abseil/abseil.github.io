@@ -17,6 +17,8 @@ all code within Abseil within this guide.
 * [Hash Library](hash)
 * [Meta Library Guide](meta)
 * [Numeric Library Guide](numeric)
+* [Options Guide](options)
+* [Random Library](random)
 * [Synchronization Guide](synchronization)
 * [StrFormat Guide](format)
 * [Strings Guide](strings)
