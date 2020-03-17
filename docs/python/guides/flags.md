@@ -71,10 +71,11 @@ flags have other arguments, which are described with the flag.
     takes optional arguments `lower_bound` and `upper_bound` as for floats.
 *   `DEFINE_enum`: takes a list of strings that represents legal values. If the
     command-line value is not in this list, it raises a flag error; otherwise,
-    it assigns to `FLAGS.flag` as a string. Use `DEFINE_enum_class` if possible.
+    it assigns to `FLAGS.flag` as a string. If possible, use `DEFINE_enum_class`
+    instead.
 *   `DEFINE_enum_class`: takes an `enum.Enum` that represents legal values. If the
-    command-line value is not a member of the enumeration, it raises a flag error;
-    otherwise, it assigns the value of the member to `FLAGS.flag`.
+    command-line value is not a member of the enumeration, it raises a flag
+    error; otherwise, it assigns the value of the member to `FLAGS.flag`.
 *   `DEFINE_list`: takes a comma-separated list of strings on the command line
     and stores them in a Python list object.
 *   `DEFINE_spaceseplist`: Takes a space-separated list of strings on the
