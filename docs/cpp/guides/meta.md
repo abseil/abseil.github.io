@@ -8,20 +8,19 @@ type: markdown
 # The Meta Library
 
 This `meta` library contains C++11-compatible versions of standard
-`<type_traits>` API functions for determining the characteristics of types. Such
-traits can support type inference, classification, and transformation, as well
-as make it easier to write templates based on generic type behavior.
+[`<type_traits>`][type_traits] API functions for determining the characteristics
+of types. Such traits can support type inference, classification, and
+transformation, as well as make it easier to write templates based on generic
+type behavior.
 
-See https://en.cppreference.com/w/cpp/header/type_traits
-
->WARNING: use of many of the constructs in this header will count as "complex
->template metaprogramming", so before proceeding, please carefully consider
->https://google.github.io/styleguide/cppguide.html#Template_metaprogramming
+> WARNING: use of many of the constructs in this header will count as "complex
+> template metaprogramming", so before proceeding, please carefully consider the
+> Style Guide's [advice on template metaprogramming][style-guide-templates].
 >
->Using template metaprogramming to detect or depend on API
->features is brittle and not guaranteed. Neither the standard library nor
->Abseil provides any guarantee that APIs are stable in the face of template
->metaprogramming. Use with caution.
+> Using template metaprogramming to detect or depend on API features is brittle
+> and not guaranteed. Neither the standard library nor Abseil provides any
+> guarantee that APIs are stable in the face of template metaprogramming. Use
+> with caution.
 
 ## Type Trait Usage
 
@@ -82,3 +81,6 @@ yield a type:
 * `absl::common_type_t`
 * `absl::underlying_type_t`
 * `absl::result_of_t`
+
+[type_traits]: https://en.cppreference.com/w/cpp/header/type_traits
+[style-guide-templates]: https://google.github.io/styleguide/cppguide.html#Template_metaprogramming

@@ -479,7 +479,7 @@ Traditionally, most C++ code used built-in functions such as `sprintf()` and
 `absl::string_view` and the memory of the formatted buffer must be managed.
 
 ```cpp
-// Bad. Need to worry about buffer size and null-terminations.
+// Bad. Need to worry about buffer size and NUL-terminations.
 
 std::string GetErrorMessage(char *op, char *user, int id) {
   char buffer[50];
@@ -547,7 +547,7 @@ string at run-time, is slower than `absl::StrCat()`. Choose `Substitute()` over
 The Abseil strings library also contains simple utilities for performing string
 matching checks. All of their function parameters are specified as
 `absl::string_view`, meaning that these functions can accept `std::string`,
-`absl::string_view` or null-terminated C-style strings.
+`absl::string_view` or NUL-terminated C-style strings.
 
 ```cpp
 // Assume "msg" is a line from a logs entry
