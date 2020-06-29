@@ -277,13 +277,13 @@ a key. In general, containers require the keys to be of a specific type, which
 can lead to inefficiencies at call sites that need to convert between
 near-equivalent types (such as `std::string` and `absl::string_view`).
 
-<pre class="bad-code">
+```cpp {.bad}
 std::map<std::string, int> m = ...;
 absl::string_view some_key = ...;
 // Construct a temporary `std::string` to do the query.
 // The allocation + copy + deallocation might dominate the find() call.
 auto it = m.find(std::string(some_key));
-</pre>
+```
 
 To avoid this unnecessary work, the Swiss tables provide heterogeneous lookup
 for conversions to string types (allowing `absl::string_view` in the lookup, for
