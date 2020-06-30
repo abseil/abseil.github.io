@@ -30,10 +30,9 @@ their own, separate guide.
 The macros that Abseil uses are listed below, in tables that list the
 macro, what it identifies, and what standard defines the macro.
 
-<p class="note">If you wish to check what macros your compiler has defined, see
-<a
-href="http://nadeausoftware.com/articles/2011/12/c_c_tip_how_list_compiler_predefined_macros">How
-to List Compiler Predefined Macros</a>.</p>
+<p class="note">If you wish to check what macros your platform has defined, see
+<a href="https://sourceforge.net/p/predef/wiki/Home/">Pre-defined Compiler
+Macros</a>.</p>
 
 ## Architecture
 
@@ -59,13 +58,13 @@ References:
 
 * [Architectures](https://sourceforge.net/p/predef/wiki/Architectures/)
   within the Sourceforge Pre-defined Compiler Macros guide.
-* [How to detect the processor type using compiler predefined macros](http://nadeausoftware.com/articles/2012/02/c_c_tip_how_detect_processor_type_using_compiler_predefined_macros)
+* [Pre-defined Compiler Macros](https://sourceforge.net/p/predef/wiki/Home/)
 
 ## Endianness
 
 No standard portable pre-defined macro exists that can be used to
 determine endianness. Instead, Abseil defines the following macros in
-`absl/base/config/h`:
+`absl/base/config.h`:
 
 * `ABSL_IS_LITTLE_ENDIAN`
 * `ABSL_IS_BIG_ENDIAN`
@@ -84,7 +83,7 @@ References:
 `_WIN32`      | Windows              | For both 32-bit and 64-bit environments
 `__linux__`   | Linux                | Android NDK, GNU C, Clang/LLVM
 `__ros__`     | Akaros               |
-`__Fuchsia__` | Fuchsia              |
+`__Fushsia__` | Fuchsia              |
 
 References:
 

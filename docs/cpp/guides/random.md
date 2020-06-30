@@ -226,6 +226,21 @@ contexts may introduce occasional (but dangerous) security issues. Although
 `absl::BitGen` is not suitable for cryptographic applications such as key
 generation, it provides guarantees strong enough to be resilient to misuse.
 
+### What About Instances Shared Across Multiple Threads?
+
+Like the C++ standard library random engines, neither `absl::BitGen`,
+nor `absl::InsecureBitGen` are thread safe.
+
+Efficiently leveraging a bit generator shared between multiple threads can be
+tricky and subtle. Use of locally-instantiated generators are preferred to
+global application-owned bit generators protected by a `Mutex` and shared across
+multiple threads.
+
+If your random sampling is happening on a hot path and you can afford a larger
+memory footprint, then consider further reducing compute costs by using a
+`thread_local absl::BitGen` for the lifetime of your process (but note that it
+must be inside a function). The usual subtleties of using `thread_local` apply.
+
 ### Can I Use Abseil's Distribution Functions With Other Bit Generator Types?
 
 Yes - the distribution functions are compatible with any type conforming to the

@@ -60,29 +60,36 @@ Note: `#if` and `#ifdef` have different results when a macro is defined to `0`.
 We explicitly state that a feature check macro should be undefined for a
 “false” state so both `#if` and `#ifdef` can be used interchangeably.
 
-When writing preprocessor conditionals, you can either whitelist all platforms
-where a given feature is available, or blacklist all platforms where a given
-feature is missing. Either option has pros and cons:
+When writing preprocessor conditionals, you can either opt into use of a feature
+by explicitly listing all platforms where a given feature is available, or opt
+out by explicitly listing all platforms where a given feature is missing or
+broken. Either option has pros and cons:
 
-|| whitelist |blacklist|
-|----|------------|----------|
-|pros|Generally safe, and more likely to build on a new platform.|The compilation fails if a new platform doesn’t support the feature.|
-|cons|The whitelist needs to be extended for each new platform.|Compilation might succeed but runtime behavior might be unexpected, if the interface exists but the implementation is problematic.|
+|      | opt-in                          | opt-out                             |
+| ---- | ------------------------------- | ----------------------------------- |
+| pros | Generally safe, and more likely | The compilation fails if a new      |
+:      : to build on a new platform.     : platform doesn’t support the        :
+:      :                                 : feature.                            :
+| cons | The allow-list needs to be      | Compilation might succeed but       |
+:      : extended for each new platform. : runtime behavior might be           :
+:      :                                 : unexpected, if the interface exists :
+:      :                                 : but the implementation is           :
+:      :                                 : problematic.                        :
 
-When choosing a whitelist or blacklist approach, think about what is likely to
-happen when a new platform is added and which approach is easier to maintain the
+When choosing a opt-in or opt-out approach, think about what is likely to happen
+when a new platform is added and which approach is easier to maintain the
 invariant of your module.
 
 Some examples:
 
 If you are working around a compiler bug or a missing C++ feature in the
-standard library implementation, you probably want to blacklist the combinations
+standard library implementation, you probably want to deny-list the combinations
 where the feature is missing. When a new platform is added, you can assume it is
 standards-compliant, and your unit test will fail if it is not.
 
 If you are relying on a low-level OS feature for better functionality (more
-logging, better debugging context), you probably want to white-list the
+logging, better debugging context), you probably want to allow-list the
 operating systems that claim to support this feature. When a new OS is added,
 you can assume the feature is missing, and your module will continue to work
 with minimum functionality. If desired, a developer can decide to opt-in by
-extending the whitelist.
+extending the allow-list.

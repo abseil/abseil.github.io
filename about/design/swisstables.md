@@ -41,7 +41,7 @@ value. We split this value up into two parts:
 
 For performance reasons, it is important that you use a hash function that
 distributes entropy across the entire bit space well (producing an
-[avalanche effect][avalanche]. The Abseil [hash framework][absl-hash]
+[avalanche effect][avalanche]). The Abseil [hash framework][absl-hash]
 accomplishes this well and should be sufficient for most users.
 
 <img src="images/hashbits-layout.png" align="center"
@@ -164,5 +164,5 @@ order) of
 
 [cppcon]: https://www.youtube.com/watch?v=ncHmEUmJZf4
 [avalanche]: https://en.wikipedia.org/wiki/Avalanche_effect
-[absl-hash]: /docs/cpp/guides/hash.md
+[absl-hash]: /docs/cpp/guides/hash
 [sse]: https://en.wikipedia.org/wiki/Streaming_SIMD_Extensions

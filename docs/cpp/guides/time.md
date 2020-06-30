@@ -43,11 +43,11 @@ fields represent the time as defined by some local government. Your civil time
 matches the values shown on the clock hanging on your wall and the Dilbert
 calendar on your desk. Your friend living across the country may, at the same
 moment, have a different civil time showing on their Far Side calendar and
-clock. For example, if you lived in New York on July 20, 1969 you witnessed Neil
-Armstrong's small step at 10:56 in the evening, whereas your friend in San
-Francisco saw the same thing at 7:56, and your pen pal in Sydney saw it while
-eating lunch at 12:56 on July 21. You all would agree on the absolute time of
-the event, but you'd disagree about the civil time.
+clock. For example, if you lived in New York, then you witnessed Neil
+Armstrong's small step on July 20, 1969 at 10:56 PM, whereas your friend in San
+Francisco saw the same thing at 7:56 PM, and your pen pal in Sydney saw it while
+eating lunch on July 21, 1969 at 12:56 PM. You all would agree on the absolute
+time of the event, but you'd disagree about the civil time.
 
 Time zones are geo-political regions within which rules are shared to convert
 between absolute times and civil times. The geographical nature of time zones is
@@ -189,7 +189,7 @@ absl::Time takeoff = absl::FromCivil(ct, nyc);
 
 Formatting and parsing functions are provided for converting to and from
 strings. `FormatTime()` allows you to take an absolute time and time zone and
-return a string representing that time. (See [Time Zones](#time-zones) below.)
+return a string representing that time. (See [Time Zones](#timezones) below.)
 
 ```cpp
 // Construct an absl::Time from the system clock.
