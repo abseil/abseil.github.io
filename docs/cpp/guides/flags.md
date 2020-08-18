@@ -131,6 +131,8 @@ Flags defined with `ABSL_FLAG` will create global variables named
 <code>FLAGS_<i>name</i></code> of the specified type and default value. Help text
 will be displayed using the `--help` usage argument, if invoked.
 
+### Standard Flags
+
 Out of the box, the Abseil flags library supports the following types:
 
 * `bool`
@@ -144,11 +146,36 @@ Out of the box, the Abseil flags library supports the following types:
 * `double`
 * `std::string`
 * `std::vector<std::string>`
+* `absl::LogSeverity` (provided natively for layering reasons)
 
 NOTE: support for integral types is implemented using overloads for
 variable-width fundamental types (`short`, `int`, `long`, etc.). However,
 you should prefer the fixed-width integral types as noted above (`int32_t`,
 `uint64_t`, etc.)
+
+### Abseil Flags
+
+In addition, several Abseil libraries provide their own custom support for
+Abseil flags. Documentation for these formats is provided in the type's
+`AbslParseFlag()` definition.
+
+The Abseil [time library][time-library] provides the flag support for
+absolute time values:
+
+* `absl::Duration`
+* `absl::Time`
+
+The [civil-time library][civiltime-library] additionally provides flag support
+for the following civil-time values:
+
+* `absl::CivilSecond`
+* `absl::CivilMinute`
+* `absl::CivilHour`
+* `absl::CivilDay`
+* `absl::CivilMonth`
+* `absl::CivilYear`
+
+Additional support for Abseil types will be noted here as it is added.
 
 See [Defining Custom Flag Types](#custom) for how to provide support for a new
 type.
@@ -451,7 +478,7 @@ enum class OutputMode { kPlainText, kHtml };
 // AbslParseFlag converts from a string to OutputMode.
 // Must be in same namespace as OutputMode.
 
-// Parses an OutputMode from the command line flag value `text. Returns
+// Parses an OutputMode from the command line flag value `text`. Returns
 // `true` and sets `*mode` on success; returns `false` and sets `*error`
 // on failure.
 bool AbslParseFlag(absl::string_view text,
@@ -541,6 +568,9 @@ std::string AbslUnparseFlag(const MyFlagType& flag) {
 *   If you must declare `AbslParseFlag()` and `AbslUnparseFlag()` away from
     `T`'s declaration, you must still be the owner of `T` and must guarantee
     that the functions are defined exactly once in the codebase.
+*   Document the format string of the flag where you declare `AbslParseFlag()`
+    and `AbslUnparseFlag()`. As the owner of `T`, you are responsible for
+    documenting this format.
 *   `absl::StrSplit("")` returns `{""}` (a list with one element), so watch out
     for that if you are defining a compound flag type. Flags defined with
     `ABSL_FLAG(std::vector<std::string>, ...)` treat an empty string as an empty
@@ -556,3 +586,5 @@ std::string AbslUnparseFlag(const MyFlagType& flag) {
 
 [retired-flags]: https://abseil.io/tips/90
 [friend-functions]: http://en.cppreference.com/w/cpp/language/friend
+[time-library]: https://cs.corp.google.com/google3/third_party/absl/time/time.h
+[civiltime-library]: https://cs.corp.google.com/google3/third_party/absl/time/civil_time.h

@@ -22,3 +22,5 @@ be adding more design notes in the future.
 ## [`charconv`](charconv)
 
 ## [B-Tree Maps](btree)
+
+## [Random Library](random)

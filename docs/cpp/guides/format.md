@@ -16,8 +16,11 @@ string formatting and a number of additional benefits:
     `absl::string_view`
 *   Reliable behavior independent of standard libraries
 *   Support for the POSIX positional extensions
+*   Supports Abseil types such as `absl::Cord` natively and can be extended to
+    support other types.
 *   Much faster (generally 2 to 3 times faster) than native `printf` functions
 *   Streamable to a variety of existing sinks
+*   Extensible to custom sinks
 
 Additionally, the library includes replacements for `printf()`, `fprintf()`, and
 `snprintf()`.
@@ -49,21 +52,21 @@ result, if you need to provide it as a variable, use an `absl::string_view`
 instead of a `std::string`:
 
 ```cpp
-// Won't compile, not constexpr (and strings can't be declared constexpr).
-std::string formatString = "Welcome to %s, Number %d!";
-std::string s = absl::StrFormat(formatString, "The Village", 6);
+// Won't compile, not constexpr (and the `std::string` can't be declared constexpr).
+std::string format_string = "Welcome to %s, Number %d!";
+std::string s = absl::StrFormat(format_string, "The Village", 6);
 
 // This will compile.
-constexpr absl::string_view formatString = "Welcome to %s, Number %d!";
-std::string s = absl::StrFormat(formatString, "The Village", 6);
+constexpr absl::string_view kFormatString = "Welcome to %s, Number %d!";
+std::string s = absl::StrFormat(kFormatString, "The Village", 6);
 ```
 
-Requiring the format string to be `constexpr` allows compiler-time checking of
+Requiring the format string to be `constexpr` allows compile-time checking of
 the format strings.
 
 NOTE: \* a format string must either be declared `constexpr` or dynamically
-formatted using a `ParsedFormat` type. See the forthcoming "Advanced StrFormat
-Usage' guide for information on dynamic formatting.
+formatted using an `absl::ParsedFormat` type. See
+[Advanced Formatting](#advanced) below.
 
 ### Conversion Specifiers
 
@@ -219,6 +222,84 @@ of an exact type. For example, `%s` binds to any string-like argument, so
 `std::string`, `absl::string_view`, and `const char*` are all accepted.
 Likewise, `%d` accepts any integer-like argument, etc.
 
+## Advanced Formats {:advanced}
+
+Format strings that are very frequently used or performance-critical can be
+specified using an `absl::ParsedFormat`. An `absl::ParsedFormat` represents a
+pre-parsed `absl::FormatSpec` with template arguments specifying a collection of
+conversion specifiers.
+
+In C++11 and C++14, these conversion specifiers are restricted to single char
+values (e.g. `d`); in C++17 or later, you may also specify one or more
+`absl::FormatConversionCharSet` enums (e.g. `absl::FormatConversionCharSet::d`
+or `absl::FormatConversionCharSet::d | absl::FormatConversionCharSet::x` using
+the bitwise-or combination.
+
+Some enums specify whole conversion groups:
+
+* `absl::FormatConversionCharSet::kIntegral` = `d | i | u | o | x | X`
+* `absl::FormatConversionCharSet::kFloating` = `a | e | f | g | A | E | F | G`
+* `absl::FormatConversionCharSet::kNumeric` = kIntegral | kFloating
+* `absl::FormatConversionCharSet::kString` = s
+* `absl::FormatConversionCharSet::kPointer` = p
+
+These type specifiers will be checked at compile-time. This approach is much
+faster than reparsing `const char*` formats on each use.
+
+
+```cpp
+// Verified at compile time.
+static const auto* const format_string =
+    new absl::ParsedFormat<'s','d'>("Welcome to %s, Number %d!");
+absl::StrFormat(*format_string, "TheVillage", 6);
+
+// Verified at runtime.
+auto format_runtime = absl::ParsedFormat<'d'>::New(format_string);
+if (format_runtime) {
+  value = absl::StrFormat(*format_runtime, i);
+} else {
+  ... error case ...
+}
+
+// C++17 allows extended formats to support multiple conversion characters per
+// argument, specified via a combination of `FormatConversionCharSet` enums.
+using MyFormat = absl::ParsedFormat<absl::FormatConversionCharSet::d |
+                                    absl::FormatConversionCharSet::x>;
+MyFormat GetFormat(bool use_hex) {
+  if (use_hex) return MyFormat("foo %x bar");
+  return MyFormat("foo %d bar");
+}
+
+```
+
+Pre-compiled formats can also be used as a way to pass formats through API
+boundaries in a type-safe manner. The format object encodes the type information
+in its template arguments to allow compile-time checking in the formatting
+functions.
+
+Example:
+
+```cpp
+// Note: this example only compiles in C++17 and above.
+class MyValue {
+ public:
+  // MyValueFormat can be constructed from a %d or a %x format and can be
+  // used with any argument type that can be formatted with %d or %x.
+  using MyValueFormat = absl::ParsedFormat<absl::FormatConversionCharSet::d |
+                                           absl::FormatConversionCharSet::x>;
+  const MyValueFormat& GetFormat(int radix) const {
+    return radix == RADIX_HEX ? format_x_ : format_d_;
+  }
+ private:
+   const MyValueFormat format_d_{"%6d"};
+   const MyValueFormat format_x_{"%8x"};
+};
+
+std::string PrintIt(const MyValue& foo) {
+  return absl::StringF(foo.GetFormat(mode), my_int_value_);
+}
+```
+
 ## PrintF Replacements
 
 In addition to the `std::sprintf()`-like `StrFormat()` function, `str_format.h`
@@ -267,14 +348,129 @@ Example:
 std::cout << absl::StreamFormat("name: %-20.4s: quota: %7.3f", name, quota);
 
 // Stream to a file
-FILE * fileHandle;
-fileHandle = fopen("myfile.txt","w");
-if (fileHandle!=nullptr)
-{
+if (FILE* file_handle = fopen("myfile.txt","w"; file_handle != nullptr) {
   int result =
-      absl::FPrintF(fileHandle, "%s", "C:\\Windows\\System32\\");
+      absl::FPrintF(file_handle, "%s", "C:\\Windows\\System32\\");
   return result;
 }
 ```
+
+## User-Defined Formats
+
+The `str_format` library provides customization utilities for formatting
+user-defined types using `StrFormat()`. As with most type extensions, you should
+own the type you wish to extend.
+
+To extend formatting to your custom type, provide an `AbslFormatConvert()`
+overload as a free (non-member) function within the same file and namespace of
+that type, usually as a `friend` definition. The `str_format` library will check
+for such an overload when formatting user-defined types using `StrFormat()`.
+
+An `AbslFormatConvert()` overload should have the following signature:
+
+```cpp
+absl::FormatConvertResult<...> AbslFormatConvert(
+    const X& value,
+    const absl::FormatConversionSpec& conversion_spec,
+    absl::FormatSink *output_sink);
+```
+
+* The `absl::FormatConvertResult` return value holds the set of
+  `absl::FormatConversionCharSet` values valid for this custom type. A return
+  value of `true` indicates the conversion was successful; if `false` is
+  returned, `StrFormat()` will produce an empty string and this result will be
+  propogated to `FormatUntyped()`.
+* `absl::FormatConversionSpec` holds the fields pulled from the user string as
+  they are processed. See "Conversion Specifiers" above for full documentation
+  on this format.
+* `absl::FormatSink` holds the formatted string as it is built.
+
+The `absl::FormatConversionSpec` class also has a number of member functions to
+inspect the returned conversion character specification:
+
+* `conversion_char()` returns the basic conversion character for this format
+  operation.
+* `width()` and `precision()` indicate that the conversion operation should
+  adjust the resulting width or precision of the result.
+* `is_basic()` indicates that no additional conversion flags are included in the
+  conversion, including any for modifying the width or precision. This method is
+  useful for optimizing conversions via a fast path.
+* `has_left_flag()` indicates whether the result should be left justified,
+  through use of a '-' character in the format string. E.g. "%-s"
+* `has_show_pos_flag()` indicates whether a sign column is prepended to the
+  result for this conversion character in the format string, even if the result
+  is positive, through use of a '+' character in the format string. E.g. "%+d"
+* `has_show_pos_flag()` indicates whether a mandatory sign column is added to
+  the result for this conversion character, through use of a space character
+  (' ') in the format string. E.g. "% i"
+* `has_alt_flag()` indicates whether an "alternate" format is applied to the
+  result for this conversion character. E.g. "%#h"
+* `has_zero_flag()` indicates whether zeroes should be prepended to the result
+  for this conversion character instead of spaces, through use of the '0'
+  character in the format string. E.g. "%0f"
+
+These member functions can be used to select how to process conversion
+operations encountered in the source format strings.
+
+An example usage within a user-defined type is shown below:
+
+```cpp
+struct Point {
+
+  ...
+  // StrFormat support is added to the Point class through an
+  // AbslFormatConvert() friend declaration.
+  //
+  // FormatConvertResult indicates that this formatting extension will accept
+  // kIntegral ( d | i | u | o | x | X) or kString (s) specifiers. Successful
+  // conversions will return `true`.
+  friend absl::FormatConvertResult<absl::FormatConversionCharSet::kString |
+                                   absl::FormatConversionCharSet::kIntegral>
+  AbslFormatConvert(const Point& p,
+                    const absl::FormatConversionSpec& spec,
+                    absl::FormatSink* s) {
+    // If the conversion char is %s, produce output of the form "x=1 y=2"
+    if (spec.conversion_char() == absl::FormatConversionChar::s) {
+      // If the conversion char is integral (%i, %d ...) , produce output of the
+      // form "1,2"
+      s->Append(absl::StrCat("x=", p.x, " y=", p.y));
+    } else {
+      // If the conversion char is integral (%i, %d ...) , produce output of the
+      // form "1,2". Note that no padding will occur here.
+      s->Append(absl::StrCat(p.x, ",", p.y));
+    }
+    return {true};
+  }
+
+  int x;
+  int y;
+};
+```
+
+## Custom Sinks
+
+```cpp
+bool absl::Format(&dest, format, ...)
+```
+
+Similar to `absl::StrAppendFormat`, but the output is an arbitrary destination
+object that supports the `RawSink` interface. To implement this interface,
+provide an overload of `AbslFormatFlush()` for your sink object:
+
+```cpp
+void AbslFormatFlush(MySink* dest, absl::string_view part);
+```
+
+where `dest` is the pointer passed to `absl::Format()`. This is usually
+accomplished by providing a free function that can be found by ADL.
+
+The library already provides builtin support for using sinks of type
+`std::string`, `std::ostream`, and `absl::Cord` with `absl::Format()`.
+
+Note: Remember that only the type owner should write extensions like this. An
+overload for the type `MySink` should **only** be declared in the header that
+declares `MySink`, and in the same namespace as `MySink`. If a particular type
+does not support this extension ask the owner to write one, or make your own
+wrapper type that supports it.
 
 [1]: http://pubs.opengroup.org/onlinepubs/9699919799/functions/fprintf.html
