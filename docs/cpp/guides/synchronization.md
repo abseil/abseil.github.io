@@ -147,7 +147,7 @@ of `std::mutex` but adds the following additional features:
   acquired in a consistent order). The deadlock detector is enabled by default
   in most non-opt build modes, and it can detect deadlock risks that even Clang's
   [Thread Sanitizer](https://clang.llvm.org/docs/ThreadSanitizer.html) misses.
-  (See [Deadlock Detection](#Deadlock-detection) below.)
+  (See [Deadlock Detection](#deadlock-detection) below.)
 
 Additionally, `absl::Mutex` can act as a reader-writer lock (like
 `std::shared_mutex`) with special `ReaderLock()` and `ReaderUnlock()` functions.
