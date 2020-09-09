@@ -162,6 +162,7 @@ absl::StrFormat("%f", 1.6)       -> "1.600000" // Width includes decimal pt.
 absl::StrFormat("%05.2f", 1.6)   -> "01.60"
 absl::StrFormat("%.1f", 1.63232) -> "1.6"      // Rounding down
 absl::StrFormat("%.3f", 1.63451) -> "1.635"    // Rounding up
+absl::StrFormat("%*.*f", 5, 2, 1.63451) -> " 1.63"  // Same as "%5.2f"
 
 // Exponential Notation
 // Default precision of a %e conversion is 6
@@ -222,7 +223,7 @@ of an exact type. For example, `%s` binds to any string-like argument, so
 `std::string`, `absl::string_view`, and `const char*` are all accepted.
 Likewise, `%d` accepts any integer-like argument, etc.
 
-## Advanced Formats {:advanced}
+## Advanced Formats {#advanced}
 
 Format strings that are very frequently used or performance-critical can be
 specified using an `absl::ParsedFormat`. An `absl::ParsedFormat` represents a
@@ -237,11 +238,11 @@ the bitwise-or combination.
 
 Some enums specify whole conversion groups:
 
-* `absl::FormatConversionCharSet::kIntegral` = `d | i | u | o | x | X`
-* `absl::FormatConversionCharSet::kFloating` = `a | e | f | g | A | E | F | G`
-* `absl::FormatConversionCharSet::kNumeric` = kIntegral | kFloating
-* `absl::FormatConversionCharSet::kString` = s
-* `absl::FormatConversionCharSet::kPointer` = p
+*   `absl::FormatConversionCharSet::kIntegral` = `d | i | u | o | x | X`
+*   `absl::FormatConversionCharSet::kFloating` = `a | e | f | g | A | E | F | G`
+*   `absl::FormatConversionCharSet::kNumeric` = `kIntegral | kFloating`
+*   `absl::FormatConversionCharSet::kString` = `s`
+*   `absl::FormatConversionCharSet::kPointer` = `p`
 
 These type specifiers will be checked at compile-time. This approach is much
 faster than reparsing `const char*` formats on each use.

@@ -244,8 +244,8 @@ must be inside a function). The usual subtleties of using `thread_local` apply.
 ### Can I Use Abseil's Distribution Functions With Other Bit Generator Types?
 
 Yes - the distribution functions are compatible with any type conforming to the
-[`UniformRandomBitGenerator`](http://en.cppreference.com/w/cpp/concept/UniformRandomBitGenerator)
-concept, as defined by C++11. This includes `std::` types (eg.
+[`UniformRandomBitGenerator`](http://en.cppreference.com/w/cpp/named_req/UniformRandomBitGenerator)
+named requirement, as defined by C++11. This includes `std::` types (e.g.
 `std::minstd_rand0` and `std::mt19937_64`).
 
 ### I Need My Variate Sequences To Be The Same Every Time!
@@ -312,7 +312,7 @@ philosophical as it is practical: The legitimate use cases for an eternally
 unchanging pseudorandom sequence are uncommon within Google.
 
 
-The Abseil family of distribution classes and distribution functions (eg.
+The Abseil family of distribution classes and distribution functions (e.g.
 `absl::Uniform()`) should be considered to have
 **Process Stability**.
 We hope to provide support for seed-stable distributions in the future, but at
