@@ -62,7 +62,7 @@ functions to constuct each particular status code. (See
 For example, the following piece of code shows how to return an error
 encountered while implementing a file operation:
 
-```
+```c++
 absl::Status Open(absl::string_view fname, absl::string_view mode, ...) {
   if (...) return absl::OkStatus();  // Signal success
   if (...) return absl::InvalidArgumentError("bad mode");
@@ -90,7 +90,7 @@ Note that low-level routines such as a file `Open()` should typically not log
 status values themselves, but should pass them up to the caller who will have
 better context on how to handle any error.
 
-## Canonical Errors :{canonical_errors}
+## Canonical Errors {#canonical_errors}
 
 `Status` returns errors using an `absl::StatusCode`, which is an enumerated type
 indicating either no error ("OK") or an error condition. These error codes map
@@ -237,7 +237,7 @@ For example, suppose you want to execute two operations (regardless of whether
 or not the first operation failed), but want to return an error if either of the
 operations failed. Instead of:
 
-```c++ {.bad}
+```c++
 absl::Status s = Operation1();
 absl::Status s2 = Operation2();
 if (s.ok()) s = s2;
@@ -245,7 +245,7 @@ if (s.ok()) s = s2;
 
 use
 
-```c++ {.good}
+```c++
 absl::Status s = Operation1();
 s.Update(Operation2());
 ```
