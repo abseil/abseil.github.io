@@ -19,6 +19,7 @@ all code within Abseil within this guide.
 * [Numeric Library Guide](numeric)
 * [Options Guide](options)
 * [Random Library](random)
+* [Status](status)
 * [Synchronization Guide](synchronization)
 * [StrFormat Guide](format)
 * [Strings Guide](strings)
