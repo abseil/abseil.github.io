@@ -131,7 +131,7 @@ absl::Status my_status = DoSomething();
 //
 // Use the Status.ok() helper function:
 if (!my_status.ok()) {
-  LOG(WARNING) << "Unexpected error " << s;
+  LOG(WARNING) << "Unexpected error " << my_status;
 }
 ```
 
