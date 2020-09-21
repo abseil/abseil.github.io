@@ -278,7 +278,7 @@ can lead to inefficiencies at call sites that need to convert between
 near-equivalent types (such as `std::string` and `absl::string_view`).
 
 <pre class="bad-code">
-std::map<std::string, int> m = ...;
+std::map&lt;std::string, int&gt; m = ...;
 absl::string_view some_key = ...;
 // Construct a temporary `std::string` to do the query.
 // The allocation + copy + deallocation might dominate the find() call.

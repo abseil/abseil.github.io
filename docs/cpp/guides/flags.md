@@ -230,7 +230,7 @@ with an
 <br/>
 `// Exposed for testing only` comment.
 
-Warning: The necessity to access flags from different files, expecially in
+Warning: The necessity to access flags from different files, especially in
 libraries, is generally a sign of a bad design. Given the "global variable"
 nature of flags they should be avoided in libraries and be injected instead
 (e.g. in constructors). (see
@@ -424,9 +424,10 @@ For more details, see the [Tip of the Week on retired flags][retired-flags].
 
 ## Special Usage Flags {#special_flags}
 
-There are a few flags defined by the Abseil flags library itself. Usage flags,
-if invoked, cause the application to print some information about itself and
-exit.
+There are a few flags defined by the Abseil flags library itself. These usage
+flags are reserved words and should not be declared by anyone other than the
+Abseil team, just like any other flags which you don't own. Usage flags, if
+invoked, cause the application to print some information about itself and exit.
 
 ```text
 --help            show help on important flags for this binary
@@ -586,5 +587,5 @@ std::string AbslUnparseFlag(const MyFlagType& flag) {
 
 [retired-flags]: https://abseil.io/tips/90
 [friend-functions]: http://en.cppreference.com/w/cpp/language/friend
-[time-library]: https://cs.corp.google.com/google3/third_party/absl/time/time.h
-[civiltime-library]: https://cs.corp.google.com/google3/third_party/absl/time/civil_time.h
+[time-library]: time.md#time-durations
+[civiltime-library]: time.md#civil-times
