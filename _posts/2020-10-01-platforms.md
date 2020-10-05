@@ -39,14 +39,15 @@ last to support the following compilers:
 
 We will soon remove our continuous integration tests for these compilers.
 
-### Preparing for the future
+### Preparing for the Future
 
-The last supported compiler to implement C++14 was Microsoft Visual C++ 2017,
-which was released on March 7, 2017. Therefore, Abseil will only support C++11
-(and Microsoft Visual C++ 2015) until March 7, 2022. We will do one final Long
-Term Support release in March of 2022 which will announce that it is the final
-LTS release to support C++11. We strongly recommend all users begin moving to
-C++14 or newer.
+Of our supported platforms and compilers, the last to facilitate support for
+C++14 was Microsoft Visual C++ 2017, which was released on March
+7, 2017. Therefore, Abseil will only support C++11 (and Microsoft Visual C++
+2015) until March 7, 2022. We will do one final Long Term Support release in
+March of 2022, at which point we will announce that it is the final LTS release
+to support C++11. We strongly recommend all users begin moving to C++14 or newer
+as soon as possible and not wait for this LTS release, however.
 
 In addition, the following support changes will occur in the near future:
 
