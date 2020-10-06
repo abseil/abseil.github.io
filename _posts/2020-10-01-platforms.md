@@ -16,14 +16,15 @@ By [Derek Mauro](mailto:dmauro@google.com), Abseil Engineer
 [In September 2017, Abseil made the following support
 promise](https://abseil.io/about/compatibility):
 
-> We will support our code for at least 5 years. We will support language
-> versions, compilers, platforms, and workarounds as needed for 5 years after
-> their replacement is available, when possible. If it is technically infeasible
-> (such as support for MSVC before 2015, which has limited C++11 functionality),
-> those will be noted specifically. After 5 years we will stop support and may
-> remove workarounds. `ABSL_HAVE_THREAD_LOCAL` is a good example: the base
-> language feature works on everything except Xcode prior to Xcode 8 ; once
-> Xcode 8 is out for 5 years, we will drop that workaround support.
+<i>We will support our code for at least 5 years. We will support language
+versions, compilers, platforms, and workarounds as needed for 5 years after
+their replacement is available, when possible. If it is technically infeasible
+(such as support for MSVC before 2015, which has limited C++11 functionality),
+those will be noted specifically. After 5 years we will stop support and may
+remove workarounds. `ABSL_HAVE_THREAD_LOCAL` is a good example: the base
+language feature works on everything except Xcode prior to Xcode 8 ; once
+Xcode 8 is out for 5 years, we will drop that workaround support.
+</i>
 
 <!--break-->
 
