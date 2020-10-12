@@ -187,9 +187,9 @@ performed via `operator*` or `operator->`, after a call to `ok()` confirms that
 the `absl::StatusOr<T>` holds an object of type `T`:
 
 ```c++
-absl::StatusOr<int> i = GetCount();
+absl::StatusOr<int> foo = GetCount();
 if (foo.ok()) {
-  updated_total += *i
+  updated_total += *foo;
 }
 ```
 
