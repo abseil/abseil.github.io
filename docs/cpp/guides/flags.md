@@ -128,8 +128,9 @@ ABSL_FLAG(absl::Duration, timeout, absl::Seconds(30), "Default RPC deadline");
 ```
 
 Flags defined with `ABSL_FLAG` will create global variables named
-<code>FLAGS_<i>name</i></code> of the specified type and default value. Help text
-will be displayed using the `--help` usage argument, if invoked.
+<code>FLAGS_<i>name</i></code> of the specified type and default value. Help
+text will be displayed using the `--help` usage argument, if invoked. See
+[Special Flags](#special_flags) for `--help` documentation.
 
 ### Standard Flags
 
@@ -219,7 +220,7 @@ some header file that is included by those modules. For an `ABSL_FLAG` flag
 named `FLAGS_name` of type `T`, use the `ABSL_DECLARE_FLAG(T, name);` macro to
 do so:
 
-```cpp
+```cpp {.good}
 ABSL_DECLARE_FLAG(absl::Duration, timeout);
 ```
 
@@ -441,6 +442,7 @@ invoked, cause the application to print some information about itself and exit.
 --helppackage     shows flags defined in files in same directory as main()
 --version         prints version info for the executable
 ```
+NOTE: The help message for a flag will include its default value, so in most cases there is no need to mention the default value in the definition of a flag's `help-text`.
 
 Additionally, some built-in flags have additional behavioral effects. These are
 noted below.
@@ -451,11 +453,10 @@ The Abseil flags library also supports an `undefok` flag:
 
 `--undefok=flagname,flagname,...`
 
-For those names listed as the argument to `--undefok`, this flag instructs the
-Abseil flags library to suppress normal error signaling that occurs when
-`--name` is seen on the command-line (or `--noname` since a listed flag might
-have been an old boolean flag), but `name` has not been defined anywhere in the
-application
+For any listed `flagname`, this instructs the Abseil flags library to suppress
+normal error signaling that occurs when `--flagname` is seen on the command-line
+(or `--noflagname` since a listed flag might have been an old boolean flag), but
+no flag with name `flagname` has been defined.
 
 ## Defining Custom Flag Types {#custom}
 
@@ -587,5 +588,5 @@ std::string AbslUnparseFlag(const MyFlagType& flag) {
 
 [retired-flags]: https://abseil.io/tips/90
 [friend-functions]: http://en.cppreference.com/w/cpp/language/friend
-[time-library]: time.md#time-durations
-[civiltime-library]: time.md#civil-times
+[time-library]: https://cs.corp.google.com/google3/third_party/absl/time/time.h
+[civiltime-library]: https://cs.corp.google.com/google3/third_party/absl/time/civil_time.h

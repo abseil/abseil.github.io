@@ -116,7 +116,7 @@ Examples:
 // By default, empty strings are *included* in the output. See the
 // `absl::SkipEmpty()` predicate below to omit them{#stringSplitting}.
 std::vector<std::string> v = absl::StrSplit("a,b,,c", ',');
-// v[0] == "a", v[1] == "b", v[3] == "", v[4] = "c"
+// v[0] == "a", v[1] == "b", v[2] == "", v[3] = "c"
 
 // You can also split an empty string
 v = absl::StrSplit("", ',');
@@ -321,8 +321,8 @@ For this reason, you should get in the habit of preferring `absl::StrCat()` or
 string, and is designed to be the fastest possible way to construct a string out
 of a mix of raw C strings, `absl::string_view` elements, `std::string` value,
 and boolean and numeric values. `StrCat()` is generally more efficient on string
-concatenations involving more than one unary operator, such as `a + b + c` or `a
-+= b + c`, since they avoid the creation of temporary string objects during
+concatenations involving more than one binary operator, such as `a + b + c` or
+`a += b + c`, since they avoid the creation of temporary string objects during
 string construction.
 
 ```cpp

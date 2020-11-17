@@ -214,7 +214,8 @@ our estimates.
 
 #### Recommendation
 
-Use `absl::flat_hash_map` most of the time.
+Use `absl::flat_hash_map` most of the time. If pointer stability of values (but
+not keys) is needed, use `absl::flat_hash_map<Key, std::unique_ptr<Value>>`.
 
 ### `absl::node_hash_map` and `absl::node_hash_set`
 
