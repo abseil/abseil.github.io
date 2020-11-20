@@ -81,15 +81,15 @@ Archiecture, Specific Compiler, and Standard Library implementation.
     </tr>
     <tr>
       <td>Linux, little-endian, 64-bit</td>
-      <td>gcc 4.9+<br/>clang 3.3+</td>
+      <td>gcc 5.1+<br/>clang 3.7+</td>
       <td>libstdc++<br/>libc++</td>
     </tr>
   </tbody>
 </table>
 
-<p style="background-color: #89CFF0; padding: 5px; width: 80%;" id="id08192019">
+<p style="background-color: #89CFF0; padding: 5px; width: 80%;" id="id09012020">
 <br/>
-Abseil now requires gcc 4.9 or above. Usage of gcc 4.8 is now unsupported.
+Abseil now requires gcc 5.1 or above. Usage of gcc 4.9 is now unsupported.
 </p>
 
 **Best Effort**
@@ -220,7 +220,7 @@ themselves.
     </tr>
     <tr>
       <td>Android NDK r11c+</td>
-      <td>gcc 4.9+</td>
+      <td>gcc 5.1+</td>
       <td>libc++, libstdc++</td>
     </tr>
   </tbody>
@@ -228,9 +228,9 @@ themselves.
 
 <p style="background-color: #89CFF0; padding: 5px; width: 80%;" id="id08192019">
 <br/>
-Abseil now requires gcc 4.9 or above. Usage of gcc 4.8 is now unsupported.
+Abseil now requires gcc 5.1 or above. Usage of gcc 4.9 is now unsupported.
 </p>
 
 <!-- Styles for dated updates/changes to platform support -->
 <style>#id06272019:before { content: "06/27/2019";font-weight:bold; color:black}</style>
-<style>#id08192019:before { content: "08/19/2019";font-weight:bold; color:black}</style>
+<style>#id09012020:before { content: "09/01/2020";font-weight:bold; color:black}</style>

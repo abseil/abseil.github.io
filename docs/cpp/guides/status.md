@@ -56,7 +56,7 @@ Success of any particular operation is indicated by a `Status` error code of
 developers should construct their operations to return `absl::OkStatus()` upon
 success, or an `absl::StatusCode` upon another type of error (e.g. an
 `absl::StatusCode::kInvalidArgument` error). The API provides convenience
-functions to constuct each particular status code. (See
+functions to construct each particular status code. (See
 [Canonical Errors](#canonical_errors) below.)
 
 For example, the following piece of code shows how to return an error
