@@ -220,7 +220,7 @@ some header file that is included by those modules. For an `ABSL_FLAG` flag
 named `FLAGS_name` of type `T`, use the `ABSL_DECLARE_FLAG(T, name);` macro to
 do so:
 
-```cpp {.good}
+```cpp
 ABSL_DECLARE_FLAG(absl::Duration, timeout);
 ```
 
