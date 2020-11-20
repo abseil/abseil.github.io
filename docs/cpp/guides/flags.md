@@ -588,5 +588,5 @@ std::string AbslUnparseFlag(const MyFlagType& flag) {
 
 [retired-flags]: https://abseil.io/tips/90
 [friend-functions]: http://en.cppreference.com/w/cpp/language/friend
-[time-library]: https://cs.corp.google.com/google3/third_party/absl/time/time.h
-[civiltime-library]: https://cs.corp.google.com/google3/third_party/absl/time/civil_time.h
+[time-library]: time.md#time-durations
+[civiltime-library]: time.md#civil-times
