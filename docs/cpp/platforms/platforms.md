@@ -7,59 +7,44 @@ type: markdown
 
 # Abseil Platforms
 
-The Abseil C++ code is supported on the following platforms. By "platforms",
-we mean the union of operating system, architecture (e.g. little-endian vs.
-big-endian), compiler, and standard library.
+The Abseil C++ code is supported on the following platforms. By "platforms", we
+mean the union of operating system, architecture (e.g. CPU, little-endian vs.
+big-endian, etc.), compiler, and standard library.
 
 ## Support Levels
 
 Abseil has two basic levels of support:
 
 <ul>
-  <li><b>Supported</b> means that the indicated platform is officially
-  supported. We pledge to test our code on that platform, have automated
-  continuous integration (CI) tests for that platform, and bugs within that
-  platform will be treated with high priority.</li>
+  <li><b>Supported</b> means that Abseil is expected to work on the indicated
+  platform, and it will be considered a bug if Abseil stops working. We pledge
+  to test our code on that platform, have automated continuous integration (CI)
+  tests for that platform, and bugs within that platform will be treated with
+  high priority.</li>
   <li><b>Best Effort</b> means that we may or may not run continuous integration
   tests on the platform, but we are fairly confident that Abseil should work on
   the platform. Although we may not prioritize bugs on the associated platforms,
   we will make our best effort to support it, and we will welcome patches based
-  on this platform. We may at some point officially support such a
-  platform.</li>
+  on this platform. We may at some point officially support such a platform.</li>
 </ul>
 
 Any other platform that is not explicitly mentioned as **Supported** or
-**Best Effort** is *not supported*. We will not accept patches for such
-platforms and we will not prioritize bugs related to such platforms.
+**Best Effort** is *not supported*. We may not prioritize bugs related to such
+platforms, and we will only accept patches that in our judgement do not
+complicate the code.
 
 ## C++11 and Above
 
 Abseil requires a code base that at least supports C++11 and our code is
 C++11-compliant. Often, we include C++11 versions of standard library
-functionality available in a later version (e.g C++14 and C++17). Many of these
-C++11 utlities will silently revert to their official standard library
-functionality when compiled on C++14 and C++17
-platforms. That is, we guarantee that our code will compile under any of the
-following compilation flags:
+functionality available in a later version (e.g C++14 through C++20). Many of
+these C++11 utlities will silently revert to their official standard library
+functionality when compiled on C++14 or newer platforms. That is, we guarantee
+that our code will compile under any of the following compilation flags:
 
-Linux:
-
-* gcc, clang: `-std=c++11`
-* gcc, clang: `-std=c++14`
-* clang < 5.0: `-std=c++1z`
-* gcc, clang 5.0+: `-std=c++17`
-
-macOS:
-
-* gcc, clang: `-std=c++11`
-* gcc, clang: `-std=c++14`
-* clang < 5.0: `-std=c++1z`
-* gcc, clang 5.0+: `-std=c++17`
-
-Windows:
-
-* msvc: `/std:c++14`
-* msvc: `/std:c++latest`
+* GCC: `-std=c++11`, `-std=c++14`, `-std=c++17`, `-std=c++20`
+* Clang: `-std=c++11`, `-std=c++14`, `-std=c++17`, `-std=c++20`
+* MSVC: `/std:c++14`, `/std:c++17`
 
 ## Supported Platforms
 
@@ -180,8 +165,8 @@ themselves.
     </tr>
     <tr>
       <td>Windows, little-endian, 32/64-bit</td>
-      <td>MVC 2015 Update 3, MSVC 2017</td>
-      <td>msvc</td>
+      <td>MSVC 2015 Update 3, MSVC 2017</td>
+      <td>[MS STL](https://github.com/microsoft/STL)</td>
     </tr>
   </tbody>
 </table>
