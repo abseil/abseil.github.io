@@ -43,6 +43,7 @@ Macros</a>.</p>
 |`__arm__`|ARM||32-bit only|
 |`_M_ARM`|ARM|Visual Studio||
 |`__aarch64__`|ARM64|||
+|`_M_ARM64`|ARM64|Visual Studio||
 |`__i386__`|Intel x86|||
 |`_M_IX86`|Intel x86|Visual Studio\*||
 |`__ia64__`|Intel Itanum (IA-64)|||

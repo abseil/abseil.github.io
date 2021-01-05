@@ -83,8 +83,8 @@ A non-OK Status typically includes both an error code
 file.txt filename is missing"). The API provides `code()` and `message()` member
 functions to retrieve these values. The error code is intended for programs to
 examine (e.g., the caller might react differently based on the error code it
-sees). The message is not intended for end users; it may get logged somewhere
-for a developer or SRE to examine and find out what went wrong.
+sees). The error message may be logged somewhere for a developer or SRE to
+examine and find out what went wrong. The message is not intended for end users.
 
 NOTE: low-level routines such as a file `Open()` operation should typically not
 log status values themselves, but should pass them up to the caller who will
@@ -188,7 +188,7 @@ the `absl::StatusOr<T>` holds an object of type `T`:
 
 ```c++
 absl::StatusOr<int> i = GetCount();
-if (foo.ok()) {
+if (i.ok()) {
   updated_total += *i
 }
 ```
