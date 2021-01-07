@@ -87,7 +87,7 @@ upgrade check, the old API, and its replacement coexist for at least one
 Long-Term Support (LTS) branch cut. Then, when the time comes to actually remove
 the deprecated API, we will add a release notes blog post as a helpful reminder.
 Any LTS branch that includes such an API breaking change will have that change
-noted on the [LTS main page][lts-page].
+noted in its [release notes][lts-releases].
 
 [compatibility]: /about/compatibility
 [clang-tidy]: http://clang.llvm.org/extra/clang-tidy/
@@ -95,5 +95,5 @@ noted on the [LTS main page][lts-page].
 [clang-tidy-checks]: https://clang.llvm.org/extra/clang-tidy/checks/list.html
 [abseil-blog]: https://abseil.io/blog/
 [llvm]: http://releases.llvm.org/
-[lts-page]: https://github.com/abseil/abseil-cpp/blob/master/LTS.md
+[lts-page]: https://github.com/abseil/abseil-cpp/releases
 
