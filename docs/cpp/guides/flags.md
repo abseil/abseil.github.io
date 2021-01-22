@@ -150,9 +150,9 @@ Out of the box, the Abseil flags library supports the following types:
 * `absl::LogSeverity` (provided natively for layering reasons)
 
 NOTE: support for integral types is implemented using overloads for
-variable-width fundamental types (`short`, `int`, `long`, etc.). However,
-you should prefer the fixed-width integral types as noted above (`int32_t`,
-`uint64_t`, etc.)
+variable-width fundamental types (`short`, `int`, `long`, etc.). However, you
+should prefer the fixed-width integral types as noted above
+(`int32_t`, `uint64_t`, etc.).
 
 ### Abseil Flags
 
