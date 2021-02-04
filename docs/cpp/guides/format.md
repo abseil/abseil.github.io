@@ -43,6 +43,8 @@ arguments.
 Example:
 
 ```cpp
+#include "absl/strings/str_format.h"
+
 std::string s = absl::StrFormat("Welcome to %s, Number %d!", "The Village", 6);
 EXPECT_EQ("Welcome to The Village, Number 6!", s);
 ```
