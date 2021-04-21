@@ -103,7 +103,7 @@ std::vector<std::string> v = {"a", "b"};
 absl::btree_set<std::string> set7(v.begin(), v.end());
 
 std::vector<std::pair<int, std::string>> v = {{1, "a"}, {2, "b"}};
-absl::btree_map<int, std::string> set7(v.begin(), v.end());
+absl::btree_map<int, std::string> map7(v.begin(), v.end());
 ```
 <!--{% endraw %}-->
 
@@ -184,7 +184,7 @@ std::vector<std::string> v = {"a", "b"};
 absl::flat_hash_set<std::string> set7(v.begin(), v.end());
 
 std::vector<std::pair<int, std::string>> v = {{1, "a"}, {2, "b"}};
-absl::flat_hash_map<int, std::string> set7(v.begin(), v.end());
+absl::flat_hash_map<int, std::string> map7(v.begin(), v.end());
 ```
 <!--{% endraw %}-->
 
