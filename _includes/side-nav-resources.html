@@ -1,0 +1,11 @@
+<ul class="doc-side-nav">
+  {% assign current = page.url | downcase | split: '/' %}
+  <li><h5 class="doc-side-nav-title">
+    <a href="{{ site.baseurl }}/resources/" class="current">
+    <b>Resources</b></a></h5>
+  </li>
+  <li class="doc-side-nav-list-item">
+    <a href="{{ site.baseurl }}/resources/swe-book" {% if current[2] == 'swe-book.html' %}class='current'{% endif %}>
+      SWE Book</a>
+  </li>
+</ul>
