@@ -8,8 +8,8 @@ type: markdown
 # Software Engineering at Google
 
 <div>
-  <img src="/img/swe_at_google.2.cover.jpg" alt="Software Engineering at Google"/>
-<div>
-<button type=”button” ><a href=”/resources/swe_at_google.2.pdf” target=”_blank”/> Open PDF</button>
+  <img width=50%" height="50%" src="/img/swe_at_google.2.cover.jpg" alt="Software Engineering at Google"/>
+  <a href=”/resources/swe_at_google.2.pdf” target=”_blank”/>
+  </img>
 </div>
 </div>
