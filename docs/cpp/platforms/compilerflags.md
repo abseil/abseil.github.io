@@ -22,7 +22,7 @@ we will continue to work to reduce the number of flags we need to disable.
 
 These flags (and flags sets) are defined in the Abseil code repository within
 the
-[copts.bzl](https://github.com/abseil/abseil-cpp/blob/master/absl/copts.bzl)
+[copts.py](https://github.com/abseil/abseil-cpp/blob/master/absl/copts/copts.py)
 file.
 
 ## Abseil Warning Flags
