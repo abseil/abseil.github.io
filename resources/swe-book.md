@@ -30,5 +30,12 @@ if you wish.
 <a href="/resources/swe_at_google.2.pdf" target="_blank" title="Read online">
 Read online</a>
 </div>
+&nbsp;
+&nbsp;
+<div>
+<a
+href="https://www.oreilly.com/library/view/software-engineering-at/9781492082781/"
+target="_blank" title="Purchase">
+Purchase from O'Reilly</a>
+</div>
 </center>
-
