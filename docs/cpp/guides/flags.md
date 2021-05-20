@@ -94,7 +94,7 @@ OK, we've warned you about flag usage. But if we accept that you do need flags
 in your binary, what are some best practices around flag usage?
 
 *   Prefer to define flags only in the file containing the binary's `main()`
-    function. Although Abseil flags may be defined anywhere in any namespace,
+    function. Although Abseil flags may be defined anywhere in any source file,
     avoid any usage outside of `main()` as it will otherwise be difficult to
     resolve conflicts.
 *   Prefer to reference flags only from within the file containing the binary's
@@ -151,8 +151,8 @@ Out of the box, the Abseil flags library supports the following types:
 
 NOTE: support for integral types is implemented using overloads for
 variable-width fundamental types (`short`, `int`, `long`, etc.). However, you
-should prefer the fixed-width integral types as noted above
-(`int32_t`, `uint64_t`, etc.).
+should prefer the fixed-width integral types listed above (`int32_t`,
+`uint64_t`, etc.). -->
 
 ### Abseil Flags
 
@@ -226,9 +226,7 @@ ABSL_DECLARE_FLAG(absl::Duration, timeout);
 
 The declaration should always be placed in the header file associated with the
 `.cc` file that defines and owns the flag, as with any other exported entities.
-If you need to do this for testing only, you can place it at the end of the file
-with an
-<br/>
+If you need to do this for testing only, you can place it with an
 `// Exposed for testing only` comment.
 
 Warning: The necessity to access flags from different files, especially in

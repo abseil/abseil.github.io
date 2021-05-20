@@ -38,6 +38,12 @@ they wanted to avoid copying data. A `string_view` also acts as a wrapper around
 APIs that accept both types of character data; methods can simply declare that
 they accept `absl::string_view`.
 
+```cpp
+// A common use of string_view: Foo() can accept both char* and std::string via
+// implicit conversion to string_view.
+void Foo(absl::string_view s) { ... }
+```
+
 `string_view` objects are very lightweight, so you should always pass them by
 value within your methods and functions; don't pass a `const absl::string_view
 &`. (Passing `absl::string_view` instead of `const absl::string_view &` has the
@@ -46,16 +52,21 @@ passing rules, it is generally faster to pass by value in this case.)
 
 As noted above, because the `string_view` does not own the underlying data
 itself, it should only be used for read-only data. If you need to provide a
-string constant to an external API user, for example, you would still internally
-declare that string as `const char[]`; however, you would expose that data using
-an `string_view`.
+string constant to an external API user, for example:
 
 ```cpp
-// If an API declare a string literal as const char ...
-const char kGreeting[] = "hi";
+// C++17: A read-only string in a header file.
+inline constexpr absl::string_view kGreeting = "hi";
+```
 
-// API users could access this string data for reading using a string_view.
-absl::string_view GetGreeting() { return kGreeting; }
+```cpp
+// C++11: A read-only string in a header file. Due to lifetime issues, a
+// string_view is usually a poor choice for a return value (see below), but it's
+// safe here because the static storage outlives it.
+inline absl::string_view GetGreeting() {
+  static constexpr char kGreeting[] = "hi";
+  return kGreeting;
+}
 ```
 
 A `string_view` is also suitable for local variables if you know that the
@@ -79,6 +90,12 @@ the object it points to.
 A `string_view` may represent a whole string or just part of a string. For
 example, when splitting a string, `std::vector<absl::string_view>` is a natural
 data type for the output.
+
+NOTE: For more information about `string_view`, see
+[abseil.io/tips/1](https://abseil.io/tips/1).
+
+NOTE: For more information about safe idioms for constants, see
+[abseil.io/tips/140](https://abseil.io/tips/140).
 
 ## `absl::StrSplit()` for Splitting Strings
 

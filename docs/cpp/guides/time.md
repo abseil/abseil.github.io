@@ -189,7 +189,7 @@ absl::Time takeoff = absl::FromCivil(ct, nyc);
 
 Formatting and parsing functions are provided for converting to and from
 strings. `FormatTime()` allows you to take an absolute time and time zone and
-return a string representing that time. (See [Time Zones](#timezones) below.)
+return a string representing that time. (See [Time Zones](#time-zones) below.)
 
 ```cpp
 // Construct an absl::Time from the system clock.
@@ -469,7 +469,7 @@ absl::CivilDay d(2015, 6, 28);
 // d.second() == 0
 ```
 
-## Time Zones
+## Time Zones {#time-zones}
 
 The `absl::TimeZone` is an opaque, small, value-type class representing a
 geo-political region within which particular rules are used for converting
