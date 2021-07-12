@@ -21,7 +21,7 @@ The request succeeded                                                           
 The request was cancelled, typically by the caller                                                                      | `CANCELLED`
 The request parameters would never work                                                                                 | `INVALID_ARGUMENT`
 The operation did not complete within the specified deadline                                                            | `DEADLINE_EXCEEDED`
-The requested thing does not exist                                                                                      | `NOT_FOUND`
+The requested entity does not exist                                                                                      | `NOT_FOUND`
 The entity being created already exists                                                                                 | `ALREADY_EXISTS`
 The caller does not have permission to execute the operation                                                            | `PERMISSION_DENIED`
 The caller's identity cannot be verified                                                                                | `UNAUTHENTICATED`
