@@ -101,6 +101,18 @@ http_archive(
 )
 ```
 
+Some targets are benchmarks. These targets require a dependency on the
+[Google Benchmark](https://github.com/google/benchmark) framework:
+
+```
+http_archive(
+    name = "com_github_google_benchmark",
+    urls = ["https://github.com/google/benchmark/archive/bf585a2789e30585b4e3ce6baf11ef2750b54677.zip"],
+    strip_prefix = "benchmark-bf585a2789e30585b4e3ce6baf11ef2750b54677",
+    sha256 = "2a778d821997df7d8646c9c59b8edb9a573a6e04c534c01892a40aa524a7b68c",
+)
+```
+
 Now you can optionally run Abseil's unit tests with a single `bazel` command:
 
 <pre><code>$ <b>bazel test --test_tag_filters=-benchmark @com_google_absl//...</b>

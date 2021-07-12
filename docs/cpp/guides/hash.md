@@ -126,10 +126,14 @@ seeds itself at program startup.
 *   `std::unique_ptr` and `std::shared_ptr` (as with plain pointers, the pointer
     itself is hashed, not the value it points to)
 *   All string-like types including:
+    *   `absl::Cord`
     *   `absl::string_view`
-    *   `std::string`
-    *   `std::string_view` (as well as any instance of `std::basic_string` that
-        uses `char` and `std::char_traits`)
+    *   `std::string` (as well as any instance of `std::basic_string` that uses
+        `char` and `std::char_traits<char>`)
+    *   `std::string_view`
+    *   `std::wstring`
+    *   `std::u16string`
+    *   `std::u32string`
 *   All the standard sequence containers (provided the elements are hashable)
 *   All the standard ordered associative containers (provided the elements are
     hashable)

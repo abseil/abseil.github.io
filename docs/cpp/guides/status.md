@@ -40,14 +40,14 @@ absl::Status myFunction(absl::string_view filename, ...) {
 ```
 
 Most operations in Abseil (or Google) code return an
-[`absl::Status`](http://google3/third_party/absl/status/status.h) (abbreviated
-`Status` in the text below). A `Status` is designed to either return "OK" or one
-of a number of different error codes, corresponding to typical error conditions.
-In almost all cases, when using `absl::Status` you should use the canonical
-error codes (of type `absl::StatusCode`). These canonical codes are understood
-across the codebase and will be accepted across all API and RPC boundaries. A
-function which has a return value of `Status` *must be handled* (and is marked
-`ABSL_MUST_USE_RESULT`).
+[`absl::Status`](https://github.com/abseil/abseil-cpp/blob/master/absl/status/status.h)
+(abbreviated `Status` in the text below). A `Status` is designed to either
+return "OK" or one of a number of different error codes, corresponding to
+typical error conditions. In almost all cases, when using `absl::Status` you
+should use the canonical error codes (of type `absl::StatusCode`). These
+canonical codes are understood across the codebase and will be accepted across
+all API and RPC boundaries. A function which has a return value of `Status`
+*must be handled* (and is marked `ABSL_MUST_USE_RESULT`).
 
 ## Using `Status` for Returning Errors
 
