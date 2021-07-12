@@ -51,7 +51,7 @@ Navigate into this directory and run all tests:
 ```
 $ cd abseil-cpp
 $ mkdir build && cd build
-$ cmake .. -DABSL_RUN_TESTS=ON -DABSL_USE_GOOGLETEST_HEAD=ON -DCMAKE_CXX_STANDARD=11
+$ cmake -DBUILD_TESTING=ON -DABSL_USE_GOOGLETEST_HEAD=ON -DCMAKE_CXX_STANDARD=11 ..
 ...
 -- Configuring done
 -- Generating done

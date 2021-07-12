@@ -65,7 +65,7 @@ Archiecture, Specific Compiler, and Standard Library implementation.
       <th>Standard Libraries</th>
     </tr>
     <tr>
-      <td>Linux, little-endian, 64-bit</td>
+      <td>Linux, x86-64 and little-endian AArch64, 64-bit</td>
       <td>gcc 5.1+<br/>clang 3.7+</td>
       <td>libstdc++<br/>libc++</td>
     </tr>
