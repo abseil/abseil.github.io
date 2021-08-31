@@ -165,7 +165,7 @@ tends to be approximately fair in the long term.
 
 ### Mutex Basics
 
-The `absl::Mutex` class implements a mutually exclusive lock on on some
+The `absl::Mutex` class implements a mutually exclusive lock on some
 resource, allowing threads which also use the mutex to avoid concurrent access
 to that resource, which is typically some variable or data structure with
 associated invariants. For example, a financial transaction system may wish only
