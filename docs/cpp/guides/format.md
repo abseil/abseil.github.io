@@ -432,10 +432,8 @@ struct Point {
   AbslFormatConvert(const Point& p,
                     const absl::FormatConversionSpec& spec,
                     absl::FormatSink* s) {
-    // If the conversion char is %s, produce output of the form "x=1 y=2"
     if (spec.conversion_char() == absl::FormatConversionChar::s) {
-      // If the conversion char is integral (%i, %d ...) , produce output of the
-      // form "1,2"
+      // If the conversion char is %s, produce output of the form "x=1 y=2"
       s->Append(absl::StrCat("x=", p.x, " y=", p.y));
     } else {
       // If the conversion char is integral (%i, %d ...) , produce output of the
