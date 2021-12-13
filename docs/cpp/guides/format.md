@@ -370,6 +370,14 @@ The `str_format` library provides customization utilities for formatting
 user-defined types using `StrFormat()`. As with most type extensions, you should
 own the type you wish to extend.
 
+> Tip: For types you don't own you can use `absl::FormatStreamed()` to format
+> types that have an `operator<<` but no intrinsic type support within
+> `StrFormat()`.
+>
+> ```cpp
+> absl::PrintF("My Foo: %s\n", absl::FormatStreamed(foo));
+> ```
+
 To extend formatting to your custom type, provide an `AbslFormatConvert()`
 overload as a free (non-member) function within the same file and namespace of
 that type, usually as a `friend` definition. The `str_format` library will check
