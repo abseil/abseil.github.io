@@ -149,14 +149,20 @@ absl::StrFormat("%o", 016)  -> "16"       // literal octal
 absl::StrFormat("%#o", 016) -> "016"      // alternative form
 
 // Hex
-absl::StrFormat("%x", 16)    -> "10"
-absl::StrFormat("%x", 0x16)  -> "16"
-absl::StrFormat("%#x", 0x16) -> "0x16"    // alternative form
-absl::StrFormat("%X", 10)    -> "A"       // Upper-case
+absl::StrFormat("%x", 16)      -> "10"
+absl::StrFormat("%x", 0x16)    -> "16"
+absl::StrFormat("%#x", 0x16)   -> "0x16"    // alternative form
+absl::StrFormat("%X", 10)      -> "A"       // Upper-case
+absl::StrFormat("%#06x", 0x16) -> "0x0016"  // "0x" counts as part of the width
 
 // Unsigned Integers
 absl::StrFormat("%u", 16) -> "16"
 absl::StrFormat("%u", -16) -> "4294967280"
+
+// Big Integers
+// Length modifiers are unnecessary, and are ignored
+absl::StrFormat("%d", 100'000'000'000'000) -> "100000000000000"
+absl::StrFormat("%lld", 100'000'000'000'000) -> "100000000000000"
 
 // Floating Point
 // Default precision of %f conversion is 6
@@ -363,6 +369,14 @@ if (FILE* file_handle = fopen("myfile.txt","w"; file_handle != nullptr) {
 The `str_format` library provides customization utilities for formatting
 user-defined types using `StrFormat()`. As with most type extensions, you should
 own the type you wish to extend.
+
+> Tip: For types you don't own you can use `absl::FormatStreamed()` to format
+> types that have an `operator<<` but no intrinsic type support within
+> `StrFormat()`.
+>
+> ```cpp
+> absl::PrintF("My Foo: %s\n", absl::FormatStreamed(foo));
+> ```
 
 To extend formatting to your custom type, provide an `AbslFormatConvert()`
 overload as a free (non-member) function within the same file and namespace of

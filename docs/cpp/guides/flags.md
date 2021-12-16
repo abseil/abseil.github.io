@@ -152,7 +152,7 @@ Out of the box, the Abseil flags library supports the following types:
 NOTE: support for integral types is implemented using overloads for
 variable-width fundamental types (`short`, `int`, `long`, etc.). However, you
 should prefer the fixed-width integral types listed above (`int32_t`,
-`uint64_t`, etc.). -->
+`uint64_t`, etc.).
 
 ### Abseil Flags
 
@@ -217,8 +217,8 @@ was defined earlier in the same `.cc` file. If it wasn't, you'll get an
 
 If you need to allow other modules to access the flag, you must export it in
 some header file that is included by those modules. For an `ABSL_FLAG` flag
-named `FLAGS_name` of type `T`, use the `ABSL_DECLARE_FLAG(T, name);` macro to
-do so:
+named `FLAGS_name` of type `T`, use the `ABSL_DECLARE_FLAG(T, name);` macro
+defined in `absl/flags/declare.h` to do so:
 
 ```cpp
 ABSL_DECLARE_FLAG(absl::Duration, timeout);
