@@ -9,7 +9,7 @@ category: blog
 excerpt_separator: <!--break-->
 ---
 
-By [Ashley Hedberg](mailto:ahedberg@google.com)
+By [Ashley Hedberg](mailto:ahedberg@google.com), Software Engineer
 
 The C++ Standard provides a library for performing fine-grained atomic
 operations (e.g. `std::atomic`). Engineers sometimes reach for these
