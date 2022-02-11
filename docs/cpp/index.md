@@ -24,4 +24,4 @@ the header files directly.
 The following guides are general programming guides that we think are useful
 to C++ developers:
 
-* [The Danger of Atomic Operations](/docs/cpp/atomic_danger.md)
+* [The Danger of Atomic Operations](/docs/cpp/atomic_danger)
