@@ -1,0 +1,1995 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Software Engineering at Google</title>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> </script>
+    <link rel="stylesheet" type="text/css" href="theme/html/html.css">
+  </head>
+  <body data-type="book">
+    <!-- This is a placeholder element for use with the automatic TOC generation option in Atlas -->
+<nav data-type="toc">
+<ol>
+  <li data-type="foreword">
+    <a href="foreword.html">Foreword</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="preface">
+    <a href="pr01.html">Preface</a>
+            <ol>
+  <li data-type="sect1">
+    <a href="pr01.html#programming_over_time">Programming Over Time</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="pr01.html#googleapostrophes_perspective">Google’s Perspective</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="pr01.html#what_this_book_isnapostrophet">What This Book Isn’t</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="pr01.html#parting_remarks">Parting Remarks</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="pr01.html#_conventions_used_in_this_book">Conventions Used in This Book</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="pr01.html#_safari_books_online">O'Reilly Online Learning</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="pr01.html#_how_to_contact_us">How to Contact Us</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="pr01.html#_acknowledgments">Acknowledgments</a>
+            <ol>
+</ol>
+      </li>
+</ol>
+      </li>
+  <li data-type="part">
+    <a href="part1.html">Thesis</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="chapter">
+    <a href="ch01.html">What Is Software Engineering?</a>
+            <ol>
+  <li data-type="sect1">
+    <a href="ch01.html#time_and_change">Time and Change</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch01.html#hyrumapostrophes_law">Hyrum’s Law</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch01.html#example_hash_ordering">Example: Hash Ordering</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch01.html#why_not_just_aim_for_quotation_marknoth">Why Not Just Aim for “Nothing Changes”?</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch01.html#scale_and_efficiency">Scale and Efficiency</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch01.html#policies_that_donapostrophet_scale">Policies That Don’t Scale</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch01.html#policies_that_scale_well">Policies That Scale Well</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch01.html#example_compiler_upgrade">Example: Compiler Upgrade</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch01.html#shifting_left">Shifting Left</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch01.html#tradeoffs_and_costs">Trade-offs and Costs</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch01.html#example_markers">Example: Markers</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch01.html#inputs_to_decision_making">Inputs to Decision Making</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch01.html#example_distributed_builds">Example: Distributed Builds</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch01.html#example_deciding_between_time_and_scale">Example: Deciding Between Time and Scale</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch01.html#revisiting_decisionscomma_making_mistak">Revisiting Decisions, Making Mistakes</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch01.html#software_engineering_versus_programming">Software Engineering Versus Programming</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch01.html#conclusion">Conclusion</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch01.html#tlsemicolondr">TL;DRs</a>
+            <ol>
+</ol>
+      </li>
+</ol>
+      </li>
+  <li data-type="part">
+    <a href="part2.html">Culture</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="chapter">
+    <a href="ch02.html">How to Work Well on Teams</a>
+            <ol>
+  <li data-type="sect1">
+    <a href="ch02.html#help_me_hide_my_code">Help Me Hide My Code</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch02.html#the_genius_myth">The Genius Myth</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch02.html#hiding_considered_harmful">Hiding Considered Harmful</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch02.html#early_detection">Early Detection</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch02.html#the_bus_factor">The Bus Factor</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch02.html#pace_of_progress">Pace of Progress</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch02.html#in_shortcomma_donapostrophet_hide">In Short, Don’t Hide</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch02.html#itapostrophes_all_about_the_team">It’s All About the Team</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch02.html#the_three_pillars_of_social_interaction">The Three Pillars of Social Interaction</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch02.html#why_do_these_pillars_matterquestion_mar">Why Do These Pillars Matter?</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch02.html#humilitycomma_respectcomma_and_trust_in">Humility, Respect, and Trust in Practice</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch02.html#blameless_postmortem_culture">Blameless Post-Mortem Culture</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch02.html#being_googley">Being Googley</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch02.html#conclusion-id00006">Conclusion</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch02.html#tlsemicolondr-id00171">TL;DRs</a>
+            <ol>
+</ol>
+      </li>
+</ol>
+      </li>
+  <li data-type="chapter">
+    <a href="ch03.html">Knowledge Sharing</a>
+            <ol>
+  <li data-type="sect1">
+    <a href="ch03.html#challenges_to_learning">Challenges to Learning</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch03.html#philosophy">Philosophy</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch03.html#setting_the_stage_psychological_safety">Setting the Stage: Psychological Safety</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch03.html#mentorship">Mentorship</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch03.html#psychological_safety_in_large_groups">Psychological Safety in Large Groups</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch03.html#growing_your_knowledge">Growing Your Knowledge</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch03.html#ask_questions">Ask Questions</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch03.html#understand_context">Understand Context</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch03.html#scaling_your_questions_ask_the_communit">Scaling Your Questions: Ask the Community</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch03.html#group_chats">Group Chats</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch03.html#mailing_lists">Mailing Lists</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch03.html#yaqs_question_and_answer_platform">YAQS: Question-and-Answer Platform</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch03.html#scaling_your_knowledge_you_always_have">Scaling Your Knowledge: You Always Have Something to Teach</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch03.html#office_hours">Office Hours</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch03.html#tech_talks_and_classes">Tech Talks and Classes</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch03.html#documentation-id00039">Documentation</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch03.html#code">Code</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch03.html#scaling_your_organizationapostrophes_kn">Scaling Your Organization’s Knowledge</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch03.html#cultivating_a_knowledge-sharing_culture">Cultivating a Knowledge-Sharing Culture</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch03.html#establishing_canonical_sources_of_infor">Establishing Canonical Sources of Information</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch03.html#staying_in_the_loop">Staying in the Loop</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch03.html#readability_standardized_mentorship_thr">Readability: Standardized Mentorship Through Code Review</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch03.html#what_is_the_readability_processquestion">What Is the Readability Process?</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch03.html#why_have_this_processquestion_mark">Why Have This Process?</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch03.html#conclusion-id00007">Conclusion</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch03.html#tlsemicolondrs-id00101">TL;DRs</a>
+            <ol>
+</ol>
+      </li>
+</ol>
+      </li>
+  <li data-type="chapter">
+    <a href="ch04.html">Engineering for Equity</a>
+            <ol>
+  <li data-type="sect1">
+    <a href="ch04.html#bias_is_the_default">Bias Is the Default</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch04.html#understanding_the_need_for_diversity">Understanding the Need for Diversity</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch04.html#building_multicultural_capacity">Building Multicultural Capacity</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch04.html#making_diversity_actionable">Making Diversity Actionable</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch04.html#reject_singular_approaches">Reject Singular Approaches</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch04.html#challenge_established_processes">Challenge Established Processes</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch04.html#values_versus_outcomes">Values Versus Outcomes</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch04.html#stay_curiouscomma_push_forward">Stay Curious, Push Forward</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch04.html#conclusion-id00008">Conclusion</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch04.html#tlsemicolondrs-id00103">TL;DRs</a>
+            <ol>
+</ol>
+      </li>
+</ol>
+      </li>
+  <li data-type="chapter">
+    <a href="ch05.html">How to Lead a Team</a>
+            <ol>
+  <li data-type="sect1">
+    <a href="ch05.html#managers_and_tech_leads_left_parenthesi">Managers and Tech Leads (and Both)</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch05.html#the_engineering_manager">The Engineering Manager</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch05.html#the_tech_lead">The Tech Lead</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch05.html#the_tech_lead_manager">The Tech Lead Manager</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch05.html#moving_from_an_individual_contributor_r">Moving from an Individual Contributor Role to a Leadership Role</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch05.html#the_only_thing_to_fear_issemicolonwellc">The Only Thing to Fear Is…Well, Everything</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch05.html#servant_leadership">Servant Leadership</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch05.html#the_engineering_manage">The Engineering Manager</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch05.html#manager_is_a_four-letter_word">Manager Is a Four-Letter Word</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch05.html#todayapostrophes_engineering_manager">Today’s Engineering Manager</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch05.html#antipatterns">Antipatterns</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch05.html#antipattern_hire_pushovers">Antipattern: Hire Pushovers</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch05.html#antipattern_ignore_low_performers">Antipattern: Ignore Low Performers</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch05.html#antipattern_ignore_human_issues">Antipattern: Ignore Human Issues</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch05.html#antipattern_be_everyoneapostrophes_frie">Antipattern: Be Everyone’s Friend</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch05.html#antipattern_compromise_the_hiring_bar">Antipattern: Compromise the Hiring Bar</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch05.html#antipattern_treat_your_team_like_childr">Antipattern: Treat Your Team Like Children</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch05.html#positive_patterns">Positive Patterns</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch05.html#lose_the_ego-id00072">Lose the Ego</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch05.html#be_a_zen_master">Be a Zen Master</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch05.html#be_a_catalyst">Be a Catalyst</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch05.html#remove_roadblocks">Remove Roadblocks</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch05.html#be_a_teacher_and_a_mentor">Be a Teacher and a Mentor</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch05.html#set_clear_goals">Set Clear Goals</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch05.html#be_honest">Be Honest</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch05.html#track_happiness">Track Happiness</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch05.html#the_unexpected_question">The Unexpected Question</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch05.html#other_tips_and_tricks">Other Tips and Tricks</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch05.html#people_are_like_plants">People Are Like Plants</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch05.html#intrinsic_versus_extrinsic_motivation">Intrinsic Versus Extrinsic Motivation</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch05.html#conclusion-id00009">Conclusion</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch05.html#tlsemicolondrs">TL;DRs</a>
+            <ol>
+</ol>
+      </li>
+</ol>
+      </li>
+  <li data-type="chapter">
+    <a href="ch06.html">Leading at Scale</a>
+            <ol>
+  <li data-type="sect1">
+    <a href="ch06.html#always_be_deciding">Always Be Deciding</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch06.html#the_parable_of_the_airplane">The Parable of the Airplane</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch06.html#identify_the_blinders">Identify the Blinders</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch06.html#identify_the_key_trade-offs">Identify the Key Trade-Offs</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch06.html#decidecomma_then_iterate">Decide, Then Iterate</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch06.html#always_be_leaving">Always Be Leaving</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch06.html#your_mission_build_a_quotation_markself">Your Mission: Build a “Self-Driving” Team</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch06.html#dividing_the_problem_space">Dividing the Problem Space</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch06.html#always_be_scaling">Always Be Scaling</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch06.html#the_cycle_of_success">The Cycle of Success</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch06.html#important_versus_urgent">Important Versus Urgent</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch06.html#learn_to_drop_balls">Learn to Drop Balls</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch06.html#protecting_your_energy">Protecting Your Energy</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch06.html#conclusion-id00010">Conclusion</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch06.html#tlsemicolondrs-id00106">TL;DRs</a>
+            <ol>
+</ol>
+      </li>
+</ol>
+      </li>
+  <li data-type="chapter">
+    <a href="ch07.html">Measuring Engineering Productivity</a>
+            <ol>
+  <li data-type="sect1">
+    <a href="ch07.html#why_should_we_measure_engineering_produ">Why Should We Measure Engineering Productivity?</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch07.html#triage_is_it_even_worth_measuringquesti">Triage: Is It Even Worth Measuring?</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch07.html#selecting_meaningful_metrics_with_goals">Selecting Meaningful Metrics with Goals and Signals</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch07.html#goals">Goals</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch07.html#signals">Signals</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch07.html#metrics">Metrics</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch07.html#using_data_to_validate_metrics">Using Data to Validate Metrics</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch07.html#taking_action_and_tracking_results">Taking Action and Tracking Results</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch07.html#conclusion-id00011">Conclusion</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch07.html#tlsemicolondrs-id00108">TL;DRs</a>
+            <ol>
+</ol>
+      </li>
+</ol>
+      </li>
+  <li data-type="part">
+    <a href="part3.html">Processes</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="chapter">
+    <a href="ch08.html">Style Guides and Rules</a>
+            <ol>
+  <li data-type="sect1">
+    <a href="ch08.html#why_have_rulesquestion_mark">Why Have Rules?</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch08.html#creating_the_rules">Creating the Rules</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch08.html#guiding_principles">Guiding Principles</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch08.html#the_style_guide">The Style Guide</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch08.html#changing_the_rules">Changing the Rules</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch08.html#the_process">The Process</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch08.html#the_style_arbiters">The Style Arbiters</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch08.html#exceptions">Exceptions</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch08.html#guidance">Guidance</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch08.html#applying_the_rules">Applying the Rules</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch08.html#error_checkers">Error Checkers</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch08.html#code_formatters">Code Formatters</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch08.html#conclusion-id00012">Conclusion</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch08.html#tlsemicolondrs-id00109">TL;DRs</a>
+            <ol>
+</ol>
+      </li>
+</ol>
+      </li>
+  <li data-type="chapter">
+    <a href="ch09.html">Code Review</a>
+            <ol>
+  <li data-type="sect1">
+    <a href="ch09.html#code_review_flow-id00005">Code Review Flow</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch09.html#how_code_review_works_at_google">How Code Review Works at Google</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch09.html#code_review_benefits">Code Review Benefits</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch09.html#code_correctness">Code Correctness</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch09.html#comprehension_of_code">Comprehension of Code</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch09.html#code_consistency">Code Consistency</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch09.html#psychological_and_cultural_benefits">Psychological and Cultural Benefits</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch09.html#knowledge_sharing-id00052">Knowledge Sharing</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch09.html#code_review_best_practices">Code Review Best Practices</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch09.html#be_polite_and_professional">Be Polite and Professional</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch09.html#write_small_changes">Write Small Changes</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch09.html#write_good_change_descriptions">Write Good Change Descriptions</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch09.html#keep_reviewers_to_a_minimum">Keep Reviewers to a Minimum</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch09.html#automate_where_possible">Automate Where Possible</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch09.html#types_of_code_reviews">Types of Code Reviews</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch09.html#greenfield_code_reviews">Greenfield Code Reviews</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch09.html#behavioral_changescomma_improvementscom">Behavioral Changes, Improvements, and Optimizations</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch09.html#bug_fixes_and_rollbacks">Bug Fixes and Rollbacks</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch09.html#refactorings_and_large-scale_changes">Refactorings and Large-Scale Changes</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch09.html#conclusion-id00013">Conclusion</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch09.html#tlsemicolondrs-id00110">TL;DRs</a>
+            <ol>
+</ol>
+      </li>
+</ol>
+      </li>
+  <li data-type="chapter">
+    <a href="ch10.html">Documentation</a>
+            <ol>
+  <li data-type="sect1">
+    <a href="ch10.html#what_qualifies_as_documentationquestion">What Qualifies as Documentation?</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch10.html#why_is_documentation_neededquestion_mar">Why Is Documentation Needed?</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch10.html#documentation_is_like_code">Documentation Is Like Code</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch10.html#know_your_audience">Know Your Audience</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch10.html#types_of_audiences">Types of Audiences</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch10.html#documentation_types">Documentation Types</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch10.html#reference_documentation">Reference Documentation</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch10.html#design_docs">Design Docs</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch10.html#tutorials">Tutorials</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch10.html#conceptual_documentation">Conceptual Documentation</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch10.html#landing_pages">Landing Pages</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch10.html#documentation_reviews">Documentation Reviews</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch10.html#documentation_philosophy">Documentation Philosophy</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch10.html#whocomma_whatcomma_whencomma_wherecomma">WHO, WHAT, WHEN, WHERE, and WHY</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch10.html#the_beginningcomma_middlecomma_and_end">The Beginning, Middle, and End</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch10.html#the_parameters_of_good_documentation">The Parameters of Good Documentation</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch10.html#deprecating_documents">Deprecating Documents</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch10.html#when_do_you_need_technical_writersquest">When Do You Need Technical Writers?</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch10.html#conclusion-id00014">Conclusion</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch10.html#tlsemicolondrs-id00112">TL;DRs</a>
+            <ol>
+</ol>
+      </li>
+</ol>
+      </li>
+  <li data-type="chapter">
+    <a href="ch11.html">Testing Overview</a>
+            <ol>
+  <li data-type="sect1">
+    <a href="ch11.html#why_do_we_write_testsquestion_mark">Why Do We Write Tests?</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch11.html#the_story_of_google_web_server">The Story of Google Web Server</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch11.html#testing_at_the_speed_of_modern_developm">Testing at the Speed of Modern Development</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch11.html#writecomma_runcomma_react">Write, Run, React</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch11.html#benefits_of_testing_code">Benefits of Testing Code</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch11.html#designing_a_test_suite">Designing a Test Suite</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch11.html#test_size">Test Size</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch11.html#test_scope">Test Scope</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch11.html#the_beyonceacutesemicolon_rule">The Beyoncé Rule</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch11.html#a_note_on_code_coverage">A Note on Code Coverage</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch11.html#testing_at_google_scale">Testing at Google Scale</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch11.html#the_pitfalls_of_a_large_test_suite">The Pitfalls of a Large Test Suite</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch11.html#history_of_testing_at_google">History of Testing at Google</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch11.html#orientation_classes">Orientation Classes</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch11.html#test_certified">Test Certified</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch11.html#testing_on_the_toilet">Testing on the Toilet</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch11.html#testing_culture_today">Testing Culture Today</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch11.html#the_limits_of_automated_testing">The Limits of Automated Testing</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch11.html#conclusion-id00015">Conclusion</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch11.html#tlsemicolondrs-id00113">TL;DRs</a>
+            <ol>
+</ol>
+      </li>
+</ol>
+      </li>
+  <li data-type="chapter">
+    <a href="ch12.html">Unit Testing</a>
+            <ol>
+  <li data-type="sect1">
+    <a href="ch12.html#the_importance_of_maintainability">The Importance of Maintainability</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch12.html#preventing_brittle_tests">Preventing Brittle Tests</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch12.html#strive_for_unchanging_tests">Strive for Unchanging Tests</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch12.html#test_via_public_apis">Test via Public APIs</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch12.html#test_statecomma_not_interactions">Test State, Not Interactions</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch12.html#writing_clear_tests">Writing Clear Tests</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch12.html#make_your_tests_complete_and_concise">Make Your Tests Complete and Concise</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch12.html#test_behaviorscomma_not_methods">Test Behaviors, Not Methods</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch12.html#donapostrophet_put_logic_in_tests">Don’t Put Logic in Tests</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch12.html#write_clear_failure_messages">Write Clear Failure Messages</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch12.html#tests_and_code_sharing_dampcomma_not_dr">Tests and Code Sharing: DAMP, Not DRY</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch12.html#shared_values">Shared Values</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch12.html#shared_setup">Shared Setup</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch12.html#shared_helpers_and_validation">Shared Helpers and Validation</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch12.html#defining_test_infrastructure">Defining Test Infrastructure</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch12.html#conclusion-id00016">Conclusion</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch12.html#tlsemicolondrs-id00114">TL;DRs</a>
+            <ol>
+</ol>
+      </li>
+</ol>
+      </li>
+  <li data-type="chapter">
+    <a href="ch13.html">Test Doubles</a>
+            <ol>
+  <li data-type="sect1">
+    <a href="ch13.html#the_impact_of_test_doubles_on_software">The Impact of Test Doubles on Software Development</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch13.html#test_doubles_at_google">Test Doubles at Google</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch13.html#basic_concepts">Basic Concepts</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch13.html#an_example_test_double">An Example Test Double</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch13.html#seams">Seams</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch13.html#mocking_frameworks">Mocking Frameworks</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch13.html#techniques_for_using_test_doubles">Techniques for Using Test Doubles</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch13.html#faking-id00042">Faking</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch13.html#stubbing-id00089">Stubbing</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch13.html#interaction_testing">Interaction Testing</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch13.html#real_implementations">Real Implementations</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch13.html#prefer_realism_over_isolation">Prefer Realism Over Isolation</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch13.html#how_to_decide_when_to_use_a_real_implem">How to Decide When to Use a Real Implementation</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch13.html#faking-id00043">Faking</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch13.html#why_are_fakes_importantquestion_mark">Why Are Fakes Important?</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch13.html#when_should_fakes_be_writtenquestion_ma">When Should Fakes Be Written?</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch13.html#the_fidelity_of_fakes">The Fidelity of Fakes</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch13.html#fakes_should_be_tested">Fakes Should Be Tested</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch13.html#what_to_do_if_a_fake_is_not_available">What to Do If a Fake Is Not Available</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch13.html#stubbing-id00091">Stubbing</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch13.html#the_dangers_of_overusing_stubbing">The Dangers of Overusing Stubbing</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch13.html#when_is_stubbing_appropriatequestion_ma">When Is Stubbing Appropriate?</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch13.html#interaction_testing-id00047">Interaction Testing</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch13.html#prefer_state_testing_over_interaction_t">Prefer State Testing Over Interaction Testing</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch13.html#when_is_interaction_testing_appropriate">When Is Interaction Testing Appropriate?</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch13.html#best_practices_for_interaction_testing">Best Practices for Interaction Testing</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch13.html#conclusion-id00017">Conclusion</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch13.html#tlsemicolondrs-id00116">TL;DRs</a>
+            <ol>
+</ol>
+      </li>
+</ol>
+      </li>
+  <li data-type="chapter">
+    <a href="ch14.html">Larger Testing</a>
+            <ol>
+  <li data-type="sect1">
+    <a href="ch14.html#what_are_larger_testsquestion_mark">What Are Larger Tests?</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch14.html#fidelity">Fidelity</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch14.html#common_gaps_in_unit_tests">Common Gaps in Unit Tests</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch14.html#why_not_have_larger_testsquestion_mark">Why Not Have Larger Tests?</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch14.html#larger_tests_at_google">Larger Tests at Google</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch14.html#larger_tests_and_time">Larger Tests and Time</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch14.html#larger_tests_at_google_scale">Larger Tests at Google Scale</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch14.html#structure_of_a_large_test">Structure of a Large Test</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch14.html#the_system_under_test">The System Under Test</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch14.html#test_data">Test Data</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch14.html#verification">Verification</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch14.html#types_of_larger_tests">Types of Larger Tests</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch14.html#functional_testing_of_one_or_more_inter">Functional Testing of One or More Interacting Binaries</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch14.html#browser_and_device_testing">Browser and Device Testing</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch14.html#performancecomma_loadcomma_and_stress_t">Performance, Load, and Stress testing</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch14.html#deployment_configuration_testing">Deployment Configuration Testing</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch14.html#exploratory_testing">Exploratory Testing</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch14.html#asolidusb_diff_regression_testing">A/B Diff Regression Testing</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch14.html#uat">UAT</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch14.html#probers_and_canary_analysis">Probers and Canary Analysis</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch14.html#disaster_recovery_and_chaos_engineering">Disaster Recovery and Chaos Engineering</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch14.html#user_evaluation">User Evaluation</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch14.html#large_tests_and_the_developer_workflow">Large Tests and the Developer Workflow</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch14.html#authoring_large_tests">Authoring Large Tests</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch14.html#running_large_tests">Running Large Tests</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch14.html#owning_large_tests">Owning Large Tests</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch14.html#conclusion-id00018">Conclusion</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch14.html#tlsemicolondrs-id00118">TL;DRs</a>
+            <ol>
+</ol>
+      </li>
+</ol>
+      </li>
+  <li data-type="chapter">
+    <a href="ch15.html">Deprecation</a>
+            <ol>
+  <li data-type="sect1">
+    <a href="ch15.html#why_deprecatequestion_mark">Why Deprecate?</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch15.html#why_is_deprecation_so_hardquestion_mark">Why Is Deprecation So Hard?</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch15.html#deprecation_during_design">Deprecation During Design</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch15.html#types_of_deprecation">Types of Deprecation</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch15.html#advisory_deprecation">Advisory Deprecation</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch15.html#compulsory_deprecation">Compulsory Deprecation</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch15.html#deprecation_warnings">Deprecation Warnings</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch15.html#managing_the_deprecation_process">Managing the Deprecation Process</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch15.html#process_owners">Process Owners</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch15.html#milestones">Milestones</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch15.html#deprecation_tooling">Deprecation Tooling</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch15.html#conclusion-id00019">Conclusion</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch15.html#tlsemicolondrs-id00120">TL;DRs</a>
+            <ol>
+</ol>
+      </li>
+</ol>
+      </li>
+  <li data-type="part">
+    <a href="part4.html">Tools</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="chapter">
+    <a href="ch16.html">Version Control and Branch Management</a>
+            <ol>
+  <li data-type="sect1">
+    <a href="ch16.html#what_is_version_controlquestion_markone">What Is Version Control?</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch16.html#why_is_version_control_importantquestio">Why Is Version Control Important?</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch16.html#centralized_vcs_versus_distributed_vcs">Centralized VCS Versus Distributed VCS</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch16.html#source_of_truth">Source of Truth</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch16.html#version_control_versus_dependency_manag">Version Control Versus Dependency Management</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch16.html#branch_management">Branch Management</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch16.html#work_in_progress_is_akin_to_a_branch">Work in Progress Is Akin to a Branch</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch16.html#dev_branches">Dev Branches</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch16.html#release_branches">Release Branches</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch16.html#version_control_at_google">Version Control at Google</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch16.html#one_version">One Version</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch16.html#scenario_multiple_available_versions">Scenario: Multiple Available Versions</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch16.html#the_quotation_markone_versionquotation">The “One-Version” Rule</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch16.html#left_parenthesisnearlyright_parenthesis">(Nearly) No Long-Lived Branches</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch16.html#what_about_release_branchesquestion_mar">What About Release Branches?</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch16.html#monorepos">Monorepos</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch16.html#future_of_version_control">Future of Version Control</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch16.html#conclusion-id00020">Conclusion</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch16.html#tlsemicolondrs-id00122">TL;DRs</a>
+            <ol>
+</ol>
+      </li>
+</ol>
+      </li>
+  <li data-type="chapter">
+    <a href="ch17.html">Code Search</a>
+            <ol>
+  <li data-type="sect1">
+    <a href="ch17.html#the_code_search_u">The Code Search UI</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch17.html#how_do_googlers_use_code_searchquestion">How Do Googlers Use Code Search?</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch17.html#wherequestion_mark">Where?</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch17.html#whatquestion_mark">What?</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch17.html#howquestion_mark">How?</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch17.html#whyquestion_mark">Why?</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch17.html#who_and_whenquestion_mark">Who and When?</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch17.html#why_a_separate_web_toolquestion_mark">Why a Separate Web Tool?</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch17.html#scale">Scale</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch17.html#zero_setup_global_code_view">Zero Setup Global Code View</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch17.html#specialization">Specialization</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch17.html#integration_with_other_developer_tools">Integration with Other Developer Tools</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch17.html#api_exposure">API Exposure</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch17.html#impact_of_scale_on_design">Impact of Scale on Design</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch17.html#search_query_latency">Search Query Latency</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch17.html#index_latency">Index Latency</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch17.html#googleapostrophes_implementation">Google’s Implementation</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch17.html#search_index">Search Index</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch17.html#ranking">Ranking</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch17.html#selected_trade-offs">Selected Trade-Offs</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch17.html#completeness_repository_at_head">Completeness: Repository at Head</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch17.html#completeness_all_versus_most-relevant_r">Completeness: All Versus Most-Relevant Results</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch17.html#completeness_head_versus_branches_versu">Completeness: Head Versus Branches Versus All History Versus Workspaces</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch17.html#expressiveness_token_versus_substring_v">Expressiveness: Token Versus Substring Versus Regex</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch17.html#conclusion-id00021">Conclusion</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch17.html#tlsemicolondrs-id00123">TL;DRs</a>
+            <ol>
+</ol>
+      </li>
+</ol>
+      </li>
+  <li data-type="chapter">
+    <a href="ch18.html">Build Systems and Build Philosophy</a>
+            <ol>
+  <li data-type="sect1">
+    <a href="ch18.html#purpose_of_a_build_system">Purpose of a Build System</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch18.html#what_happens_without_a_build_systemques">What Happens Without a Build System?</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch18.html#but_all_i_need_is_a_compilerexclamation">But All I Need Is a Compiler!</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch18.html#shell_scripts_to_the_rescuequestion_mar">Shell Scripts to the Rescue?</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch18.html#modern_build_systems">Modern Build Systems</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch18.html#itapostrophes_all_about_dependencies">It’s All About Dependencies</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch18.html#task-based_build_systems">Task-Based Build Systems</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch18.html#artifact-based_build_systems">Artifact-Based Build Systems</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch18.html#distributed_builds">Distributed Builds</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch18.html#timecomma_scalecomma_trade-offs">Time, Scale, Trade-Offs</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch18.html#dealing_with_modules_and_dependencies">Dealing with Modules and Dependencies</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch18.html#using_fine-grained_modules_and_the_oneo">Using Fine-Grained Modules and the 1:1:1 Rule</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch18.html#minimizing_module_visibility">Minimizing Module Visibility</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch18.html#managing_dependencies">Managing Dependencies</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch18.html#conclusion-id00022">Conclusion</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch18.html#tlsemicolondrs-id00124">TL;DRs</a>
+            <ol>
+</ol>
+      </li>
+</ol>
+      </li>
+  <li data-type="chapter">
+    <a href="ch19.html">Critique: Google’s Code Review Tool</a>
+            <ol>
+  <li data-type="sect1">
+    <a href="ch19.html#code_review_tooling_principles">Code Review Tooling Principles</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch19.html#code_review_flow">Code Review Flow</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch19.html#notifications">Notifications</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch19.html#stage_one_creating_a_change">Stage 1: Create a Change</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch19.html#diffing">Diffing</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch19.html#analysis_results-id00001">Analysis Results</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch19.html#tight_tool_integration">Tight Tool Integration</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch19.html#stage_two_request_review">Stage 2: Request Review</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch19.html#stage_three_and_four_understanding_and">Stages 3 and 4: Understanding and Commenting on a Change</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch19.html#commenting">Commenting</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch19.html#understanding_the_state_of_a_change">Understanding the State of a Change</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch19.html#stage_five_change_approvals_left_parent">Stage 5: Change Approvals (Scoring a Change)</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch19.html#stage_six_commiting_a_change">Stage 6: Commiting a Change</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch19.html#after_commit_tracking_history">After Commit: Tracking History</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch19.html#conclusion-id00023">Conclusion</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch19.html#tlsemicolondrs-id00125">TL;DRs</a>
+            <ol>
+</ol>
+      </li>
+</ol>
+      </li>
+  <li data-type="chapter">
+    <a href="ch20.html">Static Analysis</a>
+            <ol>
+  <li data-type="sect1">
+    <a href="ch20.html#characteristics_of_effective_static_ana">Characteristics of Effective Static Analysis</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch20.html#scalability">Scalability</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch20.html#usability">Usability</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch20.html#key_lessons_in_making_static_analysis_w">Key Lessons in Making Static Analysis Work</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch20.html#focus_on_developer_happiness">Focus on Developer Happiness</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch20.html#make_static_analysis_a_part_of_the_core">Make Static Analysis a Part of the Core Developer Workflow</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch20.html#empower_users_to_contribute">Empower Users to Contribute</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch20.html#tricorder_googleapostrophes_static_anal">Tricorder: Google’s Static Analysis Platform</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch20.html#integrated_tools">Integrated Tools</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch20.html#integrated_feedback_channels">Integrated Feedback Channels</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch20.html#suggested_fixes">Suggested Fixes</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch20.html#per-project_customization">Per-Project Customization</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch20.html#presubmits">Presubmits</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch20.html#compiler_integration">Compiler Integration</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch20.html#analysis_while_editing_and_browsing_cod">Analysis While Editing and Browsing Code</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch20.html#conclusion-id00024">Conclusion</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch20.html#tlsemicolondrs-id00126">TL;DRs</a>
+            <ol>
+</ol>
+      </li>
+</ol>
+      </li>
+  <li data-type="chapter">
+    <a href="ch21.html">Dependency Management</a>
+            <ol>
+  <li data-type="sect1">
+    <a href="ch21.html#why_is_dependency_management_so_difficu">Why Is Dependency Management So Difficult?</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch21.html#conflicting_requirements_and_diamond_de">Conflicting Requirements and Diamond Dependencies</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch21.html#importing_dependencies">Importing Dependencies</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch21.html#compatibility_promises">Compatibility Promises</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch21.html#considerations_when_importing">Considerations When Importing</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch21.html#how_google_handles_importing_dependende">How Google Handles Importing Dependencies</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch21.html#dependency_managementcomma_in_theory">Dependency Management, In Theory</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch21.html#nothing_changes_left_parenthesisaka_the">Nothing Changes (aka The Static Dependency Model)</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch21.html#semantic_versioning">Semantic Versioning</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch21.html#bundled_distribution_models">Bundled Distribution Models</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch21.html#live_at_head">Live at Head</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch21.html#the_limitations_of_semver">The Limitations of SemVer</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch21.html#semver_might_overconstrain">SemVer Might Overconstrain</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch21.html#semver_might_overpromise">SemVer Might Overpromise</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch21.html#motivations-id00080">Motivations</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch21.html#minimum_version_selection">Minimum Version Selection</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch21.html#socomma_does_semver_workquestion_mark">So, Does SemVer Work?</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch21.html#dependency_management_with_infinite_res">Dependency Management with Infinite Resources</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch21.html#exporting_dependencies">Exporting Dependencies</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch21.html#conclusion-id00025">Conclusion</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch21.html#tlsemicolondrs-id00127">TL;DRs</a>
+            <ol>
+</ol>
+      </li>
+</ol>
+      </li>
+  <li data-type="chapter">
+    <a href="ch22.html">Large-Scale Changes</a>
+            <ol>
+  <li data-type="sect1">
+    <a href="ch22.html#what_is_a_large-scale_changequestion_ma">What Is a Large-Scale Change?</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch22.html#who_deals_with_lscsquestion_mark">Who Deals with LSCs?</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch22.html#barriers_to_atomic_changes">Barriers to Atomic Changes</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch22.html#technical_limitations">Technical Limitations</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch22.html#merge_conflicts">Merge Conflicts</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch22.html#no_haunted_graveyards">No Haunted Graveyards</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch22.html#heterogeneity">Heterogeneity</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch22.html#testing-id00096">Testing</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch22.html#code_review">Code Review</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch22.html#lsc_infrastructure">LSC Infrastructure</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch22.html#policies_and_culture">Policies and Culture</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch22.html#codebase_insight">Codebase Insight</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch22.html#change_management">Change Management</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch22.html#testing">Testing</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch22.html#language_support">Language Support</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch22.html#the_lsc_process">The LSC Process</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch22.html#authorization">Authorization</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch22.html#change_creation">Change Creation</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch22.html#sharding_and_submitting">Sharding and Submitting</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch22.html#cleanup">Cleanup</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch22.html#conclusion-id00026">Conclusion</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch22.html#tlsemicolondrs-id00128">TL;DRs</a>
+            <ol>
+</ol>
+      </li>
+</ol>
+      </li>
+  <li data-type="chapter">
+    <a href="ch23.html">Continuous Integration</a>
+            <ol>
+  <li data-type="sect1">
+    <a href="ch23.html#ci_concepts">CI Concepts</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch23.html#fast_feedback_loops">Fast Feedback Loops</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch23.html#automation">Automation</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch23.html#continuous_testing">Continuous Testing</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch23.html#ci_challenges">CI Challenges</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch23.html#hermetic_testing">Hermetic Testing</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch23.html#ci_at_google">CI at Google</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch23.html#ci_case_study_google_takeout">CI Case Study: Google Takeout</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch23.html#but_i_canapostrophet_afford_ci">But I Can’t Afford CI</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch23.html#conclusion-id00027">Conclusion</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch23.html#tlsemicolondrs-id00129">TL;DRs</a>
+            <ol>
+</ol>
+      </li>
+</ol>
+      </li>
+  <li data-type="chapter">
+    <a href="ch24.html">Continuous Delivery</a>
+            <ol>
+  <li data-type="sect1">
+    <a href="ch24.html#idioms_of_continuous_delivery_at_google">Idioms of Continuous Delivery at Google</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch24.html#velocity_is_a_team_sport_how_to_break_u">Velocity Is a Team Sport: How to Break Up a Deployment into Manageable Pieces</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch24.html#evaluating_changes_in_isolation_flag-gu">Evaluating Changes in Isolation: Flag-Guarding Features</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch24.html#striving_for_agility_setting_up_a_relea">Striving for Agility: Setting Up a Release Train</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch24.html#no_binary_is_perfect">No Binary Is Perfect</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch24.html#meet_your_release_deadline">Meet Your Release Deadline</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch24.html#quality_and_user-focus_ship_only_what_g">Quality and User-Focus: Ship Only What Gets Used</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch24.html#shifting_left_making_data-driven_decisi">Shifting Left: Making Data-Driven Decisions Earlier</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch24.html#changing_team_culture_building_discipli">Changing Team Culture: Building Discipline into Deployment</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch24.html#conclusion-id00029">Conclusion</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch24.html#tlsemicolondrs-id00130">TL;DRs</a>
+            <ol>
+</ol>
+      </li>
+</ol>
+      </li>
+  <li data-type="chapter">
+    <a href="ch25.html">Compute as a Service</a>
+            <ol>
+  <li data-type="sect1">
+    <a href="ch25.html#taming_the_compute_environment">Taming the Compute Environment</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch25.html#automation_of_toil">Automation of Toil</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch25.html#containerization_and_multitenancy">Containerization and Multitenancy</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch25.html#summary">Summary</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch25.html#writing_software_for_managed_compute">Writing Software for Managed Compute</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch25.html#architecting_for_failure">Architecting for Failure</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch25.html#batch_versus_serving">Batch Versus Serving</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch25.html#managing_statetwosixthree">Managing State</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch25.html#connecting_to_a_service">Connecting to a Service</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch25.html#one-off_code">One-Off Code</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch25.html#caas_over_time_and_scale">CaaS Over Time and Scale</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch25.html#containers_as_an_abstraction">Containers as an Abstraction</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch25.html#one_service_to_rule_them_all">One Service to Rule Them All</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch25.html#submitted_configuration">Submitted Configuration</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch25.html#choosing_a_compute_service">Choosing a Compute Service</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="ch25.html#centralization_versus_customization">Centralization Versus Customization</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch25.html#level_of_abstraction_serverless">Level of Abstraction: Serverless</a>
+  </li>
+  <li data-type="sect2">
+    <a href="ch25.html#public_versus_private">Public Versus Private</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch25.html#conclusion-id00030">Conclusion</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="ch25.html#tlsemicolondrs-id00131">TL;DRs</a>
+            <ol>
+</ol>
+      </li>
+</ol>
+      </li>
+  <li data-type="part">
+    <a href="part5.html">Conclusion</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="afterword">
+    <a href="ch26.html">Afterword</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="index">
+    <a href="ix.html">Index</a>
+            <ol>
+</ol>
+      </li>
+</ol>
+</nav>
+
+  </body>
+</html>

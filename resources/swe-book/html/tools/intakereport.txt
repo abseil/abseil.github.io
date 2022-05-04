@@ -1,0 +1,68 @@
+Title: Software Engineering at Google
+ISBN: 9781492082798
+JIRA #: DCPSPROD-3752
+
+
+Stylesheet: animal_theme_sass
+Toolchain: Atlas 2
+
+Atlas URL: https://atlas.oreilly.com/oreillymedia/software-engineering-at-google/
+
+Incoming format: Word
+Outgoing format: HTMLBook
+
+Preliminary pagecount: 583
+  
+Is this project in Early Release? YES
+
+Resources
+=========
+
+** Figs: Illustrations has posted the figs. 
+   41 total. (0 are informal; 0 are inline.)
+
+** Intake Report:
+   (Git repo) tools/intakereport.txt
+
+** MS Snapshot:
+    To view the submitted files, you'll need to checkout the git tag named 'post_conversion_to_htmlbook' by running the following command in your checkout:
+    
+    $ git checkout post_conversion_to_htmlbook
+    
+    This will temporarily switch the files in your repo to the state they were in when the post_conversion_to_htmlbook tag was created. 
+    To switch the files back to the current state, run:
+    
+    $ git checkout master
+  
+  
+Notes from Tools:
+=================
+
+** PROD: Add any authors to project that need to be added.
+** Syntax highlighting: applied to 0 out of 71 code listings.
+
+** This was converted by CodeMantra
+** The files in the repo before conversion were moved to a new subdirectory ERFiles/
+** There were a few XREFs where it was unclear what was supposed to be linked. I left the XREF() marker in the text for these. Note that in the future the copyeditor should avoid included production instructions in the text as it will be converted literally.
+** There were footnotes on the headers "What Is Version Control?" in Chapter 16 and "Managing State" in Chapter 25. These cause problems because they get propagated to the TOC. As we discussed on Slack, I changed them into Note admonitions.
+
+** Please let Tools know ASAP if there are any other global problems for which we can help automate a fix.
+
+
+Notes at arrival in production:
+==================
+
+Notes for Production:
+* Tom Manshreck is the main author and will likely be the main point of contact for the CE and QC review process.
+* Please have the copyeditor pay attention to figure callouts (make sure they are included and make sense), and please have them check for any references to a chapter on Frameworks. This chapter was deleted part of the way through Production.
+* The authors asked for redraws but are open to keeping the original line art. However, I think we should redraw as specified on the fig log. Watch for notes about cropping out captions/stacking images.
+* There are bylines at the beginning of each chapter. 
+* Reference the TOC document to see the order of the chapters; will need to rename them to be more clear.
+
+==================
+
+Please let me know about any other issues.
+
+Thanks,
+-Nick
+

@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Software Engineering at Google</title>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> </script>
+    <link rel="stylesheet" type="text/css" href="theme/html/html.css">
+  </head>
+  <body data-type="book">
+    <section xmlns="http://www.w3.org/1999/xhtml" data-type="chapter" id="test_doubles">
+<h1>Test Doubles</h1>
+
+<p class="byline">Written by Andrew Trenk and Dillon Bly</p>
+
+<p class="byline">Edited by Tom Manshreck</p>
+
+<p>Unit tests are a critical tool for keeping developers productive and reducing defects in code. <a contenteditable="false" data-primary="test doubles" data-type="indexterm" id="ix_tstdbl">&nbsp;</a>Although they can be easy to write for simple code, writing them becomes difficult as code becomes more complex.</p>
+
+<p>For example, imagine trying to write a test for a function that sends a request to an external server and then stores the response in a database. Writing a handful of tests might be doable with some effort. But if you need to write hundreds or thousands of tests like this, your test suite will likely take hours to run, and could become flaky due to issues like random network failures or tests overwriting one another’s data.</p>
+
+<p>Test doubles come in handy in such cases. A <a href="https://oreil.ly/vbpiU"><em>test double</em></a> is an object or function that can stand in for a real implementation in a test, similar to how a stunt double can stand in for an actor in a movie. <a contenteditable="false" data-primary="mocking" data-seealso="test doubles" data-type="indexterm" id="id-z2CpsgSX">&nbsp;</a>The use of test doubles is often referred to as <em>mocking</em>, but we avoid that term in this chapter because, as we’ll see, that term is also used to refer to more specific aspects of test doubles.</p>
+
+<p>Perhaps the most obvious type of test double is a simpler implementation of an object that behaves similarly to the real implementation, such as an in-memory database. Other types of test doubles can make it possible to validate specific details of your system, such as by making it easy to trigger a rare error condition, or ensuring a heavyweight function is called without actually executing the function’s <span class="keep-together">implementation.</span></p>
+
+<p>The previous two chapters introduced the concept of <em>small tests</em> and discussed why they should comprise the majority of tests in a test suite. However, production code often doesn’t fit within the constraints of small tests due to communication across multiple processes or machines. Test doubles can be much more lightweight than real implementations, allowing you to write many small tests that execute quickly and are not flaky.</p>
+
+<section data-type="sect1" id="the_impact_of_test_doubles_on_software">
+<h1>The Impact of Test Doubles on Software Development</h1>
+
+<p>The use of test doubles introduces a few complications to software development that require some trade-offs to be made. <a contenteditable="false" data-primary="test doubles" data-secondary="impact on software development" data-type="indexterm" id="id-1GC5HksXh5">&nbsp;</a>The concepts introduced here are discussed in more depth throughout this chapter:</p>
+
+<dl>
+	<dt>Testability</dt>
+	<dd>To use test doubles, a codebase needs to be designed to be <em>testable</em>—it should be possible for tests to swap out real implementations with test doubles. For example, code that calls a database needs to be flexible enough to be able to use a test double in place of a real database. If the codebase isn’t designed with testing in mind and you later decide that tests are needed, it can require a major commitment to refactor the code to support the use of test doubles.</dd>
+	<dt>Applicability</dt>
+	<dd>Although proper application of test doubles can provide a powerful boost to engineering velocity, their improper use can lead to tests that are brittle, complex, and less effective. These downsides are magnified when test doubles are used improperly across a large codebase, potentially resulting in major losses in productivity for engineers. In many cases, test doubles are not suitable and engineers should prefer to use real implementations instead.</dd>
+	<dt>Fidelity</dt>
+	<dd><em>Fidelity</em> refers to how closely the behavior of a test double resembles the behavior of the real implementation that it’s replacing. <a contenteditable="false" data-primary="fidelity" data-secondary="of test doubles" data-type="indexterm" id="id-pMCZs0SdfkhX">&nbsp;</a>If the behavior of a test double significantly differs from the real implementation, tests that use the test double likely wouldn’t provide much value—for example, imagine trying to write a test with a test double for a database that ignores any data added to the database and always returns empty results. But perfect fidelity might not be feasible; test doubles often need to be vastly simpler than the real implementation in order to be suitable for use in tests. In many situations, it is appropriate to use a test double even without perfect fidelity. Unit tests that use test doubles often need to be supplemented by larger-scope tests that exercise the real implementation.</dd>
+</dl>
+</section>
+
+<section data-type="sect1" id="test_doubles_at_google">
+<h1>Test Doubles at Google</h1>
+
+<p>At Google, we’ve seen countless examples of the benefits to productivity and software quality<a contenteditable="false" data-primary="test doubles" data-secondary="at Google" data-type="indexterm" id="id-BjCJHos1U2">&nbsp;</a> that test doubles can bring to a codebase, as well as the negative impact they can cause when used improperly. The practices we follow at Google have evolved over time based on these experiences. Historically, we had few guidelines on how to <span class="keep-together">effectively</span> use test doubles, but best practices evolved as we saw common patterns and antipatterns arise in many teams’ codebases.</p>
+
+<p>One lesson we learned the hard way is the danger<a contenteditable="false" data-primary="mocking frameworks" data-secondary="over reliance on" data-type="indexterm" id="id-a1C5HzfbUo">&nbsp;</a> of overusing mocking frameworks, which allow you to easily create test doubles (we will discuss mocking frameworks in more detail later in this chapter). When mocking frameworks first came into use at Google, they seemed like a hammer fit for every nail—they made it very easy to write highly focused tests against isolated pieces of code without having to worry about how to construct the dependencies of that code. It wasn’t until several years and countless tests later that we began to realize the cost of such tests: though these tests were easy to write, we suffered greatly given that they required constant effort to maintain while rarely finding bugs. The pendulum at Google has now begun swinging in the other direction, with many engineers avoiding mocking frameworks in favor of writing more realistic tests.</p>
+
+<p>Even though the practices discussed in this chapter are generally agreed upon at Google, the actual application of them varies widely from team to team. This variance stems from engineers having inconsistent knowledge of these practices, inertia in an existing codebase that doesn’t conform to these practices, or teams doing what is easiest for the short term without thinking about the long-term implications.</p>
+</section>
+
+<section data-type="sect1" id="basic_concepts">
+<h1>Basic Concepts</h1>
+
+<p>Before we dive into how to effectively use test doubles, let’s cover some of the basic concepts related to them. These build the foundation for best practices that we will discuss later in this chapter.<a contenteditable="false" data-primary="test doubles" data-secondary="example" data-type="indexterm" id="id-a1C5Hxs1Co">&nbsp;</a></p>
+
+<section data-type="sect2" id="an_example_test_double">
+<h2>An Example Test Double</h2>
+
+<p>Imagine an ecommerce site that needs to process credit card payments. At its core, it might have something like the code shown in <a data-type="xref" href="#example_onethree-onedot_a_credit_card_s">A credit card service</a>.</p>
+
+<div data-type="example" id="example_onethree-onedot_a_credit_card_s">
+<h5><span class="label">Example 13-1. </span>A credit card service</h5>
+
+<pre data-code-language="java" data-type="programlisting">
+class PaymentProcessor {
+  private <strong>CreditCardService creditCardService</strong>;
+  ...
+  boolean <strong>makePayment</strong>(CreditCard creditCard, Money amount) {
+    if (creditCard.isExpired()) { return false; }
+    boolean success =<strong>
+        creditCardService</strong>.chargeCreditCard(creditCard, amount);   
+    return success;
+  }
+}</pre>
+</div>
+
+<p>It would be infeasible to use a real credit card service in a test (imagine all the transaction fees from running the test!), but a test double could be used in its place to <em>simulate</em> the behavior of the real system. The code in <a data-type="xref" href="#example_onethree-twodot_a_trivial_test">A trivial test double</a> shows an extremely simple test double.</p>
+
+<div data-type="example" id="example_onethree-twodot_a_trivial_test">
+<h5><span class="label">Example 13-2. </span>A trivial test double</h5>
+
+<pre data-code-language="java" data-type="programlisting">
+class TestDoubleCreditCardService implements CreditCardService {
+ @Override
+ public boolean chargeCreditCard(CreditCard creditCard, Money amount) {
+   return true;
+ }
+}</pre>
+</div>
+
+<p>Although this test double doesn’t look very useful, using it in a test still allows us to test some of the logic in the <code>makePayment()</code> method. For example, in <a data-type="xref" href="#example_onethree-threedot_using_the_tes">Using the test double</a>, we can validate that the method behaves properly when the credit card is expired because the code path that the test exercises doesn’t rely on the behavior of the credit card service.</p>
+
+<div data-type="example" id="example_onethree-threedot_using_the_tes">
+<h5><span class="label">Example 13-3. </span>Using the test double</h5>
+
+<pre data-code-language="java" data-type="programlisting">
+@Test public void cardIsExpired_returnFalse() {
+  boolean success = <strong>paymentProcessor</strong>.makePayment(EXPIRED_CARD, AMOUNT);
+  assertThat(success).isFalse();
+}</pre>
+</div>
+
+<p>The following sections in this chapter will discuss how to make use of test doubles in more complex situations than this one.</p>
+</section>
+
+<section data-type="sect2" id="seams">
+<h2>Seams</h2>
+
+<p>Code is said to be <a href="https://oreil.ly/yssV2"><em>testable</em></a> if it is written in a way that makes it possible to write unit tests for<a contenteditable="false" data-primary="testability" data-secondary="testable code" data-type="indexterm" id="id-AjCRs9sOIACy">&nbsp;</a> the code.<a contenteditable="false" data-primary="seams" data-type="indexterm" id="id-pMCxfQsYIXCX">&nbsp;</a><a contenteditable="false" data-primary="test doubles" data-secondary="seams" data-type="indexterm" id="id-0OCVI9sdIXCj">&nbsp;</a> A <a href="https://oreil.ly/pFSFf"><em>seam</em></a> is a way to make code testable by allowing for the use of test doubles—it makes it possible to use different dependencies for the system under test rather than the dependencies used in a production environment.</p>
+
+<p><a href="https://oreil.ly/og9p9"><em>Dependency injection</em></a> is a common technique for introducing seams.<a contenteditable="false" data-primary="dependency injection" data-secondary="introducing seams with" data-type="indexterm" id="id-pMCZskfYIXCX">&nbsp;</a> In short, when a class utilizes dependency injection, any classes it needs to use (i.e., the class’s <em>dependencies</em>) are passed to it rather than instantiated directly, making it possible for these dependencies to be substituted in tests.</p>
+
+<p><a data-type="xref" href="#example_onethree-fourdot_dependency_inj">Dependency injection</a> shows an example of dependency injection. Rather than the constructor creating an instance of <code>CreditCardService</code>, it accepts an instance as a parameter.</p>
+
+<div data-type="example" id="example_onethree-fourdot_dependency_inj">
+<h5><span class="label">Example 13-4. </span>Dependency injection</h5>
+
+<pre data-code-language="java" data-type="programlisting">
+class PaymentProcessor {
+  private CreditCardService creditCardService;
+
+  PaymentProcessor(<strong>CreditCardService creditCardService</strong>) {
+    this.creditCardService = creditCardService;
+  }
+  ...
+}</pre>
+</div>
+
+<p>The code that calls this constructor is responsible for creating an appropriate <code>CreditCardService</code> instance. Whereas the production code can pass in an implementation of <code>CreditCardService</code> that communicates with an external server, the test can pass in a test double, as demonstrated in <a data-type="xref" href="#example_onethree-fivedot_passing_in_a_t">Passing in a test double</a>.</p>
+
+<div data-type="example" id="example_onethree-fivedot_passing_in_a_t">
+<h5><span class="label">Example 13-5. </span>Passing in a test double</h5>
+
+<pre data-code-language="java" data-type="programlisting">
+PaymentProcessor paymentProcessor =
+    new PaymentProcessor(new <strong>TestDoubleCreditCardService</strong>());</pre>
+</div>
+
+<p>To reduce boilerplate associated with manually specifying constructors, automated dependency injection frameworks can be used for constructing object graphs automatically. <a contenteditable="false" data-primary="dependency injection" data-secondary="frameworks for" data-type="indexterm" id="id-wbCoHEtwIjC9">&nbsp;</a>At Google, <a href="https://github.com/google/guice">Guice</a> and <a href="https://google.github.io/dagger">Dagger</a> are automated dependency injection frameworks that are commonly used for Java code.</p>
+
+<p>With dynamically typed languages such as Python or JavaScript, it is possible to dynamically replace individual functions or object methods. Dependency injection is less important in these languages because this capability makes it possible to use real implementations of dependencies in tests while only overriding functions or methods of the dependency that are unsuitable for tests.</p>
+
+<p>Writing testable code requires an upfront investment. <a contenteditable="false" data-primary="testability" data-secondary="writing testable code early" data-type="indexterm" id="id-57C3HJUQIaC1">&nbsp;</a>It is especially critical early in the lifetime of a codebase because the later testability is taken into account, the more difficult it is to apply to a codebase. Code written without testing in mind typically needs to be refactored or rewritten before you can add appropriate tests.</p>
+</section>
+
+<section data-type="sect2" id="mocking_frameworks">
+<h2>Mocking Frameworks</h2>
+
+<p>A <em>mocking framework</em> is a <a contenteditable="false" data-primary="mocking frameworks" data-secondary="about" data-type="indexterm" id="id-pMCZsQsGcXCX">&nbsp;</a>software <a contenteditable="false" data-primary="test doubles" data-secondary="mocking frameworks" data-type="indexterm" id="id-0OC7f9socXCj">&nbsp;</a>library that makes it easier to create test doubles within tests; it allows you to replace an object with a <em>mock</em>, which is a test double whose behavior is specified inline in a test. The use of mocking frameworks reduces boilerplate because you don’t need to define a new class each time you need a test <span class="keep-together">double.</span></p>
+
+<p><a data-type="xref" href="#example_onethree-sixdot_mocking_framewo">Mocking frameworks</a> demonstrates the <a contenteditable="false" data-primary="Mockito" data-secondary="example of use" data-type="indexterm" id="id-0OCbsWfocXCj">&nbsp;</a>use of <a href="https://site.mockito.org">Mockito</a>, a mocking framework for Java. Mockito creates a test double for <code>CreditCardService</code> and instructs it to return a specific value.</p>
+
+<div data-type="example" id="example_onethree-sixdot_mocking_framewo">
+<h5><span class="label">Example 13-6. </span>Mocking frameworks</h5>
+
+<pre data-code-language="java" data-type="programlisting">
+class PaymentProcessorTest {
+  ...
+  PaymentProcessor paymentProcessor;
+
+  // Create a test double of CreditCardService with just one line of code.
+  <strong>@Mock CreditCardService mockCreditCardService</strong>;
+  @Before public void setUp() {
+    // Pass in the test double to the system under test.
+    paymentProcessor = new PaymentProcessor(<strong>mockCreditCardService</strong>);
+  }
+  @Test public void chargeCreditCardFails_returnFalse() {
+    // Give some behavior to the test double: it will return false
+    // anytime the chargeCreditCard() method is called. The usage of
+    // “any()” for the method’s arguments tells the test double to
+    // return false regardless of which arguments are passed.
+    when(<strong>mockCreditCardService.chargeCreditCard(</strong>any(), any())
+       .thenReturn(<strong>false</strong>);
+    boolean success = paymentProcessor.makePayment(CREDIT_CARD, AMOUNT);
+    assertThat(success).isFalse();
+  }  
+}</pre>
+</div>
+
+<p>Mocking frameworks<a contenteditable="false" data-primary="C++" data-secondary="googlemock mocking framework" data-type="indexterm" id="id-LjC2HWc5c6Cw">&nbsp;</a> exist for most <a contenteditable="false" data-primary="mocking frameworks" data-secondary="for major programming languages" data-type="indexterm" id="id-JjCXsacZczCZ">&nbsp;</a>major programming languages.<a contenteditable="false" data-primary="Java" data-secondary="Mockito mocking framework for" data-type="indexterm" id="id-wbCyfDc2cjC9">&nbsp;</a> At Google, we use Mockito for Java, <a href="https://github.com/google/googletest">the googlemock component of Googletest</a> for C++, and <a href="https://oreil.ly/clzvH">unittest.mock</a> for Python.<a contenteditable="false" data-primary="Python" data-secondary="unittest.mock framework for" data-type="indexterm" id="id-yoCDSpcWc2CN">&nbsp;</a></p>
+
+<p>Although mocking frameworks facilitate easier usage of test doubles, they come with some significant caveats given that their overuse will often make a codebase more difficult to maintain. We cover some of these problems later in this chapter.</p>
+</section>
+</section>
+
+<section data-type="sect1" id="techniques_for_using_test_doubles">
+<h1>Techniques for Using Test Doubles</h1>
+
+<p>There are three primary techniques for using test doubles.<a contenteditable="false" data-primary="test doubles" data-secondary="techniques for using" data-type="indexterm" id="ix_tstdbluse">&nbsp;</a> This section presents a brief introduction to these techniques to give you a quick overview of what they are and how they differ. Later sections in this chapter go into more details on how to effectively apply them.</p>
+
+<p>An engineer who is aware of the distinctions between these techniques is more likely to know the appropriate technique to use when faced with the need to use a test double.</p>
+
+<section data-type="sect2" id="faking-id00042">
+<h2>Faking</h2>
+
+<p>A <a href="https://oreil.ly/rymnI"><em>fake</em></a> is a lightweight implementation of an API that behaves similar <a contenteditable="false" data-primary="faking" data-type="indexterm" id="id-pMCZsQsYIvuX">&nbsp;</a>to the real implementation but isn’t suitable <a contenteditable="false" data-primary="test doubles" data-secondary="techniques for using" data-tertiary="faking" data-type="indexterm" id="id-0OC7f9sdI6uj">&nbsp;</a>for production; for example, an in-memory database. <a data-type="xref" href="#example_onethree-sevendot_a_simple_fake">A simple fake</a> presents an example of faking.</p>
+
+<div data-type="example" id="example_onethree-sevendot_a_simple_fake">
+<h5><span class="label">Example 13-7. </span>A simple fake</h5>
+
+<pre data-code-language="java" data-type="programlisting">
+// Creating the fake is fast and easy.
+AuthorizationService <strong>fakeAuthorizationService</strong> =
+    new FakeAuthorizationService();
+AccessManager accessManager = new AccessManager(<strong>fakeAuthorizationService</strong>):
+
+// Unknown user IDs shouldn’t have access.
+assertFalse(accessManager.userHasAccess(USER_ID));
+
+// The user ID should have access after it is added to
+// the authorization service.
+<strong>fakeAuthorizationService</strong>.addAuthorizedUser(new User(USER_ID));
+assertThat(accessManager.userHasAccess(USER_ID)).isTrue();</pre>
+</div>
+
+<p>Using a fake is often the ideal technique when you need to use a test double, but a fake might not exist for an object you need to use in a test, and writing one can be challenging because you need to ensure that it has similar behavior to the real implementation, now and in the future.</p>
+</section>
+
+<section data-type="sect2" id="stubbing-id00089">
+<h2>Stubbing</h2>
+
+<p><a href="https://oreil.ly/gmShS"><em>Stubbing</em></a> is the process of giving behavior to a function that otherwise has no behavior on its own—you specify to the function exactly what values to return (that is, you <em>stub</em> the return values).<a contenteditable="false" data-primary="test doubles" data-secondary="techniques for using" data-tertiary="stubbing" data-type="indexterm" id="id-LjCJfAs5c9uw">&nbsp;</a><a contenteditable="false" data-primary="stubbing" data-type="indexterm" id="id-JjC4I1sZcVuZ">&nbsp;</a></p>
+
+<p><a data-type="xref" href="#example_onethree-eightdot_stubbing">Stubbing</a> illustrates stubbing. <a contenteditable="false" data-primary="Mockito" data-secondary="stubbing example" data-type="indexterm" id="id-LjCYsVf5c9uw">&nbsp;</a>The <code>when(...).thenReturn(...)</code> method calls from the Mockito mocking framework specify the behavior of the <code>lookupUser()</code> method.</p>
+
+<div data-type="example" id="example_onethree-eightdot_stubbing">
+<h5><span class="label">Example 13-8. </span>Stubbing</h5>
+
+<pre data-code-language="java" data-type="programlisting">
+// Pass in a test double that was created by a mocking framework.
+AccessManager accessManager = new AccessManager(<strong>mockAuthorizationService</strong>):
+
+// The user ID shouldn’t have access if null is returned.
+when(<strong>mockAuthorizationService</strong>.lookupUser(USER_ID)).thenReturn(null);
+assertThat(accessManager.userHasAccess(USER_ID)).isFalse();
+
+// The user ID should have access if a non-null value is returned.
+when(<strong>mockAuthorizationService</strong>.lookupUser(USER_ID)).thenReturn(USER);
+assertThat(accessManager.userHasAccess(USER_ID)).isTrue();</pre>
+</div>
+
+<p>Stubbing is typically done <a contenteditable="false" data-primary="mocking frameworks" data-secondary="stubbing via" data-type="indexterm" id="id-JjC1HacZcVuZ">&nbsp;</a>through mocking frameworks to reduce boilerplate that would otherwise be needed for manually creating new classes that hardcode return values.</p>
+
+<p>Although stubbing can be a quick and simple technique to apply, it has limitations, which we’ll discuss later in this chapter.</p>
+</section>
+
+<section data-type="sect2" id="interaction_testing">
+<h2>Interaction Testing</h2>
+
+<p><a href="https://oreil.ly/zGfFn"><em>Interaction testing</em></a> is a way to validate <em>how</em> a function is called without actually calling the implementation of the function. <a contenteditable="false" data-primary="test doubles" data-secondary="techniques for using" data-tertiary="interaction testing" data-type="indexterm" id="id-JjCwf1sYSVuZ">&nbsp;</a><a contenteditable="false" data-primary="interaction testing" data-secondary="using test doubles" data-type="indexterm" id="id-wbCxIqs5Squ9">&nbsp;</a>A test should fail if a function isn’t called the correct way—for example, if the function isn’t called at all, it’s called too many times, or it’s called with the wrong arguments.</p>
+
+<p><a data-type="xref" href="#example_onethree-ninedot_interaction_te">Interaction testing</a> presents an instance of interaction testing. The <code>verify(...)</code> method from the Mockito mocking framework is used to validate that <code>lookupUser()</code> is called as expected.</p>
+
+<div data-type="example" id="example_onethree-ninedot_interaction_te">
+<h5><span class="label">Example 13-9. </span>Interaction testing</h5>
+
+<pre data-code-language="java" data-type="programlisting">
+// Pass in a test double that was created by a mocking framework.
+AccessManager accessManager = new AccessManager(<strong>mockAuthorizationService</strong>);
+accessManager.userHasAccess(USER_ID);
+
+// The test will fail if accessManager.userHasAccess(USER_ID) didn’t call
+// mockAuthorizationService.lookupUser(USER_ID).
+verify(<strong>mockAuthorizationService</strong>).lookupUser(USER_ID);</pre>
+</div>
+
+<p>Similar to stubbing, interaction testing is typically done through mocking frameworks.<a contenteditable="false" data-primary="mocking frameworks" data-secondary="interaction testing done via" data-type="indexterm" id="id-wbCoHDc5Squ9">&nbsp;</a> This reduces boilerplate compared to manually creating new classes that contain code to keep track of how often a function is called and which arguments were passed in.</p>
+
+<p>Interaction testing is sometimes called <a href="https://oreil.ly/IfMoR"><em>mocking</em></a>. We avoid this terminology in this chapter because it can be confused with mocking frameworks, which can be used for stubbing as well as for interaction testing.<a contenteditable="false" data-primary="mocking" data-secondary="interaction testing and" data-type="indexterm" id="id-57CmswSDSYu1">&nbsp;</a></p>
+
+<p>As discussed later in this chapter, interaction testing is useful in certain situations but should be avoided when possible because overuse can easily result in brittle tests.<a contenteditable="false" data-primary="test doubles" data-secondary="techniques for using" data-startref="ix_tstdbluse" data-type="indexterm" id="id-57C3HmTDSYu1">&nbsp;</a></p>
+</section>
+</section>
+
+<section data-type="sect1" id="real_implementations">
+<h1>Real Implementations</h1>
+
+<p>Although test doubles can be <a contenteditable="false" data-primary="test doubles" data-secondary="using real implementations instead of" data-type="indexterm" id="ix_tstdblrl">&nbsp;</a>invaluable testing tools, our first choice for tests is to use the <a contenteditable="false" data-primary="real implementations, using instead of test doubles" data-type="indexterm" id="ix_realimp">&nbsp;</a>real implementations of the system under test’s dependencies; that is, the same implementations that are used in production code. Tests have higher fidelity when they execute code as it will be executed in production, and using real implementations helps accomplish this.</p>
+
+<p>At Google, the preference for real implementations developed over time as we saw that overuse of mocking frameworks had a tendency to pollute tests with repetitive code that got out of sync with the real implementation and made refactoring difficult. We’ll look at this topic in more detail later in this chapter.</p>
+
+<p>Preferring real implementations <a contenteditable="false" data-primary="classical testing" data-type="indexterm" id="id-AjCQH3IZFN">&nbsp;</a>in tests is known as <a href="https://oreil.ly/OWw7h"><em>classical testing</em></a>. There is also a style of testing known as <em>mockist testing</em>, in which the preference is to use mocking frameworks instead of real implementations. <a contenteditable="false" data-primary="mockist testing" data-type="indexterm" id="id-LjCLIYI8FJ">&nbsp;</a>Even though some people in the software industry practice mockist testing (including the <a href="https://oreil.ly/_QWy7">creators of the first mocking frameworks</a>), at Google, we have found that this style of testing is difficult to scale. It requires engineers to follow <a href="http://jmock.org/oopsla2004.pdf">strict guidelines when designing the system under test</a>, and the default behavior of most engineers at Google has been to write code in a way that is more suitable for the classical testing style.</p>
+
+<section data-type="sect2" id="prefer_realism_over_isolation">
+<h2>Prefer Realism Over Isolation</h2>
+
+<p>Using real implementations for dependencies makes the system under test more realistic<a contenteditable="false" data-primary="real implementations, using instead of test doubles" data-secondary="preferring realism over isolation" data-type="indexterm" id="id-0OCnH9soc0Fj">&nbsp;</a> given that<a contenteditable="false" data-primary="test doubles" data-secondary="using real implementations instead of" data-tertiary="preferring realism over isolation" data-type="indexterm" id="id-LjCYsAs5c1Fw">&nbsp;</a> all code in these real implementations will be executed in the test. In contrast, a test that utilizes test doubles isolates the system under test from its dependencies so that the test does not execute code in the dependencies of the system under test.</p>
+
+<p>We prefer realistic tests because they give more confidence that the system under test is working properly. If unit tests rely too much on test doubles, an engineer might need to run integration tests or manually verify that their feature is working as expected in order to gain this same level of confidence. Carrying out these extra tasks can slow down development and can even allow bugs to slip through if engineers skip these tasks entirely when they are too time consuming to carry out compared to running unit tests.</p>
+
+<p>Replacing all dependencies of a class with test doubles<a contenteditable="false" data-primary="dependencies" data-secondary="replacing all in a class with test doubles" data-type="indexterm" id="id-JjC1HoIZcoFZ">&nbsp;</a> arbitrarily isolates the system under test to the implementation that the author happens to put directly into the class and excludes implementation that happens to be in different classes. However, a good test should be independent of implementation—it should be written in terms of the API being tested rather than in terms of how the implementation is structured.</p>
+
+<p>Using real implementations can cause your test to fail if there is a bug in the real implementation. This is good! You <em>want</em> your tests to fail in such cases because it indicates that your code won’t work properly in production. <a contenteditable="false" data-primary="failures" data-secondary="bug in real implementation causing cascade of test failures" data-type="indexterm" id="id-kJC0spcNcAFx">&nbsp;</a><a contenteditable="false" data-primary="bugs" data-secondary="in real implementations causing cascade of test failures" data-type="indexterm" id="id-57CWfdcZcOF1">&nbsp;</a>Sometimes, a bug in a real implementation can cause a cascade of test failures because other tests that use the real implementation might fail, too. But with good developer tools, such as a <span class="keep-together">Continuous</span> Integration (CI) system, it is usually easy to track down the change that caused the failure.</p>
+
+<aside data-type="sidebar" id="commercial_atdonotmock">
+<h5>Case Study: @DoNotMock</h5>
+
+<p>At Google, we’ve seen enough tests that over-rely on mocking frameworks to motivate<a contenteditable="false" data-primary="@DoNotMock annotation" data-type="indexterm" id="id-57C3H0sDS4cWFM">&nbsp;</a> the creation of the <code>@DoNotMock</code> annotation in Java, which is available as part of the <a href="https://github.com/google/error-prone">ErrorProne</a> static analysis tool.<a contenteditable="false" data-primary="Error Prone tool (Java)" data-secondary="@DoNotMock annotation" data-type="indexterm" id="id-YjCVIVsmSqcdFw">&nbsp;</a> This annotation is a way for <a contenteditable="false" data-primary="APIs" data-secondary="declaring a type should not be mocked" data-type="indexterm" id="id-EjCNc0sdSxcdFk">&nbsp;</a>API owners to declare, "this type should not be mocked because better alternatives exist.”</p>
+
+<p>If an engineer attempts to use a mocking framework to create an instance of a class or interface that has been annotated as <code>@DoNotMock</code>, as demonstrated in <a data-type="xref" href="#example_onethree-onezerodot_the_commerc">The @DoNotMock annotation</a>, they will see an error directing them to use a more suitable test strategy, such as a real implementation or a fake. This annotation is most commonly used for value objects that are simple enough to use as-is, as well as for APIs that have well-engineered fakes available.</p>
+
+<div data-type="example" id="example_onethree-onezerodot_the_commerc">
+<h5><span class="label">Example 13-10. </span>The @DoNotMock annotation</h5>
+
+<pre data-code-language="java" data-type="programlisting">
+@DoNotMock("Use SimpleQuery.create() instead of mocking.")
+public abstract class Query {
+  public abstract String getQueryValue();
+}</pre>
+</div>
+
+<p>Why would an API owner care? In short, it severely constrains the API owner’s ability to make changes to their implementation over time. As we’ll explore later in the chapter, every time a mocking framework is used for stubbing or interaction testing, it duplicates behavior provided by the API.</p>
+
+<p>When the API owner wants to change their API, they might find that it has been mocked thousands or even tens of thousands of times throughout Google’s codebase! These test doubles are very likely to exhibit behavior that violates the API contract of the type being mocked—for instance, returning null for a method that can never return null. Had the tests used the real implementation or a fake, the API owner could make changes to their implementation without first fixing thousands of flawed tests.</p>
+</aside>
+</section>
+
+<section data-type="sect2" id="how_to_decide_when_to_use_a_real_implem">
+<h2>How to Decide When to Use a Real Implementation</h2>
+
+<p>A real implementation is preferred if it is fast, deterministic, and has simple dependencies. <a contenteditable="false" data-primary="real implementations, using instead of test doubles" data-secondary="deciding when to use real implementations" data-type="indexterm" id="ix_realimpwh">&nbsp;</a><a contenteditable="false" data-primary="test doubles" data-secondary="using real implementations instead of" data-tertiary="deciding when to use real implementation" data-type="indexterm" id="ix_tstdblrlwh">&nbsp;</a>For example, a real implementation should be used for a <a href="https://oreil.ly/UZiXP"><em>value object</em></a>. Examples include an amount of money, a date, a geographical address, or a collection class such as a list or a map.</p>
+
+<p class="pagebreak-before">However, for more complex code, using a real implementation often isn’t feasible. There might not be an exact answer on when to use a real implementation or a test double given that there are trade-offs to be made, so you need to take the following considerations into account.</p>
+
+<section data-type="sect3" id="execution_time">
+<h3>Execution time</h3>
+
+<p>One of the most important qualities of unit tests is that they<a contenteditable="false" data-primary="unit testing" data-secondary="execution time for tests" data-type="indexterm" id="id-kJCRHVs8IoSjFR">&nbsp;</a> should be fast—you want to<a contenteditable="false" data-primary="execution time for tests" data-type="indexterm" id="id-57Cms0sQI2SWFM">&nbsp;</a> be able to continually <a contenteditable="false" data-primary="real implementations, using instead of test doubles" data-secondary="deciding when to use real implementations" data-tertiary="execution time" data-type="indexterm" id="id-yoC2f9s2IbSYFZ">&nbsp;</a>run them during development so that you can get quick feedback on whether your code is working (and you also want them to finish quickly when run in a CI system). As a result, a test double can be very useful when the real implementation is slow.</p>
+
+<p>How slow is too slow for a unit test? If a real implementation added one millisecond to the running time of each individual test case, few people would classify it as slow. But what if it added 10 milliseconds, 100 milliseconds, 1 second, and so on?</p>
+
+<p>There is no exact answer here—it can depend on whether engineers feel a loss in productivity, and how many tests are using the real implementation (one second extra per test case may be reasonable if there are five test cases, but not if there are 500). For borderline situations, it is often simpler to use a real implementation until it becomes too slow to use, at which point the tests can be updated to use a test double instead.</p>
+
+<p>Parellelization of tests<a contenteditable="false" data-primary="parallelization of tests" data-type="indexterm" id="id-MjCOH0cwIDSBF6">&nbsp;</a> can also help reduce execution time. At Google, our test infrastructure makes it trivial to split up tests in a test suite to be executed across multiple servers. This increases the cost of CPU time, but it can provide a large savings in developer time. We discuss this more in <a data-type="xref" href="ch18.html#build_systems_and_build_philosophy">Build Systems and Build Philosophy</a>.</p>
+
+<p>Another trade-off to be aware of: using a real implementation can result in increased build times given that the tests need to build the real implementation as well as all of its dependencies. Using a highly scalable build system like <a href="https://bazel.build">Bazel</a> can help because it caches unchanged build artifacts.</p>
+</section>
+
+<section data-type="sect3" id="determinism">
+<h3>Determinism</h3>
+
+<p>A test is <a href="https://oreil.ly/brxJl"><em>deterministic</em></a> if, for a given version of the <a contenteditable="false" data-primary="real implementations, using instead of test doubles" data-secondary="deciding when to use real implementations" data-tertiary="determinism in tests" data-type="indexterm" id="id-yoCQs9sWcbSYFZ">&nbsp;</a>system under test, running the test always results in the same outcome; that is, the test either always passes or always fails. <a contenteditable="false" data-primary="determinism in tests" data-type="indexterm" id="id-MjCjfyszcDSBF6">&nbsp;</a>In contrast, a test is <a href="https://oreil.ly/5pG0f"><em>nondeterministic</em></a> if its outcome can change, even if the system under test remains unchanged.<a contenteditable="false" data-primary="nondeterministic behavior in tests" data-type="indexterm" id="id-EjCNc0sQc0SdFk">&nbsp;</a>&nbsp;</p>
+
+<p><a href="https://oreil.ly/71OFU">Nondeterminism in tests</a> can lead to flakiness—tests can occasionally fail even when there are no changes to the system under test.<a contenteditable="false" data-primary="flaky tests" data-type="indexterm" id="id-MjCxsvfzcDSBF6">&nbsp;</a> As discussed in <a data-type="xref" href="ch11.html#testing_overview">Testing Overview</a>, flakiness harms the health of a test suite if developers start to distrust the results of the test and ignore failures. If use of a real implementation rarely causes flakiness, it might not warrant a response, because there is little <span class="keep-together">disruption</span> to engineers. But if flakiness happens often, it might be time to replace a real implementation with a test double because doing so will improve the fidelity of the test.</p>
+
+<p>A real implementation can be much more complex compared to a test double, which increases the likelihood that it will be nondeterministic. For example, a real implementation that utilizes multithreading might occasionally cause a test to fail if the output of the system under test differs depending on the order in which the threads are executed.</p>
+
+<p>A common cause of nondeterminism is code that is not <a href="https://oreil.ly/aes__">hermetic</a>; that is, it has dependencies<a contenteditable="false" data-primary="dependencies" data-secondary="external, causing nondeterminism in tests" data-type="indexterm" id="id-EjCDsZcQc0SdFk">&nbsp;</a> on external services that are outside the control of a test.<a contenteditable="false" data-primary="hermetic code, nondeterminism and" data-type="indexterm" id="id-ZjCxfBcGcjSXFG">&nbsp;</a> For example, a test that tries to read the contents of a web page from an HTTP server might fail if the server is overloaded or if the web page contents change. Instead, a test double should be used to prevent the test from depending on an external server. If using a test double is not feasible, another option is to use a hermetic instance of a server, which has its life cycle controlled by the test. Hermetic instances are discussed in more detail in the next chapter.</p>
+
+<p>Another example of nondeterminism is code that relies on the system clock given that the output of the system under test can differ depending on the current time. Instead of relying on the system clock, a test can use a test double that hardcodes a specific time.</p>
+</section>
+
+<section data-type="sect3" id="dependency_construction">
+<h3>Dependency construction</h3>
+
+<p>When using a real<a contenteditable="false" data-primary="real implementations, using instead of test doubles" data-secondary="deciding when to use real implementations" data-tertiary="dependency construction" data-type="indexterm" id="id-yoC0H9snSbSYFZ">&nbsp;</a> implementation, you need to construct all of its dependencies.<a contenteditable="false" data-primary="dependencies" data-secondary="construction when using real implementations in tests" data-type="indexterm" id="id-MjCxsysjSDSBF6">&nbsp;</a> For example, an object needs its entire dependency tree to be constructed: all objects that it depends on, all objects that these dependent objects depend on, and so on. A test double often has no dependencies, so constructing a test double can be much simpler compared to constructing a real implementation.</p>
+
+<p>As an extreme example, imagine trying to create the object in the code snippet that follows in a test. It would be time consuming to determine how to construct each individual object. Tests will also require constant maintenance because they need to be updated when the signature of these objects’ constructors is modified:</p>
+
+<pre data-type="programlisting">
+Foo foo = new Foo(new A(new B(new C()), new D()), new E(), ..., new Z());</pre>
+
+<p>It can be tempting to instead use a test double because constructing one can be trivial. For example, this is all it takes to construct a test double when using the Mockito mocking framework:</p>
+
+<pre data-type="programlisting">
+@Mock Foo mockFoo;</pre>
+
+<p class="pagebreak-before">Although creating this test double is much simpler, there are significant benefits to using the real implementation, as discussed earlier in this section. There are also often significant downsides to overusing test doubles in this way, which we look at later in this chapter. So, a trade-off needs to be made when considering whether to use a real implementation or a test double.</p>
+
+<p>Rather than manually constructing the object in tests, the ideal solution is to use the same object construction code that is used in the production code, such as a factory method or automated dependency injection. To support the use case for tests, the object construction code needs to be flexible enough to be able to use test doubles rather than hardcoding the<a contenteditable="false" data-primary="test doubles" data-secondary="using real implementations instead of" data-startref="ix_tstdblrlwh" data-tertiary="deciding when to use real implementation" data-type="indexterm" id="id-6WCGHBtvSgSwFq">&nbsp;</a> implementations<a contenteditable="false" data-primary="real implementations, using instead of test doubles" data-secondary="deciding when to use real implementations" data-startref="ix_realimpwh" data-type="indexterm" id="id-gAC3s6t7S6SAF4">&nbsp;</a> that will be used<a contenteditable="false" data-primary="real implementations, using instead of test doubles" data-startref="ix_realimp" data-type="indexterm" id="id-bBCvfEtWSySBF7">&nbsp;</a> for production.<a contenteditable="false" data-primary="test doubles" data-secondary="using real implementations instead of" data-startref="ix_tstdblrl" data-type="indexterm" id="id-mkCjIRtXSmS0FV">&nbsp;</a></p>
+</section>
+</section>
+</section>
+
+<section data-type="sect1" id="faking-id00043">
+<h1>Faking</h1>
+
+<p>If using a real implementation is not feasible within a test, the best option is often to use a fake in its place. <a contenteditable="false" data-primary="test doubles" data-secondary="faking" data-type="indexterm" id="ix_tstdblfak">&nbsp;</a><a contenteditable="false" data-primary="faking" data-type="indexterm" id="ix_fake">&nbsp;</a>A fake is preferred over other test double techniques because it behaves similarly to the real implementation: the system under test shouldn’t even be able to tell whether it is interacting with a real implementation or a fake. <a data-type="xref" href="#example_onethree-oneonedot_a_fake_file">A fake file system</a> illustrates a fake file system.</p>
+
+<div data-type="example" id="example_onethree-oneonedot_a_fake_file">
+<h5><span class="label">Example 13-11. </span>A fake file system</h5>
+
+<pre data-code-language="java" data-type="programlisting">
+// This fake implements the FileSystem interface. This interface is also
+// used by the real implementation.
+public class <strong>FakeFileSystem</strong> implements <strong>FileSystem</strong> {
+  // Stores a map of file name to file contents. The files are stored in
+  // memory instead of on disk since tests shouldn’t need to do disk I/O.
+  private Map&lt;String, String&gt; <strong>files</strong> = new HashMap&lt;&gt;();
+  @Override
+  public void <strong>writeFile</strong>(String fileName, String contents) {
+    // Add the file name and contents to the map.
+    <strong>files</strong>.add(fileName, contents);
+  }
+  @Override
+  public String <strong>readFile</strong>(String fileName) {
+    String contents = <strong>files</strong>.get(fileName);
+    // The real implementation will throw this exception if the
+    // file isn’t found, so the fake must throw it too.
+    if (contents == null) { throw new FileNotFoundException(fileName); }
+    return contents;
+  }
+}</pre>
+</div>
+
+<section class="pagebreak-before" data-type="sect2" id="why_are_fakes_importantquestion_mark">
+<h2 class="less_space">Why Are Fakes Important?</h2>
+
+<p>Fakes can be a powerful tool for testing: they <a contenteditable="false" data-primary="faking" data-secondary="importance of fakes" data-type="indexterm" id="id-0OCnH9sdIMij">&nbsp;</a>execute quickly and allow you to effectively test your code without the drawbacks of using real implementations.</p>
+
+<p>A single <a contenteditable="false" data-primary="APIs" data-secondary="faking" data-type="indexterm" id="id-LjC2HVfGImiw">&nbsp;</a>fake has the power to radically improve the testing experience of an API. If you scale that to a large number of fakes for all sorts of APIs, fakes can provide an enormous boost to engineering velocity across a software organization.</p>
+
+<p>At the other end of the spectrum, in a software organization where fakes are rare, velocity will be slower because engineers can end up struggling with using real implementations that lead to slow and flaky tests. Or engineers might resort to other test double techniques such as stubbing or interaction testing, which, as we’ll examine later in this chapter, can result in tests that are unclear, brittle, and less effective.</p>
+</section>
+
+<section data-type="sect2" id="when_should_fakes_be_writtenquestion_ma">
+<h2>When Should Fakes Be Written?</h2>
+
+<p>A fake requires more effort and more domain experience to create because it needs to behave similarly to the real implementation. <a contenteditable="false" data-primary="faking" data-secondary="when to write fakes" data-type="indexterm" id="id-LjC2HAs5cmiw">&nbsp;</a>A fake also requires maintenance: whenever the behavior of the real implementation changes, the fake must also be updated to match this behavior. Because of this, the team that owns the real implementation should write and maintain a fake.</p>
+
+<p>If a team is considering writing a fake, a trade-off needs to be made on whether the productivity improvements that will result from the use of the fake outweigh the costs of writing and maintaining it. If there are only a handful of users, it might not be worth their time, whereas if there are hundreds of users, it can result in an obvious productivity improvement.</p>
+
+<p>To reduce the number of fakes that need to be maintained, a fake should typically be created only at the root of the code that isn’t feasible for use in tests. For example, if a database can’t be used in tests, a fake should exist for the database API itself rather than for each class that calls the database API.</p>
+
+<p>Maintaining a fake can be burdensome if its implementation needs to be duplicated across programming languages, such as for a service that has client libraries that allow the service to be invoked from different languages. One solution for this case is to create a single fake service implementation and have tests configure the client libraries to send requests to this fake service. This approach is more heavyweight compared to having the fake written entirely in memory because it requires the test to communicate across processes. However, it can be a reasonable trade-off to make, as long as the tests can still execute quickly.</p>
+</section>
+
+<section data-type="sect2" id="the_fidelity_of_fakes">
+<h2>The Fidelity of Fakes</h2>
+
+<p>Perhaps the most important concept surrounding<a contenteditable="false" data-primary="fidelity" data-secondary="of fakes" data-type="indexterm" id="id-JjC1H1sYSZiZ">&nbsp;</a> the creation of fakes is <em>fidelity</em>; in other words, how <a contenteditable="false" data-primary="faking" data-secondary="fidelity of fakes" data-type="indexterm" id="id-kJCpfVsxSnix">&nbsp;</a>closely the behavior of a fake matches the behavior of the real implementation. If the behavior of a fake doesn’t match the behavior of the real implementation, a test using that fake is not useful—a test might pass when the fake is used, but this same code path might not work properly in the real implementation.</p>
+
+<p>Perfect fidelity is not always feasible. After all, the fake was necessary because the real implementation wasn’t suitable in one way or another. For example, a fake database would usually not have fidelity to a real database in terms of hard drive storage because the fake would store everything in memory.</p>
+
+<p>Primarily, however, a fake should maintain fidelity to the API contracts of the real implementation. For any given input to an API, a fake should return the same output and perform the same state changes of its corresponding real implementation. For example, for a real implementation of <code>database.save(itemId)</code>, if an item is successfully saved when its ID does not yet exist but an error is produced when the ID already exists, the fake must conform to this same behavior.</p>
+
+<p>One way to think about this is that the fake must have perfect fidelity to the real implementation, but <em>only from the perspective of the test</em>. For example, a fake for a hashing API doesn’t need to guarantee that the hash value for a given input is exactly the same as the hash value that is generated by the real implementation—tests likely don’t care about the specific hash value, only that the hash value is unique for a given input. If the contract of the hashing API doesn’t make guarantees of what specific hash values will be returned, the fake is still conforming to the contract even if it doesn’t have perfect fidelity to the real implementation.</p>
+
+<p>Other examples where perfect fidelity typically might not be useful for fakes include latency and resource consumption. However, a fake cannot be used if you need to explicitly test for these constraints (e.g., a performance test that verifies the latency of a function call), so you would need to resort to other mechanisms, such as by using a real implementation instead of a fake.</p>
+
+<p>A fake might not need to have 100% of the functionality of its corresponding real implementation, especially if such behavior is not needed by most tests (e.g., error handling code for rare edge cases). It is best to have the fake fail fast in this case; for example, raise an error if an unsupported code path is executed. This failure communicates to the engineer that the fake is not appropriate in this situation.</p>
+</section>
+
+<section class="pagebreak-before" data-type="sect2" id="fakes_should_be_tested">
+<h2 class="less_space">Fakes Should Be Tested</h2>
+
+<p>A fake must have its <em>own</em> tests to ensure that it conforms to the API of its corresponding real implementation. <a contenteditable="false" data-primary="faking" data-secondary="testing fakes" data-type="indexterm" id="id-kJC0sVsGTnix">&nbsp;</a><a contenteditable="false" data-primary="testing" data-secondary="tests for fakes" data-type="indexterm" id="id-57CWf0sbT8i1">&nbsp;</a>A fake without tests might initially provide realistic behavior, but without tests, this behavior can diverge over time as the real implementation evolves.</p>
+
+<p>One approach to writing tests for fakes involves writing tests against the API’s public<a contenteditable="false" data-primary="contract fakes" data-type="indexterm" id="id-kJCRHxfGTnix">&nbsp;</a> interface and running those tests against both the real implementation and the fake (these are known as <a href="https://oreil.ly/yuVlX"><em>contract tests</em></a>). The tests that run against the real implementation will likely be slower, but their downside is minimized because they need to be run only by the owners of the fake.</p>
+</section>
+
+<section data-type="sect2" id="what_to_do_if_a_fake_is_not_available">
+<h2>What to Do If a Fake Is Not Available</h2>
+
+<p>If a fake is not available, first ask the owners of the API to create one.<a contenteditable="false" data-primary="faking" data-secondary="when fakes are not available" data-type="indexterm" id="id-kJCRHVsktnix">&nbsp;</a> The owners might not be familiar with the concept of fakes, or they might not realize the benefit they provide to users of an API.</p>
+
+<p>If the owners of an API are unwilling or unable to create a fake, you might be able to write your own. One way to do this is to wrap all calls to the API in a single class and then create a fake version of the class that doesn’t talk to the API. Doing this can also be much simpler than creating a fake for the entire API because often you’ll need to use only a subset of the API’s behavior anyway. At Google, some teams have even contributed their fake to the owners of the API, which has allowed other teams to benefit from the fake.</p>
+
+<p>Finally, you could decide to settle on using a real implementation (and deal with the trade-offs of real implementations that are mentioned earlier in this chapter), or resort to other test double techniques (and deal with the trade-offs that we will mention later in this chapter).</p>
+
+<p>In some cases, you can think of a fake as an optimization: if tests are too slow using a real implementation, you can create a fake to make them run faster. But if the speedup from a fake doesn’t outweigh the work it would take to create and maintain the fake, it would be better<a contenteditable="false" data-primary="test doubles" data-secondary="faking" data-startref="ix_tstdblfak" data-type="indexterm" id="id-MjCOH0cDtpi9">&nbsp;</a> to stick with<a contenteditable="false" data-primary="faking" data-startref="ix_fake" data-type="indexterm" id="id-YjC6sycYtOip">&nbsp;</a> using the real implementation.</p>
+</section>
+</section>
+
+<section data-type="sect1" id="stubbing-id00091">
+<h1>Stubbing</h1>
+
+<p>As discussed earlier in this chapter, stubbing<a contenteditable="false" data-primary="test doubles" data-secondary="stubbing" data-type="indexterm" id="ix_tstdblstb">&nbsp;</a> is a way <a contenteditable="false" data-primary="stubbing" data-type="indexterm" id="ix_stub">&nbsp;</a>for a test to hardcode behavior for a function that otherwise has no behavior on its own. It is often a quick and easy way to replace a real implementation in a test. For example, the code in <a data-type="xref" href="#example_onethree-onetwodot_using_stubbi">Using stubbing to simulate responses</a> uses stubbing to simulate the response from a credit card server.</p>
+
+<div data-type="example" id="example_onethree-onetwodot_using_stubbi">
+<h5><span class="label">Example 13-12. </span>Using stubbing to simulate responses</h5>
+
+<pre data-code-language="java" data-type="programlisting">
+@Test public void getTransactionCount() {
+  transactionCounter = new TransactionCounter(<strong>mockCreditCardServer</strong>);
+  // Use stubbing to return three transactions.
+  when(<strong>mockCreditCardServer</strong>.getTransactions()).thenReturn(
+      newList(TRANSACTION_1, TRANSACTION_2, TRANSACTION_3));
+  assertThat(transactionCounter.getTransactionCount()).isEqualTo(3);
+}</pre>
+</div>
+
+<section data-type="sect2" id="the_dangers_of_overusing_stubbing">
+<h2>The Dangers of Overusing Stubbing</h2>
+
+<p>Because stubbing is so easy to apply in tests, it can be tempting to use this technique anytime it’s not trivial to use a real implementation.<a contenteditable="false" data-primary="stubbing" data-secondary="dangers of overusing" data-type="indexterm" id="id-LjC2HAsGIBHw">&nbsp;</a> However, overuse of stubbing can result in major losses in productivity for engineers who need to maintain these tests.</p>
+
+<section data-type="sect3" id="tests_become_unclear">
+<h3>Tests become unclear</h3>
+
+<p>Stubbing involves writing extra code to define the behavior of the functions being stubbed.<a contenteditable="false" data-primary="tests" data-secondary="becoming unclear with overuse of stubbing" data-type="indexterm" id="id-wbCoHqs1fEI4H4">&nbsp;</a> Having this extra code detracts from the intent of the test, and this code can be difficult to understand if you’re not familiar with the implementation of the system under test.</p>
+
+<p>A key sign that stubbing isn’t appropriate for a test is if you find yourself mentally stepping through the system under test in order to understand why certain functions in the test are stubbed.</p>
+</section>
+
+<section data-type="sect3" id="tests_become_brittle">
+<h3>Tests become brittle</h3>
+
+<p>Stubbing leaks<a contenteditable="false" data-primary="tests" data-secondary="becoming brittle with overuse of stubbing" data-type="indexterm" id="id-kJCRHVs8IMImHR">&nbsp;</a> implementation details of your code into your test. <a contenteditable="false" data-primary="brittle tests" data-secondary="with overuse of stubbing" data-type="indexterm" id="id-57Cms0sQIWINHM">&nbsp;</a>When implementation details in your production code change, you’ll need to update your tests to reflect these changes. Ideally, a good test should need to change only if user-facing behavior of an API changes; it should remain unaffected by changes to the API’s implementation.</p>
+</section>
+
+<section data-type="sect3" id="tests_become_less_effective">
+<h3>Tests become less effective</h3>
+
+<p>With stubbing, there is no way to<a contenteditable="false" data-primary="tests" data-secondary="becoming less effective with overuse of stubbing" data-type="indexterm" id="id-57C3H0sZcWINHM">&nbsp;</a> ensure the function being stubbed behaves like the real implementation, such as in a statement like that shown in the following snippet that hardcodes part of the contract of the <code>add()</code> method (<em>“If 1 and 2 are passed in, 3 will be returned”</em>):</p>
+
+<pre data-type="programlisting">
+when(stubCalculator.add(1, 2)).thenReturn(3);</pre>
+
+<p>Stubbing is a poor choice if the system under test depends on the real implementation’s contract because you will be forced to duplicate the details of the contract, and there is no way to guarantee that the contract is correct (i.e., that the stubbed function has fidelity to the real implementation).</p>
+
+<p>Additionally, with stubbing there is no way to store state, which can make it difficult to test certain aspects of your code. For example, if you call <code>database.save(item)</code> on either a real implementation or a fake, you might be able to retrieve the item by calling <code>database.get(item.id())</code> given that both of these calls are accessing internal state, but with stubbing, there is no way to do this.</p>
+</section>
+
+<section data-type="sect3" id="an_example_of_overusing_stubbing">
+<h3>An example of overusing stubbing</h3>
+
+<p><a data-type="xref" href="#example_onethree-onethreedot_overuse_of">Overuse of stubbing</a> illustrates a test that<a contenteditable="false" data-primary="tests" data-secondary="overusing stubbing, example of" data-type="indexterm" id="id-MjCxsysjSzIoH6">&nbsp;</a> overuses stubbing.</p>
+
+<div data-type="example" id="example_onethree-onethreedot_overuse_of">
+<h5><span class="label">Example 13-13. </span>Overuse of stubbing</h5>
+
+<pre data-code-language="java" data-type="programlisting">
+@Test public void creditCardIsCharged() {
+  // Pass in test doubles that were created by a mocking framework.
+  <strong>paymentProcessor</strong> =
+      new PaymentProcessor(<strong>mockCreditCardServer</strong>, <strong>mockTransactionProcessor</strong>);
+  // Set up stubbing for these test doubles.
+  when(<strong>mockCreditCardServer</strong>.isServerAvailable()).thenReturn(true);
+  when(<strong>mockTransactionProcessor</strong>.beginTransaction()).thenReturn(transaction);
+  when(<strong>mockCreditCardServer</strong>.initTransaction(transaction)).thenReturn(true);
+  when(<strong>mockCreditCardServer</strong>.pay(transaction, creditCard, 500))
+      .thenReturn(false);
+  when(<strong>mockTransactionProcessor</strong>.endTransaction()).thenReturn(true);
+  // Call the system under test.
+  <strong>paymentProcessor</strong>.processPayment(creditCard, Money.dollars(500));
+  // There is no way to tell if the pay() method actually carried out the
+  // transaction, so the only thing the test can do is verify that the
+  // pay() method was called.
+  verify(<strong>mockCreditCardServer</strong>).pay(transaction, creditCard, 500);
+}</pre>
+</div>
+
+<p><a data-type="xref" href="#example_onethree-onefourdot_refactoring">Refactoring a test to avoid stubbing</a> rewrites the same test but avoids using stubbing. Notice how the test is shorter and that implementation details (such as how the transaction processor is used) are not exposed in the test. <a contenteditable="false" data-primary="tests" data-secondary="refactoring to avoid stubbing" data-type="indexterm" id="id-EjCDsLIdSoIYHk">&nbsp;</a>No special setup is needed because the credit card server knows how to behave.</p>
+
+<div data-type="example" id="example_onethree-onefourdot_refactoring">
+<h5><span class="label">Example 13-14. </span>Refactoring a test to avoid stubbing</h5>
+
+<pre data-code-language="java" data-type="programlisting">
+@Test public void creditCardIsCharged() {
+  <strong>paymentProcessor</strong> = 
+      new PaymentProcessor(<strong>creditCardServer</strong>, <strong>transactionProcessor</strong>);
+  // Call the system under test.
+  <strong>paymentProcessor</strong>.processPayment(creditCard, Money.dollars(500));
+  // Query the credit card server state to see if the payment went through.
+  assertThat(<strong>creditCardServer</strong>.getMostRecentCharge(creditCard))
+      .isEqualTo(500);
+}</pre>
+</div>
+
+<p>We obviously don’t want such a test to talk to an external credit card server, so a fake credit card server would be more suitable. If a fake isn’t available, another option is to use a real implementation that talks to a hermetic credit card server, although this will increase the execution time of the tests. (We explore hermetic servers in the next chapter.)</p>
+</section>
+</section>
+
+<section data-type="sect2" id="when_is_stubbing_appropriatequestion_ma">
+<h2>When Is Stubbing Appropriate?</h2>
+
+<p>Rather than a catch-all replacement for a real implementation, stubbing is appropriate <a contenteditable="false" data-primary="stubbing" data-secondary="appropriate use of" data-type="indexterm" id="id-JjC1H1sZc4HZ">&nbsp;</a>when you need a function to return a specific value to get the system under test into a certain state, such as <a data-type="xref" href="#example_onethree-onetwodot_using_stubbi">Using stubbing to simulate responses</a> that requires the system under test to return a non-empty list of transactions. Because a function’s behavior is defined inline in the test, stubbing can simulate a wide variety of return values or errors that might not be possible to trigger from a real implementation or a fake.</p>
+
+<p>To ensure its purpose is clear, each stubbed function should have a direct relationship with the test’s assertions.<a contenteditable="false" data-primary="assertions" data-secondary="stubbed functions having direct relationship with" data-type="indexterm" id="id-wbCoHJf2czH9">&nbsp;</a> As a result, a test typically should stub out a small number of functions because stubbing out many functions can lead to tests that are less clear. A test that requires many functions to be stubbed can be a sign that stubbing is being overused, or that the system under test is too complex and should be refactored.</p>
+
+<p>Note that even when stubbing is appropriate, real implementations or fakes are still preferred because they don’t expose implementation details and they give you more guarantees about the correctness of the code compared to stubbing. But stubbing can be a reasonable technique to use, as long as its usage is constrained so that tests don’t become overly complex.<a contenteditable="false" data-primary="test doubles" data-secondary="stubbing" data-startref="ix_tstdblstb" data-type="indexterm" id="id-kJCRHOINcXHx">&nbsp;</a><a contenteditable="false" data-primary="stubbing" data-startref="ix_stub" data-type="indexterm" id="id-57CmsZIZc9H1">&nbsp;</a></p>
+</section>
+</section>
+
+<section data-type="sect1" id="interaction_testing-id00047">
+<h1>Interaction Testing</h1>
+
+<p>As discussed earlier in this chapter, interaction testing is a way to validate how a function<a contenteditable="false" data-primary="test doubles" data-secondary="interaction testing" data-type="indexterm" id="ix_tstdblint">&nbsp;</a> is called without <a contenteditable="false" data-primary="interaction testing" data-type="indexterm" id="ix_inttst">&nbsp;</a>actually calling the implementation of the function.</p>
+
+<p>Mocking frameworks make it easy to perform interaction testing. However, to keep tests useful, readable, and resilient to change, it’s important to perform interaction testing only when necessary.</p>
+
+<section data-type="sect2" id="prefer_state_testing_over_interaction_t">
+<h2>Prefer State Testing Over Interaction Testing</h2>
+
+<p>In contrast to interaction<a contenteditable="false" data-primary="state testing" data-secondary="preferring over interaction testing" data-type="indexterm" id="id-JjC1H1swI5sZ">&nbsp;</a> testing, it is preferred<a contenteditable="false" data-primary="interaction testing" data-secondary="preferring state testing over" data-type="indexterm" id="id-wbCMsqswIWs9">&nbsp;</a> to test code through <a href="https://oreil.ly/k3hSR"><em>state testing</em></a>.</p>
+
+<p>With state testing, you call the system under test and validate that either the correct value was returned or that some other state in the system under test was properly changed. <a data-type="xref" href="#example_onethree-onefivedot_state_testi">State testing</a> presents an example of state testing.</p>
+
+<div data-type="example" id="example_onethree-onefivedot_state_testi">
+<h5><span class="label">Example 13-15. </span>State testing</h5>
+
+<pre data-code-language="java" data-type="programlisting">
+@Test public void sortNumbers() {
+  NumberSorter <strong>numberSorter</strong> = new NumberSorter(<strong>quicksort</strong>, <strong>bubbleSort</strong>);
+  // Call the system under test.
+  List <strong>sortedList</strong> = <strong>numberSorter</strong>.sortNumbers(newList(3, 1, 2));
+  // Validate that the returned list is sorted. It doesn’t matter which
+  // sorting algorithm is used, as long as the right result was returned.
+  assertThat(<strong>sortedList</strong>).isEqualTo(newList(1, 2, 3));
+}</pre>
+</div>
+
+<p><a data-type="xref" href="#example_onethree-onesixdot_interaction">Interaction testing</a> illustrates a similar test scenario but instead uses interaction testing. Note how it’s impossible for this test to determine that the numbers are actually sorted, because the test doubles don’t know how to sort the numbers—all it can tell you is that the system under test tried to sort the numbers.</p>
+
+<div data-type="example" id="example_onethree-onesixdot_interaction">
+<h5><span class="label">Example 13-16. </span>Interaction testing</h5>
+
+<pre data-code-language="java" data-type="programlisting">
+@Test public void sortNumbers_quicksortIsUsed() {
+  // Pass in test doubles that were created by a mocking framework.
+  NumberSorter <strong>numberSorter</strong> =
+      new NumberSorter(<strong>mockQuicksort</strong>, <strong>mockBubbleSort</strong>);
+
+  // Call the system under test.
+  <strong>numberSorter</strong>.sortNumbers(newList(3, 1, 2));
+
+  // Validate that numberSorter.sortNumbers() used quicksort. The test
+  // will fail if mockQuicksort.sort() is never called (e.g., if
+  // mockBubbleSort is used) or if it’s called with the wrong arguments.
+  verify(<strong>mockQuicksort</strong>).sort(newList(3, 1, 2));
+}</pre>
+</div>
+
+<p>At Google, we’ve found that emphasizing state testing is more scalable; it reduces test brittleness, making it easier to change and maintain code over time.</p>
+
+<p>The primary<a contenteditable="false" data-primary="interaction testing" data-secondary="preferring state testing over" data-tertiary="limitations of interaction testing" data-type="indexterm" id="id-YjCoH0tpIPsp">&nbsp;</a> issue with interaction testing is that it can’t tell you that the system under test is working properly; it can only validate that certain functions are called as expected. It requires you to make an assumption about the behavior of the code; for example, “<em>If <code>database.save(item)</code> is called, we assume the item will be saved to the database.</em>” State testing is preferred because it actually validates this assumption (such as by saving an item to a database and then querying the database to validate that the item exists).</p>
+
+<p>Another downside of interaction testing is that it utilizes implementation details of the system under test—to validate that a function was called, you are exposing to the test that the system under test calls this function. Similar to stubbing, this extra code makes tests brittle because it leaks implementation details of your production code into tests. Some people at Google jokingly refer to tests that overuse interaction <span class="keep-together">testing</span> as <a href="https://oreil.ly/zkMDu"><em>change-detector tests</em></a> because they fail in response to any change to the production code, even if the behavior of the system under test remains unchanged.</p>
+</section>
+
+<section data-type="sect2" id="when_is_interaction_testing_appropriate">
+<h2>When Is Interaction Testing Appropriate?</h2>
+
+<p>There are some <a contenteditable="false" data-primary="interaction testing" data-secondary="appropriate uses of" data-type="indexterm" id="id-wbCoHqs2cWs9">&nbsp;</a>cases for which interaction testing is warranted:</p>
+
+<ul>
+	<li>
+	<p>You cannot perform state testing because you are unable to use a real implementation or a fake (e.g., if the real implementation is too slow and no fake exists). As a fallback, you can perform interaction testing to validate that certain functions are called. Although not ideal, this does provide some basic level of confidence that the system under test is working as expected.</p>
+	</li>
+	<li>
+	<p>Differences in the number or order of calls to a function would cause undesired behavior. Interaction testing is useful because it could be difficult to validate this behavior with state testing. For example, if you expect a caching feature to reduce the number of calls to a database, you can verify that the database object is not accessed more times than expected. Using Mockito, the code might look similar to this:</p>
+
+	<pre data-type="programlisting">
+verify(databaseReader, atMostOnce()).selectRecords();</pre>
+	</li>
+</ul>
+
+<p>Interaction testing is not a complete replacement for state testing. If you are not able to perform state testing in a unit test, strongly consider supplementing your test suite with larger-scoped tests that do perform state testing. For instance, if you have a unit test that validates usage of a database through interaction testing, consider adding an integration test that can perform state testing against a real database. Larger-scope testing is an important strategy for risk mitigation, and we discuss it in the next <span class="keep-together">chapter.</span></p>
+</section>
+
+<section data-type="sect2" id="best_practices_for_interaction_testing">
+<h2>Best Practices for Interaction Testing</h2>
+
+<p>When performing<a contenteditable="false" data-primary="interaction testing" data-secondary="best practices" data-type="indexterm" id="id-kJCRHVsxSdsx">&nbsp;</a> interaction testing, following these practices can reduce some of the impact of the aforementioned downsides.</p>
+
+<section data-type="sect3" id="prefer_to_perform_interaction_testing_o">
+<h3>Prefer to perform interaction testing only for state-changing functions</h3>
+
+<p>When a system under<a contenteditable="false" data-primary="interaction testing" data-secondary="best practices" data-tertiary="performing only for state-changing functions" data-type="indexterm" id="id-yoC0H9sOfbSQsZ">&nbsp;</a> test calls a function on a dependency, that <a contenteditable="false" data-primary="state-changing functions" data-type="indexterm" id="id-MjCxsysofDSbs6">&nbsp;</a>call falls into one of two categories:</p>
+
+<dl>
+	<dt>State-changing</dt>
+	<dd>Functions that have side effects on the world outside the system under test. Examples: <code>sendEmail()</code>, <code>saveRecord()</code>, <code>logAccess()</code>.</dd>
+	<dt>Non-state-changing</dt>
+	<dd>Functions that don’t <a contenteditable="false" data-primary="non-state-changing functions" data-type="indexterm" id="id-ZjCyH2Imfgf8S0sj">&nbsp;</a>have side effects; they return information about the world outside the system under test and don’t modify anything. Examples: <code>getUser()</code>, <code>findResults()</code>, <code>readFile()</code>.</dd>
+</dl>
+
+<p>In general, you should perform interaction testing only for functions that are state-changing. Performing interaction testing for non-state-changing functions is usually redundant given that the system under test will use the return value of the function to do other work that you can assert. The interaction itself is not an important detail for correctness, because it has no side effects.</p>
+
+<p>Performing interaction testing for non-state-changing functions makes your test brittle because you’ll need to update the test anytime the pattern of interactions changes. It also makes the test less readable given that the additional assertions make it more difficult to determine which assertions are important for ensuring correctness of the code. By contrast, state-changing interactions represent something useful that your code is doing to change state somewhere else.</p>
+
+<p><a data-type="xref" href="#example_onethree-onesevendot_state-chan">State-changing and non-state-changing interactions</a> demonstrates interaction testing on both state-changing and non-state-changing functions.</p>
+
+<div data-type="example" id="example_onethree-onesevendot_state-chan">
+<h5><span class="label">Example 13-17. </span>State-changing and non-state-changing interactions</h5>
+
+<pre data-code-language="java" data-type="programlisting">
+@Test public void grantUserPermission() {
+  UserAuthorizer userAuthorizer =
+      new UserAuthorizer(<strong>mockUserService</strong>, <strong>mockPermissionDatabase</strong>);
+  when(<strong>mockPermissionService</strong>.<strong>getPermission</strong>(FAKE_USER)).thenReturn(EMPTY);
+  
+  // Call the system under test.
+  userAuthorizer.grantPermission(USER_ACCESS);
+  
+  // addPermission() is state-changing, so it is reasonable to perform
+  // interaction testing to validate that it was called.
+  verify(<strong>mockPermissionDatabase</strong>).<strong>addPermission</strong>(FAKE_USER, USER_ACCESS);
+  
+  // getPermission() is non-state-changing, so this line of code isn’t
+  // needed. One clue that interaction testing may not be needed:
+  // getPermission() was already stubbed earlier in this test.
+  verify(<strong>mockPermissionDatabase</strong>).<strong>getPermission</strong>(FAKE_USER);
+}</pre>
+</div>
+</section>
+
+<section data-type="sect3" id="avoid_overspecification">
+<h3>Avoid overspecification</h3>
+
+<p>In <a data-type="xref" href="ch12.html#unit_testing">Unit Testing</a>, we discuss why it is useful to test behaviors rather than methods. This means that a test method should focus<a contenteditable="false" data-primary="overspecification of interaction tests" data-type="indexterm" id="id-YjC6sVspIdSQsw">&nbsp;</a> on verifying one behavior of a method or class rather than trying<a contenteditable="false" data-primary="interaction testing" data-secondary="best practices" data-tertiary="avoiding overspecification" data-type="indexterm" id="id-EjCZf0sWI0SVsk">&nbsp;</a> to verify multiple behaviors in a single test.</p>
+
+<p>When performing interaction testing, we should aim to apply the same principle by avoiding overspecifying which functions and arguments are validated. This leads to tests that are clearer and more concise. It also leads to tests that are resilient to changes made to behaviors that are outside the scope of each test, so fewer tests will fail if a change is made to a way a function is called.</p>
+
+<p><a data-type="xref" href="#example_onethree-oneeightdot_overspecif">Overspecified interaction tests</a> illustrates interaction testing with overspecification. The intention of the test is to validate that the user’s name is included in the greeting prompt, but the test will fail if unrelated behavior is changed.</p>
+
+<div data-type="example" id="example_onethree-oneeightdot_overspecif">
+<h5><span class="label">Example 13-18. </span>Overspecified interaction tests</h5>
+
+<pre data-code-language="java" data-type="programlisting">
+@Test public void displayGreeting_renderUserName() {
+  when(mockUserService.getUserName()).thenReturn("Fake User");
+  userGreeter.displayGreeting(); // Call the system under test.
+  
+  // The test will fail if any of the arguments to setText() are changed.
+  verify(<strong>userPrompt</strong>).<strong>setText</strong>("Fake User", "Good morning!", "Version 2.1");
+  
+  // The test will fail if setIcon() is not called, even though this
+  // behavior is incidental to the test since it is not related to
+  // validating the user name.
+  verify(<strong>userPrompt</strong>).<strong>setIcon</strong>(IMAGE_SUNSHINE);
+}</pre>
+</div>
+
+<p><a data-type="xref" href="#example_onethree-oneninedot_well-specif">Well-specified interaction tests</a> illustrates interaction testing with more care in specifying relevant arguments and functions. The behaviors being tested are split into separate tests, and each test validates the minimum amount necessary for ensuring<a contenteditable="false" data-primary="well-specified interaction tests" data-type="indexterm" id="id-6WCRsMSDIgSxsq">&nbsp;</a> the behavior it is testing is correct.</p>
+
+<div data-type="example" id="example_onethree-oneninedot_well-specif">
+<h5><span class="label">Example 13-19. </span>Well-specified interaction tests</h5>
+
+<pre data-code-language="java" data-type="programlisting">
+@Test public void displayGreeting_renderUserName() {
+  when(mockUserService.getUserName()).thenReturn("Fake User");
+  userGreeter.displayGreeting(); // Call the system under test.
+  verify(<strong>userPrompter</strong>).<strong>setText</strong>(eq("Fake User"), any(), any());
+}
+@Test public void displayGreeting_timeIsMorning_useMorningSettings() {
+  setTimeOfDay(TIME_MORNING);
+  userGreeter.displayGreeting(); // Call the system under test.
+  verify(<strong>userPrompt</strong>).<strong>setText</strong>(any(), eq("Good morning!"), any());
+  verify(<strong>userPrompt</strong>).<strong>setIcon</strong>(IMAGE_SUNSHINE);
+}</pre>
+</div>
+</section>
+</section>
+</section>
+
+<section data-type="sect1" id="conclusion-id00017">
+<h1>Conclusion</h1>
+
+<p>We’ve <a contenteditable="false" data-primary="test doubles" data-secondary="interaction testing" data-startref="ix_tstdblint" data-type="indexterm" id="id-0OCnH9sYf1">&nbsp;</a>learned that<a contenteditable="false" data-primary="interaction testing" data-startref="ix_inttst" data-type="indexterm" id="id-LjCYsAs4fJ">&nbsp;</a> test doubles are crucial to engineering velocity because they can help comprehensively test your code and ensure that your tests run fast. On the other hand, misusing them can be a major drain on productivity because they can lead to tests that are unclear, brittle, and less effective. This is why it’s important for engineers to understand the best practices for how to effectively apply test doubles.</p>
+
+<p>There is often no exact answer regarding whether to use a real implementation or a test double, or which test double technique to use. An engineer might need to make some trade-offs when deciding the proper approach for their use case.</p>
+
+<p>Although test doubles are great for working around dependencies that are difficult to use in tests, if you want to maximize confidence in your code, at some point you still want to exercise these dependencies in tests. The next chapter will cover larger-scope testing, for which these dependencies are used regardless of their suitability for unit tests; for example, even if they are slow or nondeterministic.</p>
+</section>
+
+<section data-type="sect1" id="tlsemicolondrs-id00116">
+<h1>TL;DRs</h1>
+
+<ul>
+	<li>
+	<p>A real implementation should be preferred over a test double.</p>
+	</li>
+	<li>
+	<p>A fake is often the ideal solution if a real implementation can’t be used in a test.</p>
+	</li>
+	<li>
+	<p>Overuse of stubbing leads to tests that are unclear and brittle.</p>
+	</li>
+	<li>
+	<p>Interaction testing should be avoided when possible: it leads to tests that are brittle because it exposes implementation<a contenteditable="false" data-primary="test doubles" data-startref="ix_tstdbl" data-type="indexterm" id="id-kJCRH3H8Ias1IR">&nbsp;</a> details of the system under test.</p>
+	</li>
+</ul>
+</section>
+</section>
+
+  </body>
+</html>
