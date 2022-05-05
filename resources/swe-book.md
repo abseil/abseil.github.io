@@ -15,9 +15,9 @@ per se, but about the engineering practices utilized at Google to make their
 codebase sustainable and healthy. (These practices are paramount for common
 infrastructural code such as Abseil.)
 
-We are happy to announce that we are providing a PDF digital copy of this book free
-of charge. Of course, we encourage you to get yourself a hard copy from O'Reilly
-if you wish.
+We are happy to announce that we are providing a digital version of this book
+in HTML free of charge. Of course, we encourage you to get yourself a hard copy
+from O'Reilly if you wish.
 
 <center>
 <div style="width:50%">
