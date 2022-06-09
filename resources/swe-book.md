@@ -15,19 +15,19 @@ per se, but about the engineering practices utilized at Google to make their
 codebase sustainable and healthy. (These practices are paramount for common
 infrastructural code such as Abseil.)
 
-We are happy to announce that we are providing a PDF digital copy of this book free
-of charge. Of course, we encourage you to get yourself a hard copy from O'Reilly
-if you wish.
+We are happy to announce that we are providing a digital version of this book
+in HTML free of charge. Of course, we encourage you to get yourself a hard copy
+from O'Reilly if you wish.
 
 <center>
 <div style="width:50%">
-<a href="/resources/swe_at_google.2.pdf" target="_blank">
+<a href="/resources/swe-book/html/toc.html" target="_blank">
 <img src="/img/swe_at_google.2.cover.jpg" alt="Software Engineering at Google" />
 </a>
 </div>
 &nbsp;
 <div>
-<a href="/resources/swe_at_google.2.pdf" target="_blank" title="Read online">
+<a href="/resources/swe-book/html/toc.html" target="_blank" title="Read online">
 Read online</a>
 </div>
 &nbsp;
