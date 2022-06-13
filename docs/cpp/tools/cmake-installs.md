@@ -132,7 +132,7 @@ $ mkdir build && cd build
 $ cmake .. -DCMAKE_PREFIX_PATH=~/Source/InstallProject/install
 ...
 -- Build files have been written to: ~/Source/InstallProject/build
-$ cmake --build . --target hello_world
+$ cmake --build .. --target hello_world
 [ 50%] Building CXX object CMakeFiles/hello_world.dir/hello_world.cc.o
 [100%] Linking CXX executable hello_world
 [100%] Built target hello_world
