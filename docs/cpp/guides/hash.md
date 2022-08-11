@@ -108,8 +108,9 @@ Of course, this works only if `MyKey` is hashable by `absl::Hash`, i.e.
 `absl::Hash` supports the `MyKey` type.
 
 NOTE: the hash codes computed by `absl::Hash` are not guaranteed to be stable
-across different runs of your program. In fact, in the usual case it randomly
-seeds itself at program startup.
+across different runs of your program, or across different dynamically loaded
+libraries in your program. In fact, in the usual case it randomly seeds itself
+at program startup.
 
 ### Intrinsic Type Support
 
@@ -330,7 +331,7 @@ In case of errors, `absl::VerifyTypeImplementsAbslHashCorrectly()` will print
 diagnostics indicating which two elements violated these requirements.
 
 `absl::VerifyTypeImplementsAbslHashCorrectly()` also supports testing
-heterogenous lookup and custom equality operators. In this case, we would use a
+heterogeneous lookup and custom equality operators. In this case, we would use a
 tuple to pass mixed types.
 
 ```c++

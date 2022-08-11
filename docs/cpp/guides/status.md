@@ -22,13 +22,13 @@ Within Google, `absl::Status` is the primary mechanism to gracefully handle
 errors across API boundaries (and in particular across RPC boundaries). Some of
 these errors may be recoverable, but others may not. Most functions which can
 produce a recoverable error should be designed to return either an
-`absl::Status` (or the similar `absl::StatusOr<T>`, which holds either an object
-of type `T` or an error).
+`absl::Status` or the similar `absl::StatusOr<T>`, which holds either an object
+of type `T` or an error.
 
 Example:
 
 ```c++
-absl::Status myFunction(absl::string_view filename, ...) {
+absl::Status MyFunction(absl::string_view filename, ...) {
   ...
   // encounter error
   if (error condition) {
@@ -70,7 +70,7 @@ absl::Status Open(absl::string_view filename, absl::string_view mode, ...) {
   absl::Status result;  // Default constructor creates an OK value as well.
   if (...) {
     // Short-hand for result = absl::Status(absl::StatusCode::kNotFound, ...)
-    result = absl::NotFoundError(absl::StrCat(fname, " is missing"));
+    result = absl::NotFoundError(absl::StrCat(filename, " is missing"));
   } else {
     ...
   }
@@ -158,7 +158,7 @@ if (!s.ok()) {  // Either Open or Create failed
 }
 ```
 
-### Returning a Status or a Value
+## Returning a Status or a Value
 
 Suppose a function needs to return a value on success or, alternatively, a
 `Status` on error. The Abseil Status library provides an `absl::StatusOr<T>`
@@ -210,7 +210,7 @@ if (!result.ok()) {
 }
 ```
 
-### Ignoring Status Results
+## Ignoring Status Results
 
 Our compilers produce errors if a `Status` value returned by a function is
 ignored. In some cases, ignoring the result is the correct thing to do, which
@@ -226,7 +226,7 @@ prefer to actually handle the return value: perhaps you can verify that the
 result matches the error you are expecting, or perhaps you can export it for
 monitoring.
 
-### Keeping Track of the First Error Encountered
+## Keeping Track of the First Error Encountered
 
 Use `Status::Update()` to keep track of the first non-ok status encountered in a
 sequence. `Update()` will overwrite an existing "OK" status, but will not
