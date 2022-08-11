@@ -357,7 +357,7 @@ Example:
 std::cout << absl::StreamFormat("name: %-20.4s: quota: %7.3f", name, quota);
 
 // Stream to a file
-if (FILE* file_handle = fopen("myfile.txt","w"; file_handle != nullptr) {
+if (FILE* file_handle = fopen("myfile.txt", "w"); file_handle != nullptr) {
   int result =
       absl::FPrintF(file_handle, "%s", "C:\\Windows\\System32\\");
   return result;
