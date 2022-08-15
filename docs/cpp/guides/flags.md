@@ -127,8 +127,6 @@ ABSL_FLAG(std::vector<std::string>, languages,
 ABSL_FLAG(absl::Duration, timeout, absl::Seconds(30), "Default RPC deadline");
 ABSL_FLAG(std::optional<std::string>, image_file, std::nullopt,
           "Sets the image input from a file.");
-// An optional flag can also indicate its valueless state with empty braces {}
-// instead of std::nullopt.
 ```
 
 Flags defined with `ABSL_FLAG` will create global variables named

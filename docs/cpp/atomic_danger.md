@@ -61,8 +61,7 @@ contain relevant components.
 -   [std::call_once](https://en.cppreference.com/w/cpp/thread/call_once) and
     [absl::call_once](https://github.com/abseil/abseil-cpp/blob/master/absl/base/call_once.h)
     for one-time initialization
--   [thread::ThreadPool](http://google3/thread/threadpool.h) and
-    [boost::asio::thread_pool](https://www.boost.org/doc/libs/1_76_0/doc/html/boost_asio/reference/thread_pool.html)
+-   [boost::asio::thread_pool](https://www.boost.org/doc/libs/1_76_0/doc/html/boost_asio/reference/thread_pool.html)
     for thread pooling
 -   [absl::Notification](https://github.com/abseil/abseil-cpp/blob/master/absl/synchronization/notification.h)
     for one-time notifications

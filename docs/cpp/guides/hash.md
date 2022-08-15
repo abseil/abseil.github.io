@@ -109,8 +109,7 @@ Of course, this works only if `MyKey` is hashable by `absl::Hash`, i.e.
 
 NOTE: the hash codes computed by `absl::Hash` are not guaranteed to be stable
 across different runs of your program, or across different dynamically loaded
-libraries in your program. In fact, in the usual case it randomly seeds itself
-at program startup.
+libraries in your program.
 
 ### Intrinsic Type Support
 
