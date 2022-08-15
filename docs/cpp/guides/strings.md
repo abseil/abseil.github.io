@@ -240,7 +240,8 @@ whether or not a resultant element is included in the result set. A filtering
 predicate may be passed as an *optional* third argument to the `StrSplit()`
 function.
 
-The predicates must be unary functions (or functors) that take a single
+The predicates must be unary functions (or function objects such as
+[lambdas](https://en.cppreference.com/w/cpp/language/lambda)) that take a single
 `absl::string_view` argument and return a bool indicating whether the argument
 should be included (`true`) or excluded (`false`).
 
@@ -273,6 +274,12 @@ std::vector<std::string> v = absl::StrSplit(",a, ,b,", ',', absl::SkipEmpty());
 std::vector<std::string> v = absl::StrSplit(",a, ,b,", ',',
                                             absl::SkipWhitespace());
 // v[0] == "a", v[1] == "b"
+
+// Passes a lambda as the predicate to keep only the lines that don't start
+// with a `#`.
+std::vector<std::string> non_comment_lines = absl::StrSplit(
+    file_content, '\n',
+    [](absl::string_view line) { return !absl::StartsWith(line, "#"); });
 ```
 
 ## `absl::StrCat()` and `absl::StrAppend()` for String Concatenation

@@ -33,18 +33,18 @@ Any other platform that is not explicitly mentioned as **Supported** or
 platforms, and we will only accept patches that in our judgement do not
 complicate the code.
 
-## C++11 and Above
+## C++14 and Above
 
-Abseil requires a code base that at least supports C++11 and our code is
-C++11-compliant. Often, we include C++11 versions of standard library
-functionality available in a later version (e.g C++14 through C++20). Many of
-these C++11 utlities will silently revert to their official standard library
-functionality when compiled on C++14 or newer platforms. That is, we guarantee
+Abseil requires a code base that at least supports C++14 and our code is
+C++14-compliant. Often, we include C++14 versions of standard library
+functionality available in a later version (e.g C++17 through C++20). Many of
+these C++14 utlities will silently revert to their official standard library
+functionality when compiled on C++17 or newer platforms. That is, we guarantee
 that our code will compile under any of the following compilation flags:
 
-* GCC: `-std=c++11`, `-std=c++14`, `-std=c++17`, `-std=c++20`
-* Clang: `-std=c++11`, `-std=c++14`, `-std=c++17`, `-std=c++20`
-* MSVC: `/std:c++14`, `/std:c++17`
+*   GCC: `-std=c++14`, `-std=c++17`, `-std=c++20`
+*   Clang: `-std=c++14`, `-std=c++17`, `-std=c++20`
+*   MSVC: `/std:c++14`, `/std:c++17`
 
 ## Supported Platforms
 

@@ -26,7 +26,7 @@ Running the Abseil code within this tutorial requires:
 *   A compatible platform (e.g. Windows, macOS, Linux, etc.). Most platforms are
     fully supported. Consult the [Platforms Guide](platforms/platforms) for more
     information.
-*   A compatible C++ compiler *supporting at least C++11*. Most major compilers
+*   A compatible C++ compiler *supporting at least C++14*. Most major compilers
     are supported.
 
 Although you are free to use your own build system, most of the documentation
@@ -77,15 +77,15 @@ provide the SHA-256 of the specified file within the `sha256` field of the
 https://docs.bazel.build/versions/master/repo/http.html#http_archive-sha256)
 for more information.
 
-Bazel also requires a dependency on the [`rules_cc`
-repository](https://github.com/bazelbuild/rules_cc) to build C++ code, so add
+Bazel also requires a dependency on the
+[`bazel_skylib` rules](https://github.com/bazelbuild/bazel-skylib), so add
 the following `http_archive` rule to the `WORKSPACE` file:
 
 ```
 http_archive(
-  name = "rules_cc",
-  urls = ["https://github.com/bazelbuild/rules_cc/archive/262ebec3c2296296526740db4aefce68c80de7fa.zip"],
-  strip_prefix = "rules_cc-262ebec3c2296296526740db4aefce68c80de7fa",
+  name = "bazel_skylib",
+  urls = ["https://github.com/bazelbuild/bazel-skylib/releases/download/1.2.1/bazel-skylib-1.2.1.tar.gz"],
+  sha256 = "f7be3474d42aae265405a592bb7da8e171919d74c16f082a5457840f06054728",
 )
 ```
 
