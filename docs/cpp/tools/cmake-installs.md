@@ -110,8 +110,8 @@ cmake_minimum_required(VERSION 3.5)
 
 project(my_project)
 
-# Abseil requires C++11
-set(CMAKE_CXX_STANDARD 11)
+# Abseil requires C++14
+set(CMAKE_CXX_STANDARD 14)
 
 # Import Abseil's CMake targets
 find_package(absl REQUIRED)
