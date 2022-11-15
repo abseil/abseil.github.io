@@ -481,9 +481,9 @@ invoked, cause the application to print some information about itself and exit.
 
 ```text
 --help            show help on important flags for this binary
---helpfull        shows all flags from all files, sorted by file and then
-                  by name; shows the flagname, its default value, and its
-                  help string
+--helpfull        shows the full list of flags from all files, sorted by file
+                  and then by name; shows the flagname, its default value, and
+                  its help string
 --helpshort       shows only flags for the file with the same name as the
                   executable (usually the one containing main())
 --helpon=FILE     shows only flags defined in FILE.*
@@ -491,7 +491,10 @@ invoked, cause the application to print some information about itself and exit.
 --helppackage     shows flags defined in files in same directory as main()
 --version         prints version info for the executable
 ```
-NOTE: The help message for a flag will include its default value, so in most cases there is no need to mention the default value in the definition of a flag's `help-text`.
+
+NOTE: The help message for a flag will include its default value, so in most
+cases there is no need to mention the default value in the definition of a
+flag's `help-text`.
 
 Additionally, some built-in flags have additional behavioral effects. These are
 noted below.
