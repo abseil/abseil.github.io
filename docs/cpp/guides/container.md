@@ -43,7 +43,7 @@ be replacements for
 and [`std::unordered_set`](https://en.cppreference.com/w/cpp/container/unordered_set)
 They provide several advantages over the `std::unordered_*` containers:
 
-*   Provides C++11 support for C++17 mechanisms such as `try_emplace()`.
+*   Provides C++14 support for C++17 mechanisms such as `try_emplace()`.
 *   Supports heterogeneous lookup.
 *   Allows optimizations for `emplace({key, value})` to avoid allocating a pair
     in most common cases.
@@ -165,7 +165,7 @@ pointers to those nodes.
 
 The slot array requires `(sizeof(void*) + 1) * bucket_count()` bytes and the
 nodes themselves require `sizeof(value_type) * size()` bytes. Together, this is
-O(`9*bucket_count + sizeof(std::pair<const K, V>)*size()`) on most platforms.
+O(`9*bucket_count() + sizeof(std::pair<const K, V>)*size()`) on most platforms.
 
 #### Recommendation
 
@@ -253,7 +253,7 @@ containers:
 *   Provide lower memory overhead in most cases than their STL equivalents.
 *   Are generally more cache friendly (and hence faster) than their STL
     equivalents.
-*   Provide C++11 support for C++17 mechanisms such as `try_emplace()`.
+*   Provide C++14 support for C++17 mechanisms such as `try_emplace()`.
 *   Support heterogeneous lookup.
 
 ### Construction

@@ -106,7 +106,7 @@ the one we used in the
 `find_package` to import Abseil's targets from our local `install` directory.
 
 ```
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.10)
 
 project(my_project)
 

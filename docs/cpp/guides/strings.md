@@ -60,7 +60,7 @@ inline constexpr absl::string_view kGreeting = "hi";
 ```
 
 ```cpp
-// C++11: A read-only string in a header file. Due to lifetime issues, a
+// C++14: A read-only string in a header file. Due to lifetime issues, a
 // string_view is usually a poor choice for a return value (see below), but it's
 // safe here because the static storage outlives it.
 inline absl::string_view GetGreeting() {
