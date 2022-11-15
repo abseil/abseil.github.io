@@ -45,4 +45,4 @@ absl::StrFormat("The point is %v", p);
 `%v` uses type deduction to print an argument and supports any user-defined type
 that provides an `AbslStringify()` definition. Most types that are supported
 natively by `absl::StrFormat()` are also supported by `%v`. For a full list of
-supported types, see the [StrFormat Guide](https://abseil.io/docs/cpp/format). 
+supported types, see the [StrFormat Guide](https://abseil.io/docs/cpp/guides/format). 
