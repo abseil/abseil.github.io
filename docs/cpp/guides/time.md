@@ -382,7 +382,7 @@ absl::CivilMonth cm;
 UseDay(cm);                  // OK: implicit conversion to absl::CivilDay
 ```
 
-### Civil Time Normalization
+### Civil Time Normalization {#normalization}
 
 Normalization takes invalid values and adjusts them to produce valid values.
 Within the civil-time library, integer arguments passed to the `Civil*`
