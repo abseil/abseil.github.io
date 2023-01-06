@@ -14,7 +14,8 @@ Abseil contains two Status libraries within the `absl/status` directory:
   associated utilities for generating and propagating status codes.
 * A `statusor` library containing the `absl::StatusOr<T>` class template for use
   in returning either an `absl::Status` error or an object of type `T`. (This
-  `StatusOr<T>` abstraction is similar to the C++ proposal for `std::expected`.)
+  `StatusOr<T>` abstraction is similar to [C++23's
+  `std::expected`](https://en.cppreference.com/w/cpp/utility/expected).)
 
 ## Overview of `absl::Status`
 

@@ -73,10 +73,12 @@ A `string_view` is also suitable for local variables if you know that the
 lifetime of the underlying object is longer than the lifetime of your
 `string_view` variable. However, beware of binding it to a temporary value:
 
-```cpp
+```cpp {.bad}
 // BAD use of string_view: lifetime problem
 absl::string_view sv = obj.ReturnAString();
+```
 
+```cpp {.good}
 // GOOD use of string_view: str outlives sv
 std::string str = obj.ReturnAString();
 absl::string_view sv = str;
@@ -292,7 +294,7 @@ overhead. Always look for ways to reduce creation of such temporaries.
 
 For example, the following code is inefficient:
 
-```cpp
+```cpp {.bad}
 // Inefficient code
 std::string s1 = "A string";
 s1 = s1 + " another string";
@@ -302,7 +304,7 @@ The assignment operator above creates a temporary string, copies `s1` into that
 temporary string, concatenates that temporary string, and then assigns it back
 to `s1`. Instead use the optimized `+=` operator for such concatenation:
 
-```cpp
+```cpp {.good}
 // Efficient code
 s1 += " another string";
 ```
@@ -311,7 +313,7 @@ Good compilers may be able to optimize the preceding inefficient code. However,
 operations that involve more than one concatenation cannot normally avoid
 temporaries:
 
-```cpp
+```cpp {.bad}
 // Inefficient code
 std::string s1 = "A string";
 std::string another = " and another string";
@@ -324,12 +326,14 @@ and `absl::StrAppend()` are often more efficient than operators such as `+=`,
 since they don't require the creation of temporary `std::string` objects, and
 their memory is preallocated during string construction.
 
-```cpp
+```cpp {.bad}
 // Inefficient code
 std::string s1 = "A string";
 std::string another = " and another string";
 s1 += " and some other string" + another;
+```
 
+```cpp {.good}
 // Efficient code
 std::string s1 = "A string";
 std::string another = " and another string";
@@ -387,7 +391,7 @@ For clarity and performance, don't use `absl::StrCat()` when appending to a
 string. Use `absl::StrAppend()` instead. In particular, avoid using any of these
 (anti-)patterns:
 
-```cpp
+```cpp {.bad}
 str.append(absl::StrCat(...))
 str += absl::StrCat(...)
 str = absl::StrCat(str, ...)
@@ -502,7 +506,7 @@ Traditionally, most C++ code used built-in functions such as `sprintf()` and
 `snprintf()`; these functions have some problems in that they don't support
 `absl::string_view` and the memory of the formatted buffer must be managed.
 
-```cpp
+```cpp {.bad}
 // Bad. Need to worry about buffer size and NUL-terminations.
 
 std::string GetErrorMessage(char *op, char *user, int id) {
@@ -510,12 +514,16 @@ std::string GetErrorMessage(char *op, char *user, int id) {
   sprintf(buffer, "Error in %s for user %s (id %i)", op, user, id);
   return buffer;
 }
+```
 
+```cpp
 // Better. Using absl::StrCat() avoids the pitfalls of sprintf() and is faster.
 std::string GetErrorMessage(absl::string_view op, absl::string_view user, int id) {
   return absl::StrCat("Error in ", op, " for user ", user, " (", id, ")");
 }
+```
 
+```cpp {.good}
 // Best. Using absl::Substitute() is easier to read and to understand.
 std::string GetErrorMessage(absl::string_view op, absl::string_view user, int id) {
   return absl::Substitute("Error in $0 for user $1 ($2)", op, user, id);

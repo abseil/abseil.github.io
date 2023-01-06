@@ -25,3 +25,4 @@ all code within Abseil within this guide.
 * [StrFormat Guide](format)
 * [Strings Guide](strings)
 * [Time Library](time)
+* [Types Library](types)
