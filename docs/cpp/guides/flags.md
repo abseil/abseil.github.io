@@ -40,7 +40,7 @@ In the command:
 $ fgrep -l -f /var/tmp/foo johannes brahms
 ```
 
-*   `-l` are `-f` are *command-line flags*.
+*   `-l` and `-f` are *command-line flags*.
 *   The `-f` flag contains one argument, `/var/tmp/foo` which is its
     *command-line flag argument*.
 *   The `johannes` and `brahms` arguments, which are not associated with any
@@ -125,6 +125,8 @@ ABSL_FLAG(std::vector<std::string>, languages,
           std::vector<std::string>({"english", "french", "german"}),
           "comma-separated list of languages to offer in the 'lang' menu");
 ABSL_FLAG(absl::Duration, timeout, absl::Seconds(30), "Default RPC deadline");
+ABSL_FLAG(std::optional<std::string>, image_file, std::nullopt,
+          "Sets the image input from a file.");
 ```
 
 Flags defined with `ABSL_FLAG` will create global variables named
@@ -136,18 +138,19 @@ text will be displayed using the `--help` usage argument, if invoked. See
 
 Out of the box, the Abseil flags library supports the following types:
 
-* `bool`
-* `int16_t`
-* `uint16_t`
-* `int32_t`
-* `uint32_t`
-* `int64_t`
-* `uint64_t`
-* `float`
-* `double`
-* `std::string`
-* `std::vector<std::string>`
-* `absl::LogSeverity` (provided natively for layering reasons)
+*   `bool`
+*   `int16_t`
+*   `uint16_t`
+*   `int32_t`
+*   `uint32_t`
+*   `int64_t`
+*   `uint64_t`
+*   `float`
+*   `double`
+*   `std::string`
+*   `std::vector<std::string>`
+*   `std::optional<T>` (see "Optional Flags" below)
+*   `absl::LogSeverity` (provided natively for layering reasons)
 
 NOTE: support for integral types is implemented using overloads for
 variable-width fundamental types (`short`, `int`, `long`, etc.). However, you
@@ -187,6 +190,42 @@ definitions of flags with the same name are linked into a single program the
 linker will report an error. If you want to access a flag in more than one
 source file, define it in a `.cc` file, and [declare](#declaring_flags) it in
 the corresponding header file.
+
+### Optional Flags
+
+The Abseil flags library supports flags of type `std::optional<T>` where `T` is
+a type of one of the supported flags. We refer to this flag type as an
+"optional flag." An optional flag is either "valueless", holding no value of
+type `T` (indicating that the flag has not been set) or a value of type `T`. The
+valueless state in C++ code is represented by a value of `std::nullopt` for the
+optional flag.
+
+Using `std::nullopt` as an optional flag's default value allows you to check
+whether such a flag was ever specified on the command line:
+
+```cpp
+if (absl::GetFlag(FLAGS_foo).has_value()) {
+  // flag was set on command line
+} else {
+  // flag was not passed on command line
+}
+```
+
+Using `std::optional<T>` in this manner avoids common workarounds for indicating
+such an unset flag (such as using sentinel values to indicate this state).
+
+An optional flag also allows a developer to pass a flag in an "unset" valueless
+state on the command line, allowing the flag to later be set in binary logic. An
+optional flag's valueless state is indicated by the special notation of passing
+the value as an empty string through the syntax `--flag=` or `--flag ""`.
+
+```sh
+$ binary_with_optional --flag_in_unset_state=
+$ binary_with_optional --flag_in_unset_state ""
+```
+
+NOTE: as a result of the above syntax requirements, an optional flag cannot be
+set to a `T` of any value which unparses to the empty string.
 
 ## Accessing Flags
 
@@ -353,6 +392,18 @@ Despite this flexibility, we recommend using only a single form:
 `--variable=value` for non-boolean flags, and `--variable/--novariable` for
 boolean flags. This consistency will make your code more readable.
 
+Setting a flag of type `std::optional<T>` on the command line to show the
+"unset" state requires a way to refer to this uninitialized value. For Abseil
+flags, this value is specified using the empty string.
+
+```sh
+binary_with_optional --flag_in_unset_state=
+binary_with_optional --flag_in_unset_state ""
+```
+
+NOTE: this usage prevents an optional flag from having a *value* of the empty
+string in practice.
+
 It is a fatal error to specify a flag on the command-line that has not been
 defined somewhere in the executable. If you need that functionality for some
 reason -- say you want to use the same set of flags for several executables, but
@@ -430,9 +481,9 @@ invoked, cause the application to print some information about itself and exit.
 
 ```text
 --help            show help on important flags for this binary
---helpfull        shows all flags from all files, sorted by file and then
-                  by name; shows the flagname, its default value, and its
-                  help string
+--helpfull        shows the full list of flags from all files, sorted by file
+                  and then by name; shows the flagname, its default value, and
+                  its help string
 --helpshort       shows only flags for the file with the same name as the
                   executable (usually the one containing main())
 --helpon=FILE     shows only flags defined in FILE.*
@@ -440,7 +491,10 @@ invoked, cause the application to print some information about itself and exit.
 --helppackage     shows flags defined in files in same directory as main()
 --version         prints version info for the executable
 ```
-NOTE: The help message for a flag will include its default value, so in most cases there is no need to mention the default value in the definition of a flag's `help-text`.
+
+NOTE: The help message for a flag will include its default value, so in most
+cases there is no need to mention the default value in the definition of a
+flag's `help-text`.
 
 Additionally, some built-in flags have additional behavioral effects. These are
 noted below.

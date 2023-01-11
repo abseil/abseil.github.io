@@ -71,7 +71,7 @@ biased sampling.
 // as other values.
 uint32_t die_roll = 1 + (bitgen() % 6);
 
-// Instead, use a distribution function instead:
+// Use a distribution function instead:
 uint32_t die_roll = absl::Uniform(absl::IntervalClosed, gen, 1, 6);
 ```
 

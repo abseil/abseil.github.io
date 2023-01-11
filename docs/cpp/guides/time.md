@@ -242,7 +242,7 @@ int64_t min = dur / absl::Minutes(1);      // min == 0
 ```
 
 Additionally, the Abseil time library provides helper functions for converting
-duration values into integers or `double` values:
+duration values into `int64_t` or `double` values:
 
 * `ToInt64Nanoseconds()` and `ToDoubleNanoseconds()`
 * `ToInt64Microseconds()` and `ToDoubleMicroseconds()`
@@ -382,7 +382,7 @@ absl::CivilMonth cm;
 UseDay(cm);                  // OK: implicit conversion to absl::CivilDay
 ```
 
-### Civil Time Normalization
+### Civil Time Normalization {#normalization}
 
 Normalization takes invalid values and adjusts them to produce valid values.
 Within the civil-time library, integer arguments passed to the `Civil*`
