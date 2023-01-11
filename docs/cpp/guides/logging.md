@@ -18,11 +18,11 @@ beginning of a statement that additional data may optionally be streamed into
 just like `std::cout`.
 
 All data streamed into a single macro will be concatenated and written to the
-logfiles as a single message with a prefix formed from metadata (time,
-file/line, etc.). In particular, and unlike `std::cout`, the library supplies a
-newline at the end of each message, so you shouldn't generally end logging
-statements with `\n` or `std::endl`. Any newlines that *are* streamed in will
-show up in the logfiles.
+logfiles as a single message with a [prefix](#prefix) formed from metadata
+(time, file/line, etc.). In particular, and unlike `std::cout`, the library
+supplies a newline at the end of each message, so you shouldn't generally end
+logging statements with `\n` or `std::endl`. Any newlines that *are* streamed in
+will show up in the logfiles.
 
 For more detailed information, see the header files.
 
@@ -42,7 +42,7 @@ LOG(INFO) << "Hello world!";
 This will produce a message in the logs like:
 
 ```
-I0926 09:00:00.000000   12345 main.cc:10] Hello world!
+I0926 09:00:00.000000   12345 foo.cc:10] Hello world!
 ```
 
 The format of the metadata is documented [below](#prefix).
@@ -73,7 +73,7 @@ ProcessFile(filenames_sorted.front());
 This will produce a message in the logs like:
 
 ```
-F0926 09:00:01.000000   12345 main.cc:100] Check failed: !filenames_sorted.empty() no files matched
+F0926 09:00:01.000000   12345 foo.cc:100] Check failed: !filenames_sorted.empty() no files matched
 E0926 09:00:01.150000   12345 process_state.cc:1133] *** SIGABRT received by PID 12345 (TID 12345) on cpu 0 from PID 12345; stack trace: ***
 E0926 09:00:01.250000   12345 process_state.cc:1136] PC: @     0xdeadbeef  (unknown)  raise
     @     0xdeadbeef       1920  FailureSignalHandler()
@@ -99,8 +99,20 @@ CHECK_EQ(2 * x, y) << "oops!";
 This will produce a message in the logs like:
 
 ```
-F0926 09:00:02.000000   12345 main.cc:200] Check failed: 2 * x == y (6 vs. 5) oops!
+F0926 09:00:02.000000   12345 foo.cc:20] Check failed: 2 * x == y (6 vs. 5) oops!
 ```
+
+### Alternate Macro Names for Interoperability
+
+Abseil provides alternative macro names prefixed with `ABSL_` (e.g. `ABSL_LOG`)
+for the benefit of projects that need them.  These macros are provided in
+separate `absl_log.h` and `absl_check.h` header files.  Both names are identical
+and are equally supported.
+
+We expect most libraries to avoid logging in headers, and most projects to use
+only one logging framework.  In these cases, the shorter names tend to be more
+convenient and readable, which is especially valuable for macros used as heavily
+as these tend to be.
 
 ### Severity Levels {#severity}
 
@@ -116,27 +128,23 @@ There are four proper severity levels:
     events that are important for understanding the state *of the program* but
     which are not indicative of a problem. Libraries, especially low-level
     common libraries, should use this level sparingly lest they spam the logs of
-    every program that uses them.
-
+    every program that uses them.<br />
 *   `WARNING` corresponds to `absl::LogSeverity::kWarning`. It describes
     unexpected events which *may* indicate a problem.
-
 *   `ERROR` corresponds to `absl::LogSeverity::kError`. It describes unexpected
     problematic events that the program is able to recover from. `ERROR`
     messages should be actionable, meaning that they should describe actual
     problems with the software or its configuration (and not e.g. with user
     input) and the combination of the message, the file name and line number,
     and surrounding messages should be sufficient to at least understand the
-    event being reported.
-
+    event being reported.<br />
 *   `FATAL` corresponds to `absl::LogSeverity::kFatal` and is the implicit
     severity level for `CHECK` failures. It describes unrecoverable problems.
     Logging at this level terminates the process. The `FATAL` logging level
     should be used sparingly and carefully in services, especially user-facing
     services, and in library code that may be included in such services. Each
     fatal log is a potential outage if a significant fraction of the serving
-    jobs hit it at once.
-
+    jobs hit it at once.<br />
     Fatal logging is more often appropriate for developer tools, some batch
     jobs, and failures at job startup. That said, process termination and
     outages are always preferable to undefined behavior (which could include
@@ -156,7 +164,9 @@ If you want to specify a severity level using a C++ expression, e.g. so that the
 level used varies at runtime, you can do that too:
 
 ```c++
-LOG(LEVEL(MoonPhase() == kFullMoon ? absl::LogSeverity::kFatal : absl::LogSeverity::kError)) << "Spooky error!";
+LOG(LEVEL(MoonPhase() == kFullMoon ? absl::LogSeverity::kFatal
+                                     : absl::LogSeverity::kError))
+      << "Spooky error!";
 ```
 
 ### Other Macro Variants {#macros}
@@ -166,19 +176,16 @@ The logging API contains a number of additional macros for special cases.
 *   `QCHECK()` works like `CHECK()` but with the same variations as `QFATAL` vs.
     `FATAL`: it does not log a stack trace or run `atexit()` handlers on
     failure.
-
     ```c++
     int main (int argc, char**argv) {
       absl::ParseCommandLine(argc, argv);
       QCHECK(!absl::GetFlag(FLAGS_path).empty()) << "--path is required";
       ...
     ```
-
 *   `PLOG()` and `PCHECK()` automatically append a string describing `errno` to
     the logged message. They are useful with system library calls that set
     `errno` on failure to indicate the nature of the failure. Their names are
     intended to be consistent with the `perror` library function.
-
     ```c++
     const int fd = open(path.c_str(), O_RDONLY);
     PCHECK(fd != -1) << "Failed to open " << path;
@@ -189,62 +196,49 @@ The logging API contains a number of additional macros for special cases.
     const int close_ret = close(fd);
     if (close_ret == -1) PLOG(WARNING) << "Failed to close " << path;
     ```
-
 *   `DLOG()` ("debug log") and `DCHECK()` disappear from the binary completely
     in optimized builds. Note that `DLOG(FATAL)` and `DCHECK()` have very
-    different semantics from `LOG(DFATAL)`.
-
+    different semantics from `LOG(DFATAL)`.<br />
     Debug logging is helpful for information that's useful when debugging tests
     but expensive to collect (e.g. acquiring a contended lock) in production:
-
     ```c++
     DLOG(INFO) << server.State();
     ```
-
     Be careful with `DCHECK()`; if it's worth checking in tests it's probably
     worth checking in production too:
-
     ```c++
     DCHECK(ptr != nullptr);
     ptr->Method();
     ```
-
     `DCHECK` can sometimes be useful for checking invariants in very hot
     codepaths, where checks in tests must be assumed to validate behavior in
-    production.
-
+    production.<br />
     Just like `assert()`, be sure not to rely on evaluation of side-effects
     inside `DCHECK` and `DLOG` statements:
-
     ```c++ {.bad}
     DCHECK(server.Start());
     // In an optimized build, no attempt will have been made to start the
     // server!
     ```
-
 *   `LOG_IF()` adds a condition parameter and is equivalent to an `if`
     statement. As with `if` and the ternary operator, the condition will be
     contextually converted to `bool`. `PLOG_IF()` and `DLOG_IF()` variants also
     exist.
-
     ```c++
     LOG_IF(INFO, absl::GetFlag(FLAGS_dry_run))
         << "--dry_run set; no changes will be made";
     ```
-
 *   `LOG_EVERY_N()`, `LOG_FIRST_N()`, `LOG_EVERY_N_SEC()`, and
     `LOG_EVERY_POW_2()` add more complicated conditions that can't be easily
     replicated with a simple `if` statement. Each of these maintains a
     per-statement state object in static storage that's used to determine
-    whether it's time to log again. They are thread-safe.
-
+    whether it's time to log again. They are thread-safe.<br />
     The token `COUNTER` may be streamed into these; it will be replaced by a
     monotonically increasing count of the number of times execution has passed
     through this statement, including both the times when logging happened and
     the times when it did not. Macro variants with an added condition (e.g.
     `LOG_IF_EVERY_N()`) also exist, as do many combinations with `VLOG()`,
     `PLOG()`, and `DLOG()`.
-
     ```c++
     LOG_EVERY_N(WARNING, 1000) << "Got a packet with a bad CRC (" << COUNTER
                                << " total)";
@@ -255,51 +249,34 @@ The logging API contains a number of additional macros for special cases.
 The `LOG()` and `CHECK()` macros support some chainable methods that alter their
 behavior.
 
-*   `.AtLocation(absl::string_view file, int line)`
-
+*   `.AtLocation(absl::string_view file, int line)`<br />
     Overrides the location inferred from the callsite. The string pointed to by
     `file` must be valid until the end of the statement.
-
-*   `.NoPrefix()`
-
+*   `.NoPrefix()`<br />
     Omits the [prefix](#prefix) from this line. The prefix includes metadata
     about the logged data such as source code location and timestamp.
-
-*   `.WithTimestamp(absl::Time timestamp)`
-
+*   `.WithTimestamp(absl::Time timestamp)`<br />
     Uses the specified timestamp instead of one collected at the time of
     execution.
-
-*   `.WithThreadID(absl::LogEntry::tid_t tid)`
-
+*   `.WithThreadID(absl::LogEntry::tid_t tid)`<br />
     Uses the specified thread ID instead of one collected at the time of
     execution.
-
-*   `.WithMetadataFrom(const absl::LogEntry &entry)`
-
-    Copies all metadata (but no data) from the specified `absl::LogEntry`.
-
+*   `.WithMetadataFrom(const absl::LogEntry &entry)`<br />
+    Copies all metadata (but no data) from the specified `absl::LogEntry`.<br />
     This can be used to change the severity of a message, but it has some
     limitations:
-
     *   `ABSL_MIN_LOG_LEVEL` is evaluated against the severity passed into `LOG`
         (or the implicit `FATAL` level of `CHECK`).
     *   `LOG(FATAL)` and `CHECK` terminate the process unconditionally, even if
         the severity is changed later.
-
-*   `.WithPerror()`
-
+*   `.WithPerror()`<br />
     Appends to the logged message a colon, a space, a textual description of the
     current value of `errno` (as by `strerror(3)`), and the numerical value of
     `errno`. The result is comparable to `PLOG()` and `PCHECK()`.
-
-*   `.ToSinkAlso(absl::LogSink* sink)`
-
+*   `.ToSinkAlso(absl::LogSink* sink)`<br />
     Sends this message to `*sink` in addition to whatever other sinks it would
     otherwise have been sent to. `sink` must not be null.
-
-*   `.ToSinkOnly(absl::LogSink* sink)`
-
+*   `.ToSinkOnly(absl::LogSink* sink)`<br />
     Sends this message to `*sink` and no others. `sink` must not be null.
 
 ## Logged Message Output {#output}
@@ -309,12 +286,12 @@ behavior.
 Each message is logged with metadata of the following form:
 
 ```
-I0926 09:00:00.000000   12345 main.cc:10] Hello world!
+I0926 09:00:00.000000   12345 foo.cc:10] Hello world!
 ```
 
 The prefix starts with an `I`, representing the `INFO` severity level, combined
 with a date, `0926`. The time follows, with microseconds, in the machine's local
-timezone. `12345` is a thread ID number. `main.cc:10` is the source code
+timezone. `12345` is a thread ID number. `foo.cc:10` is the source code
 location where the `LOG()` statement appears, and the bracket and space are a
 fixed delimiter before the message itself.
 
@@ -399,6 +376,21 @@ operator<<(std::ostream&, const MyType&)` (for small `MyType`, you can pass by
 value instead) in your type's namespace (for
 [ADL](https://en.cppreference.com/w/cpp/language/adl)).
 
+### Why does logging use macros and not functions?
+
+There are several reasons the logging system uses macros:
+
+*   Until C++20, which introduces `std::source_location`, it's impossible to
+    portably capture source filename and line number at a function call without
+    spelling out `__FILE__` and `__LINE__` or hiding their spelling in a macro.
+
+*   `CHECK()` uses stringification to include the source code text of the failed
+    condition in the failure message. There's no way to do this in a function.
+
+*   `CHECK(bar()) << foo();` does not evaluate `foo()` when `bar()` returns
+    `true`. Likewise `LOG(INFO) << foo();` does not evaluate `foo()` if
+    `ABSL_MIN_LOG_LEVEL` is `kWarning`. Functions can't do this.
+
 ### Okay, but how does `LOG(ERROR)` not use the name `ERROR`? It's right there! {#hygiene}
 
 `LOG(severity)` is a preprocessor macro whose definition looks like
@@ -419,19 +411,3 @@ this is how `LOG(LEVEL(x))` works.
 This is also why misspelling a severity level, e.g. `LOG(WARN)` (this should be
 `WARNING`), produces a diagnostic about `LONG_INTERNAL_MACRO_NAME_WARN` not
 being defined rather than about `WARN` not being defined.
-
-### Why is it called `LOG` and not `ABSL_LOG` like all Abseil's other names?
-
-Moreso than just about anything else in Abseil, `LOG` and `CHECK` are used
-*a lot* in Google's codebase, so the cost to rename them would have been
-relatively high.  There's also a non-trivial cumulative human cost to read and
-write those five extra characters and the extra line breaks they will cause.
-
-Unlike most of our C++ types (but *like* Flags, to some extent), we expect
-logging to be used sparingly in library projects.  Indeed; the rest of Abseil is
-such a project, and it does not depend on Abseil Logging.  To the extent that
-this is true, it should be rare to need to mix logging libraries in a single
-program, and so conflicts between different `LOG` definitions should be rare.
-
-Neither of these factors is decisive, but taken together, we found them
-persuasive and decided not to rename.
