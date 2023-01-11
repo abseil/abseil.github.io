@@ -22,4 +22,4 @@ them.
 
 ## Presentations
 
-* [Modern A++ API Design](modern-cpp-api-design.pptx)
+* [Modern C++ API Design](modern-cpp-api-design.pptx)
