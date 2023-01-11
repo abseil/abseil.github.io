@@ -89,8 +89,6 @@ The Clang compiler flag set has the following characteristics:
     * `-Wno-double-promotion`
     * `-Wno-float-conversion`
     * `-Wno-old-style-cast`
-    * `-Wno-shorten-64-to-32`
-    * `-Wno-sign-conversion`
 * `-Wrange-loop-analysis` is disabled because Clang's implementation only
   ignores actual POD types; turning this warning on would require even small
   value types such as `absl::string_view` to be defined as const references
