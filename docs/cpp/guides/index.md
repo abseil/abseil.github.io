@@ -15,6 +15,7 @@ all code within Abseil within this guide.
 * [Container Library](container)
 * [Flags Library](flags)
 * [Hash Library](hash)
+* [Logging Library](logging)
 * [Meta Library Guide](meta)
 * [Numeric Library Guide](numeric)
 * [Options Guide](options)
@@ -24,3 +25,4 @@ all code within Abseil within this guide.
 * [StrFormat Guide](format)
 * [Strings Guide](strings)
 * [Time Library](time)
+* [Types Library](types)
