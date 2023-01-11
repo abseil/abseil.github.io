@@ -72,10 +72,11 @@ formatted using an `absl::ParsedFormat` type. See
 
 ### Conversion Specifiers
 
-The `str_format` library follows the POSIX syntax as used within the
+The `str_format` library mostly follows the POSIX syntax as used within the
 [POSIX `printf()` family specification][1], which specifies the makeup of a
-format conversion specifier. A format conversion specifier is a string of the
-following form:
+format conversion specifier. (Exceptions are noted below.)
+
+A format conversion specifier is a string of the following form:
 
 *   The `%` character
 *   An optional positional specifier of the form `n$`, where `n` is a
@@ -100,7 +101,7 @@ following form:
 *   An optional precision value specified as `.n`, where `n` is a integral
     value, or <code>.*<i>variable</i></code> to use a variable of type `int` to
     specify this value.
-*   A length modifer to modify the length of the data type. In `StrFormat()`,
+*   A length modifier to modify the length of the data type. In `StrFormat()`,
     these values are ignored (and not needed, since `StrFormat()` is type-safe)
     but are allowed for backwards compatibility:
     *   `hh`, `h`, `l`, `ll`, `L`, `j`, `z`, `t`, `q`
@@ -121,10 +122,22 @@ following form:
     *   `p` for pointer address values
     *   `n` for the special case of writing out the number of characters written
         to this point.
+    *   `v` for values using the default format for a deduced type. These
+        deduced types include many primitive types denoted here as well as
+        user-defined types containing the proper extensions. (See
+        [User Defined Formats](#user-defined-formats) below.)
 
 NOTE: the `n` specifier within the `printf` family of functions is unsafe.
 `StrFormat()` allows use of `%n` only when capturing such values within a safe
 `FormatCountCapture` class. See example below.
+
+NOTE: the `v` specifier (for "value") is a type specifier not present in the
+`POSIX` specification. `%v` will format values according to their deduced type.
+`v` uses `d` for signed integer values, `u` for unsigned integer values, `g` for
+floating point values, and formats boolean values as `"true"`/`"false"` (instead
+of `1` or `0` for booleans formatted using `d`). `const char*` is not supported;
+please use `std:string` and `string_view`. `char` is also not supported due to
+ambiguity of the type. This specifier does not support modifiers.
 
 Examples:
 
@@ -141,7 +154,7 @@ absl::StrFormat("%s", "Hello!") -> "Hello!"
 absl::StrFormat("%d", 1)    -> "1"
 absl::StrFormat("%02d", 1)  -> "01"       // Zero-padding
 absl::StrFormat("%-2d", 1)  -> "1 "       // Left justification
-absl::StrFormat("%0+3d", 1) -> "+01");    // + specifier part of width
+absl::StrFormat("%0+3d", 1) -> "+01"    // + specifier part of width
 
 // Octals
 absl::StrFormat("%o", 16)   -> "20"
@@ -198,6 +211,15 @@ int n = 0;
 std::string s = absl::StrFormat(
     "%s%d%n", "hello", 123, absl::FormatCountCapture(&n));
 EXPECT_EQ(8, n);
+
+// %v
+std::string s = "hello";
+unsigned int x = 16;
+absl::StrFormat("%v", s)    -> "hello"
+absl::StrFormat("%v", 1)    -> "1"
+absl::StrFormat("%v", x)    -> "16"
+absl::StrFormat("%v", 1.6)  -> "1.6"
+absl::StrFormat("%v", true) -> "true"
 ```
 
 ### Type Support
@@ -238,8 +260,8 @@ specified using an `absl::ParsedFormat`. An `absl::ParsedFormat` represents a
 pre-parsed `absl::FormatSpec` with template arguments specifying a collection of
 conversion specifiers.
 
-In C++11 and C++14, these conversion specifiers are restricted to single char
-values (e.g. `d`); in C++17 or later, you may also specify one or more
+In C++14, these conversion specifiers are restricted to single char values (e.g.
+`d`); in C++17 or later, you may also specify one or more
 `absl::FormatConversionCharSet` enums (e.g. `absl::FormatConversionCharSet::d`
 or `absl::FormatConversionCharSet::d | absl::FormatConversionCharSet::x` using
 the bitwise-or combination.
@@ -326,7 +348,6 @@ take the same arguments, return an `int` with the same semantics and can set
 Example:
 
 ```cpp
-
 absl::PrintF("Trying to request TITLE: %s USER: %s\n", title, user);
 ```
 
@@ -364,7 +385,7 @@ if (FILE* file_handle = fopen("myfile.txt", "w"); file_handle != nullptr) {
 }
 ```
 
-## User-Defined Formats
+## User-Defined Formats {#user-defined-formats}
 
 The `str_format` library provides customization utilities for formatting
 user-defined types using `StrFormat()`. As with most type extensions, you should
@@ -378,10 +399,78 @@ own the type you wish to extend.
 > absl::PrintF("My Foo: %s\n", absl::FormatStreamed(foo));
 > ```
 
-To extend formatting to your custom type, provide an `AbslFormatConvert()`
-overload as a free (non-member) function within the same file and namespace of
-that type, usually as a `friend` definition. The `str_format` library will check
-for such an overload when formatting user-defined types using `StrFormat()`.
+There are two methods of formatting user-defined types:
+
+*   `AbslStringify()` provides a simpler user API using the `v` type specifier,
+    and as well as working with `StrFormat(), also works with` absl::StrCat()`,
+    `absl::Substitute()`, and logging.
+*   `AbslFormatConvert()` is more customizable, allowing users more control over
+    type specifiers and additional modifiers for formatting their types.
+
+We'll cover both of these approaches below.
+
+### `AbslStringify()`
+
+To extend formatting to your custom type using `AbslStringify()`, provide an
+`AbslStringify()` overload as a free (non-member) function template within the
+same file and namespace of that type as a `friend` definition. The `str_format`
+library will check for such an overload when formatting user-defined types using
+`StrFormat()`.
+
+An `AbslStringify()` overload should have the following signature:
+
+```cpp
+template <typename Sink>
+void AbslStringify(Sink& sink, const UserDefinedType& value);
+```
+
+Note: `AbslStringify()` utilizes a generic "sink" buffer to construct its
+string. This sink has an interface similar to `absl::FormatSink`, but does not
+support `PutPaddedString()`.
+
+`AbslStringify()` only supports use with the type specifier `%v`, which uses
+type deducation for formatting purposes.
+
+An example usage within a user-defined type is shown below:
+
+```cpp
+struct Point {
+
+  ...
+  // StrFormat support is added to the Point class through an AbslStringify()
+  // friend declaration.
+  template <typename Sink>
+  friend void AbslStringify(Sink& sink, const Point& p) {
+    absl::Format(&sink, "(%d, %d)", p.x, p.y);
+  }
+
+  int x;
+  int y;
+}
+```
+
+Formatting a `Point` can then simply use the `%v` type specifier:
+
+```cpp
+// StrFormat has built-in support for types extended with AbslStringify
+absl::StrFormat("The point is %v", p);
+// AbslStringify also automatically includes support for absl::StrCat and
+// absl::Substitute()
+absl::StrCat("The point is ", p);
+absl::Substitute("The point is $0", p);
+```
+
+Additionally, `AbslStringify()` itself can use `%v` within its own format
+strings to perform this type deducation. Our `Point` above could be formatted
+as `"(%v, %v)"` for example, and deduce the `int` values as `%d`.
+
+### `AbslFormatConvert()`
+
+To extend formatting to your custom type using `AbslFormatConvert()`, provide an
+`AbslFormatConvert()` overload as a free (non-member) function within the same
+file and namespace of that type, usually as a `friend` definition. The
+`str_format` library will check for such an overload when formatting
+user-defined types using `StrFormat()`.
 
 An `AbslFormatConvert()` overload should have the following signature:
 
@@ -390,7 +479,7 @@ absl::FormatConvertResult<...> AbslFormatConvert(
     const X& value,
     const absl::FormatConversionSpec& conversion_spec,
     absl::FormatSink *output_sink);
-```
+~~~
 
 * The `absl::FormatConvertResult` return value holds the set of
   `absl::FormatConversionCharSet` values valid for this custom type. A return
@@ -448,11 +537,11 @@ struct Point {
                     absl::FormatSink* s) {
     if (spec.conversion_char() == absl::FormatConversionChar::s) {
       // If the conversion char is %s, produce output of the form "x=1 y=2"
-      s->Append(absl::StrCat("x=", p.x, " y=", p.y));
+      absl::Format(s, "x=%vy=%v", p.x, p.y);
     } else {
       // If the conversion char is integral (%i, %d ...) , produce output of the
       // form "1,2". Note that no padding will occur here.
-      s->Append(absl::StrCat(p.x, ",", p.y));
+      absl::Format(s, "%v,%v", p.x, p.y);
     }
     return {true};
   }
