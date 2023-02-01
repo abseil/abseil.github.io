@@ -340,7 +340,7 @@ The bug was introduced on
 [Jul 18, 2011](https://github.com/golang/go/commit/ee6e1a3ff77) as part of a
 WaitGroup rewrite that was intended to improve scalability. The change indeed
 improved performance and scalability, but it also replaced a simple mutex-based
-algorithm with a trickier one based on atomic operations. The bug occured in
+algorithm with a trickier one based on atomic operations. The bug occurred in
 very rare circumstances but led to arbitrary memory corruptions. It was
 discovered and fixed only on
 [Apr 10, 2014](https://github.com/golang/go/commit/e9347c781be). The bug was
@@ -358,8 +358,9 @@ unexpected thread interleaving.
 
 The bug was introduced sometime before
 [Feb 2009](https://twitter.com/nitsanw/status/1406871256486580229). The bug
-allowed the remove operation to return the same item more than once, ultimately
-due to a flaw in the Java CAS spec. It was identified on
+allowed the remove operation to return the same item more than once. The root
+cause was an inconsistency between a failed CAS and a subsequent atomic read of
+the same field. It was identified on
 [Jan 15, 2018](https://github.com/JCTools/JCTools/issues/205#) and fixed on
 [Jan 21, 2018](https://github.com/JCTools/JCTools/commit/69786bb178f194b7dad5e4dbf84bed41db5af94e)
 after much discussion.

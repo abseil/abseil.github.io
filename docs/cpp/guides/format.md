@@ -402,7 +402,7 @@ own the type you wish to extend.
 There are two methods of formatting user-defined types:
 
 *   `AbslStringify()` provides a simpler user API using the `v` type specifier,
-    and as well as working with `StrFormat(), also works with` absl::StrCat()`,
+    and as well as working with `StrFormat()`, also works with `absl::StrCat()`,
     `absl::Substitute()`, and logging.
 *   `AbslFormatConvert()` is more customizable, allowing users more control over
     type specifiers and additional modifiers for formatting their types.

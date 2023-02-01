@@ -115,6 +115,7 @@ span.bolditalic {
 a.ulink, a.xref, a.email, a.link, a {
   text-decoration: none;
   color: #8e0012;
+  word-wrap: break-word;
 }
 
 span.lineannotation {
