@@ -47,7 +47,7 @@ below in the order of re-publication.**
   {% assign new = true %}
 
   {% for post in sorted_posts %}
-    {% if post.title contains "Tip of the Week" %}
+    {% if post.url contains "/tips/" %}
       {% assign cur_date = post.date | date_to_string %}
       {% unless datelist contains cur_date %}
         <li><b>{{post.date | date: '%B %d, %Y' }}</b></li>

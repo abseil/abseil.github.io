@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Software Engineering at Google</title>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> </script>
+    <link rel="stylesheet" type="text/css" href="theme/html/html.css">
+  </head>
+  <body data-type="book">
+    <section xmlns="http://www.w3.org/1999/xhtml" data-type="chapter" id="how_to_work_well_on_teams">
+<h1>How to Work Well on Teams</h1>
+
+<p class="byline">Written by Brian Fitzpatrick</p>
+
+<p class="byline">Edited by Riona MacNamara</p>
+
+<p>Because this chapter is about the cultural and social aspects of software engineering at Google, it makes sense to begin by focusing on the one variable over which you definitely have control: you.</p>
+
+<p>People are inherently imperfect—we like to say that humans are mostly a collection of intermittent bugs. But before you can understand the bugs in your coworkers, you need to understand the bugs in yourself. We’re going to ask you to think about your own reactions, behaviors, and attitudes—and in return, we hope you gain some real insight into how to become a more efficient and successful software engineer who spends less energy dealing with people-related problems and more time writing great code.</p>
+
+<p>The critical idea in this chapter is that software development is a team endeavor. And to succeed on an engineering team—or in any other creative collaboration—you need to reorganize your behaviors around the core principles of humility, respect, and trust.</p>
+
+<p>Before we get ahead of ourselves, let’s begin by observing how software engineers tend to behave in general.</p>
+
+<section data-type="sect1" id="help_me_hide_my_code">
+<h1>Help Me Hide My Code</h1>
+
+<p>For the past 20 years, my colleague Ben<sup><a data-type="noteref" id="ch01fn18-marker" href="#ch01fn18">1</a></sup> and I have spoken at many programming conferences. In 2006, we launched Google’s (now deprecated) open source Project Hosting service, and at first, we used to get lots of questions and requests about the product. But around mid-2008, we began to notice a trend in the sort of requests we were getting:</p>
+
+<blockquote>
+<p>"Can you please give Subversion on Google Code the ability to hide specific branches?"</p>
+
+<p>"Can you make it possible to create open source projects that start out hidden to the world and then are revealed when they’re ready?"</p>
+
+<p>"Hi, I want to rewrite all my code from scratch, can you please wipe all the history?"</p>
+</blockquote>
+
+<p>Can you spot a common theme to these requests?</p>
+
+<p>The answer is <em>insecurity</em>. People<a contenteditable="false" data-primary="insecurity" data-type="indexterm" id="id-PdSzCPh4U8">&nbsp;</a> are afraid of others seeing and judging their work in progress. In one sense, insecurity is just a part of human nature—nobody likes to be criticized, especially for things that aren’t finished. Recognizing this theme tipped us off to a more general trend within software development: insecurity is actually a symptom of a larger problem.</p>
+</section>
+
+<section data-type="sect1" id="the_genius_myth">
+<h1>The Genius Myth</h1>
+
+<p>Many humans have the instinct to find and worship idols.<a contenteditable="false" data-primary="teams" data-secondary="Genius Myth and" data-type="indexterm" id="id-YdSEI8Clcl">&nbsp;</a><a contenteditable="false" data-primary="hero worship" data-type="indexterm" id="id-WdSlCQCpcA">&nbsp;</a> &nbsp;For software engineers, those might be Linus Torvalds, Guido Van Rossum, Bill Gates—all heroes who changed the world with heroic feats. Linus wrote Linux by himself, right?</p>
+
+<p>Actually, what Linus<a contenteditable="false" data-primary="Torvalds, Linus" data-type="indexterm" id="id-WdS2I2HpcA">&nbsp;</a> did was write just the beginnings of a proof-of-concept Unix-like kernel and show it to an email list. <a contenteditable="false" data-primary="Linux" data-secondary="developers of" data-type="indexterm" id="id-mGSMClHWcb">&nbsp;</a>That was no small accomplishment, and it was definitely an impressive achievement, but it was just the tip of the iceberg. Linux is hundreds of times bigger than that initial kernel and was developed by <em>thousands</em> of smart people. Linus’ real achievement was to lead these people and coordinate their work; Linux is the shining result not of his original idea, but of the collective labor&nbsp; of the <a contenteditable="false" data-primary="Unix, developers of" data-type="indexterm" id="id-1JS8tvHKcx">&nbsp;</a>community. (And Unix itself was not entirely written by Ken Thompson and Dennis Ritchie, but by a group of smart people at Bell Labs.)</p>
+
+<p>On that same note, did Guido Van Rossum personally write all of Python?<a contenteditable="false" data-primary="Van Rossum, Guido" data-type="indexterm" id="id-mGSdIvtWcb">&nbsp;</a> Certainly, he wrote the first version. <a contenteditable="false" data-primary="Python" data-type="indexterm" id="id-PdSzCetQc8">&nbsp;</a>But hundreds of others were responsible for contributing to subsequent versions, including ideas, features, and bug fixes.<a contenteditable="false" data-primary="Jobs, Steve" data-type="indexterm" id="id-1JSNHXtKcx">&nbsp;</a> Steve Jobs led an entire team that built the Macintosh, and although Bill Gates is known for writing a BASIC interpreter for early home computers, his bigger achievement was building a successful company around MS-DOS. <a contenteditable="false" data-primary="Gates, Bill" data-type="indexterm" id="id-ZdSrtAtNce">&nbsp;</a>Yet they all became leaders and symbols of the collective achievements of their communities. The Genius Myth is the tendency that we as humans need to ascribe the success of a team to a single person/leader.<a contenteditable="false" data-primary="Genius Myth" data-type="indexterm" id="id-DdS0hetDco">&nbsp;</a></p>
+
+<p>And what about Michael Jordan?</p>
+
+<p>It’s the same story.<a contenteditable="false" data-primary="Jordan, Michael" data-type="indexterm" id="id-1JSXI7uKcx">&nbsp;</a> We idolized him, but the fact is that he didn’t win every basketball game by himself. His true genius was in the way he worked with his team. The team’s coach, Phil Jackson, was extremely clever, and his coaching techniques are legendary. He recognized that one player alone never wins a championship, and so he assembled an entire “dream team” around MJ. This team was a well-oiled machine—at least as impressive as Michael himself.</p>
+
+<p>So, why do we repeatedly idolize the individual in these stories? Why do people buy products endorsed by celebrities? Why do we want to buy Michelle Obama’s dress or Michael Jordan’s shoes?</p>
+
+<p>Celebrity is a big part of it.<a contenteditable="false" data-primary="celebrity" data-type="indexterm" id="id-DdS2IZUDco">&nbsp;</a> Humans have a natural instinct to find leaders and role models, idolize them, and attempt to imitate them. We all need heroes for inspiration, and the programming world has its heroes, too.<a contenteditable="false" data-primary="techie-celebrity phenomenon" data-type="indexterm" id="id-y8SYCJU1cj">&nbsp;</a> The phenomenon of “techie-celebrity” has almost spilled over into mythology. We all want to write something world-changing like Linux or design the next brilliant programming language.</p>
+
+<p>Deep down, many engineers secretly wish to be seen as geniuses. <a contenteditable="false" data-primary="hiding your work" data-secondary="Genius Myth and" data-type="indexterm" id="id-y8SAIAc1cj">&nbsp;</a>This fantasy goes something like this:</p>
+
+<ul>
+	<li>
+	<p>You are struck by an awesome new concept.</p>
+	</li>
+	<li>
+	<p>You vanish into your cave for weeks or months, slaving away at a perfect implementation of your idea.</p>
+	</li>
+	<li>
+	<p>You then “unleash” your software on the world, shocking everyone with your genius.</p>
+	</li>
+	<li>
+	<p>Your peers are astonished by your cleverness.</p>
+	</li>
+	<li>
+	<p>People line up to use your software.</p>
+	</li>
+	<li>
+	<p>Fame and fortune follow naturally.</p>
+	</li>
+</ul>
+
+<p>But hold on: time for a reality check. You’re probably not a genius.</p>
+
+<p>No offense, of course—we’re sure that you’re a very intelligent person. But do you realize how rare actual geniuses really are? Sure, you write code, and that’s a tricky skill. But even if you are a genius, it turns out that that’s not enough. Geniuses still make mistakes, and having brilliant ideas and elite programming skills doesn’t guarantee that your software will be a hit. Worse, you might find yourself solving only analytical problems and not <em>human</em> problems.<a contenteditable="false" data-primary="human problems, solving" data-type="indexterm" id="id-lrSPCNs9cW">&nbsp;</a> Being a genius is most definitely not an excuse for being a jerk: anyone—genius or not—with poor social skills tends to be a poor teammate.<a contenteditable="false" data-primary="social skills" data-type="indexterm" id="id-NdS9Hds8cg">&nbsp;</a> The vast majority of the work at Google (and at most companies!) doesn’t require genius-level intellect, but 100% of the work requires a minimal level of social skills. What will make or break your career, especially at a company like <span class="keep-together">Google,</span> is how well you collaborate with others.</p>
+
+<p>It turns out that this<a contenteditable="false" data-primary="insecurity" data-secondary="manifestation in Genius Myth" data-type="indexterm" id="id-lrSgILF9cW">&nbsp;</a> Genius Myth is just another manifestation of our insecurity. Many programmers are afraid to share work they’ve only just started because it means peers will see their mistakes and know the author of the code is not a genius.</p>
+
+<p>To quote a friend:</p>
+
+<blockquote>
+<p>I know I get SERIOUSLY insecure about people looking before something is done. Like they are going to seriously judge me and think I’m an idiot.</p>
+</blockquote>
+
+<p>This is an extremely common feeling among programmers, and the natural reaction is to hide in a cave, work, work, work, and then polish, polish, polish, sure that no one will see your goof-ups and that you’ll still have a chance to unveil your masterpiece when you’re done. Hide away until your code is perfect.</p>
+
+<p>Another common motivation for hiding your work is the fear that another programmer might take your idea and run with it before you get around to working on it. By keeping it secret, you control the idea.</p>
+
+<p>We know what you’re probably thinking now: so what? Shouldn’t people be allowed to work however they want?</p>
+
+<p>Actually, no. In this case, we assert that you’re doing it wrong, and it <em>is</em> a big deal. Here’s why.</p>
+</section>
+
+<section data-type="sect1" id="hiding_considered_harmful">
+<h1>Hiding Considered Harmful</h1>
+
+<p>If you spend all of your<a contenteditable="false" data-primary="risks" data-secondary="of working alone" data-secondary-sortas="working" data-type="indexterm" id="id-WdS2IQCGfA">&nbsp;</a> time working alone, you’re increasing the risk of unnecessary failure and cheating your potential for growth.<a contenteditable="false" data-primary="hiding your work" data-secondary="harmful effects of" data-type="indexterm" id="ix_hideharm">&nbsp;</a> Even though software development is deeply intellectual work that can require deep concentration and alone time, you must play that off against the value (and need!) for collaboration and review.</p>
+
+<p>First of all, how do you even know whether you’re on the right track?</p>
+
+<p>Imagine you’re a bicycle-design enthusiast, and one day you get a brilliant idea for a completely new way to design a gear shifter. You order parts and proceed to spend weeks holed up in your garage trying to build a prototype. When your neighbor—also a bike advocate—asks you what’s up, you decide not to talk about it. You don’t want anyone to know about your project until it’s absolutely perfect. Another few months go by and you’re having trouble making your prototype work correctly. But because you’re working in secrecy, it’s impossible to solicit advice from your mechanically inclined friends.</p>
+
+<p>Then, one day your neighbor pulls his bike out of his garage with a radical new gear-shifting mechanism. Turns out he’s been building something very similar to your invention, but with the help of some friends down at the bike shop. At this point, you’re exasperated. You show him your work. He points out that your design had some simple flaws—ones that might have been fixed in the first week if you had shown him. There are a number of lessons to learn here.</p>
+
+<section data-type="sect2" id="early_detection">
+<h2>Early Detection</h2>
+
+<p>If you keep your great idea hidden<a contenteditable="false" data-primary="hiding your work" data-secondary="harmful effects of" data-tertiary="forgoing early detection of flaws or issues" data-type="indexterm" id="id-DdS2I7CWu3fw">&nbsp;</a> from the world and refuse to show anyone anything until the implementation is polished, you’re taking a huge gamble. It’s easy to make fundamental design mistakes early on. You risk reinventing wheels.<sup><a data-type="noteref" id="ch01fn19-marker" href="#ch01fn19">2</a></sup> And you forfeit the benefits of collaboration, too: notice how much faster your neighbor moved by working with others? This is why people dip their toes in the water before jumping in the deep end: you need to make sure that you’re working on the right thing, you’re doing it correctly, and it hasn’t been done before. The chances of an early misstep are high. The more feedback you solicit early on, the more you lower this risk.<sup><a data-type="noteref" id="ch01fn20-marker" href="#ch01fn20">3</a></sup> Remember the tried-and-true mantra of “Fail early, fail fast, fail often.”</p>
+
+<p>Early sharing isn’t just about preventing personal missteps and getting your ideas vetted. <a contenteditable="false" data-primary="“Fail early, fail fast, fail often”" data-primary-sortas="Fail early" data-type="indexterm" id="id-y8SAIxHJuYfL">&nbsp;</a>It’s also important to strengthen what we call the bus factor of your project.</p>
+</section>
+
+<section data-type="sect2" id="the_bus_factor">
+<h2>The Bus Factor</h2>
+
+<blockquote>
+<p>Bus factor (noun): the number of people that need to get hit by a bus before your project is completely doomed.</p>
+</blockquote>
+
+<p>How dispersed is the knowledge and know-how in your project?<a contenteditable="false" data-primary="bus factor" data-type="indexterm" id="id-7eS9ILH1TJfJ">&nbsp;</a><a contenteditable="false" data-primary="hiding your work" data-secondary="harmful effects of" data-tertiary="bus factor" data-type="indexterm" id="id-rMSDC2H0TmfW">&nbsp;</a> If you’re the only person who understands how the prototype code works, you might enjoy good job security—but if you get hit by a bus, the project is toast. If you’re working with a colleague, however, you’ve doubled the bus factor. And if you have a small team designing and prototyping together, things are even better—the project won’t be marooned when a team member disappears. Remember: team members might not literally be hit by buses, but other unpredictable life events still happen. Someone might get married, move away, leave the company, or take leave to care for a sick relative. Ensuring that there is <em>at least</em> good documentation in addition to a primary and a secondary owner for each area of responsibility helps future-proof your project’s success and increases your project’s bus factor. Hopefully most engineers recognize that it is better to be one part of a successful project than the critical part of a failed project.</p>
+
+<p>Beyond the bus factor, there’s the issue of overall pace of progress. It’s easy to forget that working alone is often a tough slog, much slower than people want to admit. How much do you learn when working alone? <a contenteditable="false" data-primary="knowledge sharing" data-secondary="increasing knowledge by working with others" data-type="indexterm" id="id-rMSxIMt0TmfW">&nbsp;</a>How fast do you move? Google and Stack Overflow are great sources of opinions and information, but they’re no substitute for actual human experience. Working with other people directly increases the collective wisdom behind the effort. When you become stuck on something absurd, how much time do you waste pulling yourself out of the hole? Think about how <span class="keep-together">different</span> the experience would be if you had a couple of peers to look over your shoulder and tell you—instantly—how you goofed and how to get past the problem. This is exactly why teams sit together (or do pair programming) in software engineering companies. Programming is hard. Software engineering is even harder. You need that second pair of eyes.</p>
+</section>
+
+<section data-type="sect2" id="pace_of_progress">
+<h2>Pace of Progress</h2>
+
+<p>Here’s another analogy. Think about how you work with your compiler. <a contenteditable="false" data-primary="hiding your work" data-secondary="harmful effects of" data-tertiary="pace of progress" data-type="indexterm" id="id-7eS9IWCDUJfJ">&nbsp;</a>When you sit down to write a large piece of software, do you spend days writing 10,000 lines of code, and then, after writing that final, perfect line, press the “compile” button for the very first time? Of course you don’t. Can you imagine what sort of disaster would result?<a contenteditable="false" data-primary="feedback" data-secondary="accelerating pace of progress with" data-type="indexterm" id="id-rMSDCkC4UmfW">&nbsp;</a> Programmers work best in tight feedback loops: write a new function, compile. Add a test, compile. Refactor some code, compile. This way, we discover and fix typos and bugs as soon as possible after generating code. We want the compiler at our side for every little step; some environments can even compile our code as we type. This is how we keep code quality high and make sure our software is evolving correctly, bit by bit. <a contenteditable="false" data-primary="DevOps" data-secondary="philosophy on tech productivity" data-type="indexterm" id="id-GdSMHgCdURfd">&nbsp;</a>The current DevOps philosophy toward tech productivity is explicit about these sorts of goals: get feedback as early as possible, test as early as possible, and think about security and production environments as early as possible.<a contenteditable="false" data-primary="shifting left" data-type="indexterm" id="id-lrSZtjCmU7fA">&nbsp;</a> This is all bundled into the idea of "shifting left" in the developer workflow; the earlier we find a problem, the cheaper it is to fix it.</p>
+
+<p>The same sort of rapid feedback loop is needed not just at the code level, but at the whole-project level, too. Ambitious projects evolve quickly and must adapt to changing environments as they go. Projects run into unpredictable design obstacles or political hazards, or we simply discover that things aren’t working as planned. Requirements morph unexpectedly. How do you get that feedback loop so that you know the instant your plans or designs need to change? Answer: by working in a team. Most engineers know the quote, “Many eyes make all bugs shallow,” but a better version might be, “Many eyes make sure your project stays relevant and on track.” People working in caves awaken to discover that while their original vision might be complete, the world has changed and their project has become irrelevant.</p>
+
+<aside data-type="sidebar" id="case-study-engineers-and-offices-AbIYtRUkfz">
+<h5>Case Study: Engineers and Offices</h5>
+
+<p>Twenty-five years ago, conventional wisdom stated that for an engineer to be productive, they needed to have their own office with a door that closed. <a contenteditable="false" data-primary="software engineers" data-secondary="offices for" data-type="indexterm" id="id-lrSgIjCMtZUGf6">&nbsp;</a><a contenteditable="false" data-primary="hiding your work" data-secondary="harmful effects of" data-tertiary="engineers and offices" data-type="indexterm" id="id-NdSaClCQtpU6fo">&nbsp;</a>This was supposedly the only way they could have big, uninterrupted slabs of time to deeply concentrate on writing reams of code.<a contenteditable="false" data-primary="teams" data-secondary="engineers and offices, opinions on" data-type="indexterm" id="id-63SLHgCotmU0fx">&nbsp;</a></p>
+
+<p>I think that it’s not only unnecessary for most engineers<sup><a data-type="noteref" id="ch01fn21-marker" href="#ch01fn21">4</a></sup> to be in a private office, it’s downright dangerous. Software today is written by teams, not individuals, and a high-bandwidth, readily available connection to the rest of your team is even more valuable than your internet connection. You can have all the uninterrupted time in the world, but if you’re using it to work on the wrong thing, you’re wasting your time.</p>
+
+<p>Unfortunately, it seems that modern-day tech companies (including Google, in some cases) have swung the pendulum to the exact opposite extreme. Walk into their offices and you’ll often find engineers clustered together in massive rooms—a hundred or more people together—with no walls whatsoever. This “open floor plan” is now a topic of huge debate and, as a result, hostility toward open offices is on the rise. The tiniest conversation becomes public, and people end up not talking for risk of annoying dozens of neighbors. This is just as bad as private offices!</p>
+
+<p>We think the middle ground is really the best solution. Group teams of four to eight people together in small rooms (or large offices) to make it easy (and non-embarrassing) for spontaneous conversation to happen.</p>
+
+<p>Of course, in any situation, individual engineers still need a way to filter out noise and interruptions, which is why most teams I’ve seen have developed a way to communicate that they’re currently busy and that you should limit interruptions. Some of us used to work on a team with a vocal interrupt protocol: if you wanted to talk, you would say “Breakpoint Mary,” where Mary was the name of the person you wanted to talk to. If Mary was at a point where she could stop, she would swing her chair around and listen. If Mary was too busy, she’d just say “ack,” and you’d go on with other things until she finished with her current head state.</p>
+
+<p>Other teams have tokens or stuffed animals that team members put on their monitor to signify that they should be interrupted only in case of emergency. Still other teams give out noise-canceling headphones to engineers to make it easier to deal with background noise—in fact, in many companies, the very act of wearing headphones is a common signal that means “don’t disturb me unless it’s really important.” Many engineers tend to go into headphones-only mode when coding, which may be useful for short spurts but, if used all the time, can be just as bad for collaboration as walling yourself off in an office.</p>
+
+<p>Don’t misunderstand us—we still think engineers need uninterrupted time to focus on writing code, but we think they need a high-bandwidth, low-friction connection to their team just as much. If less-knowledgeable people on your team feel that there’s a barrier to asking you a question, it’s a problem: finding the right balance is an art.</p>
+</aside>
+</section>
+
+<section data-type="sect2" id="in_shortcomma_donapostrophet_hide">
+<h2>In Short, Don’t Hide</h2>
+
+<p>So, what “hiding” boils down to is this: working alone is inherently riskier than working with others. Even though you might be afraid of someone stealing your idea or thinking you’re not intelligent, you should be much more concerned about wasting huge swaths of your time toiling away on the wrong thing.</p>
+
+<p>Don’t become another statistic.<a contenteditable="false" data-primary="hiding your work" data-secondary="harmful effects of" data-startref="ix_hideharm" data-type="indexterm" id="id-GdSxIXHDcRfd">&nbsp;</a></p>
+</section>
+</section>
+
+<section data-type="sect1" id="itapostrophes_all_about_the_team">
+<h1>It’s All About the Team</h1>
+
+<p>So, let’s back up now and put all of these ideas together.</p>
+
+<p>The point <a contenteditable="false" data-primary="teams" data-secondary="software engineering as team endeavor" data-type="indexterm" id="ix_teamsfteng">&nbsp;</a>we’ve been hammering away at is that, in the realm of programming, lone craftspeople are extremely rare—and even when they do exist, they don’t perform superhuman achievements in a vacuum; their world-changing accomplishment is almost always the result of a spark of inspiration followed by a heroic team effort.</p>
+
+<p>A great team makes brilliant use of its superstars, but the whole is always greater than the sum of its parts. But creating a superstar team is fiendishly difficult.</p>
+
+<p>Let’s put this idea into simpler words: <em>software engineering is a team endeavor</em>.</p>
+
+<p>This concept directly contradicts the inner Genius Programmer fantasy so many of us hold, but it’s not enough to be brilliant when you’re alone in your hacker’s lair. You’re not going to change the world or delight millions of computer users by hiding and preparing your secret invention. You need to work with other people. Share your vision. Divide the labor. Learn from others. Create a brilliant team.</p>
+
+<p>Consider this: how many pieces of widely used, successful software can you name that were truly written by a single person? (Some people might say “LaTeX,” but it’s hardly “widely used,” unless you consider the number of people writing scientific papers to be a statistically significant portion of all computer users!)</p>
+
+<p>High-functioning teams are gold and the true key to success. You should be aiming for this experience however you can.</p>
+
+<section data-type="sect2" id="the_three_pillars_of_social_interaction">
+<h2>The Three Pillars of Social Interaction</h2>
+
+<p>So, if teamwork is the best route to producing great software, how does one build (or find) a great team?<a contenteditable="false" data-primary="teams" data-secondary="software engineering as team endeavor" data-tertiary="pillars of social interaction" data-type="indexterm" id="id-GdSxIgCDcQSd">&nbsp;</a><a contenteditable="false" data-primary="social interaction" data-secondary="pillars of" data-type="indexterm" id="id-lrSPCjC9cvSA">&nbsp;</a></p>
+
+<p>To reach collaborative nirvana, you first need to learn and embrace what I call the “three pillars” of social skills. These three principles aren’t just about greasing the wheels of relationships; they’re the foundation on which all healthy interaction and collaboration are based:</p>
+
+<dl>
+	<dt>Pillar 1: Humility</dt>
+	<dd>You are not the center of the universe (nor is your code!). You’re neither omniscient nor infallible. <a contenteditable="false" data-primary="humility" data-type="indexterm" id="id-63SVIgCotlcZSx">&nbsp;</a>You’re open to self-improvement.</dd>
+	<dt>Pillar 2: Respect</dt>
+	<dd>You genuinely care about others you work with. <a contenteditable="false" data-primary="respect" data-type="indexterm" id="id-MdSdIJt1tvczSZ">&nbsp;</a>You treat them kindly and appreciate their abilities and accomplishments.</dd>
+	<dt>Pillar 3: Trust</dt>
+	<dd>You believe others are<a contenteditable="false" data-primary="trust" data-type="indexterm" id="id-xaSeIbu4tXc7SP">&nbsp;</a> competent and will do the right thing, and you’re OK with letting them drive when appropriate.<sup><a data-type="noteref" id="ch01fn22-marker" href="#ch01fn22">5</a></sup></dd>
+</dl>
+
+<p>If you perform a root-cause analysis on almost any social conflict, you can ultimately trace it back to a lack of humility, respect, and/or trust. That might sound implausible at first, but give it a try. Think about some nasty or uncomfortable social situation currently in your life. At the basest level, is everyone being appropriately humble? Are people really respecting one another? Is there mutual trust?</p>
+</section>
+
+<section data-type="sect2" id="why_do_these_pillars_matterquestion_mar">
+<h2>Why Do These Pillars Matter?</h2>
+
+<p>When you began this chapter, you probably weren’t planning to sign up for some sort of weekly support group. <a contenteditable="false" data-primary="social interaction" data-secondary="why the pillars matter" data-type="indexterm" id="id-lrSgIjCbfvSA">&nbsp;</a><a contenteditable="false" data-primary="teams" data-secondary="software engineering as team endeavor" data-tertiary="why social interaction pillars matter" data-type="indexterm" id="id-NdSaClClf2S9">&nbsp;</a>We empathize. Dealing with social problems can be difficult: people are messy, unpredictable, and often annoying to interface with. Rather than putting energy into analyzing social situations and making strategic moves, it’s tempting to write off the whole effort. It’s much easier to hang out with a predictable compiler, isn’t it? Why bother with the social stuff at all?</p>
+
+<p>Here’s a quote from a<a contenteditable="false" data-primary="Hamming, Richard" data-type="indexterm" id="id-NdSWIoHlf2S9">&nbsp;</a> <a href="http://bit.ly/hamming_paper">famous lecture by Richard Hamming</a>:</p>
+
+<blockquote>
+<p>By taking the trouble to tell jokes to the secretaries and being a little friendly, I got superb secretarial help. For instance, one time for some idiot reason all the reproducing services at Murray Hill were tied up. Don’t ask me how, but they were. I wanted something done. My secretary called up somebody at Holmdel, hopped [into] the company car, made the hour-long trip down and got it reproduced, and then came back. It was a payoff for the times I had made an effort to cheer her up, tell her jokes and be friendly; it was that little extra work that later paid off for me. By realizing you have to use the system and studying how to get the system to do your work, you learn how to adapt the system to your desires.</p>
+</blockquote>
+
+<p>The moral is this: do not underestimate the power of playing the social game. It’s not about tricking or manipulating people; it’s about creating relationships to get things done. Relationships always outlast projects. When you’ve got richer relationships with your coworkers, they’ll be more willing to go the extra mile when you need them.</p>
+</section>
+
+<section data-type="sect2" id="humilitycomma_respectcomma_and_trust_in">
+<h2>Humility, Respect, and Trust in Practice</h2>
+
+<p>All of this preaching about humility, respect, and trust sounds like a sermon.<a contenteditable="false" data-primary="teams" data-secondary="software engineering as team endeavor" data-tertiary="humility, respect, and trust in practice" data-type="indexterm" id="ix_teamsftenghrt">&nbsp;</a><a contenteditable="false" data-primary="social interaction" data-secondary="humility, respect, and trust in practice" data-type="indexterm" id="ix_socinthrt">&nbsp;</a> Let’s come out of the clouds and think about how to apply these ideas in real-life situations.<a contenteditable="false" data-primary="humility" data-secondary="practicing" data-type="indexterm" id="ix_humprac">&nbsp;</a><a contenteditable="false" data-primary="respect" data-secondary="practicing" data-type="indexterm" id="ix_resp">&nbsp;</a><a contenteditable="false" data-primary="trust" data-secondary="practicing" data-type="indexterm" id="ix_trst">&nbsp;</a> We’re going to examine a list of specific behaviors and examples that you can start with. Many of them might sound obvious at first, but after you begin thinking about them, you’ll notice how often you (and your peers) are guilty of not following them—we’ve certainly noticed this about ourselves!</p>
+
+<section data-type="sect3" id="lose_the_ego-id00070">
+<h3>Lose the ego</h3>
+
+<p>OK, this is sort of a simpler way of telling someone without enough humility to lose their ’tude. <a contenteditable="false" data-primary="ego, losing" data-type="indexterm" id="id-p6SYIJC9HGS9S4">&nbsp;</a>Nobody wants to work with someone who consistently behaves like they’re the most important person in the room. Even if you know you’re the wisest person in the discussion, don’t wave it in people’s faces. For example, do you always feel like you need to have the first or last word on every subject? Do you feel the need to comment on every detail in a proposal or discussion? Or do you know somebody who does these things?</p>
+
+<p>Although it’s important to be humble, that doesn’t mean you need to be a doormat; there’s nothing wrong with self-confidence.<a contenteditable="false" data-primary="self-confidence" data-type="indexterm" id="id-MdSdI2H3HRSzSZ">&nbsp;</a> Just don’t come off like a know-it-all. Even better, think about going for a “collective” ego, instead; rather than worrying about whether you’re personally awesome, try to build a sense of team accomplishment and group pride. For example, the Apache Software Foundation has a long history of creating communities around software projects. These communities have incredibly strong identities and reject people who are more concerned with self-promotion.</p>
+
+<p>Ego manifests itself in many ways, and a lot of the time, it can get in the way of your productivity and slow you down.<a contenteditable="false" data-primary="Hamming, Richard" data-type="indexterm" id="id-2KSWIDtqH1SLS0">&nbsp;</a> Here’s another great story from Hamming’s lecture that illustrates this point perfectly (emphasis ours):</p>
+
+<blockquote>
+<p>John Tukey almost always dressed very casually. He would go into an important office and it would take a long time before the other fellow realized that this is a first-class man and he had better listen. For a long time, John has had to overcome this kind of hostility. It’s wasted effort! I didn’t say you should conform; I said, “The appearance of conforming gets you a long way.” If you chose to assert your ego in any number of ways, “I am going to do it my way,” you pay a small steady price throughout the whole of your professional career. And this, over a whole lifetime, adds up to an enormous amount of needless trouble. […] By realizing you have to use the system and studying how to get the system to do your work, you learn how to adapt the system to your desires. <em>Or you can fight it steadily, as a small, undeclared war, for the whole of your life.</em></p>
+</blockquote>
+</section>
+
+<section data-type="sect3" id="learn_to_give_and_take_criticism">
+<h3>Learn to give <em>and</em> take criticism</h3>
+
+<p>A few years ago, Joe started a new job as a programmer. <a contenteditable="false" data-primary="criticism, learning to give and take" data-type="indexterm" id="id-MdSdIoC1tRSzSZ">&nbsp;</a>After his first week, he really began digging into the codebase. Because he cared about what was going on, he started gently questioning other teammates about their contributions. He sent simple code reviews by email, politely asking about design assumptions or pointing out places where logic could be improved. After a couple of weeks, he was summoned to his director’s office. “What’s the problem?” Joe asked. “Did I do something wrong?” The director looked concerned: “We’ve had a lot of complaints about your behavior, Joe. Apparently, you’ve been really harsh toward your teammates, criticizing them left and right. They’re upset. You need to tone it down.” Joe was utterly baffled. Surely, he thought, his code reviews should have been welcomed and appreciated by his peers. In this case, however, Joe should have been more sensitive to the team’s widespread insecurity and should have used a subtler means to introduce code reviews into the culture—perhaps even something as simple as discussing the idea with the team in advance and asking team members to try it out for a few weeks.</p>
+
+<p>In a professional software engineering environment, criticism is almost never personal—it’s usually just part of the process of making a better project. <a contenteditable="false" data-primary="constructive criticism" data-type="indexterm" id="id-2KSWIlHdt1SLS0">&nbsp;</a>The trick is to make sure you (and those around you) understand the difference between a constructive criticism of someone’s creative output and a flat-out assault against someone’s character. The latter is useless—it’s petty and nearly impossible to act on. The former can (and should!) be helpful and give guidance on how to improve. And, most important, it’s imbued with respect: the person giving the constructive criticism genuinely cares about the other person and wants them to improve themselves or their work. Learn to respect your peers and give constructive criticism politely. If you truly respect someone, you’ll be motivated to choose tactful, helpful phrasing—a skill acquired with much practice. We cover this much more in <a data-type="xref" href="ch09.html#code_review-id00002">Code Review</a>.</p>
+
+<p>On the other side of the conversation, you need to learn to accept criticism as well. This means not just being humble about your skills, but trusting that the other person has your best interests (and those of your project!) at heart and doesn’t actually think you’re an idiot. Programming is a skill like anything else: it improves with practice. If a peer pointed out ways in which you could improve your juggling, would you take it as an attack on your character and value as a human being? We hope not. In the same way, your self-worth shouldn’t be connected to the code you write—or any creative project you build. To repeat ourselves: <em>you are not your code</em>. Say that over and over. You are not what you make. You need to not only believe it yourself, but get your coworkers to believe it, too.</p>
+
+<p>For example, if you have an insecure collaborator, here’s what not to say: “Man, you totally got the control flow wrong on that method there. <a contenteditable="false" data-primary="insecurity" data-secondary="criticism and" data-type="indexterm" id="id-woSVImhEtyS7SR">&nbsp;</a>You should be using the standard xyzzy code pattern like everyone else.” This feedback is full of antipatterns: you’re telling someone they’re “wrong” (as if the world were black and white), demanding they change something, and accusing them of creating something that goes against what everyone else is doing (making them feel stupid). Your coworker will immediately be put on the offense, and their response is bound to be overly <span class="keep-together">emotional.</span></p>
+
+<p>A better way to say the same thing might be, “Hey, I’m confused by the control flow in this section here. I wonder if the xyzzy code pattern might make this clearer and easier to maintain?” Notice how you’re using humility to make the question about you, not them. They’re not wrong; you’re just having trouble understanding the code. The suggestion is merely offered up as a way to clarify things for poor little you while possibly helping the project’s long-term sustainability goals. You’re also not demanding anything—you’re giving your collaborator the ability to peacefully reject the suggestion. The discussion stays focused on the code itself, not on anyone’s value or coding skills.</p>
+</section>
+
+<section data-type="sect3" id="fail_fast_and_iterate">
+<h3>Fail fast and iterate</h3>
+
+<p>There’s a well-known urban legend in the business world about a manager who makes a mistake and loses an impressive $10 million.<a contenteditable="false" data-primary="failures" data-secondary="fail fast and iterate" data-type="indexterm" id="id-2KSWIwCwh1SLS0">&nbsp;</a> He dejectedly goes into the office the next day and starts packing up his desk, and when he gets the inevitable “the CEO wants to see you in his office” call, he trudges into the CEO’s office and quietly slides a piece of paper across the desk.</p>
+
+<blockquote>
+<p>“What’s this?” asks the CEO.</p>
+
+<p>“My resignation,” says the executive. “I assume you called me in here to fire me.”</p>
+
+<p>“Fire you?” responds the CEO, incredulously. “Why would I fire you? I just spent $10 million training you!”<sup><a data-type="noteref" id="ch01fn24-marker" href="#ch01fn24">6</a></sup></p>
+</blockquote>
+
+<p>It’s an extreme story, to be sure, but the CEO in this story understands that firing the executive wouldn’t undo the $10 million loss, and it would compound it by losing a valuable executive who he can be very sure won’t make that kind of mistake again.</p>
+
+<p>At Google, one of our favorite mottos is that “Failure is an option.” It’s widely recognized that if you’re not failing now and then, you’re not being innovative enough or taking enough risks. Failure is viewed as a golden opportunity to learn and improve for the next go-around.<sup><a data-type="noteref" id="ch01fn25-marker" href="#ch01fn25">7</a></sup> In fact, Thomas Edison<a contenteditable="false" data-primary="Edison, Thomas" data-type="indexterm" id="id-k7SvC1hehYSPSJ">&nbsp;</a> is often quoted as saying, “If I find 10,000 ways something won’t work, I haven’t failed. I am not discouraged, because every wrong attempt discarded is another step forward.”</p>
+
+<p>Over in Google X—the division that works on “moonshots” like self-driving cars and internet access delivered by balloons—failure is deliberately built into its incentive system. People come up with outlandish ideas and coworkers are actively encouraged to shoot them down as fast as possible. Individuals are rewarded (and even compete) to see how many ideas they can disprove or invalidate in a fixed period of time. Only when a concept truly cannot be debunked at a whiteboard by all peers does it proceed to early prototype.<a contenteditable="false" data-primary="trust" data-secondary="practicing" data-startref="ix_trst" data-type="indexterm" id="id-k7SGINuehYSPSJ">&nbsp;</a><a contenteditable="false" data-primary="respect" data-secondary="practicing" data-startref="ix_resp" data-type="indexterm" id="id-aESdC9ukhPSmSV">&nbsp;</a><a contenteditable="false" data-primary="humility" data-secondary="practicing" data-startref="ix_humprac" data-type="indexterm" id="id-89SYHbuMh2SqS1">&nbsp;</a><a contenteditable="false" data-primary="teams" data-secondary="software engineering as team endeavor" data-startref="ix_teamsftenghrt" data-tertiary="humility, respect, and trust in practice" data-type="indexterm" id="id-g1SZt9u3hDS4SJ">&nbsp;</a><a contenteditable="false" data-primary="social interaction" data-secondary="humility, respect, and trust in practice" data-startref="ix_socinthrt" data-type="indexterm" id="id-LdSZhvuoheSLSA">&nbsp;</a></p>
+</section>
+</section>
+
+<section data-type="sect2" id="blameless_postmortem_culture">
+<h2>Blameless Post-Mortem Culture</h2>
+
+<p>The key to learning from your mistakes is to document your failures <a contenteditable="false" data-primary="teams" data-secondary="software engineering as team endeavor" data-tertiary="blameless postmortem culture" data-type="indexterm" id="ix_teamsftengpst">&nbsp;</a>by performing a root-cause <a contenteditable="false" data-primary="postmortems, blameless" data-type="indexterm" id="ix_pstmrt">&nbsp;</a>analysis <a contenteditable="false" data-primary="blameless postmortems" data-type="indexterm" id="ix_blapst">&nbsp;</a>and writing up a “postmortem,” as it’s called at Google (and many other companies). Take extra care to make sure the postmortem document isn’t just a useless list of apologies or excuses or finger-pointing—that’s not its purpose. A proper postmortem should always contain an explanation of what was learned and what is going to change as a result of the learning experience. Then, make sure that the postmortem is readily accessible and that the team really follows through on the proposed changes. Properly documenting failures also makes it easier for other people (present and future) to know what happened and avoid repeating history. Don’t erase your tracks—light them up like a runway for those who follow you!</p>
+
+<p>A good postmortem should include the following:</p>
+
+<ul>
+	<li>
+	<p>A brief summary of the event</p>
+	</li>
+	<li>
+	<p>A timeline of the event, from discovery through investigation to resolution</p>
+	</li>
+	<li>
+	<p>The primary cause of the event</p>
+	</li>
+	<li>
+	<p>Impact and damage assessment</p>
+	</li>
+	<li>
+	<p>A set of action items (with owners) to fix the problem immediately</p>
+	</li>
+	<li>
+	<p>A set of action items to prevent the event from happening again</p>
+	</li>
+	<li>
+	<p>Lessons learned</p>
+	</li>
+</ul>
+
+<section data-type="sect3" id="learn_patience">
+<h3>Learn patience</h3>
+
+<p>Years ago, I was writing a tool to convert CVS repositories to Subversion (and later, Git). <a contenteditable="false" data-primary="patience, learning" data-type="indexterm" id="id-xaSeIDC8hgs7SP">&nbsp;</a>Due to the vagaries of CVS, I kept unearthing bizarre bugs. Because my longtime friend and coworker Karl knew CVS quite intimately, we decided we should work together to fix these bugs.</p>
+
+<p>A problem arose when we began pair programming: I’m a bottom-up engineer who is content to dive into the muck and dig my way out by trying a lot of things quickly and skimming over the details. Karl, however, is a top-down engineer who wants to get the full lay of the land and dive into the implementation of almost every method on the call stack before proceeding to tackle the bug. This resulted in some epic interpersonal conflicts, disagreements, and the occasional heated argument. It got to the point at which the two of us simply couldn’t pair-program together: it was too frustrating for us both.</p>
+
+<p>That said, we had a longstanding history of trust and respect for each other. Combined with patience, this helped us work out a new method of collaborating. We would sit together at the computer, identify the bug, and then split up and attack the problem from two directions at once (top-down and bottom-up) before coming back together with our findings. Our patience and willingness to improvise new working styles not only saved the project, but also our friendship.</p>
+</section>
+
+<section data-type="sect3" id="be_open_to_influence">
+<h3>Be open to influence</h3>
+
+<p>The more open you are to influence, the more you are able to influence; the more vulnerable you are, the stronger you appear.<a contenteditable="false" data-primary="influence, being open to" data-type="indexterm" id="id-woSVILCluZs7SR">&nbsp;</a> These statements sound like bizarre contradictions. But everyone can think of someone they’ve worked with who is just maddeningly stubborn—no matter how much people try to persuade them, they dig their heels in even more. What eventually happens to such team members? In our experience, people stop listening to their opinions or objections; instead, they end up “routing around” them like an obstacle everyone takes for granted. You certainly don’t want to be that person, so keep this idea in your head: it’s OK for someone else to change your mind. In the opening chapter of this book, we said that engineering is inherently about trade-offs. It’s impossible for you to be right about everything all the time unless you have an unchanging environment and perfect knowledge, so of course you should change your mind when presented with new evidence. Choose your battles carefully: to be heard properly, you first need to listen to others. It’s better to do this listening <em>before</em> putting a stake in the ground or firmly announcing a decision—if you’re constantly changing your mind, people will think you’re wishy-washy.</p>
+
+<p>The idea of vulnerability can seem strange, too. <a contenteditable="false" data-primary="vulnerability, showing" data-type="indexterm" id="id-4jSRI8HXuEsGS9">&nbsp;</a>If someone admits ignorance of the topic at hand or the solution to a problem, what sort of credibility will they have in a group? Vulnerability is a show of weakness, and that destroys trust, right?<a contenteditable="false" data-primary="trust" data-secondary="vulnerability and" data-type="indexterm" id="id-k7SvCwHkulsPSJ">&nbsp;</a></p>
+
+<p>Not true. Admitting that you’ve made a mistake or you’re simply out of your league can increase your status over the long run. In fact, the willingness to express vulnerability is an outward show of humility, it demonstrates accountability and the willingness to take responsibility, and it’s a signal that you trust others’ opinions. In return, people end up respecting your honesty and strength. Sometimes, the best thing you can do is just say, “I don’t know.”</p>
+
+<p>Professional politicians, for example, are notorious for never admitting error or ignorance, even when it’s patently obvious that they’re wrong or unknowledgeable about a subject. This behavior exists primarily because politicians are constantly under attack by their opponents, and it’s why most people don’t believe a word that politicians say. When you’re writing software, however, you don’t need to be continually on the defensive—your teammates are collaborators, not competitors. You all have the same goal.<a contenteditable="false" data-primary="teams" data-secondary="software engineering as team endeavor" data-startref="ix_teamsftengpst" data-tertiary="blameless postmortem culture" data-type="indexterm" id="id-aESNIDhNuEsmSV">&nbsp;</a><a contenteditable="false" data-primary="postmortems, blameless" data-startref="ix_pstmrt" data-type="indexterm" id="id-89SJCqhmursqS1">&nbsp;</a><a contenteditable="false" data-primary="blameless postmortems" data-startref="ix_blapst" data-type="indexterm" id="id-g1S4Hdhyu6s4SJ">&nbsp;</a>&nbsp;</p>
+</section>
+</section>
+
+<section data-type="sect2" id="being_googley">
+<h2>Being Googley</h2>
+
+<p>At Google, we have our own internal version of the principles of “humility, respect, and trust” when it comes to behavior and human interactions.<a contenteditable="false" data-primary="“Googley”, being" data-primary-sortas="Googley" data-type="indexterm" id="id-p6SYIJC2FGSN">&nbsp;</a><a contenteditable="false" data-primary="social interaction" data-secondary="being “Googley”" data-type="indexterm" id="id-MdSJCoCAFRSg">&nbsp;</a><a contenteditable="false" data-primary="teams" data-secondary="software engineering as team endeavor" data-tertiary="being “Googley”" data-type="indexterm" id="id-2KSaHwCJF1Sr">&nbsp;</a></p>
+
+<p>From the earliest days of our culture, we often referred to actions as being “Googley” or “not Googley.” The word was never explicitly defined; rather, everyone just sort of took it to mean “don’t be evil” or “do the right thing” or “be good to each other.” Over time, people also started using the term “Googley” as an informal test for culture-fit whenever we would interview a candidate for an engineering job, or when writing internal performance reviews of one another. People would often express opinions about others using the term; for example, “the person coded well, but didn’t seem to have a very Googley attitude.”</p>
+
+<p>Of course, we eventually realized that the term “Googley” was being overloaded with meaning; worse yet, it could become a source of unconscious bias in hiring or evaluations. If “Googley” means something different to every employee, we run the risk of the term starting to mean “<em>is just like me.</em>” Obviously, that’s not a good test for hiring—we don’t want to hire people “just like me,” but people from a diverse set of backgrounds and with different opinions and experiences. An interviewer’s personal desire to have a beer with a candidate (or coworker) should <em>never</em> be considered a valid signal about somebody else’s performance or ability to thrive at Google.<a contenteditable="false" data-primary="trust" data-secondary="being “Googley”" data-type="indexterm" id="id-woSNH7t9FySD">&nbsp;</a><a contenteditable="false" data-primary="respect" data-secondary="being “Googley”" data-type="indexterm" id="id-4jS2t3tjFPS1">&nbsp;</a><a contenteditable="false" data-primary="humility" data-secondary="being “Googley”" data-type="indexterm" id="id-k7SNhXtZFYSo">&nbsp;</a></p>
+
+<p>Google eventually fixed the problem by explicitly defining a rubric for what we mean by “Googleyness”—a set of attributes and behaviors that we look for that represent strong leadership and exemplify “humility, respect, and trust”:</p>
+
+<dl>
+	<dt>Thrives in ambiguity</dt>
+	<dd>Can deal with conflicting messages or directions, build consensus, and make progress against a problem, even when the environment is constantly shifting.</dd>
+	<dt>Values feedback</dt>
+	<dd>Has humility to both receive and give feedback gracefully and understands how valuable feedback is for personal (and team) development.</dd>
+	<dt>Challenges status quo</dt>
+	<dd>Is able to set ambitious goals and pursue them even when there might be resistance or inertia from others.</dd>
+	<dt>Puts the user first</dt>
+	<dd>Has empathy and respect for users of Google’s products and pursues actions that are in their best interests.</dd>
+	<dt>Cares about the team</dt>
+	<dd>Has empathy and respect for coworkers and actively works to help them without being asked, improving team cohesion.</dd>
+	<dt>Does the right thing</dt>
+	<dd>Has a strong sense of ethics about everything they do; willing to make difficult or inconvenient decisions to protect the integrity of the team and product.</dd>
+</dl>
+
+<p>Now that we have these best-practice behaviors better defined, we’ve begun to shy away from using the term “Googley.” It’s always better to be specific about expectations!</p>
+</section>
+</section>
+
+<section data-type="sect1" id="conclusion-id00006">
+<h1>Conclusion</h1>
+
+<p>The foundation for almost any software endeavor—of almost any size—is a well-functioning team. Although the Genius Myth of the solo software developer still persists, the truth is that no one really goes it alone. For a software organization to stand the test of time, it must have a healthy culture, rooted in humility, trust, and respect that revolves around the team, rather than the individual. Further, the creative nature of software development <em>requires</em> that people take risks and occasionally fail; for people to accept that failure, a healthy team environment must exist.<a contenteditable="false" data-primary="teams" data-secondary="software engineering as team endeavor" data-startref="ix_teamsfteng" data-type="indexterm" id="id-1JSyCeC4sx">&nbsp;</a></p>
+</section>
+
+<section data-type="sect1" id="tlsemicolondr-id00171">
+<h1>TL;DRs</h1>
+
+<ul>
+	<li>
+	<p>Be aware of the trade-offs of working in isolation.</p>
+	</li>
+	<li>
+	<p>Acknowledge the amount of time that you and your team spend communicating and in interpersonal conflict. A small investment in understanding personalities and working styles of yourself and others can go a long way toward improving productivity.</p>
+	</li>
+	<li>
+	<p>If you want to work effectively with a team or a large organization, be aware of your preferred working style and that of others.</p>
+	</li>
+</ul>
+</section>
+<div data-type="footnotes"><p data-type="footnote" id="ch01fn18"><sup><a href="#ch01fn18-marker">1</a></sup>Ben Collins-Sussman, also an author within this book.</p><p data-type="footnote" id="ch01fn19"><sup><a href="#ch01fn19-marker">2</a></sup>Literally, if you are, in fact, a bike designer.</p><p data-type="footnote" id="ch01fn20"><sup><a href="#ch01fn20-marker">3</a></sup>I should note that sometimes it’s dangerous to get too much feedback too early in the process if you’re still unsure of your general direction or goal.</p><p data-type="footnote" id="ch01fn21"><sup><a href="#ch01fn21-marker">4</a></sup>I do, however, acknowledge that serious introverts likely need more peace, quiet, and alone time than most people and might benefit from a quieter environment, if not their own office.</p><p data-type="footnote" id="ch01fn22"><sup><a href="#ch01fn22-marker">5</a></sup>This is incredibly difficult if you’ve been burned in the past by delegating to incompetent people.</p><p data-type="footnote" id="ch01fn24"><sup><a href="#ch01fn24-marker">6</a></sup>You can find a dozen variants of this legend on the web, attributed to different famous managers.</p><p data-type="footnote" id="ch01fn25"><sup><a href="#ch01fn25-marker">7</a></sup>By the same token, if you do the same thing over and over and keep failing, it’s not failure, it’s incompetence.</p></div></section>
+
+  </body>
+</html>

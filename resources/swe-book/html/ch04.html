@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Software Engineering at Google</title>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> </script>
+    <link rel="stylesheet" type="text/css" href="theme/html/html.css">
+  </head>
+  <body data-type="book">
+    <section xmlns="http://www.w3.org/1999/xhtml" data-type="chapter" id="engineering_for_equity">
+<h1>Engineering for Equity</h1>
+
+<p class="byline">Written by Demma Rodriguez</p>
+
+<p class="byline">Edited by Riona MacNamara</p>
+
+<p>In earlier chapters, we’ve explored the <a contenteditable="false" data-primary="equitable and inclusive engineering" data-type="indexterm" id="ix_equi">&nbsp;</a>contrast between programming as the production of code that addresses the problem of the moment, and software engineering as the broader application of code, tools, policies, and processes to a dynamic and ambiguous problem that can span decades or even lifetimes. In this chapter, we’ll discuss the unique responsibilities of an engineer when designing products for a broad base of users. Further, we evaluate how an organization, by embracing diversity, can design systems that work for everyone, and avoid perpetuating harm against our users.</p>
+
+<p>As new as the field of software engineering is, we’re newer still at understanding the impact it has on underrepresented people and diverse societies. We did not write this chapter because we know all the answers. We do not. In fact, understanding how to engineer products that empower and respect all our users is still something Google is learning to do. We have had many public failures in protecting our most vulnerable users, and so we are writing this chapter because the path forward to more equitable products begins with evaluating our own failures and encouraging growth.</p>
+
+<p>We are also writing this chapter because of the increasing imbalance of power between those who make development decisions that impact the world and those who simply must accept and live with those decisions that sometimes disadvantage already marginalized communities globally. It is important to share and reflect on what we’ve learned so far with the next generation of software engineers. It is even more important that we help influence the next generation of engineers to be better than we are today.</p>
+
+<p class="pagebreak-before">Just picking up this book means that you likely aspire to be an exceptional engineer. You want to solve problems. You aspire to build products that drive positive outcomes for the broadest base of people, including people who are the most difficult to reach. To do this, you will need to consider how the tools you build will be leveraged to change the trajectory of humanity, hopefully for the better.</p>
+
+<section data-type="sect1" id="bias_is_the_default">
+<h1>Bias Is the Default</h1>
+
+<p>When engineers do not focus on users of different nationalities, ethnicities, races, genders, ages, socioeconomic statuses, abilities, and belief systems, even the most talented staff will inadvertently fail their users.<a contenteditable="false" data-primary="equitable and inclusive engineering" data-secondary="bias and" data-type="indexterm" id="id-VOTKHLSRtQ">&nbsp;</a><a contenteditable="false" data-primary="biases" data-secondary="universal presence of" data-type="indexterm" id="id-1kTdSXS6tP">&nbsp;</a> Such failures are often unintentional; all people have certain biases, and social scientists have recognized over the past several decades that most people exhibit unconscious bias, enforcing and promulgating existing stereotypes. Unconscious bias is insidious and often more difficult to mitigate than intentional acts of exclusion. Even when we want to do the right thing, we might not recognize our own biases. By the same token, our organizations must also recognize that such bias exists and work to address it in their workforces, product development, and user outreach.</p>
+
+<p>Because of bias, Google has at times failed to represent users equitably within their products, with launches over the past several years that did not focus enough on underrepresented groups. Many users attribute our lack of awareness in these cases to the fact that our engineering population is mostly male, mostly White or Asian, and certainly not representative of all the communities that use our products. The lack of representation of such users in our workforce<sup><a data-type="noteref" id="ch01fn51-marker" href="#ch01fn51">1</a></sup> means that we often do not have the requisite diversity to understand how the use of our products can affect underrepresented or vulnerable users.</p>
+
+<aside data-type="sidebar" id="case-study-google-misses-the-mark-on-racial-inclusion-gaH3C9tZ">
+<h5>Case Study: Google Misses the Mark on Racial Inclusion</h5>
+
+<p>In 2015, software engineer Jacky Alciné pointed out<sup><a data-type="noteref" id="ch01fn52-marker" href="#ch01fn52">2</a></sup> that the image recognition algorithms<a contenteditable="false" data-primary="image recognition, racial inclusion and" data-type="indexterm" id="id-ddTLSMSpCEt5">&nbsp;</a> in <a contenteditable="false" data-primary="racial inclusion" data-type="indexterm" id="id-GLTJfRSZCKtN">&nbsp;</a>Google Photos were classifying his <a contenteditable="false" data-primary="equitable and inclusive engineering" data-secondary="racial inclusion" data-type="indexterm" id="id-8wT7CDS5CMtX">&nbsp;</a>black friends as “gorillas.” Google was slow to respond to these mistakes and incomplete in addressing them.</p>
+
+<p>What caused such a monumental failure? Several things:</p>
+
+<ul>
+	<li>
+	<p>Image recognition algorithms depend on being supplied a “proper” (often meaning “complete”) dataset. The photo data fed into Google’s image recognition algorithm was clearly incomplete. In short, the data did not represent the population.</p>
+	</li>
+	<li>
+	<p>Google itself (and the tech industry in general) did not (and does not) have much black representation,<sup><a data-type="noteref" id="ch01fn53-marker" href="#ch01fn53">3</a></sup> and that affects decisions subjective in the design of such algorithms and the collection of such datasets. The unconscious bias of the organization itself likely led to a more representative product being left on the table.</p>
+	</li>
+	<li>
+	<p>Google’s target market for image recognition did not adequately include such underrepresented groups. Google’s tests did not catch these mistakes; as a result, our users did, which both embarrassed Google and harmed our users.</p>
+	</li>
+</ul>
+
+<p>As late as 2018, Google still had not adequately addressed the underlying problem.<sup><a data-type="noteref" id="ch01fn54-marker" href="#ch01fn54">4</a></sup></p>
+</aside>
+
+<p>In this example, our product was inadequately designed and executed, failing to properly consider all racial groups, and as a result, failed our users and caused Google bad press. Other technology suffers from similar failures: autocomplete can return offensive or racist results. Google’s Ad system could be manipulated to show racist or offensive ads. YouTube might not catch hate speech, though it is technically outlawed on that platform.</p>
+
+<p>In all of these cases, the technology itself is not really to blame. Autocomplete, for example, was not designed to target users or to discriminate. But it was also not resilient enough in its design to exclude discriminatory language that is considered hate speech. As a result, the algorithm returned results that caused harm to our users. The harm to Google itself should also be obvious: reduced user trust and engagement with the company. For example, Black, Latinx, and Jewish applicants could lose faith in Google as a platform or even as an inclusive environment itself, therefore undermining Google’s goal of improving representation in hiring.</p>
+
+<p>How could this happen? After all, Google hires technologists with impeccable education and/or professional experience—exceptional programmers who write the best code and test their work. "Build for everyone" is a Google brand statement, but the truth is that we still have a long way to go before we can claim that we do. One way to address these problems is to help the software engineering organization itself look like the populations for whom we build products.</p>
+</section>
+
+<section class="pagebreak-before" data-type="sect1" id="understanding_the_need_for_diversity">
+<h1 class="less_space">Understanding the Need for Diversity</h1>
+
+<p>At Google, we<a contenteditable="false" data-primary="diversity" data-secondary="understanding the need for" data-type="indexterm" id="id-1kTMHXSDhP">&nbsp;</a> believe that being an exceptional<a contenteditable="false" data-primary="equitable and inclusive engineering" data-secondary="need for diversity" data-type="indexterm" id="id-KnTOSAS8hy">&nbsp;</a> engineer requires that you also focus on bringing diverse perspectives into product design and implementation. It also means that Googlers responsible for hiring or interviewing other engineers must contribute to building a more representative workforce. For example, if you interview other engineers for positions at your company, it is important to learn how biased outcomes happen in hiring. There are significant prerequisites for understanding how to anticipate harm and prevent it. To get to the point where we can build for everyone, we first must understand our representative populations. We need to encourage engineers to have a wider scope of educational training.<a contenteditable="false" data-primary="education of software engineers" data-type="indexterm" id="id-YDTnfRSph6">&nbsp;</a></p>
+
+<p>The first order of business is to disrupt the notion that as a person with a computer science degree and/or work experience, you have all the skills you need to become an exceptional engineer. A computer science degree is often a necessary foundation. However, the degree alone (even when coupled with work experience) will not make you an engineer. It is also important to disrupt the idea that only people with computer science degrees can design and build products. Today, <a href="https://oreil.ly/2Bu0H">most programmers do have a computer science degree</a>; they are successful at building code, establishing theories of change, and applying methodologies for problem solving. However, as the aforementioned examples demonstrate, <em>this approach is insufficient for inclusive and equitable engineering</em>.</p>
+
+<p>Engineers should begin by focusing all work within the framing of the complete ecosystem they seek to influence.<a contenteditable="false" data-primary="users" data-secondary="engineers building software for all users" data-type="indexterm" id="id-YDTVHmCph6">&nbsp;</a> At minimum, they need to understand the population demographics of their users. Engineers should focus on people who are different than themselves, especially people who might attempt to use their products to cause harm. The most difficult users to consider are those who are disenfranchised by the processes and the environment in which they access technology. To address this challenge, engineering teams need to be representative of their existing and future users. In the absence of diverse representation on engineering teams, individual engineers need to learn how to build for all users.</p>
+</section>
+
+<section data-type="sect1" id="building_multicultural_capacity">
+<h1>Building Multicultural Capacity</h1>
+
+<p>One mark of an exceptional engineer is the ability to understand how products can advantage and disadvantage different<a contenteditable="false" data-primary="multicultural capacity, building" data-type="indexterm" id="ix_mlticu">&nbsp;</a> groups of human beings.<a contenteditable="false" data-primary="equitable and inclusive engineering" data-secondary="building multicultural capacity" data-type="indexterm" id="ix_equimltic">&nbsp;</a> Engineers are expected to have technical aptitude, but they should also have the <em>discernment</em> to know when to build something and when not to. Discernment includes building the capacity to identify and reject features or products that drive adverse outcomes. This is a lofty and difficult goal, because there is an enormous amount of individualism that goes into being a high-performing engineer. Yet to succeed, we must extend our focus beyond our own communities to the next billion users or to current users who might be disenfranchised or left behind by our products.</p>
+
+<p>Over time, you might build tools that billions of people use daily—tools that influence how people think about the value of human lives, tools that monitor human activity, and tools that capture and persist sensitive data, such as images of their children and loved ones, as well as other types of sensitive data. As an engineer, you might wield more power than you realize: the power to literally change society. It’s critical that on your journey to becoming an exceptional engineer, you understand the innate responsibility needed to exercise power without causing harm. The first step is to recognize the default state of your bias caused by many societal and educational factors. After you recognize this, you’ll be able to consider the often-forgotten use cases or users who can benefit or be harmed by the products you build.</p>
+
+<p>The industry continues to move forward, building new use cases for artificial intelligence (AI) and machine learning at an ever-increasing speed. To stay competitive, we drive toward scale and efficacy in building a high-talent engineering and technology workforce. Yet we need to pause and consider the fact that today, some people have the ability to design the future of technology and others do not. We need to understand whether the software systems we build will eliminate the potential for entire populations to experience shared prosperity and provide equal access to technology.</p>
+
+<p>Historically, companies faced with a decision between completing a strategic objective that drives market dominance and revenue and one that potentially slows momentum toward that goal have opted for speed and shareholder value. This tendency is exacerbated by the fact that many companies value individual performance and excellence, yet often fail to effectively drive accountability on product equity across all areas. Focusing on underrepresented users is a clear opportunity to promote equity. To continue to be competitive in the technology sector, we need to learn to engineer for global equity.</p>
+
+<p>Today, we worry when companies design technology to scan, capture, and identify people walking down the street. We worry about privacy and how governments might use this information now and in the future. Yet most technologists do not have the requisite perspective of underrepresented groups to understand the impact of racial variance in facial recognition or to understand how applying AI can drive harmful and inaccurate results.</p>
+
+<p>Currently, AI-driven facial-recognition software continues to disadvantage people of color or ethnic minorities.<a contenteditable="false" data-primary="AI (artificial intelligence)" data-secondary="facial-recognition software, disadvantaging some populations" data-type="indexterm" id="id-AAT0HwI5UV">&nbsp;</a> Our research is not comprehensive enough and does not include a wide enough range of different skin tones. We cannot expect the output to be valid if both the training data and those creating the software represent only a small subsection of people. In those cases, we should be willing to delay development in favor of trying to get more complete and accurate data, and a more comprehensive and inclusive product.</p>
+
+<p>Data science itself is challenging for humans to evaluate, however. <a contenteditable="false" data-primary="racial bias in facial recognition databases" data-type="indexterm" id="id-p6TqHqtpUl">&nbsp;</a>Even when we do have representation, a training set can still be biased and produce invalid results. A study completed in<a contenteditable="false" data-primary="law enforcement facial recognition databases, racial bias in" data-type="indexterm" id="id-MZT2SXtxUZ">&nbsp;</a> 2016 found that more than 117 million American adults are in a law enforcement facial recognition database.<sup><a data-type="noteref" id="ch01fn55-marker" href="#ch01fn55">5</a></sup> Due to the disproportionate policing of Black communities and disparate outcomes in arrests, there could be racially biased error rates in utilizing such a database in facial recognition. Although the software is being developed and deployed at ever-increasing rates, the independent testing is not. To correct for this egregious misstep, we need to have the integrity to slow down and ensure that our inputs contain as little bias as possible. Google now offers statistical training within the context of AI to help ensure that datasets are not intrinsically biased.</p>
+
+<p>Therefore, shifting the focus of<a contenteditable="false" data-primary="education of software engineers" data-secondary="more inclusive education needed" data-type="indexterm" id="id-MZTRHohxUZ">&nbsp;</a> your industry experience to include more comprehensive, multicultural, race and gender studies education is not only <em>your</em> responsibility, but also the <em>responsibility of your employer.</em> Technology companies must ensure that their employees are continually receiving professional development and that this development is comprehensive and multidisciplinary. The requirement is not that one individual take it upon themselves to learn about other cultures or other demographics alone. Change requires that each of us, individually or as leaders of teams, invest in continuous professional development that builds not just our software development and leadership skills, but also our capacity to understand the diverse experiences throughout humanity.<a contenteditable="false" data-primary="multicultural capacity, building" data-startref="ix_mlticu" data-type="indexterm" id="id-rETdCQh9U7">&nbsp;</a><a contenteditable="false" data-primary="equitable and inclusive engineering" data-secondary="building multicultural capacity" data-startref="ix_equimltic" data-type="indexterm" id="id-LETOcbhyUa">&nbsp;</a></p>
+</section>
+
+<section data-type="sect1" id="making_diversity_actionable">
+<h1>Making Diversity Actionable</h1>
+
+<p>Systemic equity and fairness are attainable if we are willing to accept that we are all accountable for the<a contenteditable="false" data-primary="diversity" data-secondary="making it actionable" data-type="indexterm" id="id-YDTVHRS3T6">&nbsp;</a> systemic <a contenteditable="false" data-primary="equitable and inclusive engineering" data-secondary="making diversity actionable" data-type="indexterm" id="id-ddTLSMS6TG">&nbsp;</a>discrimination we see in the technology sector. We are accountable for the failures in the system. Deferring or abstracting away personal accountability is ineffective, and depending on your role, it could be irresponsible. It is also irresponsible to fully attribute dynamics at your specific company or within your team to the larger societal issues that contribute to inequity. A favorite line among diversity proponents and detractors alike goes something like this: “We are working hard to fix (insert systemic discrimination topic), but accountability is hard. How do we combat (insert hundreds of years) of historical discrimination?” This line of inquiry is a detour to a more philosophical or academic conversation and away from focused efforts to improve work conditions or outcomes. <a contenteditable="false" data-primary="multicultural capacity, building" data-secondary="how inequalities in society impact workplaces" data-type="indexterm" id="id-GLTJfRSmTm">&nbsp;</a>Part of building multicultural capacity requires a more comprehensive understanding of how systems of inequality in society impact the workplace, especially in the technology sector.</p>
+
+<p>If you are an engineering manager working on hiring more people from underrepresented groups, deferring to the historical impact of discrimination in the world is a useful academic exercise.<a contenteditable="false" data-primary="hiring of software engineers" data-secondary="making diversity actionable" data-type="indexterm" id="id-ddTnHXf6TG">&nbsp;</a> However, it is critical to move beyond the academic conversation to a focus on quantifiable and actionable steps that you can take to drive equity and fairness. For example, as a hiring software engineer manager, you’re accountable for ensuring that your candidate slates are balanced. Are there women or other underrepresented groups in the pool of candidates’ reviews? After you hire someone, what opportunities for growth have you provided, and is the distribution of opportunities equitable? Every technology lead or software engineering manager has the means to augment equity on their teams. It is important that we acknowledge that, although there are significant systemic challenges, we are all part of the system. It is our problem to fix.</p>
+</section>
+
+<section data-type="sect1" id="reject_singular_approaches">
+<h1>Reject Singular Approaches</h1>
+
+<p>We cannot perpetuate solutions that present a single philosophy or methodology for fixing inequity in the technology sector. <a contenteditable="false" data-primary="equitable and inclusive engineering" data-secondary="rejecting singular approaches" data-type="indexterm" id="id-ddTnHMSJsG">&nbsp;</a>Our problems are complex and multifactorial. Therefore, we must disrupt singular approaches to advancing representation in the workplace, even if they are promoted by people we admire or who have institutional power.</p>
+
+<p>One singular narrative held dear in the technology industry is that lack of representation in the workforce can be addressed solely by fixing the hiring pipelines. Yes, that is a fundamental step, but that is not the immediate issue we need to fix. We need to recognize systemic inequity in progression and retention while simultaneously focusing on more representative hiring and educational disparities across lines of race, gender, and socioeconomic and immigration status, for example.</p>
+
+<p>In the technology industry, many people from underrepresented groups are passed over daily for opportunities and advancement. Attrition among Black+ Google employees <a href="https://oreil.ly/JFbTR">outpaces attrition from all other groups</a> and confounds progress on representation goals. If we want to drive change and increase representation, we need to evaluate whether we’re creating an ecosystem in which all aspiring engineers and other technology professionals can thrive.</p>
+
+<p>Fully understanding an entire problem space is critical to determining how to fix it. This holds true for everything from a critical data migration to the hiring of a representative workforce. For example, if you are an engineering manager who wants to hire more women, don’t just focus on building a pipeline. Focus on other aspects of the hiring, retention, and progression ecosystem and how inclusive it might or might not be to women. Consider whether your recruiters are demonstrating the ability to identify strong candidates who are women as well as men. If you manage a diverse engineering team, focus on psychological safety and invest in increasing multicultural capacity on the team so that new team members feel welcome.</p>
+
+<p>A common methodology today is to build for the majority use case first, leaving improvements and features that address edge cases for later. But this approach is flawed; it gives users who are already advantaged in access to technology a head start, which increases inequity. <a contenteditable="false" data-primary="users" data-secondary="relegating consideration of user groups to late in development" data-type="indexterm" id="id-p6TqHludsl">&nbsp;</a>Relegating the consideration of all user groups to the point when design has been nearly completed is to lower the bar of what it means to be an excellent engineer. Instead, by building in inclusive design from the start and raising development standards for development to make tools delightful and accessible for people who struggle to access technology, we enhance the experience for <em>all</em> users.</p>
+
+<p>Designing for the user who is least like you is not just wise, it’s a best practice. There are pragmatic and immediate next steps that all technologists, regardless of domain, should consider when developing products that avoid disadvantaging or underrepresenting users. It begins with more comprehensive user-experience research. This research should be done with user groups that are multilingual and multicultural and that span multiple countries, socioeconomic class, abilities, and age ranges. Focus on the most difficult or least represented use case first.</p>
+</section>
+
+<section data-type="sect1" id="challenge_established_processes">
+<h1>Challenge Established Processes</h1>
+
+<p>Challenging yourself to build more equitable systems goes beyond designing more inclusive product specifications.<a contenteditable="false" data-primary="equitable and inclusive engineering" data-secondary="challenging established processes" data-type="indexterm" id="id-GLTmHRSYFm">&nbsp;</a> Building equitable systems sometimes means challenging established processes that drive invalid results.</p>
+
+<p>Consider a recent case evaluated for equity implications. At Google, several engineering teams worked to build a global hiring requisition system. The system supports both external hiring and internal mobility. The engineers and product managers involved did a great job of listening to the requests of what they considered to be their core user group: recruiters.<a contenteditable="false" data-primary="performance of software engineers" data-secondary="flaws in performance ratings" data-type="indexterm" id="id-8wTbHnfPF1">&nbsp;</a> The recruiters were focused on minimizing wasted time for hiring managers and applicants, and they presented the development team with use cases focused on scale and efficiency for those people. To drive efficiency, the recruiters asked the engineering team to include a feature that would highlight performance ratings—specifically lower ratings—to the hiring manager and recruiter as soon as an internal transfer expressed interest in a job.</p>
+
+<p>On its face, expediting the evaluation process and helping jobseekers save time is a great goal. So where is the potential equity concern? The following equity questions were raised:</p>
+
+<ul>
+	<li>
+	<p>Are developmental assessments a predictive measure of performance?</p>
+	</li>
+	<li>
+	<p>Are the performance assessments being presented to prospective managers free of individual bias?</p>
+	</li>
+	<li>
+	<p>Are performance assessment scores standardized across organizations?</p>
+	</li>
+</ul>
+
+<p>If the answer to any of these questions is “no,” presenting performance ratings could still drive inequitable, and therefore invalid, results.</p>
+
+<p>When an exceptional engineer questioned whether past performance was in fact predictive of future performance, the reviewing team decided to conduct a thorough review. In the end, it was determined that candidates who had received a poor performance rating were likely to overcome the poor rating if they found a new team. In fact, they were just as likely to receive a satisfactory or exemplary performance rating as candidates who had never received a poor rating. In short, performance ratings are indicative only of how a person is performing in their given role <em>at the time they are being evaluated</em>. Ratings, although an important way to measure performance during a specific period, are not predictive of future performance and should not be used to gauge readiness for a future role or qualify an internal candidate for a different team. (They can, however, be used to evaluate whether an employee is properly or improperly slotted on their current team; therefore, they can provide an opportunity to evaluate how to better support an internal candidate moving forward.)</p>
+
+<p>This analysis definitely took up significant project time, but the positive trade-off was a more equitable internal mobility process.</p>
+</section>
+
+<section data-type="sect1" id="values_versus_outcomes">
+<h1>Values Versus Outcomes</h1>
+
+<p>Google has a strong track record of investing in hiring. <a contenteditable="false" data-primary="equitable and inclusive engineering" data-secondary="values versus outcomes" data-type="indexterm" id="id-8wTbHDSki1">&nbsp;</a>As the previous example illustrates, we also continually evaluate our processes in order to improve equity and inclusion.<a contenteditable="false" data-primary="values versus outcomes in equitable engineering" data-type="indexterm" id="id-AATYSKS0iV">&nbsp;</a> More broadly, our core values are based on respect and an unwavering commitment to a diverse and inclusive workforce. Yet, year after year, we have also missed our mark on hiring a representative workforce that reflects our users around the globe. The struggle to improve our equitable outcomes persists despite the policies and programs in place to help support inclusion initiatives and promote excellence in hiring and progression. The failure point is not in the values, intentions, or investments of the company, but rather in the application of those policies at the <em>implementation</em> level.</p>
+
+<p>Old habits are hard to break. The users you might be used to designing for today—the ones you are used to getting feedback from—might not be representative of all the users you need to reach. We see this play out frequently across all kinds of products, from wearables that do not work for women’s bodies to video-conferencing software that does not work well for people with darker skin tones.</p>
+
+<p>So, what’s the way out?</p>
+
+<ol>
+	<li>
+	<p><strong>Take a hard look in the mirror.</strong> At Google, we have the brand slogan, “Build For Everyone.” How can we <a contenteditable="false" data-primary="building for everyone" data-type="indexterm" id="id-9aTXSGHmHWcbix">&nbsp;</a>build for everyone when we do not have a representative workforce or engagement model that centralizes community feedback first? We can’t. The truth is that we have at times very publicly failed to protect our most vulnerable users from racist, antisemitic, and homophobic content.</p>
+	</li>
+	<li>
+	<p><strong>Don’t build for everyone. Build <em>with</em> everyone.</strong> We are not building for everyone yet. That work does not happen in a vacuum, and it certainly doesn’t happen when the technology is still not representative of the population as a whole. That said, we can’t pack up and go home. So how do we build for everyone? We build with our users. We need to engage our users across the spectrum of humanity and be intentional about putting the most vulnerable communities at the center of our design. They should not be an afterthought.</p>
+	</li>
+	<li>
+	<p><strong>Design for the user who will have the most difficulty using your product.</strong> Building for those with additional challenges will make the product better for everyone. Another way of thinking about this is: don’t trade equity for short-term velocity.</p>
+	</li>
+	<li>
+	<p><strong>Don’t assume equity; measure equity throughout your systems.</strong> Recognize that decision makers are also subject to bias and might be undereducated about the causes of inequity. You might not have the expertise to identify or measure the scope of an equity issue. Catering to a single userbase might mean disenfranchising another; these trade-offs can be difficult to spot and impossible to reverse. Partner with individuals or teams that are subject matter experts in diversity, equity, and inclusion.</p>
+	</li>
+	<li>
+	<p><strong>Change is possible.</strong> The problems we’re facing with technology today, from surveillance to disinformation to online harassment, are genuinely overwhelming. We can’t solve these with the failed approaches of the past or with just the skills we already have. We need to change.</p>
+	</li>
+</ol>
+</section>
+
+<section data-type="sect1" id="stay_curiouscomma_push_forward">
+<h1>Stay Curious, Push Forward</h1>
+
+<p>The path to equity is long and complex. <a contenteditable="false" data-primary="equitable and inclusive engineering" data-secondary="staying curious, and pushing forward" data-type="indexterm" id="id-AAT0HKSmHV">&nbsp;</a>However, we can and should transition from simply building tools and services to growing our understanding of how the products we engineer impact humanity. Challenging our education, influencing our teams and managers, and doing more comprehensive user research are all ways to make progress. Although change is uncomfortable and the path to high performance can be painful, it is possible through collaboration and creativity.</p>
+
+<p>Lastly, as future exceptional engineers, we should focus first on the users most impacted by bias and discrimination.<a contenteditable="false" data-primary="users" data-secondary="focusing first on users most impacted by bias and discrimination" data-type="indexterm" id="id-p6TqH8fWHl">&nbsp;</a> Together, we can work to accelerate progress by focusing on Continuous Improvement and owning our failures. Becoming an engineer is an involved and continual process. The goal is to make changes that push humanity forward without further disenfranchising the disadvantaged. As future exceptional engineers, we have faith that we can prevent future failures in the system.</p>
+</section>
+
+<section data-type="sect1" id="conclusion-id00008">
+<h1>Conclusion</h1>
+
+<p>Developing software, and developing a software organization, is a team effort. As a software organization scales, it must respond and adequately design for its user base, which in the interconnected world of computing today involves everyone, locally and around the world. More effort must be made to make both the development teams that design software and the products that they produce reflect the values of such a diverse and encompassing set of users. And, if an engineering organization wants to scale, it cannot ignore underrepresented groups; not only do such engineers from these groups augment the organization itself, they provide unique and necessary perspectives for the design and implementation of software that is truly useful to the world at large.</p>
+</section>
+
+<section data-type="sect1" id="tlsemicolondrs-id00103">
+<h1>TL;DRs</h1>
+
+<ul>
+	<li>
+	<p>Bias is the default.</p>
+	</li>
+	<li>
+	<p>Diversity is necessary to design properly for a comprehensive user base.</p>
+	</li>
+	<li>
+	<p>Inclusivity is critical not just to improving the hiring pipeline for underrepresented groups, but to providing a truly supportive work environment for all people.</p>
+	</li>
+	<li>
+	<p>Product velocity must be evaluated against providing a product that is truly useful to all users. It’s better to slow down than to release a product that might cause harm to some users.<a contenteditable="false" data-primary="equitable and inclusive engineering" data-startref="ix_equi" data-type="indexterm" id="id-rEToHzHECmS2f6">&nbsp;</a></p>
+	</li>
+</ul>
+</section>
+<div data-type="footnotes"><p data-type="footnote" id="ch01fn51"><sup><a href="#ch01fn51-marker">1</a></sup><a href="https://diversity.google/annual-report">Google’s 2019 Diversity Report</a>.</p><p data-type="footnote" id="ch01fn52"><sup><a href="#ch01fn52-marker">2</a></sup>@jackyalcine. 2015. “Google Photos, Y’all Fucked up. My Friend’s Not a Gorilla.” Twitter, June 29, 2015. <a href="https://twitter.com/jackyalcine/status/615329515909156865"><em>https://twitter.com/jackyalcine/status/615329515909156865</em></a>.</p><p data-type="footnote" id="ch01fn53"><sup><a href="#ch01fn53-marker">3</a></sup>Many reports in 2018–2019 pointed to a lack of diversity across tech. Some notables include <a href="https://oreil.ly/P9ocC">the National Center for Women &amp; Information Technology</a>, and <a href="https://oreil.ly/Y1pUW">Diversity in Tech</a>.</p><p data-type="footnote" id="ch01fn54"><sup><a href="#ch01fn54-marker">4</a></sup>Tom Simonite, “When It Comes to Gorillas, Google Photos Remains Blind,” <em>Wired</em>, January 11, 2018.</p><p data-type="footnote" id="ch01fn55"><sup><a href="#ch01fn55-marker">5</a></sup>Stephen Gaines and Sara Williams. “The Perpetual Lineup: Unregulated Police Face Recognition in America.” <em>Center on Privacy &amp; Technology at Georgetown Law</em>, October 18, 2016.</p></div></section>
+
+  </body>
+</html>

@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Software Engineering at Google</title>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> </script>
+    <link rel="stylesheet" type="text/css" href="theme/html/html.css">
+  </head>
+  <body data-type="book">
+    <section xmlns="http://www.w3.org/1999/xhtml" data-type="chapter" id="critique_googleapostrophes_code_review">
+<h1>Critique: Google’s Code Review Tool</h1>
+
+<p class="byline">Written by Caitlin Sadowski, Ilham Kurnia, and Ben Rohlfs</p>
+
+<p class="byline">Edited by Lisa Carey</p>
+
+<p>As you saw in <a data-type="xref" href="ch09.html#code_review-id00002">Code Review</a>, code review is a vital part of software development, particularly when working at scale.<a contenteditable="false" data-primary="Critique code review tool" data-type="indexterm" id="ix_Crit">&nbsp;</a> The main goal of code review is to improve the readability and maintainability of the code base, and this is supported fundamentally by the review process. However, having a well-defined code review process is only one part of the code review story. Tooling that supports that process also plays an important part in its success.</p>
+
+<p>In this chapter, we’ll look at what makes successful code review tooling via Google’s well-loved in-house system, <em>Critique</em>. Critique has explicit support for the primary motivations of code review, providing reviewers and authors with a view of the review and ability to comment on the change. Critique also has support for gatekeeping what code is checked into the codebase, discussed in the section on "scoring" changes. Code review information from Critique also can be useful when doing code archaeology, following some technical decisions that are explained in code review interactions (e.g., when inline comments are lacking). Although Critique is not the only code review tool used at Google, it is the most popular one by a large margin.</p>
+
+<section data-type="sect1" id="code_review_tooling_principles">
+<h1>Code Review Tooling Principles</h1>
+
+<p>We mentioned above that Critique provides functionality to support the goals of code review (we look at this functionality in more detail later in this chapter), but why is it so successful?<a contenteditable="false" data-primary="Critique code review tool" data-secondary="code review tooling principles" data-type="indexterm" id="id-AjH2tjTxU0">&nbsp;</a> Critique has been shaped by Google’s development culture, which includes code review as a core part of the workflow. This cultural influence translates into a set of guiding principles that Critique was designed to emphasize:</p>
+
+<dl>
+	<dt>Simplicity</dt>
+	<dd>Critique’s user interface (UI) is based around making it easy to do code review without a lot of unnecessary choices, and with a smooth interface. The UI loads fast, navigation is easy and hotkey supported, and there are clear visual markers for the overall state of whether a change has been reviewed.</dd>
+	<dt>Foundation of trust</dt>
+	<dd>Code review is not for slowing others down; instead, it is for empowering others. Trusting colleagues as much as possible makes it work.<a contenteditable="false" data-primary="trust" data-secondary="code reviews and" data-type="indexterm" id="id-b8HVtxCEfXU3">&nbsp;</a> This might mean, for example, trusting authors to make changes and not requiring an additional review phase to double check that minor comments are actually addressed. Trust also plays out by making changes openly accessible (for viewing and reviewing) across Google.</dd>
+	<dt>Generic communication</dt>
+	<dd>Communication problems are rarely solved through tooling. Critique prioritizes generic ways for users to comment on the code changes, instead of complicated protocols. Critique encourages users to spell out what they want in their comments or even suggests some edits instead of making the data model and process more complex. Communication can go wrong even with the best code review tool because the users are humans.</dd>
+	<dt>Workflow integration</dt>
+	<dd>Critique has a number of integration points with other core software development tools. Developers can easily navigate to view the code under review in our code search and browsing tool, edit code in our web-based code editing tool, or view test results associated with a code change.</dd>
+</dl>
+
+<p>Across these guiding principles, simplicity has probably had the most impact on the tool. There were many interesting features we considered adding, but we decided not to make the model more complicated to support a small set of users.</p>
+
+<p>Simplicity also has an interesting tension with workflow integration. We considered but ultimately decided against creating a “Code Central” tool with code editing, reviewing, and searching in one tool. Although Critique has many touchpoints with other tools, we consciously decided to keep code review as the primary focus. Features are linked from Critique but implemented in different subsystems.</p>
+</section>
+
+<section data-type="sect1" id="code_review_flow">
+<h1>Code Review Flow</h1>
+
+<p>Code reviews can be executed at many stages <a contenteditable="false" data-primary="Critique code review tool" data-secondary="code review flow" data-type="indexterm" id="id-QkHMtlTLhM">&nbsp;</a>of software <a contenteditable="false" data-primary="code reviews" data-secondary="flow" data-type="indexterm" id="id-ZZHXT2Txhz">&nbsp;</a>development, as illustrated in <a data-type="xref" href="#the_code-review_flow">Figure 19-1</a>. Critique reviews typically take place before a change can be committed to the codebase, also <a contenteditable="false" data-primary="precommit reviews" data-type="indexterm" id="id-b8HACMTZhV">&nbsp;</a>known as <em>precommit reviews</em>. Although <a data-type="xref" href="ch09.html#code_review-id00002">Code Review</a> contains a brief description of the code review flow, here we expand it to describe key aspects of Critique that help at each stage. We’ll look at each stage in more detail in the following sections.</p>
+
+<figure id="the_code-review_flow"><img alt="The code-review flow" src="images/seag_1901.png">
+<figcaption><span class="label">Figure 19-1. </span>The code review flow</figcaption>
+</figure>
+
+<p>Typical review steps go as follows:</p>
+
+<ol>
+	<li>
+	<p><strong>Create a change.</strong> A user authors a change to the codebase in their workspace. This <em>author</em> then uploads a <em>snapshot</em> (showing a patch at a particular point in time) to Critique, which triggers the run of automatic code analyzers (see <span class="keep-together"><a data-type="xref" href="ch20.html#static_analysis-id00082">Static Analysis</a></span>).</p>
+	</li>
+	<li>
+	<p><strong>Request review.</strong> After the author is satisfied with the diff of the change and the result of the analyzers shown in Critique, they mail the change to one or more reviewers.</p>
+	</li>
+	<li>
+	<p><strong>Comment.</strong> <em>Reviewers</em> open the change in Critique and draft comments on the diff. Comments are by default marked as <em>unresolved,</em> meaning they are crucial for the author to address. Additionally, reviewers can add <em>resolved</em> comments that are optional or informational. Results from automatic code analyzers, if present, are also visible to reviewers. Once a reviewer has drafted a set of comments, they need to <em>publish</em> them in order for the author to see them; this has the advantage of allowing a reviewer to provide a complete thought on a change atomically, after having reviewed the entire change. Anyone can comment on changes, providing a “drive-by review” as they see it necessary.</p>
+	</li>
+	<li>
+	<p><strong>Modify change and reply to comments.</strong> The author modifies the change, uploads new snapshots based on the feedback, and replies back to the reviewers. The author addresses (at least) all unresolved comments, either by changing the code or just replying to the comment and changing the comment type to be <em>resolved</em>. The author and reviewers can look at diffs between any pairs of snapshots to see what changed. Steps 3 and 4 might be repeated multiple times.</p>
+	</li>
+	<li>
+	<p><strong>Change approval.</strong> When the reviewers are happy with the latest state of the change, they approve the change and mark it as “looks good to me” (LGTM).<a contenteditable="false" data-primary="LGTM (looks good to me) stamp from reviewers" data-secondary="change approval with" data-type="indexterm" id="id-6bHWT3tgSQSLh8">&nbsp;</a> They can optionally include comments to address. After a change is deemed good for submission, it is clearly marked green in the UI to show this state.</p>
+	</li>
+	<li>
+	<p><strong>Commit a change.</strong> Provided the change is approved (which we’ll discuss shortly), the author can trigger the commit process of the change. If automatic analyzers and other precommit hooks (called “presubmits”) don’t find any problems, the change is committed to the codebase.</p>
+	</li>
+</ol>
+
+<p>Even after the review process is started, the entire system provides significant flexibility to deviate from the regular review flow. For example, reviewers can un-assign themselves from the change or explicitly assign it to someone else, and the author can postpone the review altogether. In emergency cases, the author can forcefully commit their change and have it reviewed after commit.</p>
+
+<section data-type="sect2" id="notifications">
+<h2>Notifications</h2>
+
+<p>As a change moves through the stages outlined earlier, Critique publishes event notifications that might be used by other supporting tools. <a contenteditable="false" data-primary="notifications from Critique" data-type="indexterm" id="id-3QHYtXTJhvhW">&nbsp;</a>This notification model allows Critique to focus on being a primary code review tool instead of a general purpose tool, while still being integrated into the developer workflow. Notifications enable a separation of concerns such that Critique can just emit events and other systems build off of those events.</p>
+
+<p>For example, users can install a Chrome extension that consumes these event notifications. When a change needs the user’s attention—for example, because it is their turn to review the change or some presubmit fails—the extension displays a Chrome notification with a button to go directly to the change or silence the notification. We have found that some developers really like immediate notification of change updates, but others choose not to use this extension because they find it is too disruptive to their flow.</p>
+
+<p>Critique also manages emails related to a change; important Critique events trigger email notifications. In addition to being displayed in the Critique UI, some analyzer findings are configured to also send the results out by email. Critique also processes email replies and translates them to comments, supporting users who prefer an email-based flow. Note that for many users, emails are not a key feature of code review; they use Critique’s dashboard view (discussed later) to manage reviews.</p>
+</section>
+</section>
+
+<section data-type="sect1" id="stage_one_creating_a_change">
+<h1>Stage 1: Create a Change</h1>
+
+<p>A code review tool should provide support at all stages of the review process and should not be the bottleneck for committing changes.<a contenteditable="false" data-primary="changes to code" data-secondary="creating" data-type="indexterm" id="ix_chgcr">&nbsp;</a><a contenteditable="false" data-primary="Critique code review tool" data-secondary="creating a change" data-type="indexterm" id="ix_Critcrch">&nbsp;</a> In the prereview step, making it easier for change authors to polish a change before sending it out for review helps reduce the time taken by the reviewers to inspect the change. Critique displays change diffs with knobs to ignore whitespace changes and highlight move-only changes. Critique also surfaces the results from builds, tests, and static analyzers, including style checks (as discussed in <a data-type="xref" href="ch09.html#code_review-id00002">Code Review</a>).</p>
+
+<p>Showing an author the diff of a change gives them the opportunity to wear a different hat: that of a code reviewer. Critique lets a change author see the diff of their changes as their reviewer will, and also see the automatic analysis results. Critique also supports making lightweight modifications to the change from within the review tool and suggests appropriate reviewers. When sending out the request, the author can also include preliminary comments on the change, providing the opportunity to ask reviewers directly about any open questions. Giving authors the chance to see a change just as their reviewers do prevents misunderstanding.</p>
+
+<p>To provide further context for the reviewers, the author can also link the change to a specific bug. Critique uses an autocomplete service to show relevant bugs, prioritizing bugs that are assigned to the author.</p>
+
+<section data-type="sect2" id="diffing">
+<h2>Diffing</h2>
+
+<p>The core of the code review process is understanding the code change itself.<a contenteditable="false" data-primary="Critique code review tool" data-secondary="creating a change" data-tertiary="diffing" data-type="indexterm" id="id-XAHat8TDSVsa">&nbsp;</a> Larger changes are typically more difficult to understand than smaller ones. <a contenteditable="false" data-primary="diffing code changes" data-type="indexterm" id="id-3QHJTXTVS0sW">&nbsp;</a>Optimizing the diff of a change is thus a core requirement for a good code review tool.</p>
+
+<p>In Critique, this principle translates onto multiple layers (see <a data-type="xref" href="#intraline_diffing_showing_character-lev">Figure 19-2</a>). The diffing component, starting from an optimized longest common subsequence algorithm, is enhanced with the following:</p>
+
+<ul>
+	<li>
+	<p>Syntax highlighting</p>
+	</li>
+	<li>
+	<p>Cross-references (powered by Kythe; see <a data-type="xref" href="ch17.html#code_search">Code Search</a>)</p>
+	</li>
+	<li>
+	<p>Intraline diffing that shows the difference on character-level<a contenteditable="false" data-primary="intraline diffing showing character-level differences" data-type="indexterm" id="id-8XHatxt5f8CoSDsA">&nbsp;</a> factoring in the word boundaries (<a data-type="xref" href="#intraline_diffing_showing_character-lev">Figure 19-2</a>)</p>
+	</li>
+	<li>
+	<p>An option to ignore whitespace differences to a varying degree</p>
+	</li>
+	<li>
+	<p>Move detection, in which <a contenteditable="false" data-primary="move detection for code chunks" data-type="indexterm" id="id-OoHMtXtWSeC7S5s4">&nbsp;</a>chunks of code that are moved from one place to another are marked as being moved (as opposed to being marked as removed here and added there, as a naive diff algorithm would)</p>
+	</li>
+</ul>
+
+<figure id="intraline_diffing_showing_character-lev"><img alt="Intraline diffing showing character-level differences" src="images/seag_1902.png">
+<figcaption><span class="label">Figure 19-2. </span>Intraline diffing showing character-level differences</figcaption>
+</figure>
+
+<p>Users can also view the diff in various different modes, such as overlay and side by side. When developing Critique, we decided that it was important to have side-by-side diffs to make the review process easier. Side-by-side diffs take a lot of space: to make them a reality, we had to simplify the diff view structure, so there is no border, no padding—just the diff and line numbers. We also had to play around with a variety of fonts and sizes until we had a diff view that accommodates even for Java’s 100-character line limit for the typical screen-width resolution when Critique launched (1,440 pixels).</p>
+
+<p>Critique further supports a variety of custom tools that provide diffs of artifacts produced by a change, such as a screenshot diff of the UI modified by a change or configuration files generated by a change.</p>
+
+<p>To make the process of navigating diffs smooth, we were careful not to waste space and spent significant effort ensuring that diffs load quickly, even for images and large files and/or changes. We also provide keyboard shortcuts to quickly navigate through files while visiting only modified sections.</p>
+
+<p>When users drill down to the file level, Critique provides a UI widget with a compact display of the chain of snapshot versions of a file; users can drag and drop to select which versions to compare. This widget automatically collapses similar snapshots, drawing focus to important snapshots. It helps the user understand the evolution of a file within a change; for example, which snapshots have test coverage, have already been reviewed, or have comments. To address concerns of scale, Critique prefetches everything, so loading different snapshots is very quick.</p>
+</section>
+
+<section data-type="sect2" id="analysis_results-id00001">
+<h2>Analysis Results</h2>
+
+<p>Uploading a snapshot of the change <a contenteditable="false" data-primary="Critique code review tool" data-secondary="creating a change" data-tertiary="analysis results" data-type="indexterm" id="id-3QHYtXTxU0sW">&nbsp;</a>triggers code analyzers (see <a data-type="xref" href="ch20.html#static_analysis-id00082">Static Analysis</a>). Critique displays<a contenteditable="false" data-primary="analysis results from code analyzers" data-type="indexterm" id="id-6bHJfpTLUes9">&nbsp;</a> the analysis results on <a contenteditable="false" data-primary="diffing code changes" data-secondary="change summary and diff view" data-type="indexterm" id="id-8XH7CDTbUOsO">&nbsp;</a>the change page, summarized by analyzer status chips shown below the change description, as depicted in <a data-type="xref" href="#change_summary_and_diff_view">Figure 19-3</a>, and detailed in the Analysis tab, as illustrated in <a data-type="xref" href="#analysis_results">Figure 19-4</a>.</p>
+
+<p>Analyzers can mark specific findings to highlight in red for increased visibility. Analyzers that are still in progress are represented by yellow chips, and gray chips are displayed otherwise. For the sake of simplicity, Critique offers no other options to mark or highlight findings—actionability is a binary option. If an analyzer produces some results (“findings”), clicking the chip opens up the findings. Like comments, findings can be displayed inside the diff but styled differently to make them easily distinguishable. Sometimes, the findings also include fix suggestions, which the author can preview and choose to apply from Critique.</p>
+
+<figure id="change_summary_and_diff_view"><img alt="Change summary and diff view" src="images/seag_1903.png">
+<figcaption><span class="label">Figure 19-3. </span>Change summary and diff view</figcaption>
+</figure>
+
+<figure id="analysis_results"><img alt="Analysis results" src="images/seag_1904.png">
+<figcaption><span class="label">Figure 19-4. </span>Analysis results</figcaption>
+</figure>
+
+<p>For example, suppose that a linter finds a style violation of extra spaces at the end of the line. The change page will display a chip for that linter. From the chip, the author can quickly go to the diff showing the offending code to understand the style violation with two clicks. Most linter violations also include fix suggestions. With a click, the author can preview the fix suggestion (for example, remove the extra spaces), and with another click, apply the fix on the change.</p>
+</section>
+
+<section data-type="sect2" id="tight_tool_integration">
+<h2>Tight Tool Integration</h2>
+
+<p>Google has tools built on top of Piper, its<a contenteditable="false" data-primary="Piper" data-secondary="tools built on top of" data-type="indexterm" id="id-93HOtBTehlsK">&nbsp;</a> monolithic source code<a contenteditable="false" data-primary="Critique code review tool" data-secondary="creating a change" data-tertiary="tight tool ingegration" data-type="indexterm" id="id-6bHWTpTMhes9">&nbsp;</a> repository (see <a data-type="xref" href="ch16.html#version_control_and_branch_management">Version Control and Branch Management</a>), such as the following:</p>
+
+<ul>
+	<li>
+	<p>Cider, an online IDE for editing source code stored in the cloud</p>
+	</li>
+	<li>
+	<p>Code Search, a tool for searching code in the codebase</p>
+	</li>
+	<li>
+	<p>Tricorder, a tool for displaying static analysis results (mentioned earlier)</p>
+	</li>
+	<li>
+	<p>Rapid, a release tool that packages and deploys binaries containing a series of changes</p>
+	</li>
+	<li>
+	<p>Zapfhahn, a test coverage calculation tool</p>
+	</li>
+</ul>
+
+<p>Additionally, there are services that provide context on change metadata (for example, about users involved in a change or linked bugs). Critique is a natural melting pot for a quick one-click/hover access or even embedded UI support to these systems, although we need to be careful not to sacrifice simplicity. For example, from a change page in Critique, the author needs to click only once to start editing the change further in Cider.<a contenteditable="false" data-primary="Kythe" data-secondary="navigating cross-references with" data-type="indexterm" id="id-8XHatACrhOsO">&nbsp;</a> There is support to navigate between cross-references using Kythe or view the mainline state of the code in Code Search (see <a data-type="xref" href="ch17.html#code_search">Code Search</a>). Critique links out to the release tool so that users can see whether a submitted change is in a specific release. For these tools, Critique favors links rather than embedding so as not to distract from the core review experience. One exception here is test coverage: the information of whether a line of code is covered by a test is shown by different background colors on the line gutter in the file’s diff view (not all projects use this coverage tool).</p>
+
+<p>Note that <a contenteditable="false" data-primary="workspaces" data-secondary="tight integration between Critique and" data-type="indexterm" id="id-GvHXtMSDhGsE">&nbsp;</a>tight integration between Critique and a developer’s workspace is possible because of the fact that workspaces are stored in a FUSE-based filesystem, accessible beyond a particular developer’s computer. The Source of Truth is hosted in the cloud and accessible to all of these tools.<a contenteditable="false" data-primary="changes to code" data-secondary="creating" data-startref="ix_chgcr" data-type="indexterm" id="id-OoHVToSYhysx">&nbsp;</a><a contenteditable="false" data-primary="Critique code review tool" data-secondary="creating a change" data-startref="ix_Critcrch" data-type="indexterm" id="id-5LHdfeS8hBsM">&nbsp;</a></p>
+</section>
+</section>
+
+<section data-type="sect1" id="stage_two_request_review">
+<h1>Stage 2: Request Review</h1>
+
+<p>After the author is happy with the state of the change, they<a contenteditable="false" data-primary="Critique code review tool" data-secondary="request review" data-type="indexterm" id="ix_Critreqrev">&nbsp;</a> can send it for review, as depicted in <a data-type="xref" href="#requesting_reviewers">Figure 19-5</a>. This requires the author to pick the reviewers. Within a small team, finding a reviewer might seem simple, but even there it is useful to distribute reviews evenly across team members and consider situations like who is on vacation. To address this, teams can provide an email alias for incoming code reviews. The alias is used by a tool called <em>GwsQ</em> (named after the initial team that used this technique: Google Web Server) that assigns specific reviewers based on the configuration linked to the alias. For example, a change author can assign a review to some-team-list-alias, and GwsQ will pick a specific member of some-team-list-alias to perform the review.</p>
+
+<figure id="requesting_reviewers"><img alt="Requesting reviewers" src="images/seag_1905.png">
+<figcaption><span class="label">Figure 19-5. </span>Requesting reviewers</figcaption>
+</figure>
+
+<p>Given the size of Google’s codebase and the number of people modifying it, it can be difficult to find out who is best qualified to review a change outside your own project. Finding reviewers is a problem to consider when reaching a certain scale. Critique must deal with scale. Critique offers the functionality to propose sets of reviewers that are sufficient to approve the change. The reviewer selection utility takes into account the following factors:</p>
+
+<ul>
+	<li>
+	<p>Who owns the code that is being changed (see the next section)</p>
+	</li>
+	<li>
+	<p>Who is most familiar with the code (i.e., who recently changed it)</p>
+	</li>
+	<li>
+	<p>Who is available for review (i.e., not out of office and preferably in the same time zone)</p>
+	</li>
+	<li>
+	<p>The GwsQ team alias setup</p>
+	</li>
+</ul>
+
+<p class="pagebreak-before">Assigning a reviewer to a change triggers a review request. This request runs “presubmits” or precommit hooks applicable to the change; teams can configure the presubmits related to their projects in many ways. The most common hooks include the following:</p>
+
+<ul>
+	<li>
+	<p>Automatically adding email lists to changes to raise awareness and transparency</p>
+	</li>
+	<li>
+	<p>Running automated test suites for the project</p>
+	</li>
+	<li>
+	<p>Enforcing project-specific invariants on both code (to enforce local code style restrictions) and change descriptions (to allow generation of release notes or other forms of tracking)</p>
+	</li>
+</ul>
+
+<p>As running tests is resource intensive, at Google they are part of presubmits (run when requesting review and when committing changes) rather than for every snapshot like Tricorder checks. Critique surfaces the result of running the hooks in a similar way to how analyzer results are displayed, with an extra distinction to highlight the fact that a failed result blocks the change from being sent for review or committed. Critique notifies the author via email if presubmits fail.<a contenteditable="false" data-primary="Critique code review tool" data-secondary="request review" data-startref="ix_Critreqrev" data-type="indexterm" id="id-6bHQtKs7IJ">&nbsp;</a></p>
+</section>
+
+<section data-type="sect1" id="stage_three_and_four_understanding_and">
+<h1>Stages 3 and 4: Understanding and Commenting on a Change</h1>
+
+<p>After the review process starts, the author and the reviewers work in tandem to reach the goal of committing changes of high quality.<a contenteditable="false" data-primary="Critique code review tool" data-secondary="understanding and commenting on a change" data-type="indexterm" id="ix_Critundcomm">&nbsp;</a></p>
+
+<section data-type="sect2" id="commenting">
+<h2>Commenting</h2>
+
+<p>Making<a contenteditable="false" data-primary="changes to code" data-secondary="commenting on" data-type="indexterm" id="id-XAHat8TVfYca">&nbsp;</a> comments is the second <a contenteditable="false" data-primary="commenting on changes in Critique" data-type="indexterm" id="id-3QHJTXTafocW">&nbsp;</a>most common action that users make in Critique after viewing changes (<a data-type="xref" href="#commenting_on_the_diff_view">Figure 19-6</a>). Commenting in Critique is free for all. Anyone—not only the change author and the assigned reviewers—can comment on a change.</p>
+
+<p>Critique also offers the ability to track review progress via per-person state. Reviewers have checkboxes to mark individual files at the latest snapshot as reviewed, helping the reviewer keep track of what they have already looked at. When the author modifies a file, the “reviewed” checkbox for that file is cleared for all reviewers because the latest snapshot has been updated.</p>
+
+<figure id="commenting_on_the_diff_view"><img alt="Commenting on the diff view" src="images/seag_1906.png">
+<figcaption><span class="label">Figure 19-6. </span>Commenting on the diff view</figcaption>
+</figure>
+
+<p>When a reviewer sees a relevant analyzer finding, they can click a "Please fix" button to create an unresolved comment asking the author to address the finding. Reviewers can also suggest a fix to a change by inline editing the latest version of the file. Critique transforms this suggestion into a comment with a fix attached that can be applied by the author.</p>
+
+<p>Critique does not dictate what comments users should create, but for some common comments, Critique provides quick shortcuts. The change author can click the "Done" button on the comment panel to indicate when a reviewer’s comment has been addressed, or the "Ack" button to acknowledge that the comment has been read, typically used for informational or optional comments. Both have the effect of resolving the comment thread if it is unresolved. These shortcuts simplify the workflow and reduce the time needed to respond to review comments.</p>
+
+<p>As mentioned earlier, comments are drafted as-you-go, but then “published” atomically, as shown in <a data-type="xref" href="#preparing_comments_to_the_author">Figure 19-7</a>. This allows authors and reviewers to ensure that they are happy with their comments before sending them out.</p>
+
+<figure id="preparing_comments_to_the_author"><img alt="Preparing comments to the author" src="images/seag_1907.png">
+<figcaption><span class="label">Figure 19-7. </span>Preparing comments to the author</figcaption>
+</figure>
+</section>
+
+<section data-type="sect2" id="understanding_the_state_of_a_change">
+<h2>Understanding the State of a Change</h2>
+
+<p>Critique provides <a contenteditable="false" data-primary="changes to code" data-secondary="understanding the state of" data-type="indexterm" id="ix_chgund">&nbsp;</a>a number of mechanisms to make it clear where in the comment-and-iterate phase a change is currently located. These include a feature for determining who needs to take action next, and a dashboard view of review/author status for all of the changes with which a particular developer is involved.</p>
+
+<section data-type="sect3" id="quotation_marksemicolonwhose_turnquotat">
+<h3>"Whose turn" feature</h3>
+
+<p>One important factor in accelerating the review process is understanding when it’s your turn to act, especially when there are multiple reviewers assigned to a change. This might be the case if the author wants to have their change reviewed by a software engineer and the user-experience person responsible for the feature, or the SRE carrying the pager for the service. Critique helps define who is expected to look at the change next by managing an <em>attention set</em> for each change.</p>
+
+<p>The attention set comprises the set of people on which a change is currently blocked. When a reviewer or author is in the attention set, they are expected to respond in a timely manner. Critique tries to be smart about updating the attention set when a user publishes their comments, but users can also manage the attention set themselves. Its usefulness increases even more when there are more reviewers in the change. The attention set is surfaced in Critique by rendering the relevant usernames in bold.</p>
+
+<p>After we implemented this feature, our users had a difficult time imagining the previous state. The prevailing opinion is: how did we get along without this? The alternative before we implemented this feature was chatting between reviewers and authors to understand who was dealing with a change. This feature also emphasizes the turn-based nature of code review; it is always at least one person’s turn to take action.</p>
+</section>
+
+<section data-type="sect3" id="dashboard_and_search_system">
+<h3>Dashboard and search system</h3>
+
+<p>Critique’s landing page is the user’s dashboard<a contenteditable="false" data-primary="dashboard and search system (Critique)" data-type="indexterm" id="id-8XHatDTKC8Cwc2">&nbsp;</a> page, as depicted in <a data-type="xref" href="#dashboard_view">Figure 19-8</a>. The dashboard page is divided into user-customizable sections, each of them containing a list of change summaries.</p>
+
+<figure id="dashboard_view"><img alt="Dashboard view" src="images/seag_1908.png">
+<figcaption><span class="label">Figure 19-8. </span>Dashboard view</figcaption>
+</figure>
+
+<p>The dashboard page is powered by <a contenteditable="false" data-primary="Changelist Search" data-type="indexterm" id="id-OoHMtDC7CeCEcQ">&nbsp;</a>a search system called <em>Changelist Search</em>. Changelist Search indexes the latest state of all available changes (both pre- and post-submit) across all users at Google and allows its users to look up relevant changes by regular expression–based queries. Each dashboard section is defined by a query to Changelist Search. We have spent time ensuring Changelist Search is fast enough for interactive use; everything is indexed quickly so that authors and reviewers are not slowed down, despite the fact that we have an extremely large number of concurrent changes happening simultaneously at Google.</p>
+
+<p>To optimize the user experience (UX), Critique’s default dashboard setting is to have the first section display the changes that need a user’s attention, although this is customizable. There is also a search bar for making custom queries over all changes and browsing the results. As a reviewer, you mostly just need the attention set. As an author, you mostly just need to take a look at what is still waiting for review to see if you need to ping any changes. Although we have shied away from customizability in some other parts of the Critique UI, we found that users like to set up their dashboards differently without detracting from the fundamental experience, similar to<a contenteditable="false" data-primary="changes to code" data-secondary="understanding the state of" data-startref="ix_chgund" data-type="indexterm" id="id-5LHmteSeCKCocw">&nbsp;</a> the way <a contenteditable="false" data-primary="Critique code review tool" data-secondary="understanding and commenting on a change" data-startref="ix_Critundcomm" data-type="indexterm" id="id-YQHmTrSQCaCWc5">&nbsp;</a>everyone organizes their emails differently.<sup><a data-type="noteref" id="ch01fn191-marker" href="#ch01fn191">1</a></sup></p>
+</section>
+</section>
+</section>
+
+<section data-type="sect1" id="stage_five_change_approvals_left_parent">
+<h1>Stage 5: Change Approvals (Scoring a Change)</h1>
+
+<p>Showing whether a reviewer<a contenteditable="false" data-primary="Critique code review tool" data-secondary="change approvals" data-type="indexterm" id="id-04HatBTDHK">&nbsp;</a> thinks a change <a contenteditable="false" data-primary="changes to code" data-secondary="change approvals or scoring a change" data-type="indexterm" id="id-XAHDT8TzHl">&nbsp;</a>is good boils down to providing concerns and suggestions via comments. There also needs to be some mechanism for providing a high-level “OK” on a change. At Google, the scoring for a change is divided into three parts:</p>
+
+<ul>
+	<li>
+	<p>LGTM ("looks good to me")</p>
+	</li>
+	<li>
+	<p>Approval</p>
+	</li>
+	<li>
+	<p>The number of unresolved comments</p>
+	</li>
+</ul>
+
+<p>An LGTM stamp <a contenteditable="false" data-primary="LGTM (looks good to me) stamp from reviewers" data-secondary="meaning of" data-type="indexterm" id="id-3QHYtyCyHY">&nbsp;</a>from a reviewer means that "I have reviewed this change, believe that it meets our standards, and I think it is okay to commit it after addressing unresolved comments." An Approval stamp<a contenteditable="false" data-primary="Approval stamp from reviewers" data-type="indexterm" id="id-93HDTyCNHk">&nbsp;</a> from a reviewer means that "as a gatekeeper, I allow this change to be committed to the codebase." A reviewer can mark comments as unresolved, meaning that the author will need to act upon them. When the change has at least one LGTM, sufficient approvals and no unresolved comments, the author can then commit the change. Note that every change requires an LGTM regardless of approval status, ensuring that at least two pairs of eyes viewed the change. This simple scoring rule allows Critique to inform the author when a change is ready to commit (shown prominently as a green page header).</p>
+
+<p>We made a conscious decision in the process of building Critique to simplify this rating scheme. Initially, Critique had a “Needs More Work” rating and also a <span class="keep-together">“LGTM++”</span>. The model we have moved to is to make LGTM/Approval always positive. If a change definitely needs a second review, primary reviewers can add comments but without LGTM/Approval. After a change transitions into a mostly-good state, reviewers will typically trust authors to take care of small edits—the tooling does not require repeated LGTMs regardless of change size.</p>
+
+<p>This rating scheme has also had a positive influence on code review culture. Reviewers cannot just thumbs-down a change with no useful feedback; all negative feedback from reviewers must be tied to something specific to be fixed (for example, an unresolved comment). The phrasing “unresolved comment” was also chosen to sound relatively nice.</p>
+
+<p>Critique includes<a contenteditable="false" data-primary="scoring a change" data-type="indexterm" id="id-8XHatVhoH9">&nbsp;</a> a scoring panel, next to the analysis chips, with the following <span class="keep-together">information:</span></p>
+
+<ul>
+	<li>
+	<p>Who has LGTM’ed the change</p>
+	</li>
+	<li>
+	<p>What approvals are still required and why</p>
+	</li>
+	<li>
+	<p>How many unresolved comments are still open</p>
+	</li>
+</ul>
+
+<p>Presenting the scoring information this way helps the author quickly understand what they still need to do to get the change committed.</p>
+
+<p>LGTM and Approval are <em>hard</em> requirements and can be granted only by reviewers. Reviewers can also revoke their LGTM and Approval at any time before the change is committed. Unresolved comments are <em>soft</em> requirements; the author can mark a comment “resolved” as they reply. This distinction promotes and relies on trust and communication between the author and the reviewers. For example, a reviewer can LGTM the change accompanied with unresolved comments without later on checking precisely whether the comments are truly addressed, highlighting the trust the reviewer places on the author. This trust is particularly important for saving time when there is a significant difference in time zones between the author and the reviewer. Exhibiting trust is also a good way to build trust and strengthen teams.</p>
+</section>
+
+<section data-type="sect1" id="stage_six_commiting_a_change">
+<h1>Stage 6: Commiting a Change</h1>
+
+<p>Last but not least, Critique has a button for committing the change after the review to avoid context-switching to a command-line interface.<a contenteditable="false" data-primary="changes to code" data-secondary="committing" data-type="indexterm" id="id-XAHat8TMul">&nbsp;</a><a contenteditable="false" data-primary="Critique code review tool" data-secondary="committing a change" data-type="indexterm" id="id-3QHJTXTbuY">&nbsp;</a></p>
+
+<section class="pagebreak-before" data-type="sect2" id="after_commit_tracking_history">
+<h2 class="less_space">After Commit: Tracking History</h2>
+
+<p>In addition to the core use of Critique as a tool for reviewing source code changes before they are committed to the repository, Critique is also used as a tool for change archaeology. <a contenteditable="false" data-primary="changes to code" data-secondary="tracking history of" data-type="indexterm" id="id-93HOtBTVfGuK">&nbsp;</a><a contenteditable="false" data-primary="tracking history of code changes in Critique" data-type="indexterm" id="id-6bHWTpTEf6u9">&nbsp;</a>For most files, developers can view a list of the past history of changes that modified a particular file in the Code Search system (see <a data-type="xref" href="ch17.html#code_search">Code Search</a>), or navigate directly to a change. Anyone at Google can browse the history of a change to generally viewable files, including the comments on and evolution of the change. This enables future auditing and is used to understand more details about why changes were made or how bugs were introduced. Developers can also use this feature to learn how changes were engineered, and code review data in aggregate is used to produce <span class="keep-together">trainings.</span></p>
+
+<p>Critique also supports the ability to comment after a change is committed; for example, when a problem is discovered later or additional context might be useful for someone investigating the change at another time. Critique also supports the ability to roll back changes and see whether a particular change has already been rolled back.</p>
+
+<aside data-type="sidebar" id="gerrit">
+<h5>Case Study: Gerrit</h5>
+
+<p>Although Critique is the most commonly used review tool at Google, it is not the only one.<a contenteditable="false" data-primary="Gerrit code review tool" data-type="indexterm" id="id-GvHXtWTXC9fYum">&nbsp;</a> Critique is not externally available due to its tight interdependencies with our large monolithic repository and other internal tools. Because of this, teams at Google that work on open source projects (including Chrome and Android) or internal projects that can’t or don’t want to be hosted in the monolithic repository use a different code review tool: Gerrit.</p>
+
+<p>Gerrit is a standalone, open source code review tool that is tightly integrated with the Git version control system. As such, it offers a web UI to many Git features including code browsing, merging branches, cherry-picking commits, and, of course, code review. In addition, Gerrit has a fine-grained permission model that we can use to restrict access to repositories and branches.</p>
+
+<p>Both Critique and Gerrit have the same model for code reviews in that each commit is reviewed separately. Gerrit supports stacking commits and uploading them for individual review. It also allows the chain to be committed atomically after it’s reviewed.</p>
+
+<p>Being open source, Gerrit accommodates more variants and a wider range of use cases; Gerrit’s rich plug-in system enables a tight integration into custom environments. To support these use cases, Gerrit also supports a more sophisticated scoring system. A reviewer can veto a change by placing a –2 score, and the scoring system is highly configurable.</p>
+
+<div data-type="note" id="id-YVcxUACGfduk"><h6>Note</h6>
+<p>You can learn more about Gerrit and see it in action at <a href="https://www.gerritcodereview.com"><em class="hyperlink">https://www.gerritcodereview.com</em></a>.</p>
+</div>
+
+</aside>
+</section>
+</section>
+
+<section data-type="sect1" id="conclusion-id00023">
+<h1>Conclusion</h1>
+
+<p>There are a number of implicit trade-offs when using a code review tool. Critique builds in a number of features and integrates with other tools to make the review process more seamless for its users. Time spent in code reviews is time not spent coding, so any optimization of the review process can be a productivity gain for the company. Having only two people in most cases (author and reviewer) agree on the change before it can be committed keeps velocity high. Google greatly values the educational aspects of code review, even though they are more difficult to quantify.</p>
+
+<p>To minimize the time it takes for a change to be reviewed, the code review process should flow seamlessly, informing users succinctly of the changes that need their attention and identifying potential issues before human reviewers come in (issues are caught by analyzers and Continuous Integration). When possible, quick analysis results are presented before the longer-running analyses can finish.</p>
+
+<p>There are several ways in which Critique needs to support questions of scale. The Critique tool must scale to the large quantity of review requests produced without suffering a degradation in performance. Because Critique is on the critical path to getting changes committed, it must load efficiently and be usable for special situations such as unusually large changes.<sup><a data-type="noteref" id="ch01fn192-marker" href="#ch01fn192">2</a></sup> The interface must support managing user activities (such as finding relevant changes) over the large codebase and help reviewers and authors navigate the codebase. For example, Critique helps with finding appropriate reviewers for a change without having to figure out the ownership/maintainer landscape (a feature that is particularly important for large-scale changes such as API migrations that can affect many files).</p>
+
+<p>Critique favors an opinionated process and a simple interface to improve the general review workflow. However, Critique does allow some customizability: custom analyzers and presubmits provide specific context on changes, and some team-specific policies (such as requiring LGTM from multiple reviewers) can be enforced.</p>
+
+<p>Trust and communication are core to the code review process. A tool can enhance the experience, but can’t replace them. Tight integration with other tools has also been a key factor in Critique’s success.</p>
+</section>
+
+<section data-type="sect1" id="tlsemicolondrs-id00125">
+<h1>TL;DRs</h1>
+
+<ul>
+	<li>
+	<p>Trust and communication are core to the code review process. A tool can enhance the experience, but it can’t replace them.</p>
+	</li>
+	<li>
+	<p>Tight integration with other tools is key to great code review experience.</p>
+	</li>
+	<li>
+	<p>Small workflow optimizations, like the addition of an explicit “attention set,” can increase clarity and reduce friction substantially.<a contenteditable="false" data-primary="Critique code review tool" data-startref="ix_Crit" data-type="indexterm" id="id-8XHatxt5fETyi2">&nbsp;</a></p>
+	</li>
+</ul>
+</section>
+<div data-type="footnotes"><p data-type="footnote" id="ch01fn191"><sup><a href="#ch01fn191-marker">1</a></sup>Centralized “global” reviewers for large-scale changes (LSCs) are particularly prone to customizing this dashboard to avoid flooding it during an LSC (see <a data-type="xref" href="ch22.html#large-scale_changes">Large-Scale Changes</a>).</p><p data-type="footnote" id="ch01fn192"><sup><a href="#ch01fn192-marker">2</a></sup>Although most changes are small (fewer than 100 lines), Critique is sometimes used to review large refactoring changes that can touch hundreds or thousands of files, especially for LSCs that must be executed atomically (see <a data-type="xref" href="ch22.html#large-scale_changes">Large-Scale Changes</a>).</p></div></section>
+
+  </body>
+</html>
