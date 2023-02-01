@@ -91,14 +91,15 @@ concepts:
   functions, and to and from civil time representations with the help of an
   `absl::TimeZone`.
 * Civil times are represented by six individual integers, specifying the year,
-  month, day, hour, minute, and second of an `absl::Civil*` object. (See
+  month, day, hour, minute, and second of an `absl::Civil*` object which should
+  be passed by value. (See
   [civil_time.h](https://github.com/abseil/abseil-cpp/blob/master/absl/time/civil_time.h).) These
   integer values may be specified as arguments to civil-time constructors (e.g.
   `absl::CivilYear` or `absl::CivilSecond`, or parsed from a formatted time
   string.
 * Time zones are represented by the `absl::TimeZone` class. (See
-  [time.h](https://github.com/abseil/abseil-cpp/blob/master/absl/time/time.h).) This  mostly-opaque
-  value type is passed (by value) to other Abseil time functions that will then
+  [time.h](https://github.com/abseil/abseil-cpp/blob/master/absl/time/time.h).) This mostly-opaque
+  value type is passed by value to other Abseil time functions that will then
   perform the necessary conversions to/from absolute time or civil time. It is a
   feature that the Abseil time library itself performs all time-zone arithmetic
   on your behalf, virtually eliminating offset calculation bugs from your code.
@@ -241,7 +242,7 @@ int64_t min = dur / absl::Minutes(1);      // min == 0
 ```
 
 Additionally, the Abseil time library provides helper functions for converting
-duration values into integers or `double` values:
+duration values into `int64_t` or `double` values:
 
 * `ToInt64Nanoseconds()` and `ToDoubleNanoseconds()`
 * `ToInt64Microseconds()` and `ToDoubleMicroseconds()`
@@ -284,6 +285,8 @@ daylight-saving time (DST):
 * `absl::CivilDay`
 * `absl::CivilMonth`
 * `absl::CivilYear`
+
+Prefer to pass these `absl::Civil*` types by value rather than const reference.
 
 Each of these civil-time types is a simple value type with the same interface
 for construction and the same six accessors for each of the civil time fields
@@ -379,7 +382,7 @@ absl::CivilMonth cm;
 UseDay(cm);                  // OK: implicit conversion to absl::CivilDay
 ```
 
-### Civil Time Normalization
+### Civil Time Normalization {#normalization}
 
 Normalization takes invalid values and adjusts them to produce valid values.
 Within the civil-time library, integer arguments passed to the `Civil*`

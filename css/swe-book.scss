@@ -1,0 +1,1530 @@
+@charset "UTF-8";
+
+/* O'Reilly Media, 2019 */
+/* Additional styles: Google, 2022 */
+
+/* reset */
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 24px;
+  text-decoration: none solid rgb(66, 75, 77);
+  word-spacing: 0px;
+
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+body {
+  line-height: 1;
+        max-width: 34rem;
+        margin: 6.25rem;
+}
+ol, ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* end reset */
+
+@page {
+  margin: 5px !important;
+}
+
+p { 
+  margin: 10px 0 0;
+  line-height: 125%;
+  text-align: left;
+}
+
+/* author byline */
+p.byline {
+  text-align: left;
+  margin: 10px auto 0px;
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* author byline at end of preface */
+div.preface p + p.byline { margin: 1em 0 0 !important; }
+div.preface p.byline + p.byline { margin: 0 !important; }
+
+/* author bylines after A-Head */
+div.sect1 > p.byline { margin: -0.25em 0 1em; }
+div.sect1 > p.byline + p.byline { margin-top: -1em; }
+
+/* ----------------- inlines; code and monospace in the code section below ----------------- */
+
+em { 
+  font-style: italic;
+  font-family: inherit;
+}
+
+em strong, strong em {
+  font-weight: bold;
+  font-style: italic;
+  font-family: inherit;
+}  
+
+strong, span.bold { font-weight: bold; }
+em.replaceable { font-style: italic; }
+
+strong.userinput {
+  font-weight: bold;
+  font-style: normal;
+}
+
+span.bolditalic {
+  font-weight: bold;
+  font-style: italic;
+}
+
+a.ulink, a.xref, a.email, a.link, a {
+  text-decoration: none;
+  color: #8e0012;
+  word-wrap: break-word;
+}
+
+span.lineannotation {
+  font-style: italic;
+  color: #a62a2a;
+  font-family: serif;
+}
+
+span.underline { text-decoration: underline; }
+
+span.strikethrough { text-decoration: line-through; }
+
+span.smallcaps { font-variant: small-caps; }
+
+span.cursor { background: #000; color: #ffffff; } /* for Learning GNU Emacs, 3e */
+
+span.smaller { font-size: 75%; }
+
+/* added for special formatting in Regular Expressions Cookbook, 1e (9780596802783.EBOOK) */
+
+.boxedtext, .keycap {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #000;
+  padding: 1px;
+}
+
+span.gray50 {
+  color: #7F7F7F; /* 50 % gray */
+}
+
+/* ----------------- headings ----------------- */
+
+/* shared heading styles */
+h1, div.toc-title, h2, h3, h4, h5 { 
+  -webkit-hyphens: none;
+  hyphens: none;
+  adobe-hyphenate: none;
+  font-weight: 300;
+  text-align: left;
+  page-break-after: avoid !important;
+  font-family: sans-serif, "DejaVuSans";
+}
+
+div.toc-title {
+  font-size: 1.5em;
+  margin-top: 20px !important;
+  margin-bottom: 30px !important;
+}
+
+section[data-type="chapter"] h1, section[data-type="preface"] h1 { 
+  font-size: 2.3em;
+  margin: 40px 0 15px 0;
+}
+
+section[data-type="sect1"] h1 { 
+  font-size: 1.3em;
+  color: #8e0012;
+  margin: 40px 0 8px 0;
+}
+
+section[data-type="sect2"] h2 {
+  font-size: 1.1em;
+  margin: 30px 0 8px 0 !important;
+}
+
+section[data-type="sect3"] h3 {
+  font-size: 1em;
+  color: #555;
+  margin: 20px 0px 8px 0px !important;
+}
+
+section[data-type="sect4"] h4 {
+  font-size: 1em;
+  font-weight: normal;
+  font-style: italic;
+  margin: 15px 0px 6px 0px !important;
+}
+
+section[data-type="chapter"] > div > h1,
+section[data-type="preface"] > div > h1,
+section[data-type="appendix"] > div > h1,
+section[data-type="glossary"] > div > h1,
+section[data-type="bibliography"] > div > h1,
+section[data-type="index"] > div > h1 { /* larger chapter title */
+  font-size: 2em;
+  line-height: 1;
+  margin-bottom: 50px;
+  color: #000;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #000;
+}
+ span.label,
+ span.keep-together {
+  font-size: inherit;
+  font-weight: inherit;
+ }
+/* ----------------- parts ----------------- */
+
+div[data-type="part"] h1 {
+  font-size: 2em;
+  text-align: center;
+  margin-top: 0px !important;
+  margin-bottom: 50px;
+  padding: 50px 0 10px 0;
+  border-bottom: 1px solid #000;
+}
+  
+/* ----------------- images ----------------- */
+
+/* Use this class to set <img> width to 90% */
+img.width-ninety { width: 90% }
+
+img {
+  max-width: 95%;
+  margin: 0 auto;
+  padding: 0;
+}
+
+div.figure {
+  background-color: transparent;
+  text-align: center !important;
+  margin: 15px auto !important;
+  page-break-inside: avoid;
+}
+
+figure {
+    margin: 15px auto !important;
+    page-break-inside: avoid;
+}
+
+div.figure h6,
+figure h6,
+figure figcaption {
+  font-size: 0.9rem !important;
+  text-align: center;
+  font-weight: normal !important;
+  font-style: italic;
+  font-family: serif !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
+  color: #000;
+  padding-top: 0.25em !important;
+  margin-top: 0 !important;
+  page-break-before: avoid;
+}
+
+div.informalfigure {
+  text-align: center !important;
+  padding: 5px 0 !important;
+}
+
+/* ----------------- sidebars ----------------- */
+
+div.sidebar {
+  margin: 15px 0px 10px 0px !important;
+  border: 1px solid #DCDCDC;
+  background-color: #F7F7F7;
+  padding: 15px !important;
+  page-break-inside: avoid;
+}
+
+aside[data-type="sidebar"] {
+    margin: 15px 0px 10px 0px !important;
+    page-break-inside: avoid;
+    background-color: rgba(25, 25, 25, 0.05);
+    border-color: rgba(138, 130, 118, 0.1);
+    padding: 0.75rem 0.75rem;
+}
+
+div.sidebar-title, aside[data-type="sidebar"] h5 {
+  font-weight: 300;
+  font-size: 1em;
+  font-family: sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: center;
+  margin: 4px 0 6px 0 !important;
+  page-break-inside: avoid;
+}
+
+div.sidebar ol, div.sidebar ul,
+aside[data-type="sidebar"] ol, aside[data-type="sidebar"] ul { margin-left: 1.25em !important; }
+
+div.sidebar div.figure p.title, 
+aside[data-type="sidebar"] figcaption, 
+div.sidebar div.informalfigure div.caption {
+  font-size: 90%;
+  text-align: center;
+  font-weight: normal;
+  font-style: italic;
+  font-family: serif !important;
+  color: #000;
+  padding: 5px !important;
+  page-break-before: avoid;
+  page-break-after: avoid;
+}
+
+div.sidebar div.tip, div.sidebar div[data-type="tip"], 
+div.sidebar div.note, div.sidebar div[data-type="note"], 
+div.sidebar div.warning, div.sidebar div[data-type="warning"], 
+div.sidebar div[data-type="caution"],
+div.sidebar div[data-type="important"] {
+  margin: 20px auto 20px auto !important;
+  font-size: 90%;
+  width: 85%;
+}
+
+/* author bylines in sidebars */
+aside[data-type="sidebar"] p.byline {
+  font-size: 90%;
+  font-weight: bold;
+  font-style: italic;
+  text-align: center;
+  text-indent: 0;
+  margin: 5px auto 6px;
+  page-break-after: avoid;
+}
+
+/* ----------------- code ----------------- */
+
+pre {
+  white-space: pre-wrap;
+  font-family: "Roboto Mono", "Ubuntu Mono", monospace;
+  margin: 25px 0 25px 20px;
+  font-size: 85%;
+  display: block;
+  -webkit-hyphens: none;
+  hyphens: none;
+  adobe-hyphenate: none;
+  overflow-wrap: break-word;
+}
+
+div.note pre.programlisting, div.tip pre.programlisting, 
+div.warning pre.programlisting, div.caution pre.programlisting, 
+div.important pre.programlisting {
+  margin-bottom: 0;
+}
+
+code {
+  font-family: "Roboto Mono", "Ubuntu Mono", monospace;
+  -webkit-hyphens: none;
+  hyphens: none;
+  adobe-hyphenate: none;
+  overflow-wrap: break-word;
+}
+
+code strong em, 
+code em strong, 
+pre em strong, 
+pre strong em,
+strong code em code, 
+em code strong code, 
+span.bolditalic code { /* yes, all of these variations are needed */
+  font-weight: bold;
+  font-style: italic;
+  font-family: "Roboto Mono", "Ubuntu Mono BoldItal", monospace;
+}
+
+code em, 
+em code, 
+pre em, 
+em.replaceable {
+  font-family: "Roboto Mono", "Ubuntu Mono Ital", monospace;
+  font-style: italic;
+}
+
+code strong, strong code, pre strong, strong.userinput {
+  font-family: "Roboto Mono", "Ubuntu Mono Bold", monospace;
+  font-weight: bold;
+}
+
+div[data-type="example"] {
+  margin: 10px 0 15px 0 !important;
+}
+
+div[data-type="example"] h1, 
+div[data-type="example"] h2, 
+div[data-type="example"] h3, 
+div[data-type="example"] h4, 
+div[data-type="example"] h5, 
+div[data-type="example"] h6 {
+  font-style: italic;
+  font-weight: normal;
+  text-align: left !important;
+  text-transform: none !important;
+  font-family: serif !important;
+  margin: 10px 0 5px 0 !important;
+  border-bottom: 1px solid #000;
+}
+
+li pre.example {
+  padding: 10px 0 !important;
+}
+
+div[data-type="example"] pre[data-type="programlisting"], div[data-type="example"] pre[data-type="screen"] { margin: 0; }
+
+
+/* ----------------- title and copyright page ----------------- */
+
+section[data-type="titlepage"] > div > h1 {
+  font-size: 2em;
+  margin: 50px 0 10px 0 !important;
+  line-height: 1;
+  text-align: center;
+}
+
+/* Styling for subtitle */
+section[data-type="titlepage"] h2,
+section[data-type="titlepage"] p.subtitle,
+section[data-type="titlepage"] p[data-type="subtitle"] {
+  font-size: 1.3em;
+  font-weight: normal;
+  text-align: center;
+  margin-top: 0.5em;
+  color: #555;
+}
+
+section[data-type="titlepage"] > div > h2[data-type="author"],
+section[data-type="titlepage"] p.author {
+  font-size: 1.3em;
+  font-family: serif !important;
+  font-weight: bold;
+  margin: 50px 0 !important;
+  text-align: center;
+}
+
+section[data-type="titlepage"] p.edition {
+  text-align: center;
+  text-transform: uppercase;
+  margin-top: 2em;
+}
+
+section[data-type="titlepage"] { text-align: center; }
+
+section[data-type="titlepage"]:after {
+  content: url("assets/titlepage_footer_ebook.png");
+  margin: 0 auto;
+  max-width: 80%;
+}
+
+div.book div.titlepage div.publishername {
+  margin-top: 60%;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 1.25em;
+}
+
+div.book div.titlepage div.locations p {
+  margin: 0;
+  text-align: center;
+}
+
+div.book div.titlepage div.locations p.cities {
+  font-size: 80%;
+  text-align: center;
+  margin-top: 5px;
+}
+
+section.preface[title="Dedication"] > div.titlepage h2.title { 
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 1.5em;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+ul.stafflist { margin: 15px 0 15px 20px !important; }
+ul.stafflist li {
+  list-style-type: none;
+  padding: 5px 0; 
+}
+
+ul.printings li { list-style-type: none; }
+
+section.preface[title="Dedication"] p {
+  font-style: italic;
+  text-align: center;
+}
+
+div.colophon h1.title {
+  font-size: 1.3em;
+  margin: 0 !important;
+  font-family: serif !important;
+  font-weight: normal;
+}
+
+div.colophon h2.subtitle {
+  margin: 0 !important;
+  color: #000;
+  font-family: serif !important;
+  font-size: 1em;
+  font-weight: normal;
+}
+ 
+div.colophon div.author h3.author {
+  font-size: 1.1em;
+  font-family: serif !important;
+  margin: 10px 0 0 !important;
+  font-weight: normal;
+}
+
+div.colophon div.editor h4, div.colophon div.editor h3.editor {
+  color: #000;
+  font-size: 0.8em;
+  margin: 15px 0 0 !important;
+  font-family: serif !important;
+  font-weight: normal;
+}
+
+div.colophon div.editor h3.editor {
+  font-size: 0.8em;
+  margin: 0 !important;
+  font-family: serif !important;
+  font-weight: normal;
+}
+
+div.colophon div.publisher {
+  margin-top: 10px;
+}
+
+div.colophon div.publisher p,
+div.colophon div.publisher span.publishername {
+  margin: 0;
+  font-size: 0.8em;
+}
+
+div.legalnotice p, div.timestamp p {
+  font-size: 0.8em;
+}
+
+div.timestamp p {
+  margin-top: 10px;
+}
+
+div.colophon[title="About the Author"] h1.title, div.colophon[title="Colophon"] h1.title {
+  font-size: 1.5em;
+  margin: 0 !important;
+  font-family: sans-serif !important;
+}
+
+/* ----------------- epigraphs, blockquotes, attributions ----------------- */
+
+section.chapter div.titlepage div.author {
+    margin: 10px 0 10px 0;
+}
+
+section.chapter div.titlepage div.author div.affiliation {
+    font-style: italic;
+}
+
+div.attribution {
+  margin: 5px 0 0 50px !important;
+}
+
+h3.author span.orgname { display: none; } /* to work around bug */
+
+div.epigraph {
+  margin: 10px 0px 10px 20px !important;
+  page-break-inside: avoid;
+  font-size: 90%;
+}
+
+div.epigraph p {
+  font-style: italic;
+}
+
+blockquote, div.blockquote {
+  margin: 10px !important;
+  page-break-inside: avoid;
+  font-size: 95%;
+}
+
+blockquote p, div.blockquote p {
+  font-style: italic;
+  font-family: 'Times New Roman', serif;
+  margin: 30px 1.25em 0 !important;
+}
+
+blockquote div.attribution,
+blockquote p[data-type="attribution"] {  
+  margin: 5px 0 20px 30px !important;
+  text-align: right;
+  width: 80%;
+}
+
+blockquote div.attribution p,
+blockquote p[data-type="attribution"] {  
+  font-style: normal;
+  margin-top: 5px;
+}
+
+blockquote div.attribution p:before,
+blockquote p[data-type="attribution"]:before {  
+  font-style: normal;
+  content: "\2014";
+  -webkit-hyphens: none;
+  hyphens: none;
+  adobe-hyphenate: none;
+}
+
+p.right {
+  text-align: right;
+  margin: 0;
+}
+
+/* ----------------- footnotes ----------------- */
+
+div[data-type="footnotes"] {
+  border-top: 1px solid black;
+  margin-top: 2em;
+}
+
+sub, sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+}
+
+sup { top: -0.5em; }
+
+sub { bottom: -0.25em; }
+
+p[data-type="footnote"] {
+    font-size: 90% !important;
+    line-height: 1.2em !important;
+    margin-left: 2.5em !important;
+    text-indent: -2.3em !important;
+}
+
+p[data-type="footnote"] sup:first-child {
+    display: inline-block !important;
+    position: static !important;
+    width: 2em !important;
+    text-align: right !important;
+    font-size: 100% !important;
+    padding-right: 0.5em !important;
+    top: -2px !important;
+}
+
+p[data-type="footnote"] a[href$="-marker"] { 
+    font-family: sans-serif !important;
+    font-size: 90% !important;
+    color: #8e0012 !important;
+}
+
+/* Special handling to account for Platform number (in footnote) spacing issue */
+p[data-type="footnote"] a[data-type="xref"] {
+    margin: 0 !important;
+    padding: 0 !important;
+    text-indent: 0 !important;
+}
+
+a[data-type="noteref"] {
+    font-family: sans-serif !important;
+    color: #8e0012;
+    margin-left: 0;
+    padding-left: 0;
+    font-size: 90%;
+}
+
+/*----------handling for reference sections----------*/
+div.refentry p.refname {
+  font-size: 1em;
+  font-family: sans-serif, "DejaVuSans";
+  font-weight: bold;
+  margin-bottom: 5px;
+  overflow: auto;
+  width: 100%;
+}
+
+div.refentry {
+  width: 100%;
+  display: block;
+  margin-top: 2em;
+}
+
+div.refsynopsisdiv { display: block; clear: both; }
+ 
+div.refentry header {
+   page-break-inside: avoid !important; 
+   display: block;     
+   break-inside: avoid !important;    
+   padding-top: 0;
+   border-bottom: 1px solid #000; 
+}
+
+div.refsect1 h6 {
+    font-size: 0.9em;
+    font-family: sans-serif, "DejaVuSans";
+    font-weight: bold;
+}
+
+div.refsect1 {margin-top: 3em;}
+
+/* ----------------- lists ----------------- */
+
+dl { margin-bottom: 1.5em !important; }
+
+dt {
+  padding-top: 10px !important;
+  padding-bottom: 0 !important;
+  line-height: 1.25rem;
+    font-style: italic;
+}
+
+dl.calloutlist dt { 
+    padding-top: 0 !important;
+    line-height: 0 !important;
+    margin-bottom: -2.35em !important;
+}
+
+dd { 
+    margin: 10px 0 0.25em 1.5em !important;
+    line-height: 1.65em!important
+}
+
+dd p {
+    padding: 0 !important;
+    margin: 0 0 10px !important;
+}
+
+dd ol,
+dd ul { padding-left: 0.25em !important; }
+dd li { 
+    margin-top: 0 !important; 
+    margin-bottom: 0 !important;
+    padding-top: 0;
+    padding-bottom: 0;
+    line-height: 1 !important;
+}
+
+dl.calloutlist dd li {
+    padding-top: 1em !important;
+    padding-bottom: 1.5em !important;
+}
+
+.calloutlist dd li:last-child {
+    padding-bottom: 0 !important;
+}
+
+dd, li { text-align: left; }
+ul,
+ul > li,
+ol ul,
+ol ul > li,
+ul ol ul,
+ul ol ul > li { list-style-type: disc !important; }
+ul ul,
+ul ul > li { list-style-type: square; }
+ul ul ul,
+ul ul ul > li { list-style-type: circle; }
+ol,
+ol > li,
+ol ul ol,
+ol ul ol > li,
+ul ol,
+ul ol > li { list-style-type: decimal; }
+ol ol,
+ol ol > li { list-style-type: lower-alpha; }
+ol ol ol,
+ol ol ol > li { list-style-type: lower-roman; }
+
+ol, ul { 
+  list-style-position: outside !important;
+  margin: 15px 0 15px 1.25em;
+  padding-left: 0.75rem !important;
+}
+ol li, ul li { 
+  margin: .5em 0 .65em;
+  line-height: 125%;
+}
+
+div.orderedlistalpha { list-style-type: upper-alpha; }
+
+table.simplelist, /* table for legacy titles */ 
+ul.simplelist { margin: 15px 0 15px 20px !important; }
+
+ul.simplelist li {
+  list-style-type: none;
+  padding: 5px 0; 
+}
+
+table.simplelist td { border: none; }
+
+table.simplelist tr {
+  border-bottom: none;
+}
+
+table.simplelist tr:nth-of-type(even) {
+  background-color: transparent;
+}
+
+dl.calloutlist p:first-child {
+ margin-top: -25px !important;
+}
+
+dl.calloutlist dd {
+  padding-left: 0;
+  margin-top: -25px;
+}
+
+dl.calloutlist img,
+a.co img { padding: 0; }
+
+/* ----------------- html toc ----------------- */
+
+div.toc ol {
+  margin-top: 8px !important;
+  margin-bottom: 8px !important;
+  margin-left: 0px !important;
+  padding-left: 0px !important;
+}
+
+div.toc ol ol {
+  margin-left: 30px !important;
+  padding-left: 0px !important;
+}
+
+div.toc ol li {
+  list-style-type: none;
+}
+
+div.toc a {
+  color: #8e0012;
+}
+
+div.toc ol a {
+  font-size: 1em;
+  font-weight: bold;
+}
+
+div.toc ol > li > ol a {
+  font-weight: bold;
+  font-size: 1em;
+}
+
+div.toc ol > li > ol > li > ol a {
+  text-decoration: none;
+  font-weight: normal;
+  font-size: 1em;
+}
+
+/* ----------------- admonitions ----------------- */
+ 
+div.tip, 
+div[data-type="tip"], 
+div.note, 
+div[data-type="note"], 
+div.warning, 
+div[data-type="warning"], 
+div[data-type="caution"],
+div[data-type="important"] {
+  margin: 30px !important;
+  font-size: 90%;
+  padding: 10px 8px 20px 8px !important;
+  page-break-inside: avoid;
+}
+
+div.tip ol, div.tip ul,
+div[data-type="tip"] ol, div[data-type="tip"] ul,
+div.note ol, div.note ul, 
+div[data-type="note"] ol, div[data-type="note"] ul,
+div.warning ol, div.warning ul, 
+div[data-type="warning"] ol, div[data-type="warning"] ul,
+div[data-type="caution"] ol, div[data-type="caution"] ul,
+div[data-type="important"] ol, div[data-type="important"] ul { margin-left: 1.5em !important; }
+
+div.tip, 
+div[data-type="tip"], 
+div.note, 
+div[data-type="note"] {
+  border: 1px solid #BEBEBE;
+  background-color: transparent;
+}
+
+div.warning, 
+div[data-type="warning"], 
+div[data-type="caution"],
+div[data-type="important"] {
+  border: 1px solid #BC8F8F;
+}
+
+div.tip h3, 
+div[data-type="tip"] h6, 
+div[data-type="tip"] h1,
+div.note h3, 
+div[data-type="note"] h6,
+div[data-type="note"] h1,  
+div.warning h3, 
+div[data-type="warning"] h6, 
+div[data-type="warning"] h1,
+div[data-type="caution"] h6,
+div[data-type="caution"] h1,
+div[data-type="important"] h1,
+div[data-type="important"] h6 {
+  font-weight: bold;
+  font-size: 110%;
+  font-family: sans-serif !important;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: center;
+  margin: 4px 0 6px !important;
+}
+
+div[data-type="tip"] figure h6,
+div[data-type="note"] figure h6,
+div[data-type="warning"] figure h6, 
+div[data-type="caution"] figure h6,
+div[data-type="important"] figure h6 { font-family: serif !important; }
+
+div.tip h3, 
+div[data-type="tip"] h6, 
+div.note h3, 
+div[data-type="note"] h6,
+div[data-type="tip"] h1, 
+div[data-type="note"] h1 {
+  color: #737373;
+}
+
+div.warning h3, 
+div[data-type="warning"] h6, 
+div[data-type="caution"] h6,
+div[data-type="important"] h6,
+div[data-type="warning"] h1, 
+div[data-type="caution"] h1,
+div[data-type="important"] h1 {
+  color: #C67171;
+}
+
+div.sect1[title="Safari® Books Online"] div.note, 
+div.safarienabled {
+  background-color: transparent;
+  margin: 8px 0 0 !important;
+  border: 0px solid #BEBEBE;
+  font-size: 100%;
+  padding: 0px !important;
+  page-break-inside: avoid;
+}
+
+div.sect1[title="Safari® Books Online"] div.note h3,
+div.safarienabled h6 {
+  display: none;
+}
+
+
+/* Custom Blueprint icon */
+section.blueprint > div {
+  border-top: 3px solid #8B4513;
+  border-bottom: 3px solid #8B4513;
+  margin: 1.5rem 0 !important;
+  padding: 1rem 0 !important;
+}
+
+section.blueprint > div > h1,
+section.blueprint > div > h2 { 
+    text-align: left !important;
+    margin-top: 0 !important;
+}
+
+section.blueprint > div > h1 + section > div > h2,
+section.blueprint > div > h2 + section > div > h3 { 
+    clear: both;
+    padding-top: 0.5rem !important;
+}
+
+section.blueprint > div > h1:before,
+section.blueprint > div > h2:before {
+  content: url("assets/beaver_epub.png");
+  width: 80px !important;
+  float: left;
+  margin: -1px 15px 2px -10px;
+}
+
+/* remove print brackets from ebooks (STYL-1373) */
+img.blueprint { display: none; }
+
+/* Handling for blueprint icon in Preface (STYL-1374) */
+section[data-type="preface"] div[data-type="note"].blueprint 
+{ border: none; }
+
+section[data-type="preface"] div[data-type="note"].blueprint h6 
+{ display: none; }
+
+section[data-type="preface"] div[data-type="note"].blueprint:before {
+  content: url("assets/beaver_epub.png");
+  width: 80px !important;
+  float: left;
+  margin: -1px 15px 2px -32px;
+}
+
+.author-date-bib li {
+  list-style-type: none;
+  margin-left:0;
+  padding-left: 18pt ;
+  text-indent: -18pt ;
+}
+
+/* ----------------- tables ----------------- */
+
+div.table, table {
+  margin: 15px 0 30px 0 !important;
+  max-width: 100%;
+  border: none !important;
+  background: none;
+  display: block;
+  overflow-x: auto;
+}
+
+div.table, div.informaltable, table {
+  page-break-inside: avoid;
+}
+
+table li { margin: 10px 0 0 0.25em !important; }
+
+tr,
+tr td {
+  border-bottom: 1px solid #c3c3c3;
+}
+
+thead td,
+thead th {
+  border-bottom: #9d9d9d 1px solid !important;
+  border-top: #9d9d9d 1px solid !important; 
+}
+
+tr:nth-of-type(even) {
+  background-color: #f1f6fc;
+}
+
+thead {
+  font-family: sans-serif;
+  font-weight: bold;
+}
+
+td,
+th {
+  display: table-cell;
+  padding: 0.3em;
+  text-align: left;
+  vertical-align: top;
+  font-size: 80%;
+  min-width: 6rem;
+}
+th { vertical-align: bottom; }
+
+div.informaltable table {
+  margin: 10px auto !important;
+}
+
+div.informaltable table tr {
+  border-bottom: none;
+}
+
+div.informaltable table tr:nth-of-type(even) {
+  background-color: transparent;
+}
+
+div.informaltable td, div.informaltable th {
+  border: #9d9d9d 1px solid;
+}
+
+div.table-title,
+table caption {
+  font-weight: normal;
+  font-style: italic;
+  font-family: serif;
+  font-size: 1em;
+  margin: 10px 0 10px 0 !important;
+  padding: 0;
+  page-break-after: avoid;
+  text-align: left !important;
+}
+
+table code {
+  font-size: smaller;
+  word-break: break-all;
+}
+
+table.border td { border-bottom: 0.25pt solid rgb-icc(#Grayscale, 0); }
+
+table.border tbody > tr:last-child > td { border-bottom: transparent; }
+
+/*Custom handling for stafflist tables in the copyright*/
+table.stafflist_table {
+    text-align: left;
+    border: none;
+    margin: 0;
+}
+
+table.stafflist_table tr,
+table.stafflist_table td,
+table.stafflist_table th { 
+    border-bottom: none !important;
+    border-top: none !important; 
+    font-size: 1em;
+    margin: 0;
+}
+
+table.stafflist_table td {
+    margin: 0;
+    padding: 0 1rem 0 0;
+}
+
+table.stafflist_table tr:nth-of-type(even) { background-color: transparent; }
+
+
+/* ----------------- Equations ----------------- */
+
+div.equation,
+div[data-type="equation"] {
+  margin: 10px 0 15px 0 !important;
+}
+
+div.equation-title,
+div[data-type="equation"] h5 {
+  font-style: italic;
+  font-weight: normal;
+  font-family: serif !important;
+  font-size: 90%;
+  margin: 20px 0 10px 0 !important;
+  page-break-after: avoid;
+}
+
+div.equation-contents {
+  margin-left: 20px;
+}
+
+/* Handling to allow true equations to resize based on screen width (STYL-1022) */
+div[data-type="equation"] math { font-size: calc(0.35em + 1vw); }
+
+/* ----------------- inline images and math images used fallbacks from MathML ----------------- */
+
+span.inlinemediaobject { /* for iBooks, which overrides height and width on img, per the specs */
+  height: 0.85em;
+  display: inline-block;
+  margin-bottom: 0.2em;
+}
+
+span.inlinemediaobject img {
+  margin: 0;
+  height: 0.85em;
+}
+
+div.informalequation {
+  margin: 20px 0 20px 20px;
+  width: 75%;
+}
+
+div.informalequation img {
+  width: 75%;
+}
+
+/* ----------------- index ----------------- */
+
+div.index {
+  text-indent: 0;
+}
+
+div.index h3 {
+    padding: 0.25em;
+    margin-top: 1em !important;
+    background-color: #F0F0F0;
+}
+
+div.index li {
+  line-height: 130%;
+  list-style-type: none;
+}
+
+div.index a.indexterm {
+  color: #8e0012 !important;
+}
+
+div.index ul {
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+}
+
+div.index ul ul {
+  margin-left: 2em !important;
+  margin-top: 0 !important;
+}
+
+/* ----------------- syntax highlighting and coloring text in general ----------------- */
+
+/* legacy stuff */
+code.boolean, .navy {
+  color: rgb(0,0,128); /* navy */
+}
+code.character, .olive {
+  color: rgb(128,128,0); /* olive */
+}
+code.comment, .blue {
+  color: rgb(0,0,255); /* blue */
+}
+code.conditional, .limegreen {
+  color: rgb(50,205,50); /* limegreen */
+}
+code.constant, .darkorange {
+  color: rgb(255,140,0); /* darkorange */
+}
+code.debug, .darkred {
+  color: rgb(139,0,0); /* darkred */
+}
+code.define, .darkgoldenrod, .gold {
+  color: rgb(184,134,11); /* darkgoldenrod */
+}
+code.delimiter, .dimgray {
+  color: rgb(105,105,105); /* dimgray */
+}
+code.error, .red {
+  color: rgb(255,0,0); /* red */
+}
+code.exception, .salmon {
+  color: rgb(250,128,11); /* salmon */
+}
+code.float, .steelblue {
+  color: rgb(70,130,180); /* steelblue */
+}
+pre code.function, .green {
+  color: rgb(0,128,0); /* green */
+}
+code.identifier, .royalblue {
+  color: rgb(65,105,225); /* royalblue */
+}
+code.ignore, .gray {
+  color: rgb(128,128,128); /* gray */
+}
+code.include, .purple {
+  color: rgb(128,0,128); /* purple */
+}
+code.keyword, .sienna {
+  color: rgb(160,82,45); /* sienna */
+}
+code.label, .deeppink {
+  color: rgb(255,20,147); /* deeppink */
+}
+code.macro, .orangered {
+  color: rgb(255,69,0); /* orangered */
+}
+code.number, .brown {
+  color: rgb(165,42,42); /* brown */
+}
+code.operator, .black {
+  color: #000; /* black */
+}
+code.preCondit, .teal {
+  color: rgb(0,128,128); /* teal */
+}
+code.preProc, .fuschia {
+  color: rgb(255,0,255); /* fuschia */
+}
+code.repeat, .indigo {
+  color: rgb(75,0,130); /* indigo */
+}
+code.special, .saddlebrown {
+  color: rgb(139,69,19); /* saddlebrown */
+}
+code.specialchar, .magenta {
+  color: rgb(255,0,255); /* magenta */
+}
+code.specialcomment, .seagreen {
+  color: rgb(46,139,87); /* seagreen */
+}
+code.statement, .forestgreen {
+  color: rgb(34,139,34); /* forestgreen */
+}
+code.storageclass, .plum {
+  color: rgb(221,160,221); /* plum */
+}
+code.string, .darkred {
+  color: rgb(139,0,0); /* darkred */
+}
+code.structure, .chocolate {
+  color: rgb(210,106,30); /* chocolate */
+}
+code.tag, .darkcyan {
+  color: rgb(0,139,139); /* darkcyan */
+}
+code.todo, .black {
+  color: #000; /* black */
+}
+code.type, .mediumslateblue {
+  color: rgb(123,104,238); /* mediumslateblue */
+}
+code.typedef, .darkgreen {
+  color: rgb(0,100,0); /* darkgreen */
+}
+code.underlined {
+  text-decoration: underline; /* guess what */
+}
+
+/* Pygments with manni theme */
+pre code.hll { background-color: #ffffcc; }
+pre code.c { color: #0099FF; font-style: italic; } /* Comment */
+pre code.err { color: #AA0000; } /* Error */
+pre code.k { color: #006699; font-weight: bold; } /* Keyword */
+pre code.o { color: #555555; } /* Operator */
+pre code.cm { color: #35586C; font-style: italic; } /* Comment.Multiline */
+pre code.cp { color: #009999; } /* Comment.Preproc */
+pre code.c1 { color: #35586C; font-style: italic; } /* Comment.Single */
+pre code.cs { color: #35586C; font-weight: bold; font-style: italic; } /* Comment.Special */
+pre code.gd { background-color: #FFCCCC; } /* Generic.Deleted */
+pre code.ge { font-style: italic; } /* Generic.Emph */
+pre code.gr { color: #FF0000; } /* Generic.Error */
+pre code.gh { color: #003300; font-weight: bold; } /* Generic.Heading */
+pre code.gi { background-color: #CCFFCC; } /* Generic.Inserted */
+
+/* Overriding default manni style of #AAAAAA gray for Generic Output with #000000 black, which is better suited to ORM terminal output */
+pre code.go { color: #000000; } /* Generic.Output */
+
+pre code.gp { color: #000099; font-weight: bold; } /* Generic.Prompt */
+pre code.gs { font-weight: bold; } /* Generic.Strong */
+pre code.gu { color: #003300; font-weight: bold; } /* Generic.Subheading */
+pre code.gt { color: #99CC66; } /* Generic.Traceback */
+pre code.kc { color: #006699; font-weight: bold; } /* Keyword.Constant */
+pre code.kd { color: #006699; font-weight: bold; } /* Keyword.Declaration */
+pre code.kn { color: #006699; font-weight: bold; } /* Keyword.Namespace */
+pre code.kp { color: #006699; } /* Keyword.Pseudo */
+pre code.kr { color: #006699; font-weight: bold; } /* Keyword.Reserved */
+pre code.kt { color: #007788; font-weight: bold; } /* Keyword.Type */
+pre code.m { color: #FF6600; } /* Literal.Number */
+pre code.s { color: #CC3300; } /* Literal.String */
+pre code.na { color: #330099; } /* Name.Attribute */
+pre code.nb { color: #336666; } /* Name.Builtin */
+pre code.nc { color: #00AA88; font-weight: bold; } /* Name.Class */
+pre code.no { color: #336600; } /* Name.Constant */
+pre code.nd { color: #9999FF; } /* Name.Decorator */
+pre code.ni { color: #999999; font-weight: bold; } /* Name.Entity */
+pre code.ne { color: #CC0000; font-weight: bold; } /* Name.Exception */
+pre code.nf { color: #CC00FF; } /* Name.Function */
+pre code.nl { color: #9999FF; } /* Name.Label */
+pre code.nn { color: #00CCFF; font-weight: bold; } /* Name.Namespace */
+pre code.nt { color: #330099; font-weight: bold; } /* Name.Tag */
+pre code.nv { color: #003333; } /* Name.Variable */
+pre code.ow { color: #000000; font-weight: bold; } /* Operator.Word */
+pre code.w { color: #bbbbbb; } /* Text.Whitespace */
+pre code.mf { color: #FF6600; } /* Literal.Number.Float */
+pre code.mh { color: #FF6600; } /* Literal.Number.Hex */
+pre code.mi { color: #FF6600; } /* Literal.Number.Integer */
+pre code.mo { color: #FF6600; } /* Literal.Number.Oct */
+pre code.sb { color: #CC3300; } /* Literal.String.Backtick */
+pre code.sc { color: #CC3300; } /* Literal.String.Char */
+pre code.sd { color: #CC3300; font-style: italic; } /* Literal.String.Doc */
+pre code.s2 { color: #CC3300; } /* Literal.String.Double */
+pre code.se { color: #CC3300; font-weight: bold; } /* Literal.String.Escape */
+pre code.sh { color: #CC3300; } /* Literal.String.Heredoc */
+pre code.si { color: #AA0000; } /* Literal.String.Interpol */
+pre code.sx { color: #CC3300; } /* Literal.String.Other */
+pre code.sr { color: #33AAAA; } /* Literal.String.Regex */
+pre code.s1 { color: #CC3300; } /* Literal.String.Single */
+
+/* Overriding manni default yellow #FFCC33 with brown #AA6600, which is easier to read */ 
+pre code.ss { color: #AA6600; } /* Literal.String.Symbol */
+
+pre code.bp { color: #336666; } /* Name.Builtin.Pseudo */
+pre code.vc { color: #003333; } /* Name.Variable.Class */
+pre code.vg { color: #003333; } /* Name.Variable.Global */
+pre code.vi { color: #003333; } /* Name.Variable.Instance */
+pre code.il { color: #FF6600; } /* Literal.Number.Integer.Long */
+
+/* Sanders's additions to manni */
+pre code.g { color: #005500; } /* Generic */
+pre code.l { color: #CC6600; } /* Literal */
+pre code.l { color: #FF9900; } /* Literal.Date */
+pre code.n { color: #000088; } /* Name */
+pre code.nx { color: #000088; } /* Name.Other */
+pre code.py { color: #9966FF; } /* Name.Property */
+pre code.p { color: #000000; } /* Punctuation */
+pre code.x { color: #FF0066; } /* Other */
+
+/* Special handling for sampler TOC entry rendering */
+
+div.blockquote_sampler_toc {
+  width: 95%;
+  margin: 5px 5px 5px 10px !important;
+}
+
+/* keep this body statement last before custom placeholder */
+
+body {
+  font-family: serif;
+  text-align: left;
+}
+
+/* Customizations for specific titles */
+
+/* added for special formatting in Bioinformatics Programming Using Python, 1e (9781449378677.EBOOK) */
+
+.gray-background, .reverse-video {
+  background: #2E2E2E;
+  color: #FFF;
+}
+
+/* added for special formatting in Working with Microsoft Visual Studio 2005, 1e (9780735649958.EBOOK) */
+
+.light-gray-background {
+  background: #A0A0A0;
+}
+
+/* preserve whitespace in non-pre elements */
+/* Used for special formatting in Using SQLite (9781449394042.EBOOK), which needs verbatim space preserved in a <dt> element, which cannot contain a pre */
+/* See EBK-2920 */
+
+.preserve-whitespace { white-space: pre-wrap; }
+
+/* custom class to allow <pre> or <code> content to break (if too long) (STYL-1061) */
+pre.break-code,
+code.break-code,
+.break-code pre,
+.break-code code { word-break: break-all; }
+
+/* Added for DOM Enlightenment 9781449342845 */
+span.gray { color: #4C4C4C; }
+
+/* Custom widths */
+.width-10,
+figure.width-10 img { width: 10% !important; }
+.width-20,
+figure.width-20 img { width: 20% !important; }
+.width-30,
+figure.width-30 img { width: 30% !important; }
+.width-40,
+figure.width-40 img { width: 40% !important; }
+.width-50,
+figure.width-50 img { width: 50% !important; }
+.width-60,
+figure.width-60 img { width: 60% !important; }
+.width-70,
+figure.width-70 img { width: 70% !important; }
+.width-80,
+figure.width-80 img { width: 80% !important; }
+.width-90,
+figure.width-90 img { width: 90% !important; }
+.width-full,
+.width-100 { width: 100% !important; }
+
+/* ----------------- Platform-specific overrides ----------------- */
+.sc { text-transform: none !important; }
+.right { float: none !important; }
+
+/* Fix xref spacing (STYL-1238) */
+a.totri-footnote { 
+  padding: 0 !important;
+  display: inline;
+}
+
+/* Fix table footnote marker alignment */
+table p[data-type="footnote"] { padding-left: 1em !important; }
+
+/* Adjust figure widths without affecting captions (STYL-1238) */
+figure.width-10,
+figure.width-20,
+figure.width-30,
+figure.width-40,
+figure.width-50,
+figure.width-60,
+figure.width-70,
+figure.width-80,
+figure.width-90 { width: auto !important; }
+
+/* Placeholder for custom series CSS: DO NOT EDIT OR DELETE */
+
+/* fonts (keep at bottom); using DejaVu Serif and Sans as a fallback for its rich set of glyphs */
+
+@font-face {
+  font-family: "Ubuntu Mono";
+  font-weight: normal;
+  font-style: normal;
+  src: url(UbuntuMono-Regular.otf);
+}
+
+@font-face {
+  font-family: "Ubuntu Mono Bold";
+  font-style: normal;
+  font-weight: bold;
+  src: url(UbuntuMono-Bold.otf);
+}
+
+@font-face {
+  font-family: "Ubuntu Mono BoldItal";
+  font-weight: bold;
+  font-style: italic;
+  src: url(UbuntuMono-BoldItalic.otf);
+}
+
+@font-face {
+  font-family: "Ubuntu Mono Ital";
+  font-weight: normal;
+  font-style: italic;
+  src: url(UbuntuMono-Italic.otf);
+}
+
+/* Kindle-specific styles */
+@media amzn-kf8 {
+    
+    dl.calloutlist dt { 
+        margin-bottom: -1em !important; 
+        page-break-after: avoid !important;
+    }    
+    
+}
+
+@media amzn-mobi {
+
+    dl.calloutlist dt { 
+        margin-bottom: -1em !important; 
+        page-break-after: avoid !important;
+    }  
+
+}

@@ -20,7 +20,7 @@ Running the Abseil code within this tutorial requires:
 *   A compatible platform (e.g. Windows, macOS, Linux, etc.). Most platforms are
     fully supported. Consult the [Platforms Guide](platforms/platforms) for more
     information.
-*   A compatible C++ compiler *supporting at least C++11*. Most major compilers
+*   A compatible C++ compiler *supporting at least C++14*. Most major compilers
     are supported.
 *   [Git](https://git-scm.com/) for interacting with the Abseil source code
     repository, which is contained on [GitHub](http://github.com). To install
@@ -51,14 +51,14 @@ Navigate into this directory and run all tests:
 ```
 $ cd abseil-cpp
 $ mkdir build && cd build
-$ cmake -DBUILD_TESTING=ON -DABSL_USE_GOOGLETEST_HEAD=ON -DCMAKE_CXX_STANDARD=11 ..
+$ cmake -DABSL_BUILD_TESTING=ON -DABSL_USE_GOOGLETEST_HEAD=ON -DCMAKE_CXX_STANDARD=14 ..
 ...
 -- Configuring done
 -- Generating done
 -- Build files have been written to: ${PWD}
 ```
 
-`CMAKE_CXX_STANDARD=11` instructs CMake to build using the C++11 standard, which
+`CMAKE_CXX_STANDARD=14` instructs CMake to build using the C++14 standard, which
 is our minimum language level of support.
 
 Now you can build the CMake target tests:
@@ -140,12 +140,12 @@ Note that we include an Abseil header file using the `absl` prefix.
 Now, create a `CMakeLists.txt` file within your `examples` directory like the following:
 
 ```
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.10)
 
 project(my_project)
 
-# Abseil requires C++11
-set(CMAKE_CXX_STANDARD 11)
+# Abseil requires C++14
+set(CMAKE_CXX_STANDARD 14)
 
 # Process Abseil's CMake build system
 add_subdirectory(abseil-cpp)

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Software Engineering at Google</title>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> </script>
+    <link rel="stylesheet" type="text/css" href="theme/html/html.css">
+  </head>
+  <body data-type="book">
+    <section xmlns="http://www.w3.org/1999/xhtml" data-type="chapter" id="leading_at_scale">
+<h1>Leading at Scale</h1>
+
+<p class="byline">Written by Ben Collins-Sussman</p>
+
+<p class="byline">Edited by Riona MacNamara</p>
+
+<p>In <a class="xref drop-element-attached-top drop-element-attached-center drop-target-attached-bottom drop-target-attached-center" data-type="xref" href="ch05.html#how_to_lead_a_team">How to Lead a Team</a>, we talked about what it means to go from being an “individual contributor” to being an explicit leader of a team. <a contenteditable="false" data-primary="leadership, scaling into a really good leader" data-type="indexterm" id="ix_leadsc">&nbsp;</a>It’s a natural progression to go from leading one team to leading a set of related teams, and this chapter talks about how to be effective as you continue along the path of engineering leadership.</p>
+
+<p>As your role evolves, all the best practices still apply. You’re still a “servant leader”; you’re just serving a larger group. That said, the scope of problems you’re solving becomes larger and more abstract. You’re gradually forced to become “higher level.” That is, you’re less and less able to get into the technical or engineering details of things, and you’re being pushed to go "broad" rather than "deep." At every step, this process is frustrating: you mourn the loss of these details, and you come to realize that your prior engineering expertise is becoming less and less relevant to your job. Instead, your effectiveness depends more than ever on your <em>general</em> technical intuition and ability to galvanize engineers to move in good directions.</p>
+
+<p>The process is often demoralizing—until one day you notice that you’re actually having much more impact as a leader than you ever had as an individual contributor. It’s a satisfying but bittersweet realization.</p>
+
+<p>So, assuming that we understand the basics of leadership, what does it take to scale yourself into a <em>really good</em> leader? That’s what we talk about here, using what we call “the three Always of leadership”: Always Be Deciding, Always Be Leaving, Always Be Scaling.</p>
+
+<section data-type="sect1" id="always_be_deciding">
+<h1>Always Be Deciding</h1>
+
+<p>Managing a team of teams means making ever more <a contenteditable="false" data-primary="leadership, scaling into a really good leader" data-secondary="Always be deciding" data-type="indexterm" id="id-NmhaHGCjcq">&nbsp;</a>decisions at ever-higher levels. Your job <a contenteditable="false" data-primary=" “Always of leadership”" data-primary-sortas="Always" data-secondary="Always be deciding" data-type="indexterm" id="id-A8hOC9C1cR">&nbsp;</a>becomes <a contenteditable="false" data-primary="decisions" data-secondary="making at higher levels of leadership" data-type="indexterm" id="id-BrhQUnCNco">&nbsp;</a>more about high-level strategy rather than how to solve any specific engineering task. At this level, most of the decisions you’ll make are about finding the correct set of trade-offs.</p>
+
+<section data-type="sect2" id="the_parable_of_the_airplane">
+<h2>The Parable of the Airplane</h2>
+
+<p><a href="http://lindsayjones.com">Lindsay Jones</a> is a friend of ours who is a professional theatrical sound designer and composer. <a contenteditable="false" data-primary="airplane, parable of" data-type="indexterm" id="id-pghDCRCDUGcE">&nbsp;</a>He spends his life flying around the United States, hopping from production to production, and he’s full of crazy (and true) stories about air travel. Here’s one of our favorite stories:</p>
+
+<blockquote>
+<p>It’s 6 a.m., we’re all boarded on the plane and ready to go. The captain comes on the PA system and explains to us that, somehow, someone has overfilled the fuel tank by 10,000 gallons. Now, I’ve flown on planes for a long time, and I didn’t know that such a thing was possible. I mean, if I overfill my car by a gallon, I’m gonna have gas all over my shoes, right?</p>
+
+<p>Well, so anyway, the captain then says that we have two options: we can either wait for the truck to come suck the fuel back out of the plane, which is going to take over an hour, or twenty people have to get off the plane right now to even out the weight.</p>
+
+<p>No one moves.</p>
+
+<p>Now, there’s this guy across the aisle from me in first class, and he is absolutely livid. He reminds me of Frank Burns on <em>M*A*S*H;</em> he’s just super indignant and sputtering everywhere, demanding to know who’s responsible. It’s an amazing showcase, it’s like he’s Margaret Dumont in the Marx Brothers movies.</p>
+
+<p>So, he grabs his wallet and pulls out this massive wad of cash! And he’s like “I cannot be late for this meeting!! I will give $40 to any person who gets off this plane right now!”</p>
+
+<p>Sure enough, people take him up on it. He gives out $40 to 20 people (which is $800 in cash, by the way!) and they all leave.</p>
+
+<p>So, now we’re all set and we head out to the runway, and the captain comes back on the PA again. The plane’s computer has stopped working. No one knows why. Now we gotta get towed back to the gate.</p>
+
+<p>Frank Burns is apoplectic. I mean, seriously, I thought he was gonna have a stroke. He’s cursing and screaming. Everyone else is just looking at each other.</p>
+
+<p>We get back to the gate and this guy is demanding another flight. They offer to book him on the 9:30, which is too late. He’s like, “Isn’t there another flight before 9:30?”</p>
+
+<p>The gate agent is like, “Well, there was another flight at 8, but it’s all full now. They’re closing the doors now.”</p>
+
+<p>And he’s like, “Full?! Whaddya mean it’s full? There’s not one open seat on that plane?!?!?!”</p>
+
+<p>The gate agent is like, “No sir, that plane was wide open until 20 passengers showed up out of nowhere and took all the seats. They were the happiest passengers I’ve ever seen, they were laughing all the way down the jet bridge.”</p>
+
+<p>It was a very quiet ride on the 9:30 flight.</p>
+</blockquote>
+
+<p>This story is, of course, about trade-offs.<a contenteditable="false" data-primary="trade-offs" data-secondary="for leaders" data-type="indexterm" id="id-aphrHKfPUbcV">&nbsp;</a> Although most of this book focuses on various technical trade-offs in engineering systems, it turns out that trade-offs also apply to human behaviors. As a leader, you need to make decisions about what your teams should do each week. Sometimes the trade-offs are obvious (“if we work on this project, it delays that other one…”); sometimes the trade-offs have unforeseeable consequences that can come back to bite you, as in the preceding story.</p>
+
+<p>At the highest level, your job as a leader—either of a single team or a larger organization—is to guide people toward solving difficult, ambiguous problems. By <em>ambiguous</em>, we mean that the problem has no obvious solution and might even be unsolvable. Either way, the problem needs to be explored, navigated, and (hopefully) wrestled into a state in which it’s under control. If writing code is analogous to chopping down trees, your job as a leader is to “see the forest through the trees” and find a workable path through that forest, directing engineers toward the important trees. There are three main steps to this process. First, you need to identify the <em>blinders</em>; next, you need to identify the <em>trade-offs</em>; and then you need to <em>decide</em> and iterate on a solution.</p>
+</section>
+
+<section data-type="sect2" id="identify_the_blinders">
+<h2>Identify the Blinders</h2>
+
+<p>When you first approach a problem, you’ll often discover that a group of people has already been<a contenteditable="false" data-primary="leadership, scaling into a really good leader" data-secondary="identifying the blinders" data-type="indexterm" id="id-pghQHRCQfGcE">&nbsp;</a> wrestling with it for years. <a contenteditable="false" data-primary="blinders, identifying" data-type="indexterm" id="id-aphNCbCbfbcV">&nbsp;</a>These folks have been steeped in the problem for so long that they’re wearing “blinders”—that is, they’re no longer able to see the forest. They make a bunch of assumptions about the problem (or solution) without realizing it. “This is how we’ve always done it,” they’ll say, having lost the ability to consider the status quo critically. Sometimes, you’ll discover bizarre coping mechanisms or rationalizations that have evolved to justify the status quo. This is where you—with fresh eyes—have a great advantage. You can see these blinders, ask questions, and then consider new strategies. (Of course, being unfamiliar with the problem isn’t a requirement for good leadership, but it’s often an advantage.)</p>
+</section>
+
+<section data-type="sect2" id="identify_the_key_trade-offs">
+<h2>Identify the Key Trade-Offs</h2>
+
+<p>By definition, important and ambiguous problems do <em>not</em> have magic "silver bullet" solutions. <a contenteditable="false" data-primary="leadership, scaling into a really good leader" data-secondary="identifying key trade-offs" data-type="indexterm" id="id-y9hXCPCPI8cr">&nbsp;</a><a contenteditable="false" data-primary="trade-offs" data-secondary="key, identifying" data-type="indexterm" id="id-JghAU3CXIpcM">&nbsp;</a>There’s no answer that works forever in all situations. There is only the <em>best answer for the moment</em>, and it almost certainly involves making trade-offs in one direction or another. It’s your job to call out the trade-offs, explain them to everyone, and then help decide how to balance them.</p>
+</section>
+
+<section data-type="sect2" id="decidecomma_then_iterate">
+<h2>Decide, Then Iterate</h2>
+
+<p>After you understand the trade-offs<a contenteditable="false" data-primary="leadership, scaling into a really good leader" data-secondary="deciding, then iterating" data-type="indexterm" id="id-y9hBHPCAu8cr">&nbsp;</a> and how they work, you’re empowered. You can use this information to make the best decision for this particular month.<a contenteditable="false" data-primary="decisions" data-secondary="deciding, then iterating" data-type="indexterm" id="id-JghwC3CDupcM">&nbsp;</a> Next month, you might need to reevaluate and rebalance the trade-offs again; it’s an iterative process.<a contenteditable="false" data-primary="“Always of leadership”" data-primary-sortas="Always" data-secondary="Always be deciding" data-tertiary="decide, then iterate" data-type="indexterm" id="id-EXhQU8CGupcG">&nbsp;</a> This is what we mean when we say <em>Always Be Deciding</em>.</p>
+
+<p>There’s a risk here. If you don’t frame your process as continuous rebalancing of trade-offs, your teams are likely to fall into the trap of searching for the perfect solution, which can then lead to what some call “analysis paralysis.” You need to make your teams comfortable with iteration.<a contenteditable="false" data-primary="iteration, making your teams comfortable with" data-type="indexterm" id="id-JghDHDUDupcM">&nbsp;</a> One way of doing this is to lower the stakes and calm nerves by explaining: “We’re going to try this decision and see how it goes. Next month, we can undo the change or make a different decision.” This keeps folks flexible and in a state of learning from their choices.</p>
+
+<aside data-type="sidebar" id="case_study_addressing_the_quotation_mar">
+<h5>Case Study: Addressing the "Latency" of Web Search</h5>
+
+<p>In managing a team of teams, there’s a natural tendency to move away from a single product and to instead own a whole “class” of products, or perhaps a broader problem that crosses products.<a contenteditable="false" data-primary="leadership, scaling into a really good leader" data-secondary="Addressing Web Search latency (case study)" data-type="indexterm" id="ix_leadscWScs">&nbsp;</a><a contenteditable="false" data-primary="Web Search latency case study" data-type="indexterm" id="ix_WbSrch">&nbsp;</a> A good example of this at Google has to do with our oldest product, Web Search.</p>
+
+<p>For years, thousands of Google engineers have worked on the general problem of making search results better—improving the “quality” of the results page. But it turns out that this quest for quality has a side effect: it gradually makes the product slower. Once upon a time, Google’s search results were not much more than a page of 10 blue links, each representing a relevant website. Over the past decade, however, thousands of tiny changes to improve “quality” have resulted in ever-richer results: images, videos, boxes with Wikipedia facts, even interactive UI elements. This means the servers need to do much more work to generate information: more bytes are being sent over the wire; the client (usually a phone) is being asked to render ever-more-complex HTML and data. Even though the speed of networks and computers have markedly increased over a decade, the speed of the search page has become slower and slower: its <em>latency</em> has increased. This might not seem like a big deal, but the latency of a product has a direct effect (in aggregate) on users’ engagement and how often they use it. Even increases in rendering time as small as 10 ms matter. Latency creeps up slowly. This is not the fault of a specific engineering team, but rather represents a long, collective poisoning of the commons. At some point, the overall latency of Web Search grows until its effect begins to cancel out the improvements in user engagement that came from the improvements to the "quality" of the results.</p>
+
+<p>A number of leaders struggled with this issue over the years but failed to address the problem systematically.<a contenteditable="false" data-primary="blinders, identifying" data-secondary="in Web Search latency case study" data-type="indexterm" id="id-rMhMHAfVfAuocL">&nbsp;</a> The blinders everyone wore assumed that the only way to deal with latency was to declare a latency “code yellow”<sup><a data-type="noteref" id="ch01fn71-marker" href="#ch01fn71">1</a></sup> every two or three years, during which everyone dropped everything to optimize code and speed up the product. Although this strategy would work temporarily, the latency would begin creeping up again just a month or two later, and soon return to its prior levels.</p>
+
+<p>So what changed? At some point, we took a step back, identified the blinders, and did a full reevaluation of the trade-offs.<a contenteditable="false" data-primary="trade-offs" data-secondary="in Web Search latency case study" data-type="indexterm" id="id-kXh0HNIZf7uqcR">&nbsp;</a> It turns out that the pursuit of "quality" has not one, but <em>two</em> different costs. The first cost is to the user: more quality usually means more data being sent out, which means more latency. The second cost is to Google: more quality means doing more work to generate the data, which costs more CPU time in our servers—what we call "serving capacity." Although leadership had often trodden carefully around the trade-off between quality and capacity, it had never treated latency as a full citizen in the calculus. As the old joke goes, “Good, Fast, Cheap—pick two.” A simple way to depict the trade-offs is to draw a triangle of tension between Good (Quality), Fast (Latency), and Cheap (Capacity), as illustrated in <a data-type="xref" href="#trade-offs_within_web_searchsemicolon_p">Figure 6-1</a>.</p>
+
+<figure id="trade-offs_within_web_searchsemicolon_p"><img alt="Trade-offs within Web Search; pick two!" src="images/seag_0601.png">
+<figcaption><span class="label">Figure 6-1. </span>Trade-offs within Web Search; pick two!</figcaption>
+</figure>
+
+<p>That’s exactly what was happening here. It’s easy to improve any one of these traits by deliberately harming at least one of the other two. For example, you can improve quality by putting more data on the search results page—but doing so will hurt capacity and latency. You can also do a direct trade-off between latency and capacity by changing the traffic load on your serving cluster. If you send more queries to the cluster, you get increased capacity in the sense that you get better utilization of the CPUs—more bang for your hardware buck. But higher load increases resource contention within a computer, making the average latency of a query worse. If you deliberately decrease a cluster’s traffic (run it “cooler”), you have less serving capacity overall, but each query becomes faster.</p>
+
+<p>The main point here is that this insight—a better understanding of <em>all</em> the trade-offs—allowed us to start experimenting with new ways of balancing. Instead of treating latency as an unavoidable and accidental side effect, we could now treat it as a first-class goal along with our other goals. This led to new strategies for us. For example, our data scientists were able to measure exactly how much latency hurt user engagement. This allowed them to construct a metric that pitted quality-driven improvements to short-term user engagement against latency-driven damage to long-term user engagement. This approach allows us to make more data-driven decisions about product changes. For example, if a small change improves quality but also hurts latency, we can quantitatively decide whether the change is worth launching or not. We are <em>always deciding</em> whether our quality, latency, and capacity changes are in balance, and iterating on our decisions every month.<a contenteditable="false" data-primary="leadership, scaling into a really good leader" data-secondary="Addressing Web Search latency (case study)" data-startref="ix_leadscWScs" data-type="indexterm" id="id-5ZhYUJcGfbuNco">&nbsp;</a><a contenteditable="false" data-primary="Web Search latency case study" data-startref="ix_WbSrch" data-type="indexterm" id="id-wehefPcAfzu8cB">&nbsp;</a></p>
+</aside>
+</section>
+</section>
+
+<section data-type="sect1" id="always_be_leaving">
+<h1>Always Be Leaving</h1>
+
+<p>At face value, <em>Always Be Leaving</em> sounds like terrible advice. Why would a good leader be trying to leave?<a contenteditable="false" data-primary="“Always of leadership”" data-primary-sortas="Always" data-secondary="Always be leaving" data-type="indexterm" id="id-BrhjCnCpSo">&nbsp;</a><a contenteditable="false" data-primary="leadership, scaling into a really good leader" data-secondary="Always be leaving" data-type="indexterm" id="id-pgh1URCOSQ">&nbsp;</a> In fact, this is a famous quote from Bharat Mediratta, a former Google engineering director. What he meant was that it’s not just your job to solve an ambiguous problem, but to get your organization to solve it <em>by itself</em>, without you present. If you can do that, it frees you up to move to a new problem (or new organization), leaving a trail of self-sufficient success in your wake.</p>
+
+<p>The antipattern here, of course, is a situation in which you’ve set yourself up to be a single point of failure (SPOF). <a contenteditable="false" data-primary="single point of failure (SPOF)" data-secondary="leader as" data-type="indexterm" id="id-BrhMHdUpSo">&nbsp;</a>As we <a contenteditable="false" data-primary="bus factor" data-type="indexterm" id="id-pghDC6UOSQ">&nbsp;</a>noted earlier in this book, Googlers have a term for that, the bus factor: <em>the number of people that need to get hit by a bus before your project is completely doomed.</em></p>
+
+<p>Of course, the "bus" here is just a metaphor. People become sick; they switch teams or companies; they move away. As a litmus test, think about a difficult problem that your team is making good progress on. Now imagine that you, the leader, disappear. Does your team keep going? Does it continue to be successful? Here’s an even simpler test: think about the last vacation you took that was at least a week long. Did you keep checking your work email? (Most leaders do.) Ask yourself <em>why</em>. Will things fall apart if you don’t pay attention? If so, you have very likely made yourself an SPOF. You need to fix that.</p>
+
+<section data-type="sect2" id="your_mission_build_a_quotation_markself">
+<h2>Your Mission: Build a “Self-Driving” Team</h2>
+
+<p>Coming back to Bharat’s quote: being a successful leader means<a contenteditable="false" data-primary="self-driving team, building" data-type="indexterm" id="ix_selfdr">&nbsp;</a> building an organization that is able to solve the difficult problem by itself. That organization needs to have a strong set of leaders, healthy engineering processes, and a positive, self-perpetuating culture that persists over time. Yes, this is difficult; but it gets back to the fact that leading a team of teams is often more about organizing <em>people</em> rather than being a technical wizard. Again, there are three main parts to constructing this sort of self-sufficient group: dividing the problem space, delegating subproblems, and iterating as needed.</p>
+</section>
+
+<section data-type="sect2" id="dividing_the_problem_space">
+<h2>Dividing the Problem Space</h2>
+
+<p>Challenging problems are usually composed of difficult subproblems.<a contenteditable="false" data-primary="problems" data-secondary="dividing the problem space" data-type="indexterm" id="ix_probdiv">&nbsp;</a> If you’re leading a team of teams, an obvious choice is to put a team in charge of each subproblem. The risk, however, is that the subproblems can change over time, and rigid team boundaries won’t be able to notice or adapt to this fact. If you’re able, consider an organizational structure that is looser—one in which subteams can change size, individuals can migrate between subteams, and the problems assigned to subteams can morph over time. This involves walking a fine line between “too rigid” and “too vague.” On the one hand, you want your subteams to have a clear sense of problem, purpose, and steady accomplishment; on the other hand, people need the freedom to change direction and try new things in response to a changing environment.</p>
+
+<section data-type="sect3" id="example_subdividing_the_quotation_markl">
+<h3>Example: Subdividing the “latency problem” of Google Search</h3>
+
+<p>When approaching the problem of<a contenteditable="false" data-primary="Google Search" data-secondary="subdividing latency problem of" data-type="indexterm" id="id-OjhKHmCvUNu7SY">&nbsp;</a> Search latency, we realized that the problem could, at a minimum, be subdivided into two general spaces: work that addressed the <em>symptoms</em> of latency, and different work that addressed the <em>causes</em> of latency. It was obvious that we needed to staff many projects to optimize our codebase for speed, but focusing <em>only</em> on speed wouldn’t be enough. There were still thousands of engineers increasing the complexity and "quality" of search results, undoing the speed improvements as quickly as they landed, so we also needed people to focus on a parallel problem space of preventing latency in the first place. We discovered gaps in our metrics, in our latency analysis tools, and in our developer education and documentation. By assigning different teams to work on latency causes and symptoms at the same time, we were able to systematically control latency over the long term. (Also, notice how these teams owned the <em>problems</em>, not specific solutions!)</p>
+</section>
+
+<section data-type="sect3" id="delegating_subproblems_to_leaders">
+<h3>Delegating subproblems to leaders</h3>
+
+<p>It’s essentially a cliché for management books to talk about "delegation," but there’s a reason for that: delegation is <em>really difficult</em> to learn. <a contenteditable="false" data-primary="delegation of subproblems to team leaders" data-type="indexterm" id="id-rMh5CLCVfAuASL">&nbsp;</a>It goes against all our instincts for efficiency and achievement. That difficulty is the reason for the adage, “If you want something done right, do it yourself.”</p>
+
+<p>That said, if you agree that your mission is to build a self-driving organization, the main mechanism of teaching is through delegation. You must build a set of self-sufficient leaders, and delegation is absolutely the most effective way to train them. You give them an assignment, let them fail, and then try again and try again. Silicon Valley has well-known mantras about “failing fast and iterating.” That philosophy doesn’t just apply to engineering design, but to human learning as well.</p>
+
+<p>As a leader, your plate is constantly filling up with important tasks that need to be done. Most of these tasks are things that are fairly easy for you to do. Suppose that you’re working diligently through your inbox, responding to problems, and then you decide to put 20 minutes aside to fix a longstanding and nagging issue. But before you carry out the task, be mindful and stop yourself. Ask this critical question: <em>Am I really the only one who can do this work?</em></p>
+
+<p>Sure, it might be most <em>efficient</em> for you to do it, but then you’re failing to train your leaders. You’re not building a self-sufficient organization. Unless the task is truly time sensitive and on fire, bite the bullet and assign the work to someone else—presumably someone who you know can do it but will probably take much longer to finish. Coach them on the work if need be. You need to create opportunities for your leaders to grow; they need to learn to "level up" and do this work themselves so that you’re no longer in the critical path.</p>
+
+<p>The corollary here is that you need to be mindful of your own purpose as a leader of leaders. If you find yourself deep in the weeds, you’re doing a disservice to your organization. When you get to work each day, ask yourself a different critical question: <em>What can I do that</em> nobody <em>else on my team can do?</em></p>
+
+<p>There are a number of good answers. For example, you can protect your teams from organizational politics; you can give them encouragement; you can make sure everyone is treating one another well, creating a culture of humility, trust, and respect. It’s also important to “manage up,” making sure your management chain understands what your group is doing and staying connected to the company at large. But often the most common and important answer to this question is: “I can see the forest through the trees.” In other words, you can <em>define a high-level strategy.</em> Your strategy needs to cover not just overall technical direction, but an organizational strategy as well. You’re building a blueprint for how the ambiguous problem is solved and how your organization can manage the problem over time. You’re continuously mapping out the forest, and then assigning the tree-cutting to others.</p>
+</section>
+
+<section data-type="sect3" id="adjusting_and_iterating">
+<h3>Adjusting and iterating</h3>
+
+<p>Let’s assume that you’ve now reached the point at which you’ve built a self-sustaining machine. You’re no longer an SPOF. Congratulations! What do you do now?</p>
+
+<p>Before answering, note that you have actually liberated yourself—you now have the freedom to "Always Be Leaving." This could be the freedom to tackle a new, adjacent problem, or perhaps you could even move yourself to a whole new department and problem space, making room for the careers of the leaders you’ve trained. This is a great way of avoiding personal burnout.</p>
+
+<p>The simple answer to “what now?” is to <em>direct</em> this machine and keep it healthy. But unless there’s a crisis, you should use a gentle touch. The book <em>Debugging Teams</em><sup><a data-type="noteref" id="ch01fn72-marker" href="#ch01fn72">2</a></sup> has a parable about making mindful adjustments:</p>
+
+<blockquote>
+<p>There’s a story about a Master of all things mechanical who had long since retired. His former company was having a problem that no one could fix, so they called in the Master to see if he could help find the problem. The Master examined the machine, listened to it, and eventually pulled out a worn piece of chalk and made a small X on the side of the machine. He informed the technician that there was a loose wire that needed repair at that very spot. The technician opened the machine and tightened the loose wire, thus fixing the problem. When the Master’s invoice arrived for $10,000, the irate CEO wrote back demanding a breakdown for this ridiculously high charge for a simple chalk mark! The Master responded with another invoice, showing a $1 cost for the chalk to make the mark, and $9,999 for knowing where to put it.</p>
+
+<p>To us, this is a story about wisdom: that a single, carefully considered adjustment can have gigantic effects. We use this technique when managing people. We imagine our team as flying around in a great blimp, headed slowly and surely in a certain direction. Instead of micromanaging and trying to make continuous course corrections, we spend most of the week carefully watching and listening. At the end of the week we make a small chalk mark in a precise location on the blimp, then give a small but critical "tap" to adjust the course.</p>
+</blockquote>
+
+<p>This is what good management is about: 95% observation and listening, and 5% making critical adjustments in just the right place. Listen to your leaders and skip-reports. Talk to your customers, and remember that often (especially if your team builds engineering infrastructure), your “customers” are not end users out in the world, but your coworkers. Customers’ happiness requires just as much intense listening as your reports’ happiness. What’s working and what isn’t? Is this self-driving blimp headed in the proper direction? Your direction should be iterative, but thoughtful and minimal, making the minimum adjustments necessary to correct course. If you regress into micromanagement, you risk becoming an SPOF again! “Always Be Leaving” is a call to <em>macro</em>management.</p>
+</section>
+
+<section data-type="sect3" id="take_care_in_anchoring_a_teamapostrophe">
+<h3>Take care in anchoring a team’s identity</h3>
+
+<p>A common mistake is to put a team in charge of a specific product rather than a general problem. <a contenteditable="false" data-primary="teams" data-secondary="anchoring a team's identity" data-type="indexterm" id="id-kXh0HoCgu7ukSR">&nbsp;</a>A product is a <em>solution</em> to a problem. The life expectancy of solutions can be short, and products can be replaced by better solutions. However, a <em>problem</em>—if chosen well—can be evergreen. Anchoring a team identity to a specific solution (“We are the team that manages the Git repositories”) can lead to all sorts of angst over time. What if a large percentage of your engineers want to switch to a new version control system? The team is likely to "dig in," defend its solution, and resist change, even if this is not the best path for the organization. The team clings to its blinders, because the solution has become part of the team’s identity and self-worth. If the team instead owns the <em>problem</em> (e.g., “We are the team that provides version control to the company”), it is freed up to experiment with different solutions over time.<a contenteditable="false" data-primary="problems" data-secondary="dividing the problem space" data-startref="ix_probdiv" data-type="indexterm" id="id-KohrIDCMuNuzSG">&nbsp;</a><a contenteditable="false" data-primary="self-driving team, building" data-startref="ix_selfdr" data-type="indexterm" id="id-5ZhDu1CyubuMSo">&nbsp;</a></p>
+</section>
+</section>
+</section>
+
+<section data-type="sect1" id="always_be_scaling">
+<h1>Always Be Scaling</h1>
+
+<p>A lot of leadership books talk about “scaling” in the context of learning to “maximize your impact”—strategies to grow your team and influence.<a contenteditable="false" data-primary="leadership, scaling into a really good leader" data-secondary="Always be scaling" data-type="indexterm" id="id-BrhMHnC9to">&nbsp;</a><a contenteditable="false" data-primary="“Always of leadership”" data-primary-sortas="Always" data-secondary="Always be scaling" data-type="indexterm" id="id-pghDCRC8tQ">&nbsp;</a> We’re not going to discuss those things here beyond what we’ve already mentioned. It’s probably obvious that building a self-driving organization with strong leaders is already a great recipe for growth and success.</p>
+
+<p>Instead, we’re going to discuss team scaling from a <em>defensive</em> and personal point of view rather than an offensive one. As a leader, <em>your most precious resource is your limited pool of time, attention, and energy.</em> If you aggressively build out your teams’ responsibilities and power without learning to protect your personal sanity in the process, the scaling is doomed to fail. And so we’re going to talk about how to effectively scale <em>yourself</em> through this process.</p>
+
+<section data-type="sect2" id="the_cycle_of_success">
+<h2>The Cycle of Success</h2>
+
+<p>When a team tackles a difficult problem, there’s a standard pattern that emerges, a particular cycle. <a contenteditable="false" data-primary="success, cycle of" data-type="indexterm" id="id-y9hBHPCQf1tr">&nbsp;</a>It looks like this:</p>
+
+<dl>
+	<dt>Analysis</dt>
+	<dd>First, you receive the problem and start to wrestle with it. You identify the blinders, find all the trade-offs, and build consensus about how to manage them.</dd>
+	<dt>Struggle</dt>
+	<dd>You start moving on the work, whether or not your team thinks it’s ready. You prepare for failures, retries, and iteration. At this point, your job is mostly about herding cats. Encourage your leaders and experts on the ground to form opinions and then listen carefully and devise an overall strategy, even if you have to "fake it" at first.<sup><a data-type="noteref" id="ch01fn73-marker" href="#ch01fn73">3</a></sup></dd>
+	<dt>Traction</dt>
+	<dd>Eventually your team begins to figure things out. You’re making smarter decisions, and real progress is made. Morale improves. You’re iterating on trade-offs, and the organization is beginning to drive itself around the problem. Nice job!</dd>
+	<dt>Reward</dt>
+	<dd>Something unexpected happens. Your manager takes you aside and congratulates you on your success. You discover your reward isn’t just a pat on the back, but a <em>whole new problem</em> to tackle. That’s right: the reward for success is more work…and more responsibility! Often, it’s a problem that is similar or adjacent to the first one, but equally difficult.</dd>
+</dl>
+
+<p>So now you’re in a pickle. You’ve been given a new problem, but (usually) not more people. Somehow you need to solve <em>both</em> problems now, which likely means that the original problem still needs to be managed with <em>half</em> as many people in <em>half</em> the time. You need the other half of your people to tackle the new work! We refer to this final step as the <em>compression stage</em>: you’re taking everything you’ve been doing and compressing it down to half the size.</p>
+
+<p>So really, the cycle of success is more of a spiral (see <a data-type="xref" href="#the_spiral_of_success">Figure 6-2</a>). Over months and years, your organization is scaling by tackling new problems and then figuring out how to compress them so that it can take on new, parallel struggles. If you’re lucky, you’re allowed to hire more people as you go. More often than not, though, your hiring doesn’t keep pace with the scaling. Larry Page, one of Google’s founders, would probably refer to this spiral as “uncomfortably exciting.”</p>
+
+<figure id="the_spiral_of_success"><img alt="The spiral of success" src="images/seag_0602.png">
+<figcaption><span class="label">Figure 6-2. </span>The spiral of success</figcaption>
+</figure>
+
+<p>The spiral of success is a conundrum—it’s something that’s difficult to manage, and yet it’s the main paradigm for scaling a team of teams. The act of compressing a problem isn’t just about figuring out how to maximize your team’s efficiency, but also about learning to scale your <em>own</em> time and attention to match the new breadth of responsibility.</p>
+</section>
+
+<section data-type="sect2" id="important_versus_urgent">
+<h2>Important Versus Urgent</h2>
+
+<p>Think back to a time when you weren’t yet a leader, but still a carefree individual contributor. <a contenteditable="false" data-primary="problems" data-secondary="important vs. urgent" data-type="indexterm" id="id-JghDH3CXIytM">&nbsp;</a><a contenteditable="false" data-primary="important versus urgent problems" data-type="indexterm" id="id-EXheC8CeI3tG">&nbsp;</a><a contenteditable="false" data-primary="leadership, scaling into a really good leader" data-secondary="important vs. urgent problems" data-type="indexterm" id="ix_leadscimpur">&nbsp;</a>If you used to be a programmer, your life was likely calmer and more panic-free. You had a list of work to do, and each day you’d methodically work down your list, writing code and debugging problems. Prioritizing, planning, and executing your work was straightforward.</p>
+
+<p>As you moved into leadership, though, you might have noticed that your main mode of work became less predictable and more about firefighting. That is, your job became less <em>proactive</em> and more <em>reactive.</em> The higher up in leadership you go, the more escalations you receive. You are the "finally" clause in a long list of code blocks! All of your means of communication—email, chat rooms, meetings—begin to feel like a Denial-of-Service attack against your time and attention. In fact, if you’re not mindful, you end up spending 100% of your time in reactive mode. People are throwing balls at you, and you’re frantically jumping from one ball to the next, trying not to let any of them hit the ground.</p>
+
+<p>A lot of books have discussed this problem.<a contenteditable="false" data-primary="Eisenhower, Dwight D." data-type="indexterm" id="id-OjhKHEfMIKt6">&nbsp;</a> The management author Stephen Covey is famous for talking about the idea of distinguishing between things that are <em>important</em> versus things that are <em>urgent.</em> In fact, it was US President Dwight D. Eisenhower who popularized this idea in a famous 1954 quote:</p>
+
+<blockquote>
+<p>I have two kinds of problems, the urgent and the important. The urgent are not important, and the important are never urgent.</p>
+</blockquote>
+
+<p>This tension is one of the biggest dangers to your effectiveness as a leader. If you let yourself slip into pure reactive mode (which happens almost automatically), you spend every moment of your life on <em>urgent</em> things, but almost none of those things are <em>important</em> in the big picture. Remember that your job as a leader is to do things that <em>only you can do</em>, like mapping a path through the forest. Building that meta-strategy is incredibly important, but almost never urgent. It’s always easier to respond to that next urgent email.</p>
+
+<p>So how can you force yourself to work mostly on important things, rather than urgent things? Here are a few key techniques:</p>
+
+<dl>
+	<dt>Delegate</dt>
+	<dd>Many of the urgent things you see can be delegated back to other leaders in your organization. You might feel guilty if it’s a trivial task; or you might worry that handing off an issue is inefficient because it might take those other leaders longer to fix. But it’s good training for them, and it frees up your time to work on important things that only you can do.</dd>
+	<dt>Schedule dedicated time</dt>
+	<dd>Regularly block out two hours or more to sit quietly and work <em>only</em> on important-but-not-urgent things—things like team strategy, career paths for your leaders, or how you plan to collaborate with neighboring teams.</dd>
+	<dt>Find a tracking system that works</dt>
+	<dd>There are dozens of systems for tracking and prioritizing work. <a contenteditable="false" data-primary="tracking systems for work" data-type="indexterm" id="id-wehMHduwcVIBtB">&nbsp;</a>Some are software based (e.g., specific “to-do” tools), some are pen-and-paper based (the “<a href="http://www.bulletjournal.com">Bullet Journal</a>” method), and some systems are agnostic to implementation. In this last category, David Allen’s book, <em>Getting Things Done,</em> is quite popular among engineering managers; it’s an abstract algorithm for working through tasks and maintaining a prized "inbox zero." The point here is to <em>try</em> these different systems and determine what works for you. Some of them will click with you and some will not, but you definitely need to find something more effective than tiny Post-It notes decorating your computer screen.<a contenteditable="false" data-primary="leadership, scaling into a really good leader" data-secondary="important vs. urgent problems" data-startref="ix_leadscimpur" data-type="indexterm" id="id-6LhqI8uocRIlt7">&nbsp;</a></dd>
+</dl>
+</section>
+
+<section data-type="sect2" id="learn_to_drop_balls">
+<h2>Learn to Drop Balls</h2>
+
+<p>There’s one more key technique for managing your time, and on the surface it sounds radical.<a contenteditable="false" data-primary="leadership, scaling into a really good leader" data-secondary="learning to drop balls" data-type="indexterm" id="id-EXhjH8CGu3tG">&nbsp;</a> For many, it contradicts years of engineering instinct. As an engineer, you pay attention to detail; you make lists, you check things off lists, you’re precise, and you finish what you start. That’s why it feels so good to close bugs in a bug tracker, or whittle your email down to inbox zero. But as a leader of leaders, your time and attention are under constant attack. No matter how much you try to avoid it, you end up dropping balls on the floor—there are just too many of them being thrown at you. It’s overwhelming, and you probably feel guilty about this all the time.</p>
+
+<p>So, at this point, let’s step back and take a frank look at the situation. If dropping some number of balls is inevitable, isn’t it better to drop certain balls <em>deliberately</em> rather than <em>accidentally</em>? At least then you have some semblance of control.</p>
+
+<p>Here’s a great way to do that.</p>
+
+<p>Marie Kondo is an organizational consultant and the author<a contenteditable="false" data-primary="Kondo, Marie" data-type="indexterm" id="id-rMhMHOIYuEtj">&nbsp;</a> of the extremely popular book <em>The Life-Changing Magic of Tidying Up</em>. Her philosophy is about effectively decluttering all of the junk from your house, but it works for abstract clutter as well.</p>
+
+<p>Think of your physical possessions as living in three piles. About 20% of your things are just useless—things that you literally never touch anymore, and all very easy to throw away. About 60% of your things are somewhat interesting; they vary in importance to you, and you sometimes use them, sometimes not. And then about 20% of your possessions are exceedingly important: these are the things you use <em>all</em> the time, that have deep emotional meaning, or, in Ms. Kondo’s words, spark deep “joy” just holding them. The thesis of her book is that most people declutter their lives incorrectly: they spend time tossing the bottom 20% in the garbage, but the remaining 80% still feels too cluttered. She argues that the <em>true</em> work of decluttering is about identifying the top 20%, not the bottom 20%. If you can identify only the critical things, you should then toss out the other 80%. It sounds extreme, but it’s quite effective. It is greatly freeing to declutter so radically.</p>
+
+<p>It turns out that you can also apply this philosophy to your inbox or task list—the barrage of balls being thrown at you. Divide your pile of balls into three groups: the bottom 20% are probably neither urgent nor important and very easy to delete or ignore. There’s a middle 60%, which might contain some bits of urgency or importance, but it’s a mixed bag. At the top, there’s 20% of things that are absolutely, critically important.</p>
+
+<p>And so now, as you work through your tasks, do <em>not</em> try to tackle the top 80%—you’ll still end up overwhelmed and mostly working on urgent-but-not-important tasks. Instead, mindfully identify the balls that strictly fall in the top 20%—critical things that <em>only you can do</em>—and focus strictly on them. Give yourself explicit permission to drop the other 80%.</p>
+
+<p>It might feel terrible to do so at first, but as you deliberately drop so many balls, you’ll discover two amazing things. First, even if you don’t delegate that middle 60% of tasks, your subleaders often notice and pick them up automatically. Second, if something in that middle bucket is truly critical, it ends up coming back to you anyway, eventually migrating up into the top 20%. You simply need to <em>trust</em> that things below your top-20% threshold will either be taken care of or evolve appropriately. Meanwhile, because you’re focusing only on the critically important things, you’re able to scale your time and attention to cover your group’s ever-growing responsibilities.</p>
+</section>
+
+<section data-type="sect2" id="protecting_your_energy">
+<h2>Protecting Your Energy</h2>
+
+<p>We’ve talked about protecting your time and attention—but your personal energy is the other piece of the equation.<a contenteditable="false" data-primary="leadership, scaling into a really good leader" data-secondary="protecting your energy" data-type="indexterm" id="id-OjhKHmClTKt6">&nbsp;</a> All of this scaling is simply exhausting. In an environment like this, how do you stay charged and optimistic?</p>
+
+<p>Part of the answer is that over time, as you grow older, your overall stamina builds up. Early in your career, working eight hours a day in an office can feel like a shock; you come home tired and dazed. But just like training for a marathon, your brain and body build up larger reserves of stamina over time.</p>
+
+<p>The other key part of the answer is that leaders gradually learn to <em>manage</em> their energy more intelligently. It’s something they learn to pay constant attention to. Typically, this means being aware of how much energy you have at any given moment, and making deliberate choices to “recharge” yourself at specific moments, in specific ways. Here are some great examples of mindful energy management:</p>
+
+<dl>
+	<dt>Take <span class="plain">real</span> vacations</dt>
+	<dd>A weekend is not a vacation. It takes at least three days to "forget" about your work; it takes at least a week to actually feel refreshed. But if you check your work email or chats, you <em>ruin</em> the recharge. A flood of worry comes back into your mind, and all of the benefit of psychological distancing dissipates. The vacation recharges only if you are truly disciplined about disconnecting.<sup><a data-type="noteref" id="ch01fn74-marker" href="#ch01fn74">4</a></sup> And, of course, this is possible only if you’ve built a self-driving organization.</dd>
+	<dt>Make it trivial to disconnect</dt>
+	<dd>When you disconnect, leave your work laptop at the office. If you have work communications on your phone, remove them. For example, if your company uses G Suite (Gmail, Google Calendar, etc.), a great trick is to install these apps in a "work profile" on your phone. This causes a second set of work-badged apps to appear on your phone. For example, you’ll now have two Gmail apps: one for personal email, one for work email. On an Android phone, you can then press a single button to disable the entire work profile at once. All the work apps gray out, as if they were uninstalled, and you can’t “accidentally” check work messages until you re-enable the work profile.</dd>
+	<dt>Take <span class="plain">real</span> weekends, too</dt>
+	<dd>A weekend isn’t as effective as a vacation, but it still has some rejuvenating power. Again, this recharge works only if you disconnect from work communications. Try truly signing out on Friday night, spend the weekend doing things you love, and then sign in again on Monday morning when you’re back in the office.</dd>
+	<dt>Take breaks during the day</dt>
+	<dd>Your brain operates in natural 90-minute cycles.<sup><a data-type="noteref" id="ch01fn75-marker" href="#ch01fn75">5</a></sup> Use the opportunity to get up and walk around the office, or spend 10 minutes walking outside. Tiny breaks like this are only tiny recharges, but they can make a tremendous difference in your stress levels and how you feel over the next two hours of work.</dd>
+	<dt>Give yourself permission to take a mental health day</dt>
+	<dd>Sometimes, for no reason, you just have a bad day. You might have slept well, eaten well, exercised—and yet you are still in a terrible mood anyway. If you’re a leader, this is an awful thing. Your bad mood sets the tone for everyone around you, and it can lead to terrible decisions (emails you shouldn’t have sent, overly harsh judgements, etc.). If you find yourself in this situation, just turn around and go home, declaring a sick day. Better to get nothing done that day than to do active damage.</dd>
+</dl>
+
+<p>In the end, managing your energy is just as important as managing your time. If you learn to master these things, you’ll be ready to tackle the broader cycle of scaling responsibility and building a self-sufficient team.</p>
+</section>
+</section>
+
+<section data-type="sect1" id="conclusion-id00010">
+<h1>Conclusion</h1>
+
+<p>Successful leaders naturally take on more responsibility as they progress (and that’s a good and natural thing). Unless they effectively come up with techniques to properly make decisions quickly, delegate when needed, and manage their increased responsibility, they might end up feeling overwhelmed. Being an effective leader doesn’t mean that you need to make perfect decisions, do everything yourself, or work twice as hard. Instead, strive to always be deciding, always be leaving, and always be scaling.</p>
+</section>
+
+<section data-type="sect1" id="tlsemicolondrs-id00106">
+<h1>TL;DRs</h1>
+
+<ul>
+	<li>
+	<p>Always Be Deciding: Ambiguous problems have no magic answer; they’re all about finding the right <em>trade-offs</em> of the moment, and iterating.</p>
+	</li>
+	<li>
+	<p>Always Be Leaving: Your job, as a leader, is to build an organization that automatically solves a class of ambiguous problems—over <em>time</em>—without you needing to be present.</p>
+	</li>
+	<li>
+	<p>Always Be Scaling: Success generates more responsibility over time, and you must proactively manage the <em>scaling</em> of this work in order to protect your scarce resources of personal time, attention, and energy.<a contenteditable="false" data-primary="leadership, scaling into a really good leader" data-startref="ix_leadsc" data-type="indexterm" id="id-EXheClHdUkCPsE">&nbsp;</a></p>
+	</li>
+</ul>
+</section>
+<div data-type="footnotes"><p data-type="footnote" id="ch01fn71"><sup><a href="#ch01fn71-marker">1</a></sup>“Code yellow” is Google’s term for “emergency hackathon to fix a critical problem.” Affected teams are expected to suspend all work and focus 100% attention on the problem until the state of emergency is declared over.</p><p data-type="footnote" id="ch01fn72"><sup><a href="#ch01fn72-marker">2</a></sup>Brian W. Fitzpatrick and Ben Collins-Sussman, <a class="orm:hideurl" href="http://shop.oreilly.com/product/0636920042372.do"><em>Debugging Teams: Better Productivity through Collaboration</em></a> (Boston: O’Reilly, 2016).</p><p data-type="footnote" id="ch01fn73"><sup><a href="#ch01fn73-marker">3</a></sup>It’s easy for imposter syndrome to kick in at this point. One technique for fighting the feeling that you don’t know what you’re doing is to simply pretend that <em>some</em> expert out there knows exactly what to do, and that they’re simply on vacation and you’re temporarily subbing in for them. It’s a great way to remove the personal stakes and give yourself permission to fail and learn.</p><p data-type="footnote" id="ch01fn74"><sup><a href="#ch01fn74-marker">4</a></sup>You need to plan ahead and build around the assumption that your work simply won’t get done during vacation. Working hard (or smart) just before and after your vacation mitigates this issue.</p><p data-type="footnote" id="ch01fn75"><sup><a href="#ch01fn75-marker">5</a></sup>You can read more about BRAC at <a href="https://en.wikipedia.org/wiki/Basic_rest-activity_cycle"><em class="hyperlink">https://en.wikipedia.org/wiki/Basic_rest-activity_cycle</em></a>.</p></div></section>
+
+  </body>
+</html>

@@ -35,16 +35,20 @@ A serious internal invariant is broken (i.e. worthy of a bug or outage report)  
 Unrecoverable data loss or corruption                                                                                   | `DATA_LOSS`
 There is no way to determine a more specific error code                                                                 | `UNKNOWN`
 
-*Note*: Choosing between `FAILED_PRECONDITION`, `ABORTED`, and `UNAVAILABLE` is
-subtle, especially with respect to the retry strategy the caller should use.
-Some guidelines that may help a service implementer:
-
-* Use `UNAVAILABLE` if the client can retry just the failing call.
-* Use `ABORTED` if the client should retry at a higher transaction level (such
-  as when a client-specified test-and-set fails, indicating the client should
-  restart a read-modify-write sequence).
-* Use `FAILED_PRECONDITION` if the client should not retry until the system
-  state has been explicitly fixed. For example, if an "rmdir" fails because the
-  directory is non-empty, `FAILED_PRECONDITION` should be returned since the
-  client should not retry unless the files are deleted from the directory.
+> *Note*: Choosing between `FAILED_PRECONDITION`, `ABORTED`, and `UNAVAILABLE`
+> is subtle, especially with respect to the retry strategy the caller should
+> use. Some guidelines that may help a service implementer:
+>
+> *   Use `UNAVAILABLE` if the client can retry just the failing call.
+> *   Use `ABORTED` if the client should retry at a higher transaction level
+>     (such as when a client-specified test-and-set fails, indicating the client
+>     should restart a read-modify-write sequence).
+> *   Use `FAILED_PRECONDITION` if the client should not retry until the system
+>     state has been explicitly fixed. For example, if an "rmdir" fails because
+>     the directory is non-empty, `FAILED_PRECONDITION` should be returned since
+>     the client should not retry unless the files are deleted from the
+>     directory.
+> *   Use `INVALID_ARGUMENT` (and not `OUT_OF_RANGE`) if the input value will
+>     never be accepted. `OUT_OF_RANGE` should be reserved for inputs that are
+>     out of range only because of the current system state.
 
