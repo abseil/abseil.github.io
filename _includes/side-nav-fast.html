@@ -7,7 +7,7 @@
    {% for post in sorted_posts %}
      {% if post.title contains "Performance Tip of the Week" %}
      <li><h6 class="doc-side-nav-list-item">
-         <a href="{{ post.url }}">{{ post.title | replace: 'Tip of the Week', 'TotW'}}</a></h6>
+         <a href="{{ post.url }}">{{ post.title | replace: 'Performance Tip of the Week', 'Fast TotW'}}</a></h6>
      </li>
      {% endif %}
    {% endfor %}
