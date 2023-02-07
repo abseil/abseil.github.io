@@ -65,16 +65,11 @@ by explicitly listing all platforms where a given feature is available, or opt
 out by explicitly listing all platforms where a given feature is missing or
 broken. Either option has pros and cons:
 
+
 |      | opt-in                          | opt-out                             |
 | ---- | ------------------------------- | ----------------------------------- |
-| pros | Generally safe, and more likely | The compilation fails if a new      |
-:      : to build on a new platform.     : platform doesn’t support the        :
-:      :                                 : feature.                            :
-| cons | The allow-list needs to be      | Compilation might succeed but       |
-:      : extended for each new platform. : runtime behavior might be           :
-:      :                                 : unexpected, if the interface exists :
-:      :                                 : but the implementation is           :
-:      :                                 : problematic.                        :
+| pros | Generally safe, and more likely to build on a new platform. | The compilation fails if a new platform doesn’t support the feature. |
+| cons | The allow-list needs to be extended for each new platform. | Compilation might succeed but runtime behavior might be unexpected, if the interface exists but the implementation is problematic. |
 
 When choosing a opt-in or opt-out approach, think about what is likely to happen
 when a new platform is added and which approach is easier to maintain the
