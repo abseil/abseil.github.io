@@ -16,9 +16,9 @@ The Abseil containers are designed to be more efficient in the general case; in
 some cases, however, the STL containers may be more efficient. Unlike some other
 abstractions that Abseil provides, these containers should not be considered
 drop-in replacements for their STL counterparts, as there are API and/or
-contract differences between the two sets of containers. For example, the
-Abseil containers often do not guarantee pointer stability after insertions or
-deletions.
+contract differences between the two sets of containers. For example, the Abseil
+containers often do not guarantee pointer stability[^pointer-stability] after
+insertions or deletions.
 
 The Abseil `container` library defines the following sets of containers:
 
@@ -142,8 +142,7 @@ not keys) is needed, use `absl::flat_hash_map<Key, std::unique_ptr<Value>>`.
 These are near drop-in replacement for `std::unordered_map` and
 `std::unordered_set`. They are useful:
 
-*   When pointer stability[^pointer-stability] is required for both key and
-    value.
+*   When pointer stability is required for both key and value.
 *   For automatic migrations from `std::unordered_map`, `std::unordered_set`,
     `hash_map` or `hash_set` where it's difficult to figure out whether the code
     relies on pointer stability.
