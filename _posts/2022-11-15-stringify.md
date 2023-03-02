@@ -3,7 +3,7 @@ title: "Abseil Stringify"
 layout: blog
 sidenav: side-nav-blog.html
 published: true
-permalink: blog/20221115-stringify
+permalink: blog/11152022-stringify
 type: markdown
 category: blog
 excerpt_separator: <!--break-->
