@@ -403,7 +403,7 @@ There are two methods of formatting user-defined types:
 
 *   `AbslStringify()` provides a simpler user API using the `v` type specifier,
     and as well as working with `StrFormat()`, also works with `absl::StrCat()`,
-    `absl::Substitute()`, and logging.
+    `absl::Substitute()`, logging and GoogleTest.[^1]
 *   `AbslFormatConvert()` is more customizable, allowing users more control over
     type specifiers and additional modifiers for formatting their types.
 
@@ -411,11 +411,12 @@ We'll cover both of these approaches below.
 
 ### `AbslStringify()`
 
-To extend formatting to your custom type using `AbslStringify()`, provide an
-`AbslStringify()` overload as a free (non-member) function template within the
-same file and namespace of that type as a `friend` definition. The `str_format`
-library will check for such an overload when formatting user-defined types using
-`StrFormat()`.
+To make a type support the `AbslStringify()` extension point, define a suitable
+`AbslStringify()` function template for that type as described below. For a
+class type, `AbslStringify()` should be defined as a `friend` function template.
+For an enumerated type `E`, define `AbslStringify()` at namespace scope in the
+same namespace as `E` so that it can be found by argument-dependent looking
+(ADL).
 
 An `AbslStringify()` overload should have the following signature:
 
@@ -425,11 +426,11 @@ void AbslStringify(Sink& sink, const UserDefinedType& value);
 ```
 
 Note: `AbslStringify()` utilizes a generic "sink" buffer to construct its
-string. This sink has an interface similar to `absl::FormatSink`, but does not
-support `PutPaddedString()`.
+string. For information about supported operations on `AbslStringify()`'s sink,
+see https://abseil.io/docs/cpp/guides/abslstringify.
 
 `AbslStringify()` only supports use with the type specifier `%v`, which uses
-type deducation for formatting purposes.
+type deduction for formatting purposes.
 
 An example usage within a user-defined type is shown below:
 
@@ -461,8 +462,8 @@ absl::Substitute("The point is $0", p);
 ```
 
 Additionally, `AbslStringify()` itself can use `%v` within its own format
-strings to perform this type deducation. Our `Point` above could be formatted
-as `"(%v, %v)"` for example, and deduce the `int` values as `%d`.
+strings to perform this type deduction. Our `Point` above could be formatted as
+`"(%v, %v)"` for example, and deduce the `int` values as `%d`.
 
 ### `AbslFormatConvert()`
 
@@ -479,13 +480,13 @@ absl::FormatConvertResult<...> AbslFormatConvert(
     const X& value,
     const absl::FormatConversionSpec& conversion_spec,
     absl::FormatSink *output_sink);
-~~~
+```
 
 * The `absl::FormatConvertResult` return value holds the set of
   `absl::FormatConversionCharSet` values valid for this custom type. A return
   value of `true` indicates the conversion was successful; if `false` is
   returned, `StrFormat()` will produce an empty string and this result will be
-  propogated to `FormatUntyped()`.
+  propagated to `FormatUntyped()`.
 * `absl::FormatConversionSpec` holds the fields pulled from the user string as
   they are processed. See "Conversion Specifiers" above for full documentation
   on this format.
@@ -578,3 +579,6 @@ does not support this extension ask the owner to write one, or make your own
 wrapper type that supports it.
 
 [1]: http://pubs.opengroup.org/onlinepubs/9699919799/functions/fprintf.html
+
+[^1]: See https://abseil.io/docs/cpp/guides/abslstringify for more documentation on other libraries that
+    support `AbslStringify()`
