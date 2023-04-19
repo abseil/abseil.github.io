@@ -260,6 +260,8 @@ named `FLAGS_name` of type `T`, use the `ABSL_DECLARE_FLAG(T, name);` macro
 defined in absl/flags/declare.h to do so:
 
 ```cpp
+#include "absl/flags/declare.h"
+
 ABSL_DECLARE_FLAG(absl::Duration, timeout);
 ```
 
