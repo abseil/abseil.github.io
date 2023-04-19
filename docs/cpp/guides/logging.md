@@ -371,10 +371,47 @@ by Abseil.
 
 ### How do I make my type streamable into `LOG()`? {#streaming}
 
-Just like you make it streamable into `std::cout`: define `std::ostream&
-operator<<(std::ostream&, const MyType&)` (for small `MyType`, you can pass by
-value instead) in your type's namespace (for
-[ADL](https://en.cppreference.com/w/cpp/language/adl)).
+For a class type, define an `AbslStringify()` overload as a `friend` function
+template for your type. The logging library will check for such an overload when
+formatting user-defined types.
+
+```cpp
+namespace foo {
+
+class Point {
+  ...
+  template <typename Sink>
+  friend void AbslStringify(Sink& sink, const Point& point) {
+    absl::Format(&sink, "(%d, %d)", point.x, point.y);
+  }
+
+  int x;
+  int y;
+};
+
+// If you can't declare the function in the class it's important that the
+// AbslStringify overload is defined in the SAME namespace that defines Point.
+// C++'s lookup rules rely on that.
+enum class EnumWithStringify { kMany = 0, kChoices = 1 };
+
+template <typename Sink>
+void AbslStringify(Sink& sink, EnumWithStringify e) {
+  absl::Format(&sink, "%s", e == EnumWithStringify::kMany ? "Many" : "Choices");
+}
+
+}  // namespace foo
+```
+
+`AbslStringify()` can also use `absl::StrFormat`'s catch-all `%v` type specifier
+within its own format strings to perform type deduction. `Point` above could be
+formatted as `"(%v, %v)"` for example, and deduce the `int` values as `%d`.
+
+For more details regarding `AbslStringify()` and its integration with other
+libraries, see https://abseil.io/docs/cpp/guides/abslstringify.
+
+Note: Types that implement `operator<<(std::ostream &, T)` can also be streamed
+into `LOG()` but it is recommended that users implement `AbslStringify()` as it
+has greater compatibility with other string formatting libraries.
 
 ### Why does logging use macros and not functions?
 

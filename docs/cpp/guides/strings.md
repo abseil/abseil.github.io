@@ -614,3 +614,54 @@ For conversion of numeric types into strings, use `absl::StrCat()` and
 ```cpp
 std::string foo = StrCat("The total is ", cost + tax + shipping);
 ```
+
+## Providing Formatting for User-defined Types
+
+To extend formatting to your type using `AbslStringify()`, provide an
+`AbslStringify()` overload as a `friend` function template definition. If the
+function cannot be provided in the type itself, it must be defined in the same
+namespace for the purposes of ADL look-up. The `strings` library will check for
+such an overload when formatting user-defined types.
+
+An `AbslStringify()` overload should have the following signature:
+
+```cpp
+template <typename Sink>
+void AbslStringify(Sink& sink, const UserDefinedType& value);
+```
+
+Note: `AbslStringify()` utilizes a generic "sink" buffer to construct its
+string. For more information about supported operations on `AbslStringify()`'s
+sink, see https://abseil.io/docs/cpp/guides/abslstringify.
+
+An example usage within a user-defined type is shown below:
+
+```cpp
+struct Point {
+
+  ...
+  // Strings library support is added to the Point class through an
+  // AbslStringify() friend declaration.
+  template <typename Sink>
+  friend void AbslStringify(Sink& sink, const Point& p) {
+    absl::Format(&sink, "(%d, %d)", p.x, p.y);
+  }
+
+  int x;
+  int y;
+}
+```
+
+Given this definition, `Point` formatting will be supported by a variety of
+`strings` functions.
+
+```cpp
+absl::StrCat("The point is ", p);
+absl::StrAppend(&str, p);
+absl::Substitute("The point is $0", p);
+absl::StrJoin(vector_of_points, ",");
+```
+
+Additionally, `AbslStringify()` itself can use `%v` within its own format
+strings to perform this type deduction. Our `Point` above could be formatted as
+`"(%v, %v)"` for example, and deduce the `int` values as `%d`.
