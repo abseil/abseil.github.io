@@ -73,12 +73,12 @@ A `string_view` is also suitable for local variables if you know that the
 lifetime of the underlying object is longer than the lifetime of your
 `string_view` variable. However, beware of binding it to a temporary value:
 
-```cpp {.bad}
+```cpp
 // BAD use of string_view: lifetime problem
 absl::string_view sv = obj.ReturnAString();
 ```
 
-```cpp {.good}
+```cpp
 // GOOD use of string_view: str outlives sv
 std::string str = obj.ReturnAString();
 absl::string_view sv = str;
@@ -294,7 +294,7 @@ overhead. Always look for ways to reduce creation of such temporaries.
 
 For example, the following code is inefficient:
 
-```cpp {.bad}
+```cpp
 // Inefficient code
 std::string s1 = "A string";
 s1 = s1 + " another string";
@@ -304,7 +304,7 @@ The assignment operator above creates a temporary string, copies `s1` into that
 temporary string, concatenates that temporary string, and then assigns it back
 to `s1`. Instead use the optimized `+=` operator for such concatenation:
 
-```cpp {.good}
+```cpp
 // Efficient code
 s1 += " another string";
 ```
@@ -313,7 +313,7 @@ Good compilers may be able to optimize the preceding inefficient code. However,
 operations that involve more than one concatenation cannot normally avoid
 temporaries:
 
-```cpp {.bad}
+```cpp
 // Inefficient code
 std::string s1 = "A string";
 std::string another = " and another string";
@@ -326,14 +326,14 @@ and `absl::StrAppend()` are often more efficient than operators such as `+=`,
 since they don't require the creation of temporary `std::string` objects, and
 their memory is preallocated during string construction.
 
-```cpp {.bad}
+```cpp
 // Inefficient code
 std::string s1 = "A string";
 std::string another = " and another string";
 s1 += " and some other string" + another;
 ```
 
-```cpp {.good}
+```cpp
 // Efficient code
 std::string s1 = "A string";
 std::string another = " and another string";
@@ -391,7 +391,7 @@ For clarity and performance, don't use `absl::StrCat()` when appending to a
 string. Use `absl::StrAppend()` instead. In particular, avoid using any of these
 (anti-)patterns:
 
-```cpp {.bad}
+```cpp
 str.append(absl::StrCat(...))
 str += absl::StrCat(...)
 str = absl::StrCat(str, ...)
@@ -506,7 +506,7 @@ Traditionally, most C++ code used built-in functions such as `sprintf()` and
 `snprintf()`; these functions have some problems in that they don't support
 `absl::string_view` and the memory of the formatted buffer must be managed.
 
-```cpp {.bad}
+```cpp
 // Bad. Need to worry about buffer size and NUL-terminations.
 
 std::string GetErrorMessage(char *op, char *user, int id) {
@@ -523,7 +523,7 @@ std::string GetErrorMessage(absl::string_view op, absl::string_view user, int id
 }
 ```
 
-```cpp {.good}
+```cpp
 // Best. Using absl::Substitute() is easier to read and to understand.
 std::string GetErrorMessage(absl::string_view op, absl::string_view user, int id) {
   return absl::Substitute("Error in $0 for user $1 ($2)", op, user, id);
@@ -614,3 +614,54 @@ For conversion of numeric types into strings, use `absl::StrCat()` and
 ```cpp
 std::string foo = StrCat("The total is ", cost + tax + shipping);
 ```
+
+## Providing Formatting for User-defined Types
+
+To extend formatting to your type using `AbslStringify()`, provide an
+`AbslStringify()` overload as a `friend` function template definition. If the
+function cannot be provided in the type itself, it must be defined in the same
+namespace for the purposes of ADL look-up. The `strings` library will check for
+such an overload when formatting user-defined types.
+
+An `AbslStringify()` overload should have the following signature:
+
+```cpp
+template <typename Sink>
+void AbslStringify(Sink& sink, const UserDefinedType& value);
+```
+
+Note: `AbslStringify()` utilizes a generic "sink" buffer to construct its
+string. For more information about supported operations on `AbslStringify()`'s
+sink, see https://abseil.io/docs/cpp/guides/abslstringify.
+
+An example usage within a user-defined type is shown below:
+
+```cpp
+struct Point {
+
+  ...
+  // Strings library support is added to the Point class through an
+  // AbslStringify() friend declaration.
+  template <typename Sink>
+  friend void AbslStringify(Sink& sink, const Point& p) {
+    absl::Format(&sink, "(%d, %d)", p.x, p.y);
+  }
+
+  int x;
+  int y;
+}
+```
+
+Given this definition, `Point` formatting will be supported by a variety of
+`strings` functions.
+
+```cpp
+absl::StrCat("The point is ", p);
+absl::StrAppend(&str, p);
+absl::Substitute("The point is $0", p);
+absl::StrJoin(vector_of_points, ",");
+```
+
+Additionally, `AbslStringify()` itself can use `%v` within its own format
+strings to perform this type deduction. Our `Point` above could be formatted as
+`"(%v, %v)"` for example, and deduce the `int` values as `%d`.
