@@ -176,16 +176,19 @@ The logging API contains a number of additional macros for special cases.
 *   `QCHECK()` works like `CHECK()` but with the same variations as `QFATAL` vs.
     `FATAL`: it does not log a stack trace or run `atexit()` handlers on
     failure.
+
     ```c++
     int main (int argc, char**argv) {
       absl::ParseCommandLine(argc, argv);
       QCHECK(!absl::GetFlag(FLAGS_path).empty()) << "--path is required";
       ...
     ```
+
 *   `PLOG()` and `PCHECK()` automatically append a string describing `errno` to
     the logged message. They are useful with system library calls that set
     `errno` on failure to indicate the nature of the failure. Their names are
     intended to be consistent with the `perror` library function.
+
     ```c++
     const int fd = open(path.c_str(), O_RDONLY);
     PCHECK(fd != -1) << "Failed to open " << path;
@@ -196,38 +199,47 @@ The logging API contains a number of additional macros for special cases.
     const int close_ret = close(fd);
     if (close_ret == -1) PLOG(WARNING) << "Failed to close " << path;
     ```
+
 *   `DLOG()` ("debug log") and `DCHECK()` disappear from the binary completely
     in optimized builds. Note that `DLOG(FATAL)` and `DCHECK()` have very
     different semantics from `LOG(DFATAL)`.<br />
     Debug logging is helpful for information that's useful when debugging tests
     but expensive to collect (e.g. acquiring a contended lock) in production:
+
     ```c++
     DLOG(INFO) << server.State();
     ```
+
     Be careful with `DCHECK()`; if it's worth checking in tests it's probably
     worth checking in production too:
+
     ```c++
     DCHECK(ptr != nullptr);
     ptr->Method();
     ```
+
     `DCHECK` can sometimes be useful for checking invariants in very hot
     codepaths, where checks in tests must be assumed to validate behavior in
     production.<br />
     Just like `assert()`, be sure not to rely on evaluation of side-effects
     inside `DCHECK` and `DLOG` statements:
+
     ```c++ {.bad}
     DCHECK(server.Start());
     // In an optimized build, no attempt will have been made to start the
     // server!
     ```
+
 *   `LOG_IF()` adds a condition parameter and is equivalent to an `if`
     statement. As with `if` and the ternary operator, the condition will be
     contextually converted to `bool`. `PLOG_IF()` and `DLOG_IF()` variants also
     exist.
+
     ```c++
     LOG_IF(INFO, absl::GetFlag(FLAGS_dry_run))
         << "--dry_run set; no changes will be made";
     ```
+
 *   `LOG_EVERY_N()`, `LOG_FIRST_N()`, `LOG_EVERY_N_SEC()`, and
     `LOG_EVERY_POW_2()` add more complicated conditions that can't be easily
     replicated with a simple `if` statement. Each of these maintains a
@@ -239,6 +251,7 @@ The logging API contains a number of additional macros for special cases.
     the times when it did not. Macro variants with an added condition (e.g.
     `LOG_IF_EVERY_N()`) also exist, as do many combinations with `VLOG()`,
     `PLOG()`, and `DLOG()`.
+
     ```c++
     LOG_EVERY_N(WARNING, 1000) << "Got a packet with a bad CRC (" << COUNTER
                                << " total)";
