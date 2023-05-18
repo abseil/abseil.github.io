@@ -190,7 +190,7 @@ the `absl::StatusOr<T>` holds an object of type `T`:
 ```c++
 absl::StatusOr<int> i = GetCount();
 if (i.ok()) {
-  updated_total += *i
+  updated_total += *i;
 }
 ```
 

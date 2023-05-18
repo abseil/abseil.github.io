@@ -287,7 +287,7 @@ cannot be improved.
 In order to prevent this from befalling the Abseil Random library, we have
 implemented a scheme whereby the seed material used to derive the initial state
 of a generator (`absl::BitGen`, `absl::InsecureBitGen`) is mixed with
-nondeterministic data. We refer to the conditions under which a generator
+non-deterministic data. We refer to the conditions under which a generator
 promises to produce the same variates from a fixed seed sequence, as the
 *stability* of the generator.
 
