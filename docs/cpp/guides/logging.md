@@ -355,7 +355,7 @@ terminate once the `LogSink` returns, i.e., there's no need for the sink to call
 
 Any logging that takes place in a registered `LogSink` or in a function called
 by a registered `LogSink` is sent only to `stderr` and not to any registered
-`LogSink`s so as to avoid infinite recursion so as to avoid infinite recursion.
+`LogSink`s so as to avoid infinite recursion.
 
 ### `stderr` Output {#stderr}
 
