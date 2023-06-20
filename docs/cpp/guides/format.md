@@ -507,7 +507,7 @@ inspect the returned conversion character specification:
 * `has_show_pos_flag()` indicates whether a sign column is prepended to the
   result for this conversion character in the format string, even if the result
   is positive, through use of a '+' character in the format string. E.g. "%+d"
-* `has_show_pos_flag()` indicates whether a mandatory sign column is added to
+* `has_sign_col_flag()` indicates whether a mandatory sign column is added to
   the result for this conversion character, through use of a space character
   (' ') in the format string. E.g. "% i"
 * `has_alt_flag()` indicates whether an "alternate" format is applied to the
