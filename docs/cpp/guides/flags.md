@@ -394,6 +394,15 @@ Despite this flexibility, we recommend using only a single form:
 `--variable=value` for non-boolean flags, and `--variable/--novariable` for
 boolean flags. This consistency will make your code more readable.
 
+For integer flag types (int32_t, int64_t, uint64_t, etc.), the following
+formats are accepted:
+
+- Decimal: `--my_int=24`
+- Hexadecimal: `--my_int=0x18`
+
+NOTE: Do not use two's complement hexadecimal representation to specify
+negative values. Use a negative sign with a numeric value that is in range. Ex: `--my_int=-0x18`
+
 Setting a flag of type `std::optional<T>` on the command line to show the
 "unset" state requires a way to refer to this uninitialized value. For Abseil
 flags, this value is specified using the empty string.
