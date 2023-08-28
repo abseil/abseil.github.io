@@ -58,7 +58,14 @@ enum class EnumWithStringify { kMany = 0, kChoices = 1 };
 
 template <typename Sink>
 void AbslStringify(Sink& sink, EnumWithStringify e) {
-  absl::Format(&sink, "%s", e == EnumWithStringify::kMany ? "Many" : "Choices");
+  switch (e) {
+    case EnumWithStringify::kMany:
+      sink.Append("kMany");
+      break;
+    case EnumWithStringify::kChoices:
+      sink.Append("kChoices");
+      break;
+  }
 }
 
 }  // namespace foo

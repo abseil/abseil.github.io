@@ -124,27 +124,29 @@ third-party packages (e.g. Microsoft Windows) and cannot be redefined.
 
 There are four proper severity levels:
 
-*   `INFO` corresponds to `absl::LogSeverity::kInfo`. It describes *expected*
-    events that are important for understanding the state *of the program* but
-    which are not indicative of a problem. Libraries, especially low-level
-    common libraries, should use this level sparingly lest they spam the logs of
-    every program that uses them.<br />
-*   `WARNING` corresponds to `absl::LogSeverity::kWarning`. It describes
-    unexpected events which *may* indicate a problem.
-*   `ERROR` corresponds to `absl::LogSeverity::kError`. It describes unexpected
-    problematic events that the program is able to recover from. `ERROR`
-    messages should be actionable, meaning that they should describe actual
-    problems with the software or its configuration (and not e.g. with user
-    input) and the combination of the message, the file name and line number,
-    and surrounding messages should be sufficient to at least understand the
-    event being reported.<br />
-*   `FATAL` corresponds to `absl::LogSeverity::kFatal` and is the implicit
-    severity level for `CHECK` failures. It describes unrecoverable problems.
-    Logging at this level terminates the process. The `FATAL` logging level
-    should be used sparingly and carefully in services, especially user-facing
-    services, and in library code that may be included in such services. Each
-    fatal log is a potential outage if a significant fraction of the serving
-    jobs hit it at once.<br />
+*   [`INFO`](#severity-info){#severity-info} corresponds to
+    `absl::LogSeverity::kInfo`. It describes *expected* events that are
+    important for understanding the state *of the program* but which are not
+    indicative of a problem. Libraries, especially low-level common libraries,
+    should use this level sparingly lest they spam the logs of every program
+    that uses them.<br />
+*   [`WARNING`](#severity-warning){#severity-warning} corresponds to
+    `absl::LogSeverity::kWarning`. It describes unexpected events which *may*
+    indicate a problem.
+*   [`ERROR`](#severity-error){#severity-error} corresponds to
+    `absl::LogSeverity::kError`. It describes unexpected problematic events that
+    the program is able to recover from. `ERROR` messages should be actionable,
+    meaning that they should describe actual problems with the software or its
+    configuration (and not e.g. with user input) and the combination of the
+    message, the file name and line number, and surrounding messages should be
+    sufficient to at least understand the event being reported.<br />
+*   [`FATAL`](#severity-fatal){#severity-fatal} corresponds to
+    `absl::LogSeverity::kFatal` and is the implicit severity level for `CHECK`
+    failures. It describes unrecoverable problems. Logging at this level
+    terminates the process. The `FATAL` logging level should be used sparingly
+    and carefully in services, especially user-facing services, and in library
+    code that may be included in such services. Each fatal log is a potential
+    outage if a significant fraction of the serving jobs hit it at once.<br />
     Fatal logging is more often appropriate for developer tools, some batch
     jobs, and failures at job startup. That said, process termination and
     outages are always preferable to undefined behavior (which could include
@@ -152,20 +154,28 @@ There are four proper severity levels:
     sometimes appropriate even in server and library code as a last resort in
     response to unexpected behavior that cannot be handled any other way.
 
-There is also one pseudo-level:
+There are also two pseudo-levels:
 
-*   `QFATAL` ("quiet fatal") does not have a corresponding `absl::LogSeverity`
-    value. It behaves like `FATAL` except that no stack trace is logged and
-    `atexit()` handlers are not run. It is usually the best choice for errors
-    occurring at startup (e.g. flag validation) where the control flow is
-    uninteresting and unnecessary to diagnosis.
+*   [`DFATAL`](#severity-dfatal){#severity-dfatal} ("debug fatal") corresponds
+    to `absl::kLogDebugFatal`. Its value is `ERROR` in optimized builds (e.g. in
+    production) and `FATAL` in other builds (e.g. tests). It can be useful for
+    ensuring that an unexpected event causes tests to fail (by terminating the
+    process) but does not harm production. Since production jobs will continue
+    past a `DFATAL` failure, make sure to recover
+    gracefully.
+*   [`QFATAL`](#severity-qfatal){#severity-qfatal} ("quiet fatal") does not have
+    a corresponding `absl::LogSeverity` value. It behaves like `FATAL` except
+    that no stack trace is logged and `atexit()` handlers are not run. It is
+    usually the best choice for errors occurring at startup (e.g. flag
+    validation) where the control flow is uninteresting and unnecessary to
+    diagnosis.
 
 If you want to specify a severity level using a C++ expression, e.g. so that the
 level used varies at runtime, you can do that too:
 
 ```c++
 LOG(LEVEL(MoonPhase() == kFullMoon ? absl::LogSeverity::kFatal
-                                     : absl::LogSeverity::kError))
+                                   : absl::LogSeverity::kError))
       << "Spooky error!";
 ```
 
