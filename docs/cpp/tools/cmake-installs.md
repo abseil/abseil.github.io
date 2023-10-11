@@ -102,7 +102,7 @@ int main() {
 
 Our `CMakeLists.txt` for this local project needs to be slightly different than
 the one we used in the
-[CMake Quickstart](/docs/ccp/quickstart-cmake) -- we use
+[CMake Quickstart](/docs/cpp/quickstart-cmake) -- we use
 `find_package` to import Abseil's targets from our local `install` directory.
 
 ```
