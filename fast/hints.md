@@ -225,10 +225,10 @@ often wrong:
     because performance is lost all over the place. It will be difficult to
     figure out how to get started on performance improvements.
 2.  If you are developing a library that will be used by other people, the
-    people who will run into performance problems will be likely to be people
-    who cannot easily make performance improvements (they will have to
-    understand the details of code written by other people/teams, and have to
-    negotiate with them about the importance of performance optimizations).
+    people who will run into performance problems will likely be people who
+    cannot easily make performance improvements (they will have to understand
+    the details of code written by other people/teams, and have to negotiate
+    with them about the importance of performance optimizations).
 3.  It is harder to make significant changes to a system when it is in heavy
     use.
 4.  It is also hard to tell if there are performance problems that can be solved
