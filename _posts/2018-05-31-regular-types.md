@@ -27,7 +27,7 @@ we can treat some non-Regular types as if they were Regular, including reference
 types which don't own their data. Under such an analysis, `string_view` indeed
 behaves as if it were Regular when applied to common usage (as a parameter).
 However, `span` does not, and further it is (currently) impossible to have
-shallow copy, deep compare, and Regular const semantics in the same type in C++.
+shallow copy, deep compare, and Regular `const` semantics in the same type in C++.
 
 This analysis provides us some basis to evaluate non-owning reference parameters
 types (like `string_view` and `span`) in a practical fashion, without discarding
@@ -53,8 +53,8 @@ type, which matches the built-in type semantics, thereby making our user-defined
 types behave like built-in types as well."
 
 A vastly-simplified summary, that has become popular in C++ design in later
-years, is "do as the ints do." Generally speaking, for a snippet of generic code
-operating on some type `T`, if it works properly on ints and also works properly
+years, is "do as the `int`s do." Generally speaking, for a snippet of generic code
+operating on some type `T`, if it works properly on `int`s and also works properly
 for your new type (similarly bug-free/comprehensible/etc.), you've designed a
 reasonable type.
 
@@ -125,7 +125,7 @@ era. This is true even though `int` doesn’t have a move constructor: it is
 still move constructible (can be constructed from a temporary), and this is
 even the proper design for the type. Move+copy should be considered an overload
 set for optimization purposes. For more information, see
-[TotW 148](/tips/148))
+[TotW 148](/tips/148).
 
 In either case, it's important to bear a few (related) ideas in mind:
 
@@ -145,7 +145,7 @@ In either case, it's important to bear a few (related) ideas in mind:
 
 Both definitions focus heavily on **semantics** not just **syntax**. It is from
 these basic semantic properties of types that we find design invariants like the
-idea that copy, comparison, and const-ness are related. For instance, consider
+idea that copy, comparison, and `const`-ness are related. For instance, consider
 four of the most basic semantic requirements on Regular types from Stepanov's
 early paper:
 
@@ -202,7 +202,7 @@ traditional logician. In general, we focus on predicates that observe "the
 value" rather than the identity of the instance.
 
 Stepanov goes on to describe the built-in notion of equality for most types:
-bitwise equality for ints and pointers. Floating point values are glossed over a
+bitwise equality for `int`s and pointers. Floating-point values are glossed over a
 bit via "although there are sometimes minor deviations like distinct positive
 and negative zero representations." From this as a basis, we can begin to build
 up a definition of equality for aggregates, but immediately get into trouble
@@ -230,7 +230,7 @@ location), and if our type implements all the syntactic/semantic requirements
 for Regular then we have implemented a Regular type. That should always be our
 starting point when designing a value type.
 
-## Modern Regular Types and const
+## Modern Regular Types and `const`
 
 With an agreed-upon understanding of Regular, we can start to examine the ways
 that Regular is used. We can reasonably assume that a Regular type can be fed
@@ -252,11 +252,11 @@ if (a == b) {
 }
 ```
 
-This seems straightforward: we have two const values. If they are equal, it
+This seems straightforward: we have two `const` values. If they are equal, it
 doesn't matter what operation we perform on one of them, they will remain equal.
 It also doesn't matter if we modify any other global state. It does imply one
 additional requirement beyond being Regular: the normal semantics of `const` 
-must be enforced - a const object must not change values. Consider the
+must be enforced - a `const` object must not change values. Consider the
 following type and body for `DoSomething`:
 
 ```c++
@@ -286,11 +286,11 @@ constant lvalues or rvalues must not be modified."
 
 This restriction (while being a little squishy about "modified"), plus the basic
 ideas of "equality" are enough to see that for at least the **logical** state of
-a type, const must mean const. Since `Rotten` goes out of its way to break that,
+a type, `const` must mean `const`. Since `Rotten` goes out of its way to break that,
 the P0898 formulation of Regular rightly spots that bad type design and forbids
 it.
 
-Since the original Stepanov paper never discusses const, but const is tied
+Since the original Stepanov paper never discusses `const`, but `const` is tied
 deeply to modern type design, I'll primarily focus the remainder of the
 discussion on P0898 for simplicity and clarity.
 
@@ -328,7 +328,7 @@ call is made to a non-`const` method, there is the chance for a data race.
 For instance: if you have an `optional<int>` shared among many threads, those
 threads may all ask `has_value()` or read from the contained `int`, so long as
 none of them overwrites the `int`. Such a store would take place via `operator=`
-(non-const) or assigning to the reference returned by the non-const overloads of
+(non-`const`) or assigning to the reference returned by the non-`const` overloads of
 `value()`.
 
 It has become common practice to classify types as either "thread-safe",
@@ -343,7 +343,7 @@ of its API may result in a data race.
     type causes a data race. Any call to a non-`const` API means that instance
     must be used with external synchronization. C++ guarantees that standard
     library types are at least thread-compatible. This follows from the general
-    pattern of Regular design, and "do as the ints do" as `int` is
+    pattern of Regular design, and "do as the `int`s do" as `int` is
     thread-compatible. In most cases, this is in-line with the philosophy of
     C++ - you do not pay for what you do not use. If you operate on an
     `optional<int>`, you can be sure that it isn't grabbing a mutex. On the
@@ -360,17 +360,17 @@ of its API may result in a data race.
     `mutable` members, or because of non-thread-safe data that is shared between
     instances.
 
-It is worth mentioning that "const means const" is _almost_ enough to ensure
+It is worth mentioning that "`const` means `const`" is _almost_ enough to ensure
 that a type is thread-compatible. It is possible to have members in your type
 that are not part of the logical state (for example: a reference count) but are
 mutable (either via the mutable keyword or through something like a
-const-pointer-to-non-const) and thus cause data races even when only const APIs
-are invoked. There's a strong conceptual overlap between const-ness
+`const`-pointer-to-non-`const`) and thus cause data races even when only `const` APIs
+are invoked. There's a strong conceptual overlap between `const`-ness
 (conceptually, including both syntax and semantics) and thread-compatibility,
 and that overlap is actually equivalence in the case that there are no such
 mutable members.
 
-Now considering thread-safety and const-ness, we can consider whether either the
+Now considering thread-safety and `const`-ness, we can consider whether either the
 Stepanov or P0898 definitions of Regular say everything we want. If we're
 following the model of `int` or the good standard library types, Regular types
 have a powerful property: if you have a `const T`, and pass that instance as
@@ -532,7 +532,7 @@ that allow you to operate on it race-free.
 
 -   **Thread-compatible** and not shared with other threads for writing. If
     you've been handed a (non-racing) `const T&` you can operate on this in
-    const fashion. If necessary, you can copy it to ensure there are no lurking
+    `const` fashion. If necessary, you can copy it to ensure there are no lurking
     references and perform any computation / mutation safely (but
     inefficiently). With minor knowledge (the instance isn't shared), a `T&` can
     be used safely as if it were `T`.
@@ -579,7 +579,7 @@ Given a `const T` (and some program knowledge), we can perform any operation
 it or any of its API preconditions. Regular+thread-compatible types allow us
 this invariant with no constraints on the program or that operation. Lesser
 invariants require more knowledge - in return we tend to get lower-overhead,
-which is a very C++ style of tradeoff.
+which is a very C++-style of tradeoff.
 
 ## Evaluating `string_view`
 
@@ -681,7 +681,7 @@ still behaves as if it were Regular.
 
 ## Non-owning Reference Parameters
 
-C++ is a language that is very concerned with 2 things: types, and efficiency.
+C++ is a language that is very concerned with 2 things: types and efficiency.
 The type system for C++ is more complex than most other languages by a
 significant margin: this is the only mainstream language that I can imagine
 where it's reasonable to envision a proposal for an infinite family of Null
@@ -746,7 +746,7 @@ will not mutate (depending on whose conceptualization you follow), but in either
 case it does not mutate the underlying buffer. A `const string_view` is only
 interesting in that it cannot be trimmed nor reassigned.
 
-On the other hand, `span<T>` allows non-const operations on the underlying `T`.
+On the other hand, `span<T>` allows non-`const` operations on the underlying `T`.
 If `span` were a container like `vector` we would know that a `const span` would
 imply only `const` access to the underlying `T`. In this sense, when comparing
 to `string_view` we have no precedent to draw upon.
@@ -781,7 +781,7 @@ void DoSomething(const span<int>& s) {
 ```
 
 Perhaps what we want is for `span` to only provide const access to the buffer
-when the span is const? We could make the const overload of `span::operator[]`
+when the span is `const`? We could make the `const` overload of `span::operator[]`
 provide `const T&`. Unfortunately, this isn't enough for a copyable type.
 
 ```c++
@@ -792,10 +792,10 @@ void DoSomething(const span<int>& s) {
 ```
 
 We have to treat the `span` and its dependent data as one, and that treatment
-must include const propagation. Unfortunately, we cannot get shallow copy (copy
-by pointer), const propagation (const reference implies const referent), and
+must include `const` propagation. Unfortunately, we cannot get shallow copy (copy
+by pointer), `const` propagation (`const` reference implies `const` referent), and
 deep equality (compare by pointee) in the same type. You can, however, get close
-enough to const propagation by disallowing mutation of the underlying buffer.
+enough to `const` propagation by disallowing mutation of the underlying buffer.
 
 For non-owning reference parameters like `string_view` and `span`, merely
 knowing the underlying buffer isn't being mutated externally isn't enough for it
@@ -828,7 +828,7 @@ If you have got the option, make your value types Regular and thread-compatible
 with no mutable or shared state. Do not take any of the above as justification
 to break that commandment lightly.
 
-That said, Regular as everyone describes it does gloss over some things - we
+That said, Regular - as everyone describes it - does gloss over some things: we
 operate on Regular types by reference in standard algorithms constantly, and
 those operations aren't safe without some form of structural knowledge of the
 program. Usually that knowledge is of the form "this instance isn't shared to
@@ -854,7 +854,7 @@ mutation of their unowned underlying data.
 For types where we want reference semantics but must allow for mutation of the
 underlying data, we must yield something. It is currently impossible to have a
 type that has shallow-copy, deep-compare, and Regular behavior when propagating
-const-ness: one or more of those properties must be given up. The expected usage
+`const`-ness: one or more of those properties must be given up. The expected usage
 of every type is different, so it is hard to provide one-size-fits-all guidance,
 but consider the following options:
 
@@ -881,4 +881,4 @@ on an instance of this type safely", we can look at reference types when their
 underlying data is extant and constant and determine whether the rest of their
 usage still looks Regular. Pleasantly, `string_view` works fine. We do find some
 weaknesses in the current `span` proposal, particularly when it comes to shallow
-vs. deep const.
+vs. deep `const`.
