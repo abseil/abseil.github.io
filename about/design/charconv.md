@@ -7,7 +7,7 @@ type: markdown
 
 # `charconv` Design Notes
 
-The Abseil `charconv` library provides C++11-compatible vesion of the C++17
+The Abseil `charconv` library provides C++11-compatible version of the C++17
 `<charconv>` library header, adding light-weight parsers and formatters for
 arithmetic types. In specific, this library contains a C++11-compatible version
 of `std::from_chars` to convert from a string to an arithmetic type (in this
