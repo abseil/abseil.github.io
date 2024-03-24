@@ -72,6 +72,10 @@ flags have other arguments, which are described with the flag.
 *   `DEFINE_enum`: takes a list of strings that represents legal values. If the
     command-line value is not in this list, it raises a flag error; otherwise,
     it assigns to `FLAGS.flag` as a string.
+*   `DEFINE_enum_class`: takes a subclass of `enum.Enum` that represents legal
+    values. If the command-line value is not in this enum (ignoring  the case), 
+    it raises a flag value error; otherwise, it assigns to `FLAGS.flag`
+    as an Enum.
 *   `DEFINE_list`: Takes a comma-separated list of strings on the command line
     and stores them in a Python list object.
 *   `DEFINE_spaceseplist`: Takes a space-separated list of strings on the
@@ -86,6 +90,10 @@ flags have other arguments, which are described with the flag.
 *   `DEFINE_multi_enum`: The same as `DEFINE_enum`, except the flag can be
     specified more than once on the command line. The result is a Python list
     object (list of strings), even if the flag is only on the command line once.
+*   `DEFINE_multi_enum`: The same as `DEFINE_enum_class`, except the flag can be
+    specified more than once on the command line. The result is a Python list
+    object (list of `Enum`s), even if the flag is only on the command line once.
+*   `DEFINE_alias`: Defines an alias flag for an existing one.
 
 ## Special Flags
 
