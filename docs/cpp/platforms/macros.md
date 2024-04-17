@@ -100,7 +100,7 @@ References:
 
 **Macro**        | **Compiler** | **Version Macro**                                                               | **Notes**
 ---------------- | ------------ | ------------------------------------------------------------------------------- | ---------
-`__GNUC__`       | GCC          | `__GNUC__` <br/> `__GNUC_MINOR__` <br/> `__GNUC_PATCHLEVEL__`                   | Clang also defines `__GNUC__` for compatibility with GCC. If you want Clang-only, write `defined(__GNUC__) && !defined(__clang__)`
+`__GNUC__`       | GCC          | `__GNUC__` <br/> `__GNUC_MINOR__` <br/> `__GNUC_PATCHLEVEL__`                   | Clang also defines `__GNUC__` for compatibility with GCC. If you want GCC-only, write `defined(__GNUC__) && !defined(__clang__)`
 `__clang__`      | Clang/LLVM   | `__clang_major__` <br/> `__clang_minor__` <br/> `__clang_patchlevel__`          |
 `_MSC_VER`       | MSVC         | `_MSC_VER` <br/> `_MSC_FULL_VER`                                                |
 `__EMSCRIPTEN__` | Emscripten   | `__EMSCRIPTEN_major__` <br/> `__EMSCRIPTEN_minor__` <br/> `__EMSCRIPTEN_tiny__` |
