@@ -25,7 +25,7 @@ The requested entity does not exist                                             
 The entity being created already exists                                                                                 | `ALREADY_EXISTS`
 The caller does not have permission to execute the operation                                                            | `PERMISSION_DENIED`
 The caller's identity cannot be verified                                                                                | `UNAUTHENTICATED`
-Some resource is exhausted (quota, server capacity, etc)                                                                | `RESOURCE_EXHAUSTED`
+Some infrastructure resource is exhausted (quota, server capacity, etc)                                                 | `RESOURCE_EXHAUSTED`
 The system is not in the required state for the operation                                                               | `FAILED_PRECONDITION`
 The operation was aborted, typically due to a concurrency issue like sequencer check failures, transaction aborts, etc. | `ABORTED`
 There was a transient error                                                                                             | `UNAVAILABLE`
