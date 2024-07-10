@@ -140,7 +140,7 @@ Note that we include an Abseil header file using the `absl` prefix.
 Now, create a `CMakeLists.txt` file within your `examples` directory like the following:
 
 ```
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.16)
 
 project(my_project)
 
