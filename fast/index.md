@@ -5,8 +5,7 @@ sidenav: side-nav-fast.html
 type: markdown
 ---
 
-This Performance Guide consists of a collection of
-[Performance Hints](hints) and a selection of our Performance Tips of the
+This Performance Guide consists of a selection of our Performance Tips of the
 Week. The Performance Tips of the Week form a sort of "Effective analysis and
 optimization of production performance and resource usage": a gallery
 of "do"s and "don't"s gathered from the hard-learned lessons of optimizing
