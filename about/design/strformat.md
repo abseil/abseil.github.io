@@ -135,7 +135,7 @@ Simple hooks can be written to support efficient printing to any data sink.
 ## Errors
 
 The `str_format` library contains a family of functions. While
-`absl::StrFormat()` returns a string (and is analagous to `std::sprintf()`),
+`absl::StrFormat()` returns a string (and is analogous to `std::sprintf()`),
 `absl::PrintF()` provides `std::printf()` type behavior and can return errors.
 In debug builds, we can log or die when a format doesn't exactly match its input
 parameter types. Other variants can have better error handling. Variants of the

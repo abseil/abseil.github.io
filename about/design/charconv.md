@@ -7,7 +7,7 @@ type: markdown
 
 # `charconv` Design Notes
 
-The Abseil `charconv` library provides C++11-compatible vesion of the C++17
+The Abseil `charconv` library provides C++11-compatible version of the C++17
 `<charconv>` library header, adding light-weight parsers and formatters for
 arithmetic types. In specific, this library contains a C++11-compatible version
 of `std::from_chars` to convert from a string to an arithmetic type (in this
@@ -78,7 +78,7 @@ Where `EM_trunc` is an integer in the range `[2**63, 2**64)`, and `EM_error` is
 a real number in the range `[0.0, 1.0)`. (When N is less than 0 or greater than
 27, `EM_error` is nonzero.)
 
-## Calcluating Error Bounds
+## Calculating Error Bounds
 
 To generate an initial floating point guess, we multiply the parsed mantissa by
 the appropriate power of ten. This gives us a `uint128` value, but due to errors
@@ -134,7 +134,7 @@ More subtly, if the low five bits are `0b10000`, we would normally have to
 decide whether the correct rounding direction is "up" or "toward even". However,
 this code path requires that our mantissa is inexact, so we know that `DM_error`
 is nonzero, and so also is `error`. The correct value must therefore be some
-epsilon greather than the value in our high 58 bits, and the correct rounding
+epsilon greater than the value in our high 58 bits, and the correct rounding
 direction must be up as well.
 
 Only if the low five bits are `0b01111` does the error prevent us from guessing
