@@ -459,7 +459,7 @@ year, month, day, hour, minute, and second.
 * `minute()` returning an `int`
 * `second()` returning an `int`
 
-Recall that fields inferior to the type's aligment will be set to their minimum
+Recall that fields inferior to the type's alignment will be set to their minimum
 valid value.
 
 ```cpp

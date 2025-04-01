@@ -46,20 +46,14 @@ Pre-defined Compiler Macros</a>.</p>
 | `_M_ARM64`        | ARM64            | Visual Studio          |             |
 | `__i386__`        | Intel x86        |                        |             |
 | `_M_IX86`         | Intel x86        | Visual Studio\*        |             |
-| `__ia64__`        | Intel Itanum     |                        |             |
-:                   : (IA-64)          :                        :             :
-| `_M_IA64`         | Intel Itanum     | Visual Studio          |             |
-:                   : (IA-64)          :                        :             :
-| `__ppc__` <br/>   | PowerPC          |                        |             |
-: `__PPC__` <br/>   :                  :                        :             :
-: `__ppc64__` <br/> :                  :                        :             :
-: `__PPC64__`       :                  :                        :             :
+| `__ia64__`        | Intel Itanium (IA-64) |                   |             |
+| `_M_IA64`         | Intel Itanium (IA-64) | Visual Studio     |             |
+| `__ppc__`<br/>`__PPC__`<br/>`__ppc64__`<br/>`__PPC64__`<br/>  | PowerPC | | |
 | `_M_PPC`          | PowerPC          | Visual Studio          |             |
-| `__myriad2__`     | Myriad2          | Myriad Development Kit |             |
-:                   :                  : (Intel Movidius)       :             :
+| `__myriad2__`     | Myriad2     | Myriad Development Kit (Intel Movidius) | |
 | `__mips__`        | MIPS             | GNU C                  |             |
 
-\* Only defined for 32-bits architectures.
+\* Only defined for 32-bit architectures.
 
 References:
 

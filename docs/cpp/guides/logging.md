@@ -26,6 +26,16 @@ will show up in the logfiles.
 
 For more detailed information, see the header files.
 
+### Header Files for `LOG()` and `CHECK()`
+
+Import the logging and check macros with the following #includes. The path to
+`absl` may differ depending on its installation location within your system.
+
+```c++
+#include "absl/log/log.h"
+#include "absl/log/check.h"
+```
+
 ### `LOG()` Macro {#LOG}
 
 `LOG()` takes a severity level as an argument, which defines the granularity and
@@ -172,6 +182,16 @@ There are also two pseudo-levels:
     usually the best choice for errors occurring at startup (e.g. flag
     validation) where the control flow is uninteresting and unnecessary to
     diagnosis.
+*   [`DO_NOT_SUBMIT`](#severity-do-not-submit){#severity-do-not-submit} is an
+    alias for `ERROR`, and is the right level to use when you are using `LOG`
+    for what's often called
+    [`printf()` debugging](https://en.wikipedia.org/wiki/Debugging#printf_debugging).
+    The name is easy to spot in review and is caught by common (but not
+    on-by-default) presubmit
+    checks.
+    The contract is that **it must not be checked in**, so the Abseil team
+    reserves the right to delete it, change what it does, and/or scrub any
+    instances that do end up checked in, with or without notice.
 
 If you want to specify a severity level using a C++ expression, e.g. so that the
 level used varies at runtime, you can do that too:
@@ -189,8 +209,8 @@ macro takes a non-negative integer verbosity level as an argument - `INFO`
 severity is implied. Verbosity level values are arbitrary, however lower values
 correspond to more readily-visible messages. Non-zero verbosity levels are
 disabled by default, and disabled `VLOG()`s have a very small performance cost,
-so liberal use of `VLOG()` is acceptable in most parts of google3 without risk
-of serious performance degradation or unacceptable log spam.
+so liberal use of `VLOG()` is acceptable in most cases without risk of serious
+performance degradation or unacceptable log spam.
 
 ```c++
 Foo::Foo(int num_bars) {

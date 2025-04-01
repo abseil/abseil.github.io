@@ -190,8 +190,8 @@ absl::StrFormat("%lld", 100'000'000'000'000) -> "100000000000000"
 
 // Floating Point
 // Default precision of %f conversion is 6
-absl::StrFormat("%f", 1.6)       -> "1.600000" // Width includes decimal pt.
-absl::StrFormat("%05.2f", 1.6)   -> "01.60"
+absl::StrFormat("%f", 1.6)       -> "1.600000"
+absl::StrFormat("%05.2f", 1.6)   -> "01.60"    // Width includes decimal pt.
 absl::StrFormat("%.1f", 1.63232) -> "1.6"      // Rounding down
 absl::StrFormat("%.3f", 1.63451) -> "1.635"    // Rounding up
 absl::StrFormat("%*.*f", 5, 2, 1.63451) -> " 1.63"  // Same as "%5.2f"
