@@ -48,7 +48,7 @@ LTS branches will be published on this page.
 ## Options for Using Abseil Code In Your Source Code or Binary
 
 Including Abseil code in your project, as long as it is provided as source
-code or within your own binary, is relatively straightfoward. You have a few
+code or within your own binary, is relatively straightforward. You have a few
 options, listed in order of higher preference:
 
 * Live at HEAD, depend on and build the latest snapshot of Abseil.<br/><br/>
