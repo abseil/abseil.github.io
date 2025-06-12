@@ -93,9 +93,14 @@ below.
 
 ## Using `absl::Hash`
 
-The `absl::Hash` framework is the default hash implementation for the "Swiss
-table" hash tables. All types hashable by the `absl::Hash` framework will
-automatically be hashable within Swiss tables.
+The `absl::Hash` framework is the default hash implementation for Abseil. All
+types hashable by the `absl::Hash` framework will automatically be hashable in
+Abseil containers.
+
+However, you should usually not pass `absl::Hash<T>` directly when passing a
+hasher to be used by a container. Instead specify
+`absl::DefaultHashContainerHash<T>`, which adds support for heterogeneous lookup
+and matches what the Abseil containers do by default.
 
 For other hash table implementations, `absl::Hash` can be used just like any
 other hash functor:
@@ -108,8 +113,8 @@ Of course, this works only if `MyKey` is hashable by `absl::Hash`, i.e.
 `absl::Hash` supports the `MyKey` type.
 
 NOTE: the hash codes computed by `absl::Hash` are not guaranteed to be stable
-across different runs of your program. In fact, in the usual case it randomly
-seeds itself at program startup.
+across different runs of your program, or across different dynamically loaded
+libraries in your program.
 
 ### Intrinsic Type Support
 
@@ -126,10 +131,14 @@ seeds itself at program startup.
 *   `std::unique_ptr` and `std::shared_ptr` (as with plain pointers, the pointer
     itself is hashed, not the value it points to)
 *   All string-like types including:
+    *   `absl::Cord`
     *   `absl::string_view`
-    *   `std::string`
-    *   `std::string_view` (as well as any instance of `std::basic_string` that
-        uses `char` and `std::char_traits`)
+    *   `std::string` (as well as any instance of `std::basic_string` that uses
+        `char` and `std::char_traits<char>`)
+    *   `std::string_view`
+    *   `std::wstring`
+    *   `std::u16string`
+    *   `std::u32string`
 *   All the standard sequence containers (provided the elements are hashable)
 *   All the standard ordered associative containers (provided the elements are
     hashable)
@@ -138,6 +147,11 @@ seeds itself at program startup.
     *   `absl::FixedArray`
     *   `absl::uint128`
     *   `absl::Time`, `absl::Duration`, and `absl::TimeZone`
+*   absl hash tables themselves (provided the elements are hashable):
+    *    `absl::flat_hash_map`
+    *    `absl::flat_hash_set`
+    *    `absl::node_hash_map`
+    *    `absl::node_hash_set`
 
 NOTE: the list above is not meant to be exhaustive. Additional type support
 may be added, in which case the above list will be updated.
@@ -256,7 +270,7 @@ calls `vector`'s `==` operator, which does.
 ### Combining Hash States {#combining-states}
 
 Once you've figured out what your hash expansion is, you just need to combine it
-with the hash state. The hash state object provides two static functions for
+with the hash state. The hash state object provides three static functions for
 doing this:
 
 *   `HashState::combine(H, const Args&...)`: Combines an arbitrary number of
@@ -288,6 +302,13 @@ doing this:
 >
 > is NOT guaranteed to produce the same hash expansion as a for loop but it may
 > be faster. If you need this guarantee, write out the for loop instead.
+
+*   `HashState::combine_unordered(H, begin, end)`: Combines a set of elements
+    denoted by an iterator pair into a hash state, returning the updated state.
+
+    Unlike the other two methods, the hashing is order-independent. This can be
+    used to hash unordered collections.  It should *not* be used if the order of
+    the elements is significant.
 
 Note that the state objects should always be passed by value. Furthermore, they
 are move-only types (like `std::unique_ptr`), so you'll often have to use
@@ -326,7 +347,7 @@ In case of errors, `absl::VerifyTypeImplementsAbslHashCorrectly()` will print
 diagnostics indicating which two elements violated these requirements.
 
 `absl::VerifyTypeImplementsAbslHashCorrectly()` also supports testing
-heterogenous lookup and custom equality operators. In this case, we would use a
+heterogeneous lookup and custom equality operators. In this case, we would use a
 tuple to pass mixed types.
 
 ```c++

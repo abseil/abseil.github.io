@@ -38,6 +38,12 @@ they wanted to avoid copying data. A `string_view` also acts as a wrapper around
 APIs that accept both types of character data; methods can simply declare that
 they accept `absl::string_view`.
 
+```cpp
+// A common use of string_view: Foo() can accept both char* and std::string via
+// implicit conversion to string_view.
+void Foo(absl::string_view s) { ... }
+```
+
 `string_view` objects are very lightweight, so you should always pass them by
 value within your methods and functions; don't pass a `const absl::string_view
 &`. (Passing `absl::string_view` instead of `const absl::string_view &` has the
@@ -46,16 +52,21 @@ passing rules, it is generally faster to pass by value in this case.)
 
 As noted above, because the `string_view` does not own the underlying data
 itself, it should only be used for read-only data. If you need to provide a
-string constant to an external API user, for example, you would still internally
-declare that string as `const char[]`; however, you would expose that data using
-an `string_view`.
+string constant to an external API user, for example:
 
 ```cpp
-// If an API declare a string literal as const char ...
-const char kGreeting[] = "hi";
+// C++17: A read-only string in a header file.
+inline constexpr absl::string_view kGreeting = "hi";
+```
 
-// API users could access this string data for reading using a string_view.
-absl::string_view GetGreeting() { return kGreeting; }
+```cpp
+// C++14: A read-only string in a header file. Due to lifetime issues, a
+// string_view is usually a poor choice for a return value (see below), but it's
+// safe here because the static storage outlives it.
+inline absl::string_view GetGreeting() {
+  static constexpr char kGreeting[] = "hi";
+  return kGreeting;
+}
 ```
 
 A `string_view` is also suitable for local variables if you know that the
@@ -65,7 +76,9 @@ lifetime of the underlying object is longer than the lifetime of your
 ```cpp
 // BAD use of string_view: lifetime problem
 absl::string_view sv = obj.ReturnAString();
+```
 
+```cpp
 // GOOD use of string_view: str outlives sv
 std::string str = obj.ReturnAString();
 absl::string_view sv = str;
@@ -79,6 +92,12 @@ the object it points to.
 A `string_view` may represent a whole string or just part of a string. For
 example, when splitting a string, `std::vector<absl::string_view>` is a natural
 data type for the output.
+
+NOTE: For more information about `string_view`, see
+[abseil.io/tips/1](https://abseil.io/tips/1).
+
+NOTE: For more information about safe idioms for constants, see
+[abseil.io/tips/140](https://abseil.io/tips/140).
 
 ## `absl::StrSplit()` for Splitting Strings
 
@@ -116,7 +135,7 @@ Examples:
 // By default, empty strings are *included* in the output. See the
 // `absl::SkipEmpty()` predicate below to omit them{#stringSplitting}.
 std::vector<std::string> v = absl::StrSplit("a,b,,c", ',');
-// v[0] == "a", v[1] == "b", v[3] == "", v[4] = "c"
+// v[0] == "a", v[1] == "b", v[2] == "", v[3] = "c"
 
 // You can also split an empty string
 v = absl::StrSplit("", ',');
@@ -148,7 +167,7 @@ Examples:
 // Stores results in a std::set<std::string>, which also performs de-duplication
 // and orders the elements in ascending order.
 std::set<std::string> s = absl::StrSplit("b,a,c,a,b", ',');
-// s[0] == "a", s[1] == "b", s[3] == "c"
+// s[0] == "a", s[1] == "b", s[2] == "c"
 
 // Stores results in a map. The map implementation assumes that the input
 // is provided as a series of key/value pairs. For example, the 0th element
@@ -223,7 +242,8 @@ whether or not a resultant element is included in the result set. A filtering
 predicate may be passed as an *optional* third argument to the `StrSplit()`
 function.
 
-The predicates must be unary functions (or functors) that take a single
+The predicates must be unary functions (or function objects such as
+[lambdas](https://en.cppreference.com/w/cpp/language/lambda)) that take a single
 `absl::string_view` argument and return a bool indicating whether the argument
 should be included (`true`) or excluded (`false`).
 
@@ -256,6 +276,12 @@ std::vector<std::string> v = absl::StrSplit(",a, ,b,", ',', absl::SkipEmpty());
 std::vector<std::string> v = absl::StrSplit(",a, ,b,", ',',
                                             absl::SkipWhitespace());
 // v[0] == "a", v[1] == "b"
+
+// Passes a lambda as the predicate to keep only the lines that don't start
+// with a `#`.
+std::vector<std::string> non_comment_lines = absl::StrSplit(
+    file_content, '\n',
+    [](absl::string_view line) { return !absl::StartsWith(line, "#"); });
 ```
 
 ## `absl::StrCat()` and `absl::StrAppend()` for String Concatenation
@@ -305,7 +331,9 @@ their memory is preallocated during string construction.
 std::string s1 = "A string";
 std::string another = " and another string";
 s1 += " and some other string" + another;
+```
 
+```cpp
 // Efficient code
 std::string s1 = "A string";
 std::string another = " and another string";
@@ -321,8 +349,8 @@ For this reason, you should get in the habit of preferring `absl::StrCat()` or
 string, and is designed to be the fastest possible way to construct a string out
 of a mix of raw C strings, `absl::string_view` elements, `std::string` value,
 and boolean and numeric values. `StrCat()` is generally more efficient on string
-concatenations involving more than one unary operator, such as `a + b + c` or `a
-+= b + c`, since they avoid the creation of temporary string objects during
+concatenations involving more than one binary operator, such as `a + b + c` or
+`a += b + c`, since they avoid the creation of temporary string objects during
 string construction.
 
 ```cpp
@@ -479,19 +507,23 @@ Traditionally, most C++ code used built-in functions such as `sprintf()` and
 `absl::string_view` and the memory of the formatted buffer must be managed.
 
 ```cpp
-// Bad. Need to worry about buffer size and null-terminations.
+// Bad. Need to worry about buffer size and NUL-terminations.
 
 std::string GetErrorMessage(char *op, char *user, int id) {
   char buffer[50];
   sprintf(buffer, "Error in %s for user %s (id %i)", op, user, id);
   return buffer;
 }
+```
 
+```cpp
 // Better. Using absl::StrCat() avoids the pitfalls of sprintf() and is faster.
 std::string GetErrorMessage(absl::string_view op, absl::string_view user, int id) {
   return absl::StrCat("Error in ", op, " for user ", user, " (", id, ")");
 }
+```
 
+```cpp
 // Best. Using absl::Substitute() is easier to read and to understand.
 std::string GetErrorMessage(absl::string_view op, absl::string_view user, int id) {
   return absl::Substitute("Error in $0 for user $1 ($2)", op, user, id);
@@ -547,7 +579,7 @@ string at run-time, is slower than `absl::StrCat()`. Choose `Substitute()` over
 The Abseil strings library also contains simple utilities for performing string
 matching checks. All of their function parameters are specified as
 `absl::string_view`, meaning that these functions can accept `std::string`,
-`absl::string_view` or null-terminated C-style strings.
+`absl::string_view` or NUL-terminated C-style strings.
 
 ```cpp
 // Assume "msg" is a line from a logs entry
@@ -582,3 +614,54 @@ For conversion of numeric types into strings, use `absl::StrCat()` and
 ```cpp
 std::string foo = StrCat("The total is ", cost + tax + shipping);
 ```
+
+## Providing Formatting for User-defined Types
+
+To extend formatting to your type using `AbslStringify()`, provide an
+`AbslStringify()` overload as a `friend` function template definition. If the
+function cannot be provided in the type itself, it must be defined in the same
+namespace for the purposes of ADL look-up. The `strings` library will check for
+such an overload when formatting user-defined types.
+
+An `AbslStringify()` overload should have the following signature:
+
+```cpp
+template <typename Sink>
+void AbslStringify(Sink& sink, const UserDefinedType& value);
+```
+
+Note: `AbslStringify()` utilizes a generic "sink" buffer to construct its
+string. For more information about supported operations on `AbslStringify()`'s
+sink, see https://abseil.io/docs/cpp/guides/abslstringify.
+
+An example usage within a user-defined type is shown below:
+
+```cpp
+struct Point {
+
+  ...
+  // Strings library support is added to the Point class through an
+  // AbslStringify() friend declaration.
+  template <typename Sink>
+  friend void AbslStringify(Sink& sink, const Point& p) {
+    absl::Format(&sink, "(%d, %d)", p.x, p.y);
+  }
+
+  int x;
+  int y;
+}
+```
+
+Given this definition, `Point` formatting will be supported by a variety of
+`strings` functions.
+
+```cpp
+absl::StrCat("The point is ", p);
+absl::StrAppend(&str, p);
+absl::Substitute("The point is $0", p);
+absl::StrJoin(vector_of_points, ",");
+```
+
+Additionally, `AbslStringify()` itself can use `%v` within its own format
+strings to perform this type deduction. Our `Point` above could be formatted as
+`"(%v, %v)"` for example, and deduce the `int` values as `%d`.

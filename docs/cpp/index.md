@@ -20,3 +20,8 @@ the header files directly.
 * [C++ Programming Guides](/docs/cpp/guides/)
 * [C++ Platforms Guide](/docs/cpp/platforms/)
 * [C++ Tools Guide](/docs/cpp/tools/)
+
+The following guides are general programming guides that we think are useful
+to C++ developers:
+
+* [The Danger of Atomic Operations](http://abseil.io/docs/cpp/atomic_danger)

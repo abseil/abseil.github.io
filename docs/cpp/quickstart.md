@@ -7,10 +7,9 @@ type: markdown
 
 # C++ Quickstart
 
-Note: this Quickstart uses Bazel as the official build system for Abseil, which
-is supported on most major platforms (Linux, Windows, macOS, for example) and
-compilers. The Abseil source code assumes you are using Bazel and contains
-`BUILD.bazel` files for that purpose.
+Note: this Quickstart uses [Bazel](https://bazel.build/) version 7.0 or higher
+as the official build system for Abseil, which is supported on most major
+platforms (Linux, Windows, macOS, for example) and compilers.
 
 This document is designed to allow you to get the Abseil development
 environment up and running. We recommend that each person starting
@@ -26,12 +25,8 @@ Running the Abseil code within this tutorial requires:
 *   A compatible platform (e.g. Windows, macOS, Linux, etc.). Most platforms are
     fully supported. Consult the [Platforms Guide](platforms/platforms) for more
     information.
-*   A compatible C++ compiler *supporting at least C++11*. Most major compilers
+*   A compatible C++ compiler *supporting at least C++17*. Most major compilers
     are supported.
-*   [Git](https://git-scm.com/) for interacting with the Abseil source code
-    repository, which is contained on [GitHub](http://github.com). To install
-    Git, consult the [Set Up Git](https://help.github.com/articles/set-up-git/)
-    guide on GitHub.
 
 Although you are free to use your own build system, most of the documentation
 within this guide will assume you are using [Bazel](https://bazel.build/).
@@ -39,171 +34,102 @@ within this guide will assume you are using [Bazel](https://bazel.build/).
 To download and install Bazel (and any of its dependencies), consult the
 [Bazel Installation Guide](https://docs.bazel.build/versions/master/install.html).
 
-## Running the Abseil Hello World
+## Set Up a Bazel Workspace to Work with Abseil
 
-Once you have Bazel and Git installed, you can download, compile, and run the
-[abseil-hello](https://github.com/abseil/abseil-hello) binary to get you
-coding right away. This tiny project features all the configuration and a simple
-test and `hello_main` to start you on your way:
+A
+[Bazel workspace](https://docs.bazel.build/versions/master/build-ref.html#workspace)
+is a directory on your filesystem that contains the source files for the
+software you want to build. Each workspace directory has a text file named
+`MODULE.bazel` which may be empty, or may contain references to external
+dependencies required to build the outputs.
 
-```
-$ git clone https://github.com/abseil/abseil-hello.git
-Cloning into 'abseil-hello'...
-...
-$ cd abseil-hello/bazel-hello
-bazel-hello$ bazel test :hello_test
-...
-/:hello_test                                                      PASSED in 0.1s
-
-Executed 1 out of 1 test: 1 test passes.
-...
-bazel-hello$ bazel build :hello_main
-...
-Target //:hello_main up-to-date:
-  bazel-bin/hello_main
-...
-bazel-hello$ bazel run hello_main
-Hello world
-bazel-hello$ bazel run hello_main Abseil!
-Hello Abseil!
-```
-
-Happy Coding!
-
-## Getting the Abseil Code
-
-If you wish to work directly with the Abseil code rather than simply create a
-binary dependent on it, you can obtain the Abseil code from its repository on
-GitHub:
+First, set up your development directory:
 
 ```
-# Change to the directory where you want to create the code repository
-$ cd ~
-$ mkdir Source; cd Source
-$ git clone https://github.com/abseil/abseil-cpp.git
-Cloning into 'abseil-cpp'...
-remote: Total 1935 (delta 1083), reused 1935 (delta 1083)
-Receiving objects: 100% (1935/1935), 1.06 MiB | 0 bytes/s, done.
-Resolving deltas: 100% (1083/1083), done.
-$
+mkdir my_workspace && cd my_workspace
 ```
 
-Git will create the repository within a directory named `abseil-cpp`.
-Navigate into this directory and run all tests:
+As of Bazel 7.0, the recommended way to consume Abseil is through the
+[Bazel Central Registry](https://registry.bazel.build/modules/abseil-cpp). To do
+this, create a `MODULE.bazel` file in the root directory of your Bazel workspace
+with the following content:
 
 ```
-$ cd abseil-cpp
-$ bazel test //absl/...
-..............
-INFO: Found 12 targets...
-INFO: Elapsed time: 3.677s, Critical Path: 0.03s
-$
+# MODULE.bazel
+
+# Choose the most recent version available at
+# https://registry.bazel.build/modules/abseil-cpp.
+bazel_dep(name = "abseil-cpp", version = "20240116.0")
 ```
+
+This will bring in Abseil along with all of its dependencies into your new Bazel
+workspace.
 
 ## Creating and Running a Binary
 
-Now that you've obtained the Abseil code and verified that you can build and
-test it, you're ready to use it within your own project.
+Now that you've setup a Bazel workspace with Abseil as a dependency, you're
+ready to use it within your own project.
 
-### Linking Your Code to the Abseil Repository
-
-First, create (or select) a source code directory for your work. This directory
-should generally not be the `abseil-cpp` directory itself;
-instead, you will link into that repository from your own source directory.
-
-```
-# Change to your main development directory and create a new development
-# directory. (If you already have a development directory you'd wish to use,
-# you can use that.)
-$ cd ~/Source
-$ mkdir TestProject; cd TestProject
-```
-
-Bazel allows you to link other Bazel projects using `WORKSPACE` files in the
-root of your development directories. To add a link to your local Abseil
-repository within your new project, add the following into a `WORKSPACE` file:
-
-```
-local_repository(
-  # Name of the Abseil repository. This name is defined within Abseil's
-  # WORKSPACE file, in its `workspace()` metadata
-  name = "com_google_absl",
-
-  # NOTE: Bazel paths must be absolute paths. E.g., you can't use ~/Source
-  path = "/PATH_TO_SOURCE/Source/abseil-cpp",
-)
-```
-
-The "name" in the `WORKSPACE` file identifies the name you will use in Bazel
-`BUILD` files to refer to the linked repository (in this case
-"com_google_absl").
-
-### Creating Your Test Code
-
-Within your `TestProject` create an `examples` directory:
-
-```
-$ cd TestProject; mkdir examples; cd examples
-```
-
-Now, create a `hello_world.cc` C++ file within your `examples` directory:
+In this example, we will create a `hello_world.cc` C++ file within your Bazel
+workspace directory:
 
 ```
 #include <iostream>
 #include <string>
 #include <vector>
+
 #include "absl/strings/str_join.h"
 
 int main() {
-  std::vector<std::string> v = {"foo","bar","baz"};
+  std::vector<std::string> v = {"foo", "bar", "baz"};
   std::string s = absl::StrJoin(v, "-");
 
   std::cout << "Joined string: " << s << "\n";
 
-  return(0);
+  return 0;
 }
 ```
 
 Note that we include an Abseil header file using the `absl` prefix.
 
-### Creating Your BUILD File
+### Creating Your BUILD.bazel file
 
-Now, create a `BUILD` file within your `examples` directory like the following:
+Now, create a `BUILD.bazel` file with a `cc_binary` rule in the same directory
+as your `hello_world.cc` file:
 
 ```
 cc_binary(
   name = "hello_world",
-  deps = ["@com_google_absl//absl/strings"],
+  deps = ["@abseil-cpp//absl/strings"],
   srcs = ["hello_world.cc"],
 )
 ```
 
-For more information on how to create Bazel BUILD files, consult the
+We declare a dependency on the Abseil strings library
+(`@abseil-cpp//absl/strings`) using the prefix we declared in our `MODULE.bazel`
+file (`@abseil-cpp`).
+
+For more information on how to create Bazel `BUILD.bazel` files, consult the
 [Bazel Tutorial](https://docs.bazel.build/versions/master/tutorial/cpp.html).
 
-We declare a dependency on the Abseil strings library (`//absl/strings`) using
-the prefix we declared in our `WORKSPACE` file (`@com_google_absl`).
+Build our target (`hello_world`) and run it:
 
-Build our target ("hello_world") and run it:
-
-```
-# It's often good practice to build files from the workspace root
-$ cd ~/Source/TestProject
-$ bazel build //examples:hello_world
-INFO: Analysed target //examples:hello_world (12 packages loaded).
+<pre><code>$ <b>bazel build //:hello_world</b>
+INFO: Analysed target //:hello_world (12 packages loaded).
 INFO: Found 1 target...
-Target //examples:hello_world up-to-date:
-  bazel-bin/examples/hello_world
+Target //:hello_world up-to-date:
+  bazel-bin/hello_world
 INFO: Elapsed time: 0.180s, Critical Path: 0.00s
 INFO: Build completed successfully, 1 total action
 
-$ bazel run //examples:hello_world
-INFO: Running command line: bazel-bin/examples/hello_world
-Joined string: foo-bar-baz
-$
-```
+$ <b>bazel run //:hello_world</b>
+INFO: Running command line: bazel-bin/hello_world
+Joined string: foo-bar-baz</code></pre>
 
-Congratulations! You've created your first binary using Abseil code.
+Congratulations! You've created your first binary using Abseil code. If you want
+to see a full, working example of code using Abseil, see the [`bazel-hello`
+directory in the abseil-hello
+repository](https://github.com/abseil/abseil-hello/tree/master/bazel-hello).
 
 ## What's Next
 

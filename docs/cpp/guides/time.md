@@ -43,11 +43,11 @@ fields represent the time as defined by some local government. Your civil time
 matches the values shown on the clock hanging on your wall and the Dilbert
 calendar on your desk. Your friend living across the country may, at the same
 moment, have a different civil time showing on their Far Side calendar and
-clock. For example, if you lived in New York on July 20, 1969 you witnessed Neil
-Armstrong's small step at 10:56 in the evening, whereas your friend in San
-Francisco saw the same thing at 7:56, and your pen pal in Sydney saw it while
-eating lunch at 12:56 on July 21. You all would agree on the absolute time of
-the event, but you'd disagree about the civil time.
+clock. For example, if you lived in New York, then you witnessed Neil
+Armstrong's small step on July 20, 1969 at 10:56 PM, whereas your friend in San
+Francisco saw the same thing at 7:56 PM, and your pen pal in Sydney saw it while
+eating lunch on July 21, 1969 at 12:56 PM. You all would agree on the absolute
+time of the event, but you'd disagree about the civil time.
 
 Time zones are geo-political regions within which rules are shared to convert
 between absolute times and civil times. The geographical nature of time zones is
@@ -91,14 +91,15 @@ concepts:
   functions, and to and from civil time representations with the help of an
   `absl::TimeZone`.
 * Civil times are represented by six individual integers, specifying the year,
-  month, day, hour, minute, and second of an `absl::Civil*` object. (See
+  month, day, hour, minute, and second of an `absl::Civil*` object which should
+  be passed by value. (See
   [civil_time.h](https://github.com/abseil/abseil-cpp/blob/master/absl/time/civil_time.h).) These
   integer values may be specified as arguments to civil-time constructors (e.g.
   `absl::CivilYear` or `absl::CivilSecond`, or parsed from a formatted time
   string.
 * Time zones are represented by the `absl::TimeZone` class. (See
-  [time.h](https://github.com/abseil/abseil-cpp/blob/master/absl/time/time.h).) This  mostly-opaque
-  value type is passed (by value) to other Abseil time functions that will then
+  [time.h](https://github.com/abseil/abseil-cpp/blob/master/absl/time/time.h).) This mostly-opaque
+  value type is passed by value to other Abseil time functions that will then
   perform the necessary conversions to/from absolute time or civil time. It is a
   feature that the Abseil time library itself performs all time-zone arithmetic
   on your behalf, virtually eliminating offset calculation bugs from your code.
@@ -189,7 +190,7 @@ absl::Time takeoff = absl::FromCivil(ct, nyc);
 
 Formatting and parsing functions are provided for converting to and from
 strings. `FormatTime()` allows you to take an absolute time and time zone and
-return a string representing that time. (See [Time Zones](#timezones) below.)
+return a string representing that time. (See [Time Zones](#time-zones) below.)
 
 ```cpp
 // Construct an absl::Time from the system clock.
@@ -241,7 +242,7 @@ int64_t min = dur / absl::Minutes(1);      // min == 0
 ```
 
 Additionally, the Abseil time library provides helper functions for converting
-duration values into integers or `double` values:
+duration values into `int64_t` or `double` values:
 
 * `ToInt64Nanoseconds()` and `ToDoubleNanoseconds()`
 * `ToInt64Microseconds()` and `ToDoubleMicroseconds()`
@@ -284,6 +285,8 @@ daylight-saving time (DST):
 * `absl::CivilDay`
 * `absl::CivilMonth`
 * `absl::CivilYear`
+
+Prefer to pass these `absl::Civil*` types by value rather than const reference.
 
 Each of these civil-time types is a simple value type with the same interface
 for construction and the same six accessors for each of the civil time fields
@@ -379,7 +382,7 @@ absl::CivilMonth cm;
 UseDay(cm);                  // OK: implicit conversion to absl::CivilDay
 ```
 
-### Civil Time Normalization
+### Civil Time Normalization {#normalization}
 
 Normalization takes invalid values and adjusts them to produce valid values.
 Within the civil-time library, integer arguments passed to the `Civil*`
@@ -456,7 +459,7 @@ year, month, day, hour, minute, and second.
 * `minute()` returning an `int`
 * `second()` returning an `int`
 
-Recall that fields inferior to the type's aligment will be set to their minimum
+Recall that fields inferior to the type's alignment will be set to their minimum
 valid value.
 
 ```cpp
@@ -469,7 +472,7 @@ absl::CivilDay d(2015, 6, 28);
 // d.second() == 0
 ```
 
-## Time Zones
+## Time Zones {#time-zones}
 
 The `absl::TimeZone` is an opaque, small, value-type class representing a
 geo-political region within which particular rules are used for converting

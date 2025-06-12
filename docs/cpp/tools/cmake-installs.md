@@ -102,16 +102,16 @@ int main() {
 
 Our `CMakeLists.txt` for this local project needs to be slightly different than
 the one we used in the
-[CMake Quickstart](/docs/ccp/quickstart-cmake) -- we use
+[CMake Quickstart](/docs/cpp/quickstart-cmake) -- we use
 `find_package` to import Abseil's targets from our local `install` directory.
 
 ```
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.16)
 
 project(my_project)
 
-# Abseil requires C++11
-set(CMAKE_CXX_STANDARD 11)
+# Abseil requires C++14
+set(CMAKE_CXX_STANDARD 14)
 
 # Import Abseil's CMake targets
 find_package(absl REQUIRED)

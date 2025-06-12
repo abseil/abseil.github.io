@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Software Engineering at Google</title>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> </script>
+    <link rel="stylesheet" type="text/css" href="theme/html/html.css">
+  </head>
+  <body data-type="book">
+    <section xmlns="http://www.w3.org/1999/xhtml" data-type="preface" id="preface">
+<h1>Preface</h1>
+
+<p>This book is titled <em>Software Engineering at Google</em>. What precisely do we mean by software engineering? What distinguishes “software engineering” from “programming” or “computer science”? And why would Google have a unique perspective to add to the corpus of previous software engineering literature written over the past 50 years?</p>
+
+<p>The terms “programming” and “software engineering” have been used interchangeably for quite some time in our industry, although each term has a different emphasis and different implications. University students tend to study computer science and get jobs writing code as “programmers.”</p>
+
+<p>“Software engineering,” however, sounds more serious, as if it implies the application of some theoretical knowledge to build something real and precise. Mechanical engineers, civil engineers, aeronautical engineers, and those in other engineering disciplines all practice engineering. They all work in the real world and use the application of their theoretical knowledge to create something real. Software engineers also create “something real,” though it is less tangible than the things other engineers create.</p>
+
+<p>Unlike those more established engineering professions, current software engineering theory or practice is not nearly as rigorous. Aeronautical engineers must follow rigid guidelines and practices, because errors in their calculations can cause real damage; programming, on the whole, has traditionally not followed such rigorous practices. But, as software becomes more integrated into our lives, we must adopt and rely on more rigorous engineering methods. We hope this book helps others see a path toward more reliable software practices.</p>
+
+<section data-type="sect1" id="programming_over_time">
+<h1>Programming Over Time</h1>
+
+<p>We propose that “software engineering” encompasses not just the act of writing code, but all of the tools and processes an organization uses to build and maintain that code over time. What practices can a software organization introduce that will best keep its code valuable over the long term? How can engineers make a codebase more sustainable and the software engineering discipline itself more rigorous? We don’t have fundamental answers to these questions, but we hope that Google’s collective experience over the past two decades illuminates possible paths toward finding those answers.</p>
+
+<p>One key insight we share in this book is that software engineering can be thought of as “programming integrated over time.” What practices can we introduce to our code to make it <em>sustainable</em>—able to react to necessary change—over its life cycle, from conception to introduction to maintenance to deprecation?</p>
+
+<p>The book emphasizes three fundamental principles that we feel software organizations should keep in mind when designing, architecting, and writing their code:</p>
+
+<dl>
+	<dt>Time and Change</dt>
+	<dd><p>How code will need to adapt over the length of its life</p></dd>
+	<dt>Scale and Growth</dt>
+	<dd><p>How an organization will need to adapt as it evolves</p></dd>
+	<dt>Trade-offs and Costs</dt>
+	<dd><p>How an organization makes decisions, based on the lessons of Time and Change and Scale and Growth</p></dd>
+</dl>
+
+<p>Throughout the chapters, we have tried to tie back to these themes and point out ways in which such principles affect engineering practices and allow them to be sustainable. (See <a data-type="xref" href="ch01.html#what_is_software_engineeringquestion_ma">What Is Software Engineering?</a> for a full discussion.)</p>
+</section>
+
+<section data-type="sect1" id="googleapostrophes_perspective">
+<h1>Google’s Perspective</h1>
+
+<p>Google has a unique perspective on the growth and evolution of a sustainable software ecosystem, stemming from our scale and longevity. We hope that the lessons we have learned will be useful as your organization evolves and embraces more sustainable practices.</p>
+
+<p>We’ve divided the topics in this book into three main aspects of Google’s software engineering landscape:</p>
+
+<ul>
+	<li>
+	<p>Culture</p>
+	</li>
+	<li>
+	<p>Processes</p>
+	</li>
+	<li>
+	<p>Tools</p>
+	</li>
+</ul>
+
+<p>Google’s culture is unique, but the lessons we have learned in developing our engineering culture are widely applicable. Our chapters on Culture (<a data-type="xref" href="part2.html#culture">Culture</a>) emphasize the collective nature of a software development enterprise, that the development of software is a team effort, and that proper cultural principles are essential for an organization to grow and remain healthy.</p>
+
+<p class="pagebreak-before">The techniques outlined in our Processes chapters (<a data-type="xref" href="part3.html#processes">Processes</a>) are familiar to most software engineers, but Google’s large size and long-lived codebase provides a more complete stress test for developing best practices. Within those chapters, we have tried to emphasize what we have found to work over time and at scale as well as identify areas where we don’t yet have satisfying answers.</p>
+
+<p>Finally, our Tools chapters (<a data-type="xref" href="part4.html#tools">Tools</a>) illustrate how we leverage our investments in tooling infrastructure to provide benefits to our codebase as it both grows and ages. In some cases, these tools are specific to Google, though we point out open source or third-party alternatives where applicable. We expect that these basic insights apply to most engineering organizations.</p>
+
+<p>The culture, processes, and tools outlined in this book describe the lessons that a typical software engineer hopefully learns on the job. Google certainly doesn’t have a monopoly on good advice, and our experiences presented here are not intended to dictate what your organization should do. This book is our perspective, but we hope you will find it useful, either by adopting these lessons directly or by using them as a starting point when considering your own practices, specialized for your own problem domain.</p>
+
+<p>Neither is this book intended to be a sermon. Google itself still imperfectly applies many of the concepts within these pages. The lessons that we have learned, we learned through our failures: we still make mistakes, implement imperfect solutions, and need to iterate toward improvement. Yet the sheer size of Google’s engineering organization ensures that there is a diversity of solutions for every problem. We hope that this book contains the best of that group.</p>
+</section>
+
+<section data-type="sect1" id="what_this_book_isnapostrophet">
+<h1>What This Book Isn’t</h1>
+
+<p>This book is not meant to cover software design, a discipline that requires its own book (and for which much content already exists). Although there is some code in this book for illustrative purposes, the principles are language neutral, and there is little actual “programming” advice within these chapters. As a result, this text doesn’t cover many important issues in software development: project management, API design, security hardening, internationalization, user interface frameworks, or other language-specific concerns. Their omission in this book does not imply their lack of importance. Instead, we choose not to cover them here knowing that we could not provide the treatment they deserve. We have tried to make the discussions in this book more about engineering and less about programming.</p>
+</section>
+
+<section class="pagebreak-before" data-type="sect1" id="parting_remarks">
+<h1 class="less_space">Parting Remarks</h1>
+
+<p>This text has been a labor of love on behalf of all who have contributed, and we hope that you receive it as it is given: as a window into how a large software engineering organization builds its products. We also hope that it is one of many voices that helps move our industry to adopt more forward-thinking and sustainable practices. Most important, we further hope that you enjoy reading it and can adopt some of its lessons to your own concerns.</p>
+
+<p class="byline">Tom Manshreck</p>
+
+ 
+</section>
+
+<section data-type="sect1" id="_conventions_used_in_this_book">
+<h1>Conventions Used in This Book</h1>
+
+<p>The following typographical conventions are used in this book:</p>
+
+<dl>
+	<dt><em>Italic</em></dt>
+	<dd>
+	<p>Indicates new terms, URLs, email addresses, filenames, and file extensions.</p>
+	</dd>
+	<dt><code>Constant width</code></dt>
+	<dd>
+	<p>Used for program listings, as well as within paragraphs to refer to program elements such as variable or function names, databases, data types, environment variables, statements, and keywords.</p>
+	</dd>
+	<dt><strong><code>Constant width bold</code></strong></dt>
+	<dd>
+	<p>Shows commands or other text that should be typed literally by the user.</p>
+	</dd>
+	<dt><em><code>Constant width italic</code></em></dt>
+	<dd>
+	<p>Shows text that should be replaced with user-supplied values or by values determined by context.</p>
+	</dd>
+</dl>
+
+<div data-type="note" id="id-BoIafEIb"><h6>Note</h6>
+<p>This element signifies a general note.</p>
+</div>
+
+</section>
+
+<!--<section data-type="sect1" id="_using_code_examples">
+<h1>Using Code Examples</h1>
+PROD: Please reach out to author to find out if they will be uploading code examples to oreilly.com or their own site (e.g., GitHub). If there is no code download, delete this whole section. If there is, when you email digidist with the link, let them know what you filled in for title_title (should be as close to book title as possible, i.e., learning_python_2e). This info will determine where digidist loads the files.
+
+<p>Supplemental material (code examples, exercises, etc.) is available for download at <a href="https://github.com/oreillymedia/title_title"><em class="hyperlink">https://github.com/oreillymedia/title_title</em></a>.</p>
+
+<p>If you have a technical question or a problem using the code examples, please send email to <a class="email" href="mailto:bookquestions@oreilly.com"><em>bookquestions@oreilly.com</em></a>.</p>
+
+<p>This book is here to help you get your job done. In general, if example code is offered with this book, you may use it in your programs and documentation. You do not need to contact us for permission unless you’re reproducing a significant portion of the code. For example, writing a program that uses several chunks of code from this book does not require permission. Selling or distributing examples from O’Reilly books does require permission. Answering a question by citing this book and quoting example code does not require permission. Incorporating a significant amount of example code from this book into your product’s documentation does require permission.</p>
+
+<p>We appreciate, but generally do not require, attribution. An attribution usually includes the title, author, publisher, and ISBN. For example: “<em>Software Engineering at Google</em> by Titus Winters, Tom Manshreck, and Hyrum Wright (O’Reilly). Copyright 2020 Google, LLC, 978-1-492-08279-8.”</p>
+
+<p>If you feel your use of code examples falls outside fair use or the permission given above, feel free to contact us at <a class="email" href="mailto:permissions@oreilly.com"><em>permissions@oreilly.com</em></a>.</p>
+</section>-->
+
+<section class="pagebreak-before" data-type="sect1" id="_safari_books_online">
+<h1 class="less_space">O'Reilly Online Learning</h1>
+
+<div class="ormenabled" data-type="note" id="id-N3IVFGSx"><h6>Note</h6>
+<p>For more than 40 years, <a class="orm:hideurl" href="http://oreilly.com"><em class="hyperlink">O'Reilly Media</em></a> has provided technology and business training, knowledge, and insight to help companies succeed.</p>
+</div>
+
+<p>Our unique network of experts and innovators share their knowledge and expertise through books, articles, and our online learning platform. O’Reilly’s online learning platform gives you on-demand access to live training courses, in-depth learning paths, interactive coding environments, and a vast collection of text and video from O'Reilly and 200+ other publishers. For more information, please visit <a class="orm:hideurl" href="http://www.oreilly.com"><em>http://oreilly.com</em></a>.</p>
+</section>
+
+<section data-type="sect1" id="_how_to_contact_us">
+<h1>How to Contact Us</h1>
+
+<p>Please address comments and questions concerning this book to the publisher:</p>
+
+<ul class="simplelist">
+	<li>O’Reilly Media, Inc.</li>
+	<li>1005 Gravenstein Highway North</li>
+	<li>Sebastopol, CA 95472</li>
+	<li>800-998-9938 (in the United States or Canada)</li>
+	<li>707-829-0515 (international or local)</li>
+	<li>707-829-0104 (fax)</li>
+</ul>
+
+<p>We have a web page for this book, where we list errata, examples, and any additional information. You can access this page at <a href="https://oreil.ly/software-engineering-at-google"><em>https://oreil.ly/software-engineering-at-google</em></a>.</p>
+<!--Don't forget to update the link above.-->
+
+<p>Email <a class="email" href="mailto:bookquestions@oreilly.com"><em>bookquestions@oreilly.com</em></a> to comment or ask technical questions about this book.</p>
+
+<p>For news and more information about our books and courses, see our website at <a href="http://www.oreilly.com"><em class="hyperlink">http://www.oreilly.com</em></a>.</p>
+
+<p>Find us on Facebook: <a href="http://facebook.com/oreilly"><em class="hyperlink">http://facebook.com/oreilly</em></a></p>
+
+<p>Follow us on Twitter: <a href="http://twitter.com/oreillymedia"><em class="hyperlink">http://twitter.com/oreillymedia</em></a></p>
+
+<p>Watch us on YouTube: <a href="http://www.youtube.com/oreillymedia"><em class="hyperlink">http://www.youtube.com/oreillymedia</em></a></p>
+</section>
+
+<section class="pagebreak-before" data-type="sect1" id="_acknowledgments">
+<h1 class="less_space">Acknowledgments</h1>
+
+<p>A book like this would not be possible without the work of countless others. All of the knowledge within this book has come to all of us through the experience of so many others at Google throughout our careers. We are the messengers; others came before us, at Google and elsewhere, and taught us what we now present to you. We cannot list all of you here, but we do wish to acknowledge you.</p>
+
+<p>We’d also like to thank Melody Meckfessel for supporting this project in its infancy as well as Daniel Jasper and Danny Berlin for supporting it through its completion.</p>
+
+<p>This book would not have been possible without the massive collaborative effort of our curators, authors, and editors. Although the authors and editors are specifically acknowledged in each chapter or callout, we’d like to take time to recognize those who contributed to each chapter by providing thoughtful input, discussion, and review.</p>
+
+<ul class="list_style_type_none">
+	<li>
+	<p><strong>What Is Software Engineering?:</strong> Sanjay Ghemawat, Andrew Hyatt</p>
+	</li>
+	<li>
+	<p><strong>Working Well on Teams:</strong> Sibley Bacon, Joshua Morton</p>
+	</li>
+	<li>
+	<p><strong>Knowledge Sharing:</strong> Dimitri Glazkov, Kyle Lemons, John Reese, David Symonds, Andrew Trenk, James Tucker, David Kohlbrenner, Rodrigo Damazio Bovendorp</p>
+	</li>
+	<li>
+	<p><strong>Engineering for Equity:</strong> Kamau Bobb, Bruce Lee</p>
+	</li>
+	<li>
+	<p><strong>How to Lead a Team:</strong> Jon Wiley, Laurent Le Brun</p>
+	</li>
+	<li>
+	<p><strong>Leading at Scale:</strong> Bryan O’Sullivan, Bharat Mediratta, Daniel Jasper, Shaindel Schwartz</p>
+	</li>
+	<li>
+	<p><strong>Measuring Engineering Productivity:</strong> Andrea Knight, Collin Green, Caitlin Sadowski, Max-Kanat Alexander, Yilei Yang</p>
+	</li>
+	<li>
+	<p><strong>Style Guides and Rules:</strong> Max Kanat-Alexander, Titus Winters, Matt Austern, James Dennett</p>
+	</li>
+	<li>
+	<p><strong>Code Review:</strong> Max Kanat-Alexander, Brian Ledger, Mark Barolak</p>
+	</li>
+	<li>
+	<p><strong>Documentation:</strong> Jonas Wagner, Smit Hinsu, Geoffrey Romer</p>
+	</li>
+	<li>
+	<p><strong>Testing Overview:</strong> Erik Kuefler, Andrew Trenk, Dillon Bly, Joseph Graves, Neal Norwitz, Jay Corbett, Mark Striebeck, Brad Green, Miško Hevery, Antoine <span class="keep-together">Picard</span>, Sarah Storck</p>
+	</li>
+	<li>
+	<p><strong>Unit Testing:</strong> Andrew Trenk, Adam Bender, Dillon Bly, Joseph Graves, Titus Winters, Hyrum Wright, Augie Fackler</p>
+	</li>
+	<li>
+	<p><strong>Testing Doubles:</strong> Joseph Graves, Gennadiy Civil, Adam Bender, Augie Fackler, Erik Kuefler, James Youngman</p>
+	</li>
+	<li>
+	<p><strong>Larger Testing:</strong> Adam Bender, Andrew Trenk, Erik Kuefler, Matthew <span class="keep-together">Beaumont-Gay</span></p>
+	</li>
+	<li>
+	<p><strong>Deprecation:</strong> Greg Miller, Andy Shulman</p>
+	</li>
+	<li>
+	<p><strong>Version Control and Branch Management:</strong> Rachel Potvin, Victoria Clarke</p>
+	</li>
+	<li>
+	<p><strong>Code Search:</strong> Jenny Wang</p>
+	</li>
+	<li>
+	<p><strong>Build Systems and Build Philosophy:</strong> Hyrum Wright, Titus Winters, Adam Bender, Jeff Cox, Jacques Pienaar</p>
+	</li>
+	<li>
+	<p><strong>Critique: Google’s Code Review Tool:</strong> Mikołaj Dądela, Hermann Loose, Eva May, Alice Kober-Sotzek, Edwin Kempin, Patrick Hiesel, Ole Rehmsen, Jan Macek</p>
+	</li>
+	<li>
+	<p><strong>Static Analysis:</strong> Jeffrey van Gogh, Ciera Jaspan, Emma Söderberg, Edward Aftandilian, Collin Winter, Eric Haugh</p>
+	</li>
+	<li>
+	<p><strong>Dependency Management:</strong> Russ Cox, Nicholas Dunn</p>
+	</li>
+	<li>
+	<p><strong>Large-Scale Changes:</strong> Matthew Fowles Kulukundis, Adam Zarek</p>
+	</li>
+	<li>
+	<p><strong>Continuous Integration:</strong> Jeff Listfield, John Penix, Kaushik Sridharan, Sanjeev Dhanda</p>
+	</li>
+	<li>
+	<p><strong>Continuous Delivery:</strong> Dave Owens, Sheri Shipe, Bobbi Jones, Matt Duftler, Brian Szuter</p>
+	</li>
+	<li>
+	<p><strong>Compute Services:</strong> Tim Hockin, Collin Winter, Jarek Kuśmierek</p>
+	</li>
+</ul>
+
+<p>Additionally, we’d like to thank Betsy Beyer for sharing her insight and experience in having published the original <em>Site Reliability Engineering</em> book, which made our experience much smoother. Christopher Guzikowski and Alicia Young at O’Reilly did an awesome job launching and guiding this project to publication.</p>
+
+<p>The curators would also like to personally thank the following people:</p>
+
+<p><strong>Tom Manshreck:</strong> To my mom and dad for making me believe in myself—and working with me at the kitchen table to do my homework.</p>
+
+<p><strong>Titus Winters:</strong> To Dad, for my path. To Mom, for my voice. To Victoria, for my heart. To Raf, for having my back. Also, to Mr. Snyder, Ranwa, Z, Mike, Zach, Tom (and all the Paynes), mec, Toby, cgd, and Melody for lessons, mentorship, and trust.</p>
+
+<p><strong>Hyrum Wright:</strong> To Mom and Dad for their encouragement. To Bryan and the denizens of Bakerland, for my first foray into software. To Dewayne, for continuing that journey. To Hannah, Jonathan, Charlotte, Spencer, and Ben for their love and interest. To Heather for being there through it all.</p>
+</section>
+</section>
+
+  </body>
+</html>

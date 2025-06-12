@@ -16,96 +16,16 @@ The Abseil containers are designed to be more efficient in the general case; in
 some cases, however, the STL containers may be more efficient. Unlike some other
 abstractions that Abseil provides, these containers should not be considered
 drop-in replacements for their STL counterparts, as there are API and/or
-contract differences between the two sets of containers. For example, the
-Abseil containers often do not guarantee pointer stability after insertions or
-deletions.
+contract differences between the two sets of containers. For example, the Abseil
+containers often do not guarantee pointer stability[^pointer-stability] after
+insertions or deletions.
 
 The Abseil `container` library defines the following sets of containers:
 
-* B-tree ordered containers
 * Swiss table unordered containers
+* B-tree ordered containers
 
 See below for more information about each of these container types.
-
-## B-tree Ordered Containers
-
-The Abseil `container` library contains ordered containers generally
-adhering to the STL container API contract, but implemented using (generally
-more efficient) B-trees rather than binary trees (as used in `std::map` et al):
-
-*   `absl::btree_map`
-*   `absl::btree_set`
-*   `absl::btree_multimap`
-*   `absl::btree_multiset`
-
-These ordered containers are designed to be more efficient replacements for
-[`std::map`](https://en.cppreference.com/w/cpp/container/map)
-and [`std::set`](https://en.cppreference.com/w/cpp/container/set) in most cases.
-Specifically, they provide several advantages over the ordered `std::`
-containers:
-
-*   Provide lower memory overhead in most cases than their STL equivalents.
-*   Are generally more cache friendly (and hence faster) than their STL
-    equivalents.
-*   Provide C++11 support for C++17 mechanisms such as `try_emplace()`.
-*   Support heterogeneous lookup.
-
-### Construction
-
-The set of B-tree containers support the same overload set as
-`std::map` for construction and assignment:
-
-<!--{% raw %}-->
-```c++
-// Examples using btree_multimap and btree_multiset are equivalent
-
-// Default constructor
-// No allocation for the B-tree's elements is made.
-absl::btree_set<std::string> set1;
-
-absl::btree_map<int, std::string> map1;
-
-// Initializer List constructor
-absl::btree_set<std::string> set2 = {{"huey"}, {"dewey"}, {"louie"},};
-
-absl::btree_map<int, std::string> map2 =
-    {{1, "huey"}, {2, "dewey"}, {3, "louie"},};
-
-// Copy constructor
-absl::btree_set<std::string> set3(set2);
-
-absl::btree_map<int, std::string> map3(map2);
-
-// Copy assignment operator
-// Hash functor and Comparator are copied as well
-absl::btree_set<std::string> set4;
-set4 = set3;
-
-absl::btree_map<int, std::string> map4;
-map4 = map3;
-
-// Move constructor
-// Move is guaranteed efficient
-absl::btree_set<std::string> set5(std::move(set4));
-
-absl::btree_map<int, std::string> map5(std::move(map4));
-
-// Move assignment operator
-// May be efficient if allocators are compatible
-absl::btree_set<std::string> set6;
-set6 = std::move(set5);
-
-absl::btree_map<int, std::string> map6;
-map6 = std::move(map5);
-
-// Range constructor
-std::vector<std::string> v = {"a", "b"};
-absl::btree_set<std::string> set7(v.begin(), v.end());
-
-std::vector<std::pair<int, std::string>> v = {{1, "a"}, {2, "b"}};
-absl::btree_map<int, std::string> set7(v.begin(), v.end());
-```
-<!--{% endraw %}-->
 
 ## Hash Tables
 
@@ -123,7 +43,8 @@ be replacements for
 and [`std::unordered_set`](https://en.cppreference.com/w/cpp/container/unordered_set)
 They provide several advantages over the `std::unordered_*` containers:
 
-*   Provides C++11 support for C++17 mechanisms such as `try_emplace()`.
+*   Provides C++14 support for C++17 mechanisms such as `try_emplace()` and
+    C++20 mechanisms such as `contains()`.
 *   Supports heterogeneous lookup.
 *   Allows optimizations for `emplace({key, value})` to avoid allocating a pair
     in most common cases.
@@ -184,7 +105,7 @@ std::vector<std::string> v = {"a", "b"};
 absl::flat_hash_set<std::string> set7(v.begin(), v.end());
 
 std::vector<std::pair<int, std::string>> v = {{1, "a"}, {2, "b"}};
-absl::flat_hash_map<int, std::string> set7(v.begin(), v.end());
+absl::flat_hash_map<int, std::string> map7(v.begin(), v.end());
 ```
 <!--{% endraw %}-->
 
@@ -214,15 +135,15 @@ our estimates.
 
 #### Recommendation
 
-Use `absl::flat_hash_map` most of the time.
+Use `absl::flat_hash_map` most of the time. If pointer stability of values (but
+not keys) is needed, use `absl::flat_hash_map<Key, std::unique_ptr<Value>>`.
 
 ### `absl::node_hash_map` and `absl::node_hash_set`
 
 These are near drop-in replacement for `std::unordered_map` and
 `std::unordered_set`. They are useful:
 
-*   When pointer stability[^pointer-stability] is required for both key and
-    value.
+*   When pointer stability is required for both key and value.
 *   For automatic migrations from `std::unordered_map`, `std::unordered_set`,
     `hash_map` or `hash_set` where it's difficult to figure out whether the code
     relies on pointer stability.
@@ -244,7 +165,7 @@ pointers to those nodes.
 
 The slot array requires `(sizeof(void*) + 1) * bucket_count()` bytes and the
 nodes themselves require `sizeof(value_type) * size()` bytes. Together, this is
-O(`9*bucket_count + sizeof(std::pair<const K, V>)*size()`) on most platforms.
+O(`9*bucket_count() + sizeof(std::pair<const K, V>)*size()`) on most platforms.
 
 #### Recommendation
 
@@ -278,7 +199,7 @@ can lead to inefficiencies at call sites that need to convert between
 near-equivalent types (such as `std::string` and `absl::string_view`).
 
 <pre class="bad-code">
-std::map<std::string, int> m = ...;
+std::map&lt;std::string, int&gt; m = ...;
 absl::string_view some_key = ...;
 // Construct a temporary `std::string` to do the query.
 // The allocation + copy + deallocation might dominate the find() call.
@@ -311,6 +232,87 @@ A special case which can create a subtle bug is summing `float` values in an
 unordered container. While mathematical sums do not depend on order, floating
 point sums do, and it can be the case that a sum is deterministic with
 `std::unordered_set` but non-deterministic with `absl::flat_hash_set`.
+
+## B-tree Ordered Containers
+
+The Abseil `container` library contains ordered containers generally
+adhering to the STL container API contract, but implemented using (generally
+more efficient) B-trees rather than binary trees (as used in `std::map` et al):
+
+*   `absl::btree_map`
+*   `absl::btree_set`
+*   `absl::btree_multimap`
+*   `absl::btree_multiset`
+
+These ordered containers are designed to be more efficient replacements for
+[`std::map`](https://en.cppreference.com/w/cpp/container/map)
+and [`std::set`](https://en.cppreference.com/w/cpp/container/set) in most cases.
+Specifically, they provide several advantages over the ordered `std::`
+containers:
+
+*   Provide lower memory overhead in most cases than their STL equivalents.
+*   Are generally more cache friendly (and hence faster) than their STL
+    equivalents.
+*   Provide C++14 support for C++17 mechanisms such as `try_emplace()` and C++20
+    mechanisms such as `contains()`..
+*   Support heterogeneous lookup.
+
+### Construction
+
+The set of B-tree containers support the same overload set as
+`std::map` for construction and assignment:
+
+<!--{% raw %}-->
+```c++
+// Examples using btree_multimap and btree_multiset are equivalent
+
+// Default constructor
+// No allocation for the B-tree's elements is made.
+absl::btree_set<std::string> set1;
+
+absl::btree_map<int, std::string> map1;
+
+// Initializer List constructor
+absl::btree_set<std::string> set2 = {{"huey"}, {"dewey"}, {"louie"},};
+
+absl::btree_map<int, std::string> map2 =
+    {{1, "huey"}, {2, "dewey"}, {3, "louie"},};
+
+// Copy constructor
+absl::btree_set<std::string> set3(set2);
+
+absl::btree_map<int, std::string> map3(map2);
+
+// Copy assignment operator
+// Hash functor and Comparator are copied as well
+absl::btree_set<std::string> set4;
+set4 = set3;
+
+absl::btree_map<int, std::string> map4;
+map4 = map3;
+
+// Move constructor
+// Move is guaranteed efficient
+absl::btree_set<std::string> set5(std::move(set4));
+
+absl::btree_map<int, std::string> map5(std::move(map4));
+
+// Move assignment operator
+// May be efficient if allocators are compatible
+absl::btree_set<std::string> set6;
+set6 = std::move(set5);
+
+absl::btree_map<int, std::string> map6;
+map6 = std::move(map5);
+
+// Range constructor
+std::vector<std::string> v = {"a", "b"};
+absl::btree_set<std::string> set7(v.begin(), v.end());
+
+std::vector<std::pair<int, std::string>> v = {{1, "a"}, {2, "b"}};
+absl::btree_map<int, std::string> map7(v.begin(), v.end());
+```
+<!--{% endraw %}-->
 
 ## Notes
 

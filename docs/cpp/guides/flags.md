@@ -40,7 +40,7 @@ In the command:
 $ fgrep -l -f /var/tmp/foo johannes brahms
 ```
 
-*   `-l` are `-f` are *command-line flags*.
+*   `-l` and `-f` are *command-line flags*.
 *   The `-f` flag contains one argument, `/var/tmp/foo` which is its
     *command-line flag argument*.
 *   The `johannes` and `brahms` arguments, which are not associated with any
@@ -94,7 +94,7 @@ OK, we've warned you about flag usage. But if we accept that you do need flags
 in your binary, what are some best practices around flag usage?
 
 *   Prefer to define flags only in the file containing the binary's `main()`
-    function. Although Abseil flags may be defined anywhere in any namespace,
+    function. Although Abseil flags may be defined anywhere in any source file,
     avoid any usage outside of `main()` as it will otherwise be difficult to
     resolve conflicts.
 *   Prefer to reference flags only from within the file containing the binary's
@@ -125,30 +125,61 @@ ABSL_FLAG(std::vector<std::string>, languages,
           std::vector<std::string>({"english", "french", "german"}),
           "comma-separated list of languages to offer in the 'lang' menu");
 ABSL_FLAG(absl::Duration, timeout, absl::Seconds(30), "Default RPC deadline");
+ABSL_FLAG(std::optional<std::string>, image_file, std::nullopt,
+          "Sets the image input from a file.");
 ```
 
 Flags defined with `ABSL_FLAG` will create global variables named
-<code>FLAGS_<i>name</i></code> of the specified type and default value. Help text
-will be displayed using the `--help` usage argument, if invoked.
+<code>FLAGS_<i>name</i></code> of the specified type and default value. Help
+text will be displayed using the `--help` usage argument, if invoked. See
+[Special Flags](#special_flags) for `--help` documentation.
+
+### Standard Flags
 
 Out of the box, the Abseil flags library supports the following types:
 
-* `bool`
-* `int16_t`
-* `uint16_t`
-* `int32_t`
-* `uint32_t`
-* `int64_t`
-* `uint64_t`
-* `float`
-* `double`
-* `std::string`
-* `std::vector<std::string>`
+*   `bool`
+*   `int16_t`
+*   `uint16_t`
+*   `int32_t`
+*   `uint32_t`
+*   `int64_t`
+*   `uint64_t`
+*   `float`
+*   `double`
+*   `std::string`
+*   `std::vector<std::string>`
+*   `std::optional<T>` (see "Optional Flags" below)
+*   `absl::LogSeverity` (provided natively for layering reasons)
 
 NOTE: support for integral types is implemented using overloads for
-variable-width fundamental types (`short`, `int`, `long`, etc.). However,
-you should prefer the fixed-width integral types as noted above (`int32_t`,
-`uint64_t`, etc.)
+variable-width fundamental types (`short`, `int`, `long`, etc.). However, you
+should prefer the fixed-width integral types listed above (`int32_t`,
+`uint64_t`, etc.).
+
+### Abseil Flags
+
+In addition, several Abseil libraries provide their own custom support for
+Abseil flags. Documentation for these formats is provided in the type's
+`AbslParseFlag()` definition.
+
+The Abseil [time library][time-library] provides the flag support for
+absolute time values:
+
+* `absl::Duration`
+* `absl::Time`
+
+The [civil-time library][civiltime-library] additionally provides flag support
+for the following civil-time values:
+
+* `absl::CivilSecond`
+* `absl::CivilMinute`
+* `absl::CivilHour`
+* `absl::CivilDay`
+* `absl::CivilMonth`
+* `absl::CivilYear`
+
+Additional support for Abseil types will be noted here as it is added.
 
 See [Defining Custom Flag Types](#custom) for how to provide support for a new
 type.
@@ -159,6 +190,42 @@ definitions of flags with the same name are linked into a single program the
 linker will report an error. If you want to access a flag in more than one
 source file, define it in a `.cc` file, and [declare](#declaring_flags) it in
 the corresponding header file.
+
+### Optional Flags
+
+The Abseil flags library supports flags of type `std::optional<T>` where `T` is
+a type of one of the supported flags. We refer to this flag type as an
+"optional flag." An optional flag is either "valueless", holding no value of
+type `T` (indicating that the flag has not been set) or a value of type `T`. The
+valueless state in C++ code is represented by a value of `std::nullopt` for the
+optional flag.
+
+Using `std::nullopt` as an optional flag's default value allows you to check
+whether such a flag was ever specified on the command line:
+
+```cpp
+if (absl::GetFlag(FLAGS_foo).has_value()) {
+  // flag was set on command line
+} else {
+  // flag was not passed on command line
+}
+```
+
+Using `std::optional<T>` in this manner avoids common workarounds for indicating
+such an unset flag (such as using sentinel values to indicate this state).
+
+An optional flag also allows a developer to pass a flag in an "unset" valueless
+state on the command line, allowing the flag to later be set in binary logic. An
+optional flag's valueless state is indicated by the special notation of passing
+the value as an empty string through the syntax `--flag=` or `--flag ""`.
+
+```sh
+$ binary_with_optional --flag_in_unset_state=
+$ binary_with_optional --flag_in_unset_state ""
+```
+
+NOTE: as a result of the above syntax requirements, an optional flag cannot be
+set to a `T` of any value which unparses to the empty string.
 
 ## Accessing Flags
 
@@ -189,21 +256,21 @@ was defined earlier in the same `.cc` file. If it wasn't, you'll get an
 
 If you need to allow other modules to access the flag, you must export it in
 some header file that is included by those modules. For an `ABSL_FLAG` flag
-named `FLAGS_name` of type `T`, use the `ABSL_DECLARE_FLAG(T, name);` macro to
-do so:
+named `FLAGS_name` of type `T`, use the `ABSL_DECLARE_FLAG(T, name);` macro
+defined in absl/flags/declare.h to do so:
 
 ```cpp
+#include "absl/flags/declare.h"
+
 ABSL_DECLARE_FLAG(absl::Duration, timeout);
 ```
 
 The declaration should always be placed in the header file associated with the
 `.cc` file that defines and owns the flag, as with any other exported entities.
-If you need to do this for testing only, you can place it at the end of the file
-with an
-<br/>
+If you need to do this for testing only, you can place it with an
 `// Exposed for testing only` comment.
 
-Warning: The necessity to access flags from different files, expecially in
+Warning: The necessity to access flags from different files, especially in
 libraries, is generally a sign of a bad design. Given the "global variable"
 nature of flags they should be avoided in libraries and be injected instead
 (e.g. in constructors). (see
@@ -327,6 +394,33 @@ Despite this flexibility, we recommend using only a single form:
 `--variable=value` for non-boolean flags, and `--variable/--novariable` for
 boolean flags. This consistency will make your code more readable.
 
+Note that all command line flags are first parsed by the shell, which adheres to
+the rules of [shell expansion][shell-expansions]. Specifically, quotes are
+removed before passing any tokens off to the Flags Library. Care should be taken
+to never use "smart" quotes in such command lines, as they will not parse
+correctly.
+
+For integer flag types (int32_t, int64_t, uint64_t, etc.), the following
+formats are accepted:
+
+- Decimal: `--my_int=24`
+- Hexadecimal: `--my_int=0x18`
+
+NOTE: Do not use two's complement hexadecimal representation to specify
+negative values. Use a negative sign with a numeric value that is in range. Ex: `--my_int=-0x18`
+
+Setting a flag of type `std::optional<T>` on the command line to show the
+"unset" state requires a way to refer to this uninitialized value. For Abseil
+flags, this value is specified using the empty string.
+
+```sh
+binary_with_optional --flag_in_unset_state=
+binary_with_optional --flag_in_unset_state ""
+```
+
+NOTE: this usage prevents an optional flag from having a *value* of the empty
+string in practice.
+
 It is a fatal error to specify a flag on the command-line that has not been
 defined somewhere in the executable. If you need that functionality for some
 reason -- say you want to use the same set of flags for several executables, but
@@ -397,15 +491,16 @@ For more details, see the [Tip of the Week on retired flags][retired-flags].
 
 ## Special Usage Flags {#special_flags}
 
-There are a few flags defined by the Abseil flags library itself. Usage flags,
-if invoked, cause the application to print some information about itself and
-exit.
+There are a few flags defined by the Abseil flags library itself. These usage
+flags are reserved words and should not be declared by anyone other than the
+Abseil team, just like any other flags which you don't own. Usage flags, if
+invoked, cause the application to print some information about itself and exit.
 
 ```text
 --help            show help on important flags for this binary
---helpfull        shows all flags from all files, sorted by file and then
-                  by name; shows the flagname, its default value, and its
-                  help string
+--helpfull        shows the full list of flags from all files, sorted by file
+                  and then by name; shows the flagname, its default value, and
+                  its help string
 --helpshort       shows only flags for the file with the same name as the
                   executable (usually the one containing main())
 --helpon=FILE     shows only flags defined in FILE.*
@@ -413,6 +508,10 @@ exit.
 --helppackage     shows flags defined in files in same directory as main()
 --version         prints version info for the executable
 ```
+
+NOTE: The help message for a flag will include its default value, so in most
+cases there is no need to mention the default value in the definition of a
+flag's `help-text`.
 
 Additionally, some built-in flags have additional behavioral effects. These are
 noted below.
@@ -423,11 +522,10 @@ The Abseil flags library also supports an `undefok` flag:
 
 `--undefok=flagname,flagname,...`
 
-For those names listed as the argument to `--undefok`, this flag instructs the
-Abseil flags library to suppress normal error signaling that occurs when
-`--name` is seen on the command-line (or `--noname` since a listed flag might
-have been an old boolean flag), but `name` has not been defined anywhere in the
-application
+For any listed `flagname`, this instructs the Abseil flags library to suppress
+normal error signaling that occurs when `--flagname` is seen on the command-line
+(or `--noflagname` since a listed flag might have been an old boolean flag), but
+no flag with name `flagname` has been defined.
 
 ## Defining Custom Flag Types {#custom}
 
@@ -451,7 +549,7 @@ enum class OutputMode { kPlainText, kHtml };
 // AbslParseFlag converts from a string to OutputMode.
 // Must be in same namespace as OutputMode.
 
-// Parses an OutputMode from the command line flag value `text. Returns
+// Parses an OutputMode from the command line flag value `text`. Returns
 // `true` and sets `*mode` on success; returns `false` and sets `*error`
 // on failure.
 bool AbslParseFlag(absl::string_view text,
@@ -541,6 +639,9 @@ std::string AbslUnparseFlag(const MyFlagType& flag) {
 *   If you must declare `AbslParseFlag()` and `AbslUnparseFlag()` away from
     `T`'s declaration, you must still be the owner of `T` and must guarantee
     that the functions are defined exactly once in the codebase.
+*   Document the format string of the flag where you declare `AbslParseFlag()`
+    and `AbslUnparseFlag()`. As the owner of `T`, you are responsible for
+    documenting this format.
 *   `absl::StrSplit("")` returns `{""}` (a list with one element), so watch out
     for that if you are defining a compound flag type. Flags defined with
     `ABSL_FLAG(std::vector<std::string>, ...)` treat an empty string as an empty
@@ -556,3 +657,6 @@ std::string AbslUnparseFlag(const MyFlagType& flag) {
 
 [retired-flags]: https://abseil.io/tips/90
 [friend-functions]: http://en.cppreference.com/w/cpp/language/friend
+[time-library]: time.md#time-durations
+[civiltime-library]: time.md#civil-times
+[shell-expansions]: https://www.gnu.org/software/bash/manual/html_node/Shell-Expansions.html
