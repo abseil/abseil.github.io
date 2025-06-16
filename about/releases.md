@@ -41,15 +41,14 @@ branch of Abseil instead.
 
 ## Obtaining an LTS Branch
 
-The set of LTS branches of Abseil is available on our
-[Long Term Support (LTS) Branches][LTS] page. As LTS branches are added to
-this page, entries will be added to the list. We will also list any critical
-fixes to specific LTS branches on this page.
+The set of LTS branches of Abseil is available on our [GitHub releases
+page](https://github.com/abseil/abseil-cpp/releases). Critical fixes to specific
+LTS branches will be published on this page.
 
 ## Options for Using Abseil Code In Your Source Code or Binary
 
 Including Abseil code in your project, as long as it is provided as source
-code or within your own binary, is relatively straightfoward. You have a few
+code or within your own binary, is relatively straightforward. You have a few
 options, listed in order of higher preference:
 
 * Live at HEAD, depend on and build the latest snapshot of Abseil.<br/><br/>
@@ -106,4 +105,3 @@ between different builds of Abseil.)
   our [Compatibility Guidelines](compatibility) when in
   doubt.
 
-[LTS]: https://github.com/abseil/abseil-cpp/blob/master/LTS.md

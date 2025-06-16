@@ -20,15 +20,28 @@ some categories of conversion are explicit, as noted below.
 
 ### `uint128`
 
-The `uint128` type defines an unsigned 128-bit integer supporting the following:
+The `uint128` type represents an unsigned 128-bit integer. The API is meant to
+mimic an intrinsic integer type as closely as possible, so that any forthcoming
+`uint128_t` can be a drop-in replacement.
+
+The `uint128` type supports the following:
 
 *   Implicit conversion from integral types
-*   Explicit conversion to integral types
-*   Explicit conversion to and from floating point types
 *   Overloads for `std::numeric_limits`
 
+However, a `uint128` differs from intrinsic integral types in the following
+ways:
+
+* It is not implicitly convertible to other integral types, including other
+  128-bit integral types. Conversions must be explicit.
+* It requires explicit construction from and conversion to floating point types.
+* The type traits `std::is_integral<uint128>::value` and
+  `std::is_arithmetic<uint128>::value` are both `false`.
+
 Additionally, if your compiler supports the `__int128` type extension, `uint128`
-is interoperable with that type.
+is interoperable with that type, though `uint128` will not be a typedef in this
+case. (Abseil checks for this compatibility through the
+`ABSL_HAVE_INTRINSIC_INT128` macro.)
 
 128-bit integer literals are not yet a part of the C++ language. As a result, to
 construct a 128-bit unsigned integer with a value greater than or equal to 2^64,
@@ -58,17 +71,29 @@ uint64_t low = absl::Uint128Low64(v);
 
 ### `int128`
 
-The `int128` type defines a signed 128-bit integer supporting the following:
+The `int128` type defines a signed 128-bit integer. The API is meant to
+mimic an intrinsic integer type as closely as possible, so that any forthcoming
+`int128_t` can be a drop-in replacement.
+
+The `int128` type supports the following:
 
 *   Implicit conversion from signed integral types and unsigned types narrower
     than 128 bits
-*   Explicit conversion from unsigned 128-bit types
-*   Explicit conversion to integral types
-*   Explicit conversion to and from floating point types
 *   Overloads for `std::numeric_limits`
 
-Additionally, if your compiler supports the `__int128` type extension, `int128`
-is interoperable with that type.
+However, an `int128` differs from intrinsic integral types in the following
+ways:
+
+* It is not implicitly convertible to other integral types, including other
+  128-bit integral types. Conversions must be explicit.
+* It requires explicit construction from and conversion to floating point types.
+* The type traits `std::is_integral<int128>::value` and
+  `std::is_arithmetic<int128>::value` are both `false`.
+
+If your compiler supports the `__int128` type extension, `int128` is
+interoperable with that type, though `int128` will not be a typedef in this
+case. (Abseil checks for this compatibility through
+the `ABSL_HAVE_INTRINSIC_INT128` macro.)
 
 128-bit integer literals are not yet a part of the C++ language. As a result, to
 construct a 128-bit signed integer with a value greater than or equal to 2^64,
