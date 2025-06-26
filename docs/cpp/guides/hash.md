@@ -93,9 +93,14 @@ below.
 
 ## Using `absl::Hash`
 
-The `absl::Hash` framework is the default hash implementation for the "Swiss
-table" hash tables. All types hashable by the `absl::Hash` framework will
-automatically be hashable within Swiss tables.
+The `absl::Hash` framework is the default hash implementation for Abseil. All
+types hashable by the `absl::Hash` framework will automatically be hashable in
+Abseil containers.
+
+However, you should usually not pass `absl::Hash<T>` directly when passing a
+hasher to be used by a container. Instead specify
+`absl::DefaultHashContainerHash<T>`, which adds support for heterogeneous lookup
+and matches what the Abseil containers do by default.
 
 For other hash table implementations, `absl::Hash` can be used just like any
 other hash functor:
@@ -142,6 +147,11 @@ libraries in your program.
     *   `absl::FixedArray`
     *   `absl::uint128`
     *   `absl::Time`, `absl::Duration`, and `absl::TimeZone`
+*   absl hash tables themselves (provided the elements are hashable):
+    *    `absl::flat_hash_map`
+    *    `absl::flat_hash_set`
+    *    `absl::node_hash_map`
+    *    `absl::node_hash_set`
 
 NOTE: the list above is not meant to be exhaustive. Additional type support
 may be added, in which case the above list will be updated.
@@ -260,7 +270,7 @@ calls `vector`'s `==` operator, which does.
 ### Combining Hash States {#combining-states}
 
 Once you've figured out what your hash expansion is, you just need to combine it
-with the hash state. The hash state object provides two static functions for
+with the hash state. The hash state object provides three static functions for
 doing this:
 
 *   `HashState::combine(H, const Args&...)`: Combines an arbitrary number of
@@ -292,6 +302,13 @@ doing this:
 >
 > is NOT guaranteed to produce the same hash expansion as a for loop but it may
 > be faster. If you need this guarantee, write out the for loop instead.
+
+*   `HashState::combine_unordered(H, begin, end)`: Combines a set of elements
+    denoted by an iterator pair into a hash state, returning the updated state.
+
+    Unlike the other two methods, the hashing is order-independent. This can be
+    used to hash unordered collections.  It should *not* be used if the order of
+    the elements is significant.
 
 Note that the state objects should always be passed by value. Furthermore, they
 are move-only types (like `std::unique_ptr`), so you'll often have to use

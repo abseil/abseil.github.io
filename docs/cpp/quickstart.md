@@ -25,7 +25,7 @@ Running the Abseil code within this tutorial requires:
 *   A compatible platform (e.g. Windows, macOS, Linux, etc.). Most platforms are
     fully supported. Consult the [Platforms Guide](platforms/platforms) for more
     information.
-*   A compatible C++ compiler *supporting at least C++14*. Most major compilers
+*   A compatible C++ compiler *supporting at least C++17*. Most major compilers
     are supported.
 
 Although you are free to use your own build system, most of the documentation

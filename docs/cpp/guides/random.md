@@ -25,7 +25,9 @@ The Abseil Random library provides several advantages over `<random>`:
   Abseil's bit generators require no constructor arguments to be seeded
   properly. Providing the initial state for a random value generator (ie.
   _"seeding"_) is a nontrivial task which often requires knowledge of the
-  underlying bit-generation algorithm.
+  underlying bit-generation algorithm. When seeded, Abseil bit generators
+  exhibit [Process Stability](#seed-stability).
+
 * **Concise sampling syntax**<br/>
   Abseil's Random library provides a more concise syntax than `<random>` by
   representing distributions as functions rather than objects, while still
@@ -65,43 +67,41 @@ produces. This range of values may or may not be the full space of values
 representable by the output data type. Getting these details wrong can result in
 biased sampling.
 
-```c++
-// Don't sample directly from a bit generator's output. If bitgen() produces
+```c++ {.bad}
+// AVOID: Invoking a bit generator's call operator directly. If bitgen() produces
 // values in the range [0,7], then this code will produce 1 and 2 twice as often
 // as other values.
 uint32_t die_roll = 1 + (bitgen() % 6);
+```
 
-// Use a distribution function instead:
-uint32_t die_roll = absl::Uniform(absl::IntervalClosed, gen, 1, 6);
+```c++ {.good}
+// BETTER: Use a distribution function instead:
+uint32_t die_roll = absl::Uniform(absl::IntervalClosed, bitgen, 1, 6);
 ```
 
 Always use the Abseil Random library's distribution functions instead.
 
 ### Reuse Generators When Possible
 
-Try to avoid continuously re-instantiating bit generators.
+Avoid continuously re-instantiating bit generators. URBG instances have state
+which is designed to generate a sequence, and state initialization may involve
+a lot of CPU cycles. It's better to reuse generator instances unless
+those generators will be called very infrequently.
 
-```c++
+```c++  {.bad}
 for (auto& elem : v_) {
-  absl::BitGen gen;  // Newly instantiated for every element.
+  // AVOID: Creating a new absl::BitGen instance in a loop.
+  absl::BitGen gen;
   elem = absl::Uniform(gen, 0, 1.0);
 }
 ```
 
-It's better to reuse generator instances, unless those generators will be called
-very infrequently.
-
-```c++
-class Server {
-  absl::BitGen bitgen_;
-  ...
-
-  void Method() {
-    for (auto& elem : v_) {
-      elem = absl::Uniform(bitgen_, 0, 1.0);
-    }
-  }
-};
+```c++  {.good}
+// BETTER: Reuse absl::Bitgen instances.
+absl::BitGen gen;
+for (auto& elem : v_) {
+  elem = absl::Uniform(gen, 0, 1.0);
+}
 ```
 
 ### Controlling The Output Type Of `absl::Uniform()`
@@ -172,14 +172,14 @@ auto byte = absl::Uniform<uint8_t>(bitgen);  // From [0, 255]
 
 ## `BitGenRef`: A Type-Erased URBG Interface
 
-An instance of the `BitGenRef` class can be thought of as a type-agnostic
+An instance of the `absl::BitGenRef` class can be thought of as a type-agnostic
 "reference" to an
 [URBG](https://en.cppreference.com/w/cpp/named_req/UniformRandomBitGenerator)
 instance. Functions which accept an `absl::BitGenRef` can be invoked using any
 type of URBG, such as `absl::BitGen`, `absl::InsecureBitGen`, etc.
 
 ```c++
-int TakesBitGenRef(absl::BitGenRef bitgen){
+int TakesBitGenRef(absl::BitGenRef bitgen) {
   int v = absl::Uniform<int>(bitgen, 0, 1000);
 }
 ```
@@ -213,11 +213,18 @@ EXPECT_EQ(absl::Uniform(bitgen, 0.0, 100.0), 6.5);
 
 ## Frequently Asked Questions
 
-### How Are The Abseil Random Generator Types Seeded?
+### Which Bit Generator Type Is Right For My Application? {#which-bitgen}
 
-`absl::BitGen` acquires seed data from an an underlying entropy pool managed by
-the [Randen](https://arxiv.org/abs/1810.02227) pseudorandom generator, initially
-seeded from `/dev/urandom`.
+Abseil provides `absl::BitGen` as a good default choice for random number
+generation. An `absl::BitGen` is well seeded by default, so seeding operations
+are not necessary, it has a large cycle-length, good diffusion of state, and is
+reasonably fast.
+
+It is reasonable to use `absl::InsecureBitGen` in tests or when using a URBG in
+small isolated tasks such as in `std::shuffle`. Otherwise, default to using
+`absl::BitGen` or `util_random::SharedBitGen` except when a low memory footprint
+is critical, or benchmarks indicate a measurable improvement in application
+performance.
 
 ### Why Do You Recommend `absl::BitGen` Over `absl::InsecureBitGen`?
 
@@ -226,10 +233,96 @@ contexts may introduce occasional (but dangerous) security issues. Although
 `absl::BitGen` is not suitable for cryptographic applications such as key
 generation, it provides guarantees strong enough to be resilient to misuse.
 
+### How should Bit Generators be seeded?
+
+A random bit generator is built on a recursive method where an internal hidden
+state generates variates (outputs) as well as the next internal state.
+Initialization of this hidden state is called **seeding**, which maps a sequence
+of values, "the seed", onto the internal state of the bit generator. In C++ the
+class [`std::seed_seq`](https://en.cppreference.com/w/cpp/numeric/random/seed_seq)
+provides a common algorithm for doing this mapping. To generate truly random
+seeds, the entropy typically comes from an OS entropy pool, which is available
+via `std::random_device`.
+
+In Abseil, both `absl::BitGen` and `absl::InsecureBitGen` are well seeded *by
+default* so no additional seeding is requred, and use of `std::random_device` is
+unnecessary. These generators acquire seed data from an an underlying entropy
+pool managed by the [Randen](https://arxiv.org/abs/1810.02227) pseudorandom
+generator, initially seeded from `/dev/urandom`.
+
+```c++ {.good}
+// GOOD: No need to provide additional seed to absl::BitGen.
+absl::BitGen gen;
+```
+
+When seeding other random bit generators, prefer using multiple values in the
+seed as well as allowing `std::seed_seq` to handle combining the values rather
+than pre-merging them to a single value. Using a `std::seed_seq` with an
+`absl::BitGen` is allowed and will incorporate those values plus additional
+salting value to initialize the underlying state; please refer to the
+[section on stability](#seed-stability) for more information.
+
+```c++  {.bad}
+// AVOID: Combining seed values outside of std::seed_seq.
+uint32_t seed = MyHash(a) + MyHash(b) + MyHash(c);
+std::mt19937 gen(seed);
+```
+
+```c++ {.good}
+// BETTER: Allow std::seed_seq to combine seed values.
+std::seed_seq my_seed_seq{a, b, c};
+absl::BitGen gen(my_seed_seq);
+```
+
+When available, an Abseil URBG is generally an excellent replacement for short
+lived instances like the following:
+
+```c++ {.bad}
+// AVOID: Initializes a large-state PRNG with a single word from std::random_device
+std::random_device rd;
+std::mt19937 gen(rd());
+
+std::shuffle(data.begin(), data.end(), gen);
+```
+
+```c++ {.good}
+// BETTER: Use a well-seeded PRNG by default.
+absl::InsecureBitGen g;
+std::shuffle(data.begin(), data.end(), g);
+```
+
+### Why Is My Generator Producing Different Values Between Re-runs, Even With An Explicit Seed?
+
+The Abseil libraries are continuously updated, so values produced from one
+seed sequence can change at any time. Abseil tries to prevent dependencies on
+these mappings from accumulating by mixing the seed data with nondeterministic
+data. The same `std::seed_seq` will always produce the same generator within the
+same process, but the results will vary vary between executions!
+
+```c++
+std::seed_seq my_seed_seq{1, 2, 3};
+absl::BitGen gen(my_seed_seq);
+ABSL_LOG(INFO) << "Fraction: " << absl::Uniform(gen, 0, 1.0);
+```
+
+```shell
+blaze test :my_unit_test
+…
+INFO  Fraction: 0.2578
+
+blaze test :my_unit_test
+…
+INFO  Fraction: 0.012732
+```
+
+If you believe that your generator requires stability beyond the lifetime of its
+process execution, please refer to the
+[section on stability](#seed-stability).
+
 ### What About Instances Shared Across Multiple Threads?
 
-Like the C++ standard library random engines, neither `absl::BitGen`,
-nor `absl::InsecureBitGen` are thread safe.
+Like the C++ standard library random engines, neither `absl::BitGen` nor
+`absl::InsecureBitGen` are thread safe.
 
 Efficiently leveraging a bit generator shared between multiple threads can be
 tricky and subtle. Use of locally-instantiated generators are preferred to
@@ -241,7 +334,7 @@ multiple threads.
 Yes - the distribution functions are compatible with any type conforming to the
 [`UniformRandomBitGenerator`](http://en.cppreference.com/w/cpp/named_req/UniformRandomBitGenerator)
 named requirement, as defined by C++11. This includes `std::` types (e.g.
-`std::minstd_rand0` and `std::mt19937_64`).
+`std::minstd_rand` and `std::mt19937_64`).
 
 ### I Need My Variate Sequences To Be The Same Every Time!
 
@@ -301,11 +394,20 @@ categories of generator stability:
 ### Guarantees provided by the Abseil Random library {#guarantees}
 
 Our generator types provide **Process Stability**.
+
+To seed an Abseil bit generator for
+process stability, pass a `std::seed_seq` as the constructor parameter:
+
+```c++
+// Seeding an absl::BitGen for process stability.
+std::seed_seq my_seed_seq{a, b, c};
+absl::BitGen gen(my_seed_seq);
+```
+
 There is currently **no generator type in the Abseil Random library which
 provides Seed Stability**. The motivation for this decision is as much
 philosophical as it is practical: The legitimate use cases for an eternally
 unchanging pseudorandom sequence are uncommon within Google.
-
 
 The Abseil family of distribution classes and distribution functions (e.g.
 `absl::Uniform()`) should be considered to have
