@@ -54,7 +54,8 @@ result, if you need to provide it as a variable, use an `absl::string_view`
 instead of a `std::string`:
 
 ```cpp
-// Won't compile, not constexpr (and the `std::string` can't be declared constexpr).
+// Won't compile, not constexpr (and the `std::string` can't be declared
+// constexpr).
 std::string format_string = "Welcome to %s, Number %d!";
 std::string s = absl::StrFormat(format_string, "The Village", 6);
 
@@ -102,12 +103,21 @@ A format conversion specifier is a string of the following form:
     value, or <code>.*<i>variable</i></code> to use a variable of type `int` to
     specify this value.
 *   A length modifier to modify the length of the data type. In `StrFormat()`,
-    these values are ignored (and not needed, since `StrFormat()` is type-safe)
-    but are allowed for backwards compatibility:
+    these values are largely ignored (and not needed, since `StrFormat()` is
+    type-safe) but are allowed for backwards compatibility:
     *   `hh`, `h`, `l`, `ll`, `L`, `j`, `z`, `t`, `q`
+    There is one case where the length modifier has a visible effect: if the
+    requested type is `c`, an `l` modifier causes the supplied argument to be
+    treated as a `wchar_t` instead of a `char`. (This happens automatically if
+    the supplied argument is already of type `wchar_t`.)
 *   A type-specifier:
-    *   `c` for character values
-    *   `s` for string values
+    *   `c` for character values. These will be treated like `char` unless the
+        supplied type is `wchar_t` or an `l` modifier is present, in which case
+        they will be treated like `wchar_t` and converted to multibyte strings
+        encoded as UTF-8.
+    *   `s` for string values. Wide strings (`std::wstring`,
+        `std::wstring_view`) will be converted to multibyte strings encoded as
+        UTF-8.
     *   `d` or `i` for integer values, including enumerated type values
     *   `o` for unsigned integer conversions, including enumerated type values,
         into octal values
@@ -136,7 +146,7 @@ NOTE: the `v` specifier (for "value") is a type specifier not present in the
 `v` uses `d` for signed integer values, `u` for unsigned integer values, `g` for
 floating point values, and formats boolean values as `"true"`/`"false"` (instead
 of `1` or `0` for booleans formatted using `d`). `const char*` is not supported;
-please use `std:string` and `string_view`. `char` is also not supported due to
+please use `std::string` and `string_view`. `char` is also not supported due to
 ambiguity of the type. This specifier does not support modifiers.
 
 Examples:
@@ -146,6 +156,7 @@ Examples:
 absl::StrFormat("%c", 'a') -> "a"
 absl::StrFormat("%c", 32)  -> " "
 absl::StrFormat("%c", 100) -> "d"
+absl::StrFormat("%lc", 0x2002) -> (Locale-dependent)  // E.g. U+2002 as UTF-8
 
 // Strings
 absl::StrFormat("%s", "Hello!") -> "Hello!"
@@ -154,7 +165,7 @@ absl::StrFormat("%s", "Hello!") -> "Hello!"
 absl::StrFormat("%d", 1)    -> "1"
 absl::StrFormat("%02d", 1)  -> "01"       // Zero-padding
 absl::StrFormat("%-2d", 1)  -> "1 "       // Left justification
-absl::StrFormat("%0+3d", 1) -> "+01"    // + specifier part of width
+absl::StrFormat("%0+3d", 1) -> "+01"      // + specifier part of width
 
 // Octals
 absl::StrFormat("%o", 16)   -> "20"
@@ -179,8 +190,8 @@ absl::StrFormat("%lld", 100'000'000'000'000) -> "100000000000000"
 
 // Floating Point
 // Default precision of %f conversion is 6
-absl::StrFormat("%f", 1.6)       -> "1.600000" // Width includes decimal pt.
-absl::StrFormat("%05.2f", 1.6)   -> "01.60"
+absl::StrFormat("%f", 1.6)       -> "1.600000"
+absl::StrFormat("%05.2f", 1.6)   -> "01.60"    // Width includes decimal pt.
 absl::StrFormat("%.1f", 1.63232) -> "1.6"      // Rounding down
 absl::StrFormat("%.3f", 1.63451) -> "1.635"    // Rounding up
 absl::StrFormat("%*.*f", 5, 2, 1.63451) -> " 1.63"  // Same as "%5.2f"
@@ -230,6 +241,12 @@ absl::StrFormat("%v", true) -> "true"
     *   `char`
     *   `signed char`
     *   `unsigned char`
+    *   `wchar_t`
+*   Strings:
+    *   `std::string`
+    *   `std::wstring`
+    *   `std::string_view` (if available)
+    *   `std::wstring_view` (if available)
 *   Integers:
     *   `int`
     *   `short`
@@ -248,10 +265,11 @@ Unlike the `printf` family of functions, `StrFormat()` doesn't rely on callers
 encoding the exact types of arguments into the format string. (With `printf()`
 this must be carefully done with length modifiers and conversion specifiers -
 such as `%llu` encoding the type `unsigned long long`.) In the `str_format`
-library, a format conversion specifies a broader C++ conceptual category instead
-of an exact type. For example, `%s` binds to any string-like argument, so
-`std::string`, `absl::string_view`, and `const char*` are all accepted.
-Likewise, `%d` accepts any integer-like argument, etc.
+library, a format conversion specifies a broader C++ conceptual category
+instead of an exact type. For example, `%s` binds to any string-like argument,
+so `std::string`, `std::wstring`, `absl::string_view`, `const char*`, and
+`const wchar_t*` are all accepted. Likewise, `%d` accepts any integer-like
+argument, etc.
 
 ## Advanced Formats {#advanced}
 

@@ -1,11 +1,12 @@
 ---
-title: "Performance Tips of the Week"
+title: "Performance Guide"
 layout: fast
 sidenav: side-nav-fast.html
 type: markdown
 ---
 
-These Performance Tips of the Week form a sort of "Effective analysis and
+This Performance Guide consists of a selection of our Performance Tips of the
+Week. The Performance Tips of the Week form a sort of "Effective analysis and
 optimization of production performance and resource usage": a gallery
 of "do"s and "don't"s gathered from the hard-learned lessons of optimizing
 performance of production systems running on machines in Google data

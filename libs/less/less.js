@@ -16,7 +16,7 @@ var addDataAttr = require("./utils").addDataAttr,
 
 module.exports = function(window, options) {
 
-    // use options from the current script tag data attribues
+    // use options from the current script tag data attributes
     addDataAttr(options, browser.currentScript(window));
 
     if (options.isFileProtocol === undefined) {
@@ -2854,7 +2854,7 @@ module.exports = function() {
         input = str;
         parserInput.i = j = currentPos = furthest = 0;
 
-        // chunking apparantly makes things quicker (but my tests indicate
+        // chunking apparently makes things quicker (but my tests indicate
         // it might actually make things slower in node at least)
         // and it is a non-perfect parse - it can't recognise
         // unquoted urls, meaning it can't distinguish comments
@@ -3341,7 +3341,7 @@ var Parser = function Parser(context, imports, fileInfo) {
                     }
                 },
 
-                // A variable entity useing the protective {} e.g. @{var}
+                // A variable entity using the protective {} e.g. @{var}
                 variableCurly: function () {
                     var curly, index = parserInput.i;
 
@@ -3744,7 +3744,7 @@ var Parser = function Parser(context, imports, fileInfo) {
             //
             // A Rule terminator. Note that we use `peek()` to check for '}',
             // because the `block` rule will be expecting it, but we still need to make sure
-            // it's there, if ';' was ommitted.
+            // it's there, if ';' was omitted.
             //
             end: function () {
                 return parserInput.$char(';') || parserInput.peek('}');
@@ -7194,7 +7194,7 @@ Ruleset.prototype.eval = function (context) {
     var ctxFrames = context.frames;
     ctxFrames.unshift(ruleset);
 
-    // currrent selectors
+    // current selectors
     var ctxSelectors = context.selectors;
     if (!ctxSelectors) {
         context.selectors = ctxSelectors = [];
@@ -7440,7 +7440,7 @@ Ruleset.prototype.genCSS = function (context, output) {
 
     function isRulesetLikeNode(rule, root) {
         // if it has nested rules, then it should be treated like a ruleset
-        // medias and comments do not have nested rules, but should be treated like rulesets anyway
+        // media and comments do not have nested rules, but should be treated like rulesets anyway
         // some directives and anonymous nodes are ruleset like, others are not
         if (typeof rule.isRulesetLike === "boolean") {
             return rule.isRulesetLike;
@@ -8393,7 +8393,7 @@ ProcessExtendsVisitor.prototype = {
         // a target extend is the one on the ruleset we are looking at copy/edit/pasting in place
         // e.g.  .a:extend(.b) {}  and .b:extend(.c) {} then the first extend extends the second one
         // and the second is the target.
-        // the seperation into two lists allows us to process a subset of chains with a bigger set, as is the
+        // the separation into two lists allows us to process a subset of chains with a bigger set, as is the
         // case when processing media queries
         for (extendIndex = 0; extendIndex < extendsList.length; extendIndex++) {
             for (targetExtendIndex = 0; targetExtendIndex < extendsListTarget.length; targetExtendIndex++) {
@@ -9064,7 +9064,7 @@ ToCSSVisitor.prototype = {
         }
         if (directiveNode.rules && directiveNode.rules.rules) {
             this._mergeRules(directiveNode.rules.rules);
-            //process childs
+            //process children
             directiveNode.accept(this._visitor);
             visitArgs.visitDeeper = false;
 

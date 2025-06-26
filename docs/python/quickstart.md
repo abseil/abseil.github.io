@@ -95,7 +95,7 @@ Hello, Daenerys!
 Or alternatively you can run your application via a single `run` command:
 
 ```
-$ bazel run :hello --name=Daenerys
+$ bazel run :hello -- --name=Daenerys
 ```
 
 For more information about Bazel Python Build Rules, consult the
