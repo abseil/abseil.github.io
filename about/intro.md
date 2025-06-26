@@ -8,7 +8,7 @@ type: markdown
 # Introduction to Abseil
 
 Welcome to Abseil! Abseil is an open-source collection of C++ code (compliant to
-C++14) designed to augment the C++ standard library. This document introduces
+C++17) designed to augment the C++ standard library. This document introduces
 Abseil and provides an overview of the code we're providing.
 
 ## Table of Contents
@@ -40,16 +40,14 @@ The Abseil codebase consists of the following C++ library components:
     <br /> The `memory` library contains memory management facilities that
     augment C++'s `<memory>` library.
 *   [`meta`](https://github.com/abseil/abseil-cpp/tree/master/absl/meta)
-    <br /> The `meta` library contains compatible versions of type checks
-    available within C++14 and C++17 versions of the C++ `<type_traits>`
-    library.
+    <br /> The `meta` library contains type checks similar to those available in
+    the C++ `<type_traits>` library.
 *   [`numeric`](https://github.com/abseil/abseil-cpp/tree/master/absl/numeric)
     <br /> The `numeric` library contains 128-bit integer types as well as
     implementations of C++20's bitwise math functions.
 *   [`strings`](https://github.com/abseil/abseil-cpp/tree/master/absl/strings)
     <br /> The `strings` library contains a variety of strings routines and
-    utilities, including a C++14-compatible version of the C++17
-    `std::string_view` type.
+    utilities.
 *   [`synchronization`](https://github.com/abseil/abseil-cpp/tree/master/absl/synchronization)
     <br /> The `synchronization` library contains concurrency primitives (Abseil's
     `absl::Mutex` class, an alternative to `std::mutex`) and a variety of
@@ -59,8 +57,7 @@ The Abseil codebase consists of the following C++ library components:
     points in time, durations of time, and formatting and parsing time within
     time zones.
 *   [`types`](https://github.com/abseil/abseil-cpp/tree/master/absl/types)
-    <br /> The `types` library contains non-container utility types, like a
-    C++14-compatible version of `absl::optional`.
+    <br /> The `types` library contains non-container utility types.
 *   [`utility`](https://github.com/abseil/abseil-cpp/tree/master/absl/utility)
     <br /> The `utility` library contains utility and helper code.
 

@@ -26,6 +26,16 @@ will show up in the logfiles.
 
 For more detailed information, see the header files.
 
+### Header Files for `LOG()` and `CHECK()`
+
+Import the logging and check macros with the following #includes. The path to
+`absl` may differ depending on its installation location within your system.
+
+```c++
+#include "absl/log/log.h"
+#include "absl/log/check.h"
+```
+
 ### `LOG()` Macro {#LOG}
 
 `LOG()` takes a severity level as an argument, which defines the granularity and
@@ -130,6 +140,9 @@ There are four proper severity levels:
     indicative of a problem. Libraries, especially low-level common libraries,
     should use this level sparingly lest they spam the logs of every program
     that uses them.<br />
+    The [`VLOG()`](#VLOG) macro uses `INFO` severity with an additional
+    verbosity parameter and can be switched on and off on a per-source-file
+    basis. It is a good alternative for libraries.
 *   [`WARNING`](#severity-warning){#severity-warning} corresponds to
     `absl::LogSeverity::kWarning`. It describes unexpected events which *may*
     indicate a problem.
@@ -169,6 +182,16 @@ There are also two pseudo-levels:
     usually the best choice for errors occurring at startup (e.g. flag
     validation) where the control flow is uninteresting and unnecessary to
     diagnosis.
+*   [`DO_NOT_SUBMIT`](#severity-do-not-submit){#severity-do-not-submit} is an
+    alias for `ERROR`, and is the right level to use when you are using `LOG`
+    for what's often called
+    [`printf()` debugging](https://en.wikipedia.org/wiki/Debugging#printf_debugging).
+    The name is easy to spot in review and is caught by common (but not
+    on-by-default) presubmit
+    checks.
+    The contract is that **it must not be checked in**, so the Abseil team
+    reserves the right to delete it, change what it does, and/or scrub any
+    instances that do end up checked in, with or without notice.
 
 If you want to specify a severity level using a C++ expression, e.g. so that the
 level used varies at runtime, you can do that too:
@@ -177,6 +200,41 @@ level used varies at runtime, you can do that too:
 LOG(LEVEL(MoonPhase() == kFullMoon ? absl::LogSeverity::kFatal
                                    : absl::LogSeverity::kError))
       << "Spooky error!";
+```
+
+### `VLOG()` Macro {#VLOG}
+
+`VLOG()` ("verbose log") is used for runtime-configurable debug logging. The
+macro takes a non-negative integer verbosity level as an argument - `INFO`
+severity is implied. Verbosity level values are arbitrary, however lower values
+correspond to more readily-visible messages. Non-zero verbosity levels are
+disabled by default, and disabled `VLOG()`s have a very small performance cost,
+so liberal use of `VLOG()` is acceptable in most cases without risk of serious
+performance degradation or unacceptable log spam.
+
+```c++
+Foo::Foo(int num_bars) {
+  VLOG(4) << "Constructing a new Foo with " << num_bars << " Bars";
+  for (int i = 0; i < num_bars; i++) bars_.push_back(MakeBar(this));
+}
+```
+
+Setting the `--v` flag will turn on all `VLOG()` messages at or below the
+specified level. This is likely to make your logs hard to read and/or fill up
+your disk. The `--vmodule` flag allows different levels to be set for different
+source files; it takes a comma-delimited list of `key=value` pairs where each
+key is a glob matched against filenames and each value is the verbosity level
+that should be effective in matching files. The verbose logging level can also
+be changed at runtime with `absl::SetVLogLevel` and `absl::SetGlobalVLogLevel`:
+
+```c++
+class FooTest : public testing::Test {
+ protected:
+  FooTest() {
+    // Crank up the `VLOG()` level for `Foo` since it does not log much otherwise:
+    absl::SetVLogLevel("foo_impl", 4);
+  }
+};
 ```
 
 ### Other Macro Variants {#macros}
@@ -278,6 +336,14 @@ behavior.
 *   `.NoPrefix()`<br />
     Omits the [prefix](#prefix) from this line. The prefix includes metadata
     about the logged data such as source code location and timestamp.
+*   `.WithVerbosity(int verbose_level)`<br />
+    Sets the verbosity field of the logged message as if it was logged by
+    `VLOG(verbose_level)`. Unlike `VLOG()`, this method does not affect whether
+    statement is evaluated when the specified `verbose_level` has been disabled.
+    The only effect is on `LogSink` implementations which make use of the
+    `absl::LogSink::verbosity()` value. The value
+    `absl::LogEntry::kNoVerbosityLevel` can be specified to mark the message not
+    verbose.
 *   `.WithTimestamp(absl::Time timestamp)`<br />
     Uses the specified timestamp instead of one collected at the time of
     execution.
@@ -390,6 +456,9 @@ the toolchain and flags as the build you want stripped.  This behavior is beyond
 the scope of what's guaranteed by the C++ standard, so it cannot be guaranteed
 by Abseil.
 
+If `ABSL_MAX_VLOG_VERBOSITY` is defined (as an integer) at build-time, `VLOG`s
+with *greater* verbosity are similarly removed.
+
 ## FAQ {#FAQ}
 
 ### How do I make my type streamable into `LOG()`? {#streaming}
@@ -439,10 +508,6 @@ has greater compatibility with other string formatting libraries.
 ### Why does logging use macros and not functions?
 
 There are several reasons the logging system uses macros:
-
-*   Until C++20, which introduces `std::source_location`, it's impossible to
-    portably capture source filename and line number at a function call without
-    spelling out `__FILE__` and `__LINE__` or hiding their spelling in a macro.
 
 *   `CHECK()` uses stringification to include the source code text of the failed
     condition in the failure message. There's no way to do this in a function.

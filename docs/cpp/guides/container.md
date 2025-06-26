@@ -43,7 +43,8 @@ be replacements for
 and [`std::unordered_set`](https://en.cppreference.com/w/cpp/container/unordered_set)
 They provide several advantages over the `std::unordered_*` containers:
 
-*   Provides C++14 support for C++17 mechanisms such as `try_emplace()`.
+*   Provides C++14 support for C++17 mechanisms such as `try_emplace()` and
+    C++20 mechanisms such as `contains()`.
 *   Supports heterogeneous lookup.
 *   Allows optimizations for `emplace({key, value})` to avoid allocating a pair
     in most common cases.
@@ -252,7 +253,8 @@ containers:
 *   Provide lower memory overhead in most cases than their STL equivalents.
 *   Are generally more cache friendly (and hence faster) than their STL
     equivalents.
-*   Provide C++14 support for C++17 mechanisms such as `try_emplace()`.
+*   Provide C++14 support for C++17 mechanisms such as `try_emplace()` and C++20
+    mechanisms such as `contains()`..
 *   Support heterogeneous lookup.
 
 ### Construction

@@ -394,6 +394,12 @@ Despite this flexibility, we recommend using only a single form:
 `--variable=value` for non-boolean flags, and `--variable/--novariable` for
 boolean flags. This consistency will make your code more readable.
 
+Note that all command line flags are first parsed by the shell, which adheres to
+the rules of [shell expansion][shell-expansions]. Specifically, quotes are
+removed before passing any tokens off to the Flags Library. Care should be taken
+to never use "smart" quotes in such command lines, as they will not parse
+correctly.
+
 For integer flag types (int32_t, int64_t, uint64_t, etc.), the following
 formats are accepted:
 
@@ -653,3 +659,4 @@ std::string AbslUnparseFlag(const MyFlagType& flag) {
 [friend-functions]: http://en.cppreference.com/w/cpp/language/friend
 [time-library]: time.md#time-durations
 [civiltime-library]: time.md#civil-times
+[shell-expansions]: https://www.gnu.org/software/bash/manual/html_node/Shell-Expansions.html
