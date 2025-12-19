@@ -1,0 +1,28 @@
+/* Reset some styling needed elsewhere */
+    body {
+        margin-right: 0rem !important;
+    }
+
+summary {
+  display: list-item;
+  background: #fafafa;
+  border-bottom: .0625rem #ccc dashed;
+  border-top: .0625rem #ccc dashed;
+  outline: none;
+  padding: .5625rem 0;
+  padding-left: 0.5rem;
+}
+
+.doc-side-nav {
+  display: none;
+}
+
+.markdown ul, .markdown ol {
+  list-style-position: outside;
+}
+
+/* Hide external link icon */
+a.external::after {
+  display: none;
+}
+
