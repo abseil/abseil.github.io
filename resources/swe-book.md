@@ -38,4 +38,10 @@ href="https://www.oreilly.com/library/view/software-engineering-at/9781492082781
 target="_blank" title="Purchase">
 Purchase from O'Reilly</a>
 </div>
+  <p>Digital copy of <i>Software Engineering at Google</i> curated by Titus Winters, Tom Manshreck, and Hyrum Wright is made 
+available on <a href="{{ site.baseurl }}">abseil.io</a> under the <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0
+International Public License</a>.
+  </p>
+<div>
+</div>
 </center>
