@@ -404,7 +404,7 @@ The call `mu.LockWhen(Condition(f, arg))` is equivalent to
 
 The variants `LockWhenWithTimeout()` and `AwaitWithTimeout()` allow a thread to
 wait either for a condition to become true or for some time to elapse. They each
-return `true` iff the condition is true:
+return `true` if the condition is true:
 
 ```cpp
 if (mu.LockWhenWithTimeout(Condition(f, &cond_expr), 1000 /*ms*/)) {
